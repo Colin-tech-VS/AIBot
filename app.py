@@ -1,6 +1,8 @@
 """
-Backend FastAPI - Chatbot Ollama Local (Windows)
-Optimisé avec LLaMA 3.2:3B et API HTTP Ollama
+Backend FastAPI - Chatbot Ollama Local (Multiplateforme)
+Reçoit les messages utilisateur, appelle Ollama (Llama 3.2 3B) et retourne les réponses.
+Communication frontend ↔ backend ↔ Ollama fonctionnelle.
+Compatible: Windows, macOS, Linux
 """
 
 import requests
@@ -11,27 +13,60 @@ from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
 from typing import List, Literal
 import os
+from pathlib import Path
 
 from backend.f1_bot import answer_f1_question
-from backend.knowledge_base import get_knowledge_base, KnowledgeDoc
+from backend.knowledge_base import get_knowledge_base, reload_knowledge_base, KnowledgeDoc
 
-# -----------------------------------------------------------------------------
-# CONFIG
-# -----------------------------------------------------------------------------
+# Configuration
+app = FastAPI(title="Chatbot Ollama Local (Multiplateforme)")
 
-app = FastAPI(title="Chatbot Ollama Local - Optimisé")
-
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-FRONTEND_DIR = os.path.join(BASE_DIR, "frontend")
-# Support both layouts: either `frontend/templates/index.html` or `frontend/index.html`
-POSSIBLE_TEMPLATES = os.path.join(FRONTEND_DIR, "templates")
-if os.path.isdir(POSSIBLE_TEMPLATES):
+# Déterminer les chemins relatifs au répertoire du projet
+BASE_DIR = Path(__file__).parent.absolute()
+POSSIBLE_TEMPLATES = BASE_DIR / "frontend" / "templates"
+if POSSIBLE_TEMPLATES.is_dir():
     TEMPLATES_DIR = POSSIBLE_TEMPLATES
 else:
-    TEMPLATES_DIR = FRONTEND_DIR
+    TEMPLATES_DIR = BASE_DIR / "frontend"
 
-STATIC_DIR = os.path.join(FRONTEND_DIR, "static")
+STATIC_DIR = BASE_DIR / "frontend" / "static"
 
+# Configuration Ollama (multiplateforme)
+OLLAMA_PATHS = [
+    # Windows
+    Path(os.path.expanduser("~")) / "AppData" / "Local" / "Programs" / "Ollama" / "ollama.exe",
+    Path("C:/Program Files/Ollama/ollama.exe"),
+    # macOS
+    Path("/usr/local/bin/ollama"),
+    Path(os.path.expanduser("~")) / ".ollama" / "ollama",
+    # Linux
+    Path("/usr/bin/ollama"),
+    Path("/usr/local/bin/ollama"),
+    # Fallback
+    "ollama",
+]
+
+# Déterminer le chemin valide vers ollama
+OLLAMA_PATH = None
+for path in OLLAMA_PATHS:
+    if path == "ollama":
+        OLLAMA_PATH = "ollama"
+        print(f"✓ Ollama: utilisant PATH variable")
+        break
+    elif isinstance(path, Path) and path.exists():
+        OLLAMA_PATH = str(path)
+        print(f"✓ Ollama trouvé : {OLLAMA_PATH}")
+        break
+
+if OLLAMA_PATH is None:
+    print("⚠️  ATTENTION: Ollama.exe non trouvé aux chemins connus")
+    print("   Chemins vérifiés :")
+    for p in OLLAMA_PATHS[:-1]:
+        print(f"   - {p}")
+    print("   Veuillez ajouter le chemin correct dans OLLAMA_PATHS")
+    OLLAMA_PATH = OLLAMA_PATHS[0]  # Utiliser le chemin par défaut de toute façon
+
+# Montage des fichiers statiques
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 templates = Jinja2Templates(directory=TEMPLATES_DIR)
 
@@ -100,8 +135,9 @@ async def chat(chat_msg: ChatMessage):
         return JSONResponse(status_code=400, content={"detail": "Message vide"})
 
     try:
-        # Ici tu peux garder ton pipeline F1 si besoin
-        bot_response = answer_f1_question(user_message)
+        # Appeler le pipeline F1 (news + stats + Ollama) avec historique
+        # rag_only=None : utilise la config globale RAG_ONLY; pour forcer, passer True/False
+        bot_response = answer_f1_question(user_message, history=chat_history, rag_only=None)
     except Exception as exc:
         return JSONResponse(status_code=500, content={"detail": f"Erreur backend: {exc}"})
 
@@ -168,10 +204,14 @@ async def add_kb_document(doc: KBDocumentRequest):
 
 @app.post("/kb/reload")
 async def reload_kb():
+    """Recharger la knowledge base (vide le cache et recharge depuis les fichiers)"""
     try:
-        kb = get_knowledge_base()
-        kb.load_from_files()
-        return {"status": "success", "message": "Knowledge base rechargée", "docs_count": len(kb.docs)}
+        kb = reload_knowledge_base()
+        return {
+            "status": "success",
+            "message": "Knowledge base rechargée avec succès",
+            "docs_count": len(kb.docs)
+        }
     except Exception as e:
         return JSONResponse(status_code=500, content={"error": f"Erreur lors du rechargement: {str(e)}"})
 
