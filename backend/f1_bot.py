@@ -22,7 +22,7 @@ OLLAMA_PATHS = [
     r"C:\\Program Files\\Ollama\\ollama.exe",  # alternative
     "ollama",  # fallback : PATH
 ]
-OLLAMA_MODEL = "llama2:3b"  # Llama 3.2 3B pour performances optimales
+OLLAMA_MODEL = "llama3.2:3b"  # Llama 3.2 3B pour performances optimales
 OLLAMA_TIMEOUT = 300  # secondes
 
 # Cache Ergast (5 min TTL)
