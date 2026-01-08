@@ -12,10 +12,12 @@ from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
-from typing import List
+from typing import List, Literal
 import os
 import sys
 from pathlib import Path
+
+from backend.f1_bot import answer_f1_question
 
 # Configuration
 app = FastAPI(title="Chatbot Ollama Local (Windows)")
@@ -60,7 +62,12 @@ app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 templates = Jinja2Templates(directory=TEMPLATES_DIR)
 
 # Historique des messages en mémoire
-chat_history: List[dict] = []
+class HistoryItem(BaseModel):
+    role: Literal["user", "assistant"]
+    content: str
+
+
+chat_history: List[HistoryItem] = []
 
 # Modèles Pydantic
 class ChatMessage(BaseModel):
@@ -72,7 +79,7 @@ class ChatResponse(BaseModel):
     """Modèle pour la réponse du backend"""
     user_message: str
     bot_response: str
-    history: List[dict]
+    history: List[HistoryItem]
 
 
 def call_ollama(prompt: str) -> str:
@@ -169,18 +176,18 @@ async def chat(chat_msg: ChatMessage) -> ChatResponse:
             content={"detail": "Le message ne peut pas être vide"}
         )
     
-    # Appeler Ollama
-    bot_response = call_ollama(user_message)
+    try:
+        # Appeler le pipeline F1 (news + stats + Ollama)
+        bot_response = answer_f1_question(user_message)
+    except Exception as exc:
+        return JSONResponse(
+            status_code=500,
+            content={"detail": f"Erreur interne backend: {exc}"}
+        )
     
     # Ajouter à l'historique
-    chat_history.append({
-        "role": "user",
-        "content": user_message
-    })
-    chat_history.append({
-        "role": "assistant",
-        "content": bot_response
-    })
+    chat_history.append(HistoryItem(role="user", content=user_message))
+    chat_history.append(HistoryItem(role="assistant", content=bot_response))
     
     # Retourner la réponse
     return ChatResponse(
