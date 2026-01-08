@@ -75,6 +75,7 @@ async function sendMessage(event) {
 
 /**
  * Affiche un message dans la zone de chat
+ * Support du markdown et emojis
  */
 function displayMessage(text, role = "user") {
   const messageDiv = document.createElement("div");
@@ -82,7 +83,17 @@ function displayMessage(text, role = "user") {
 
   const bubble = document.createElement("div");
   bubble.className = "message-bubble";
-  bubble.textContent = text;
+  
+  // Convertir le markdown simple en HTML (gras, italique, listes)
+  let htmlContent = text
+    // **gras** → <strong>gras</strong>
+    .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+    // *italique* → <em>italique</em>
+    .replace(/\*(.+?)\*/g, "<em>$1</em>")
+    // Nouvelles lignes → <br>
+    .replace(/\n/g, "<br>");
+  
+  bubble.innerHTML = htmlContent;
 
   messageDiv.appendChild(bubble);
   chatBox.appendChild(messageDiv);
@@ -102,7 +113,7 @@ function displayLoader() {
 
   const bubble = document.createElement("div");
   bubble.className = "message-bubble loading";
-  bubble.innerHTML = "<span></span><span></span><span></span>";
+  bubble.innerHTML = "<span>🏎️</span><span>🏁</span><span>⚡</span>";
 
   loadingDiv.appendChild(bubble);
   chatBox.appendChild(loadingDiv);
@@ -145,8 +156,8 @@ async function clearChat() {
     // Vider la zone de chat
     chatBox.innerHTML = `
       <div class="message-info">
-        <p>Historique effacé ✓</p>
-        <p>Posez une nouvelle question pour commencer...</p>
+        <p><strong>✅ Historique effacé</strong></p>
+        <p>🏁 Posez une nouvelle question pour commencer...</p>
       </div>
     `;
 

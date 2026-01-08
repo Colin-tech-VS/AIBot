@@ -244,15 +244,19 @@ def format_ergast_data(results: Dict, standings: Dict) -> str:
     if not summary:
         return "Stats indisponibles (donnée Ergast manquante)"
     block = [
-        f"Dernier Grand Prix : {summary.raceName} ({summary.circuitName}) le {summary.date}",
-        "Top 3 course :",
+        f"🏁 **Dernier Grand Prix** : {summary.raceName} 🏎️",
+        f"🏟️ **Circuit** : {summary.circuitName}",
+        f"📅 **Date** : {summary.date}",
+        "",
+        "🏆 **Top 3 Course** :",
         *[
-            f"{r.position}. {r.givenName} {r.familyName} ({r.constructor}) - {r.points} pts"
+            f"  {r.position}. 🏅 **{r.givenName} {r.familyName}** ({r.constructor}) - **{r.points}** pts"
             for r in summary.top3
         ],
-        "Classement pilotes (Top 5) :",
+        "",
+        "📊 **Classement Pilotes (Top 5)** :",
         *[
-            f"{s.position}. {s.givenName} {s.familyName} - {s.points} pts ({s.constructor})"
+            f"  {s.position}. **{s.givenName} {s.familyName}** - **{s.points}** pts ({s.constructor})"
             for s in summary.driverTop5
         ],
     ]
@@ -273,24 +277,28 @@ def build_prompt(news_summary: str, ergast_block: str, user_question: str) -> st
     news_summary = _clamp(news_summary, 1600)
     ergast_block = _clamp(ergast_block, 800)
     prompt = f"""
-    Tu es un expert F1. Réponds en français, concis et factuel.
-    Inclure :
-    - Résumé des dernières actualités vérifiées
-    - Résultats du dernier Grand Prix et classement pilotes
-    - Répondre à la question utilisateur
-    - Si une info est incertaine ou absente, dis-le clairement.
-    - Si tu ne sais pas ou que l'information n'est pas disponible, dis explicitement "Je n'ai pas cette information" et propose des pistes (sources officielles, sites d'actualités). N'invente pas de faits.
+    🏎️ Tu es un expert F1 passionné. Réponds en français, concis et factuel.
+    
+    **Instructions** :
+    ✅ Inclure les dernières actualités vérifiées F1
+    ✅ Intégrer les résultats du dernier Grand Prix et classement pilotes
+    ✅ Répondre directement à la question utilisateur
+    ✅ Utiliser du **gras** pour mettre en avant les infos importantes
+    ✅ Ajouter des emojis F1 (🏁 🏆 🏎️ 🏅 etc.) pour la clarté
+    ✅ Si une info est incertaine, dis-le clairement
+    ✅ Si tu ne sais pas, réponds : "Je n'ai pas cette information" et propose des pistes (sources officielles, sites d'actualités)
+    ✅ N'invente pas de faits - priorité à la vérité
 
-    [ACTUALITÉS RÉCENTES]
+    [🏁 ACTUALITÉS RÉCENTES]
     {news_summary}
 
-    [STATS OFFICIELLES]
+    [📊 STATS OFFICIELLES]
     {ergast_block}
 
-    [QUESTION UTILISATEUR]
+    [❓ QUESTION UTILISATEUR]
     {user_question}
 
-    Donne la réponse directement, structurée en puces courtes si utile.
+    Donne la réponse directement, structurée en puces courtes avec **gras** si utile.
     """
     prompt = textwrap.dedent(prompt).strip()
     return _clamp(prompt, 4000)
@@ -377,12 +385,12 @@ def answer_f1_question(user_question: str) -> str:
             results, standings = {}, {}
         
         news_summary = (
-            "\n\n".join([f"[Source] {item.source}\n{item.content}" for item in news_items])
+            "\n\n".join([f"🔗 **Source** : {item.source}\n{item.content}" for item in news_items])
             if news_items
             else (
-                "Aucune actualité récupérée."
+                "❌ Aucune actualité récupérée."
                 if is_f1
-                else "Question hors thématique F1. Actualités F1 non chargées pour réduire la latence."
+                else "ℹ️ Question hors thématique F1. Actualités F1 non chargées pour réduire la latence."
             )
         )
 
@@ -393,10 +401,18 @@ def answer_f1_question(user_question: str) -> str:
         prompt = build_prompt(news_summary, ergast_block, user_question)
 
         # 4) Call Ollama
-        return call_ollama(prompt)
+        response = call_ollama(prompt)
+        
+        # 5) Ajouter emojis aux réponses pertinentes
+        if "erreur" in response.lower():
+            response = f"❌ {response}"
+        elif is_f1:
+            response = f"🏎️ {response}"
+        
+        return response
     except Exception as exc:
         print(f"[ERROR] answer_f1_question: {exc}")
-        return f"[ERREUR] Impossible de traiter la demande: {exc}"
+        return f"❌ **[ERREUR]** Impossible de traiter la demande: {exc}"
 
 
 if __name__ == "__main__":
