@@ -22,8 +22,15 @@ from backend.knowledge_base import get_knowledge_base, KnowledgeDoc
 app = FastAPI(title="Chatbot Ollama Local - Optimisé")
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-TEMPLATES_DIR = os.path.join(BASE_DIR, "frontend", "templates")
-STATIC_DIR = os.path.join(BASE_DIR, "frontend", "static")
+FRONTEND_DIR = os.path.join(BASE_DIR, "frontend")
+# Support both layouts: either `frontend/templates/index.html` or `frontend/index.html`
+POSSIBLE_TEMPLATES = os.path.join(FRONTEND_DIR, "templates")
+if os.path.isdir(POSSIBLE_TEMPLATES):
+    TEMPLATES_DIR = POSSIBLE_TEMPLATES
+else:
+    TEMPLATES_DIR = FRONTEND_DIR
+
+STATIC_DIR = os.path.join(FRONTEND_DIR, "static")
 
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 templates = Jinja2Templates(directory=TEMPLATES_DIR)
@@ -202,4 +209,9 @@ if __name__ == "__main__":
     print(f"🧠 Modèle : {OLLAMA_MODEL}")
     print("=" * 60)
 
-    uvicorn.run("app:app", host="127.0.0.1", port=8000, reload=True)
+    # Disable automatic reload by default to avoid infinite restart loops
+    # (useful when files are synced by OneDrive/Cloud and trigger reloads).
+    # To enable reload during development set environment variable DEV_RELOAD=1
+    dev_reload = os.environ.get("DEV_RELOAD", "0").lower() in ("1", "true", "yes")
+    print(f"Reload enabled: {dev_reload}")
+    uvicorn.run("app:app", host="127.0.0.1", port=8000, reload=dev_reload)
