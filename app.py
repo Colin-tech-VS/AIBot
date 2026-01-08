@@ -1,8 +1,8 @@
 """
-Backend FastAPI - Chatbot Ollama Local (Windows)
+Backend FastAPI - Chatbot Ollama Local (Multiplateforme)
 Reçoit les messages utilisateur, appelle Ollama (Llama 3.2 3B) et retourne les réponses.
 Communication frontend ↔ backend ↔ Ollama fonctionnelle.
-Optimisé pour Windows avec chemin complet à ollama.exe
+Compatible: Windows, macOS, Linux
 """
 
 import subprocess
@@ -18,33 +18,40 @@ import sys
 from pathlib import Path
 
 from backend.f1_bot import answer_f1_question
-from backend.knowledge_base import get_knowledge_base, KnowledgeDoc
+from backend.knowledge_base import get_knowledge_base, reload_knowledge_base, KnowledgeDoc
 
 # Configuration
-app = FastAPI(title="Chatbot Ollama Local (Windows)")
+app = FastAPI(title="Chatbot Ollama Local (Multiplateforme)")
 
 # Déterminer les chemins relatifs au répertoire du projet
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-TEMPLATES_DIR = os.path.join(BASE_DIR, "frontend", "templates")
-STATIC_DIR = os.path.join(BASE_DIR, "frontend", "static")
+BASE_DIR = Path(__file__).parent.absolute()
+TEMPLATES_DIR = BASE_DIR / "frontend" / "templates"
+STATIC_DIR = BASE_DIR / "frontend" / "static"
 
-# ⚠️ CONFIGURATION OLLAMA WINDOWS
-# Ajouter ici le chemin complet vers ollama.exe sur votre machine
+# Configuration Ollama (multiplateforme)
 OLLAMA_PATHS = [
-    r"C:\Users\cococ\AppData\Local\Programs\Ollama\ollama.exe",  # Chemin par défaut Windows
-    r"C:\Program Files\Ollama\ollama.exe",  # Alternative
-    "ollama",  # Fallback : cherche dans le PATH
+    # Windows
+    Path(os.path.expanduser("~")) / "AppData" / "Local" / "Programs" / "Ollama" / "ollama.exe",
+    Path("C:/Program Files/Ollama/ollama.exe"),
+    # macOS
+    Path("/usr/local/bin/ollama"),
+    Path(os.path.expanduser("~")) / ".ollama" / "ollama",
+    # Linux
+    Path("/usr/bin/ollama"),
+    Path("/usr/local/bin/ollama"),
+    # Fallback
+    "ollama",
 ]
 
-# Déterminer le chemin valide vers ollama.exe
+# Déterminer le chemin valide vers ollama
 OLLAMA_PATH = None
 for path in OLLAMA_PATHS:
     if path == "ollama":
-        # On essaiera le PATH lors de l'exécution
         OLLAMA_PATH = "ollama"
+        print(f"✓ Ollama: utilisant PATH variable")
         break
-    elif Path(path).exists():
-        OLLAMA_PATH = path
+    elif isinstance(path, Path) and path.exists():
+        OLLAMA_PATH = str(path)
         print(f"✓ Ollama trouvé : {OLLAMA_PATH}")
         break
 
@@ -178,8 +185,9 @@ async def chat(chat_msg: ChatMessage) -> ChatResponse:
         )
     
     try:
-        # Appeler le pipeline F1 (news + stats + Ollama)
-        bot_response = answer_f1_question(user_message)
+        # Appeler le pipeline F1 (news + stats + Ollama) avec historique
+        # rag_only=None : utilise la config globale RAG_ONLY; pour forcer, passer True/False
+        bot_response = answer_f1_question(user_message, history=chat_history, rag_only=None)
     except Exception as exc:
         return JSONResponse(
             status_code=500,
@@ -278,13 +286,12 @@ async def add_kb_document(doc: KBDocumentRequest):
 
 @app.post("/kb/reload")
 async def reload_kb():
-    """Recharger la knowledge base (depuis fichiers markdown)"""
+    """Recharger la knowledge base (vide le cache et recharge depuis les fichiers)"""
     try:
-        kb = get_knowledge_base()
-        kb.load_from_files()
+        kb = reload_knowledge_base()
         return {
             "status": "success",
-            "message": "Knowledge base rechargée",
+            "message": "Knowledge base rechargée avec succès",
             "docs_count": len(kb.docs)
         }
     except Exception as e:

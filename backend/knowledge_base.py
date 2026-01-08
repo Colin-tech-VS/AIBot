@@ -54,7 +54,9 @@ class KnowledgeBase:
         if self.use_chromadb:
             self._init_chromadb()
         
-        self._load_default_knowledge()
+        # Charger les fichiers du répertoire (pas de docs par défaut hardcodés)
+        # Cela permet de contrôler la KB via les fichiers uniquement
+        self.load_from_files()
     
     def _init_chromadb(self):
         """Initialize ChromaDB for embeddings"""
@@ -74,96 +76,6 @@ class KnowledgeBase:
             print(f"[WARN] ChromaDB init failed: {e}. Using simple search.")
             self.use_chromadb = False
     
-    def _load_default_knowledge(self):
-        """Charger les connaissances par défaut F1"""
-        default_docs = [
-            KnowledgeDoc(
-                "f1_rules_basic",
-                "Règles de base F1",
-                """
-                **F1 Règles de base 2025** :
-                - **Distance de la course** : 307 km (approximativement 2 heures)
-                - **Points au podium** : 1er=25pts, 2e=18pts, 3e=15pts, 4e=12pts, 5e=10pts, 6e=8pts, 7e=6pts, 8e=4pts, 9e=2pts, 10e=1pt
-                - **Point du meilleur tour** : 1 point (si dans les 10 premiers)
-                - **Drapeau rouge** : Course arrêtée si danger immédiat
-                - **ERS (Energy Recovery System)** : Récupération d'énergie contrôlée
-                - **Sécurité** : Halo obligatoire, KERS, systèmes de protection
-                """,
-                "f1-rules"
-            ),
-            KnowledgeDoc(
-                "f1_history",
-                "Histoire de la F1",
-                """
-                **Histoire de la Formule 1** :
-                - **Fondation** : 1950, premier championnat officiel
-                - **Évolutions majeures** :
-                  - 1960s : Monocoques introduites (lotus)
-                  - 1970s : Aérodynamique révolutionnaire
-                  - 1980s : Turbo era
-                  - 1990s : Williams dominance, V10 engines
-                  - 2000s : Ferrari dominance (Schumacher)
-                  - 2010s : Mercedes dominance (Hamilton)
-                  - 2020s : Red Bull, Verstappen era
-                - **Pilotes légendaires** : Senna, Prost, Schumacher, Hamilton, Verstappen
-                """,
-                "history"
-            ),
-            KnowledgeDoc(
-                "current_teams_2025",
-                "Équipes F1 2025",
-                """
-                **Équipes de F1 2025** :
-                1. **Red Bull Racing** - Max Verstappen, Sergio Pérez
-                2. **Mercedes** - Lewis Hamilton, George Russell
-                3. **Ferrari** - Charles Leclerc, Carlos Sainz
-                4. **McLaren** - Lando Norris, Oscar Piastri
-                5. **Aston Martin** - Fernando Alonso, Lance Stroll
-                6. **Alpine** - Pierre Gasly, Esteban Ocon
-                7. **Haas F1** - Kevin Magnussen, Nico Hülkenberg
-                8. **Racing Bulls** - Yuki Tsunoda, Liam Lawson
-                9. **Williams** - Alexander Albon, Carlos Sainz Jr.
-                10. **Kick Sauber** - Zhou Guanyu, Valtteri Bottas
-                """,
-                "teams"
-            ),
-            KnowledgeDoc(
-                "driver_facts",
-                "Faits Pilotes F1",
-                """
-                **Faits clés pilotes actuels** :
-                - **Max Verstappen** : Recordman de victoires (99+), 3x champion F1
-                - **Lewis Hamilton** : 7x champion F1, recordman historique (bientôt chez Ferrari)
-                - **Charles Leclerc** : Jeune talent Ferrari, approx 5 victoires
-                - **George Russell** : Mercedes, talent émergent, 1 victoire
-                - **Fernando Alonso** : Vétéran, 2x champion, toujours compétitif
-                """,
-                "drivers"
-            ),
-            KnowledgeDoc(
-                "faq_f1",
-                "FAQ F1",
-                """
-                **Questions fréquentes F1** :
-                
-                Q: Combien de races par saison ?
-                R: Approx 24 races (calendrier 2025)
-                
-                Q: Quelle est la plus longue piste F1 ?
-                R: Le circuit de Monza (5.793 km) ou Spa (7.004 km)
-                
-                Q: Qui est le plus jeune champions F1 ?
-                R: Max Verstappen (18 ans à sa première victoire), Sebastian Vettel (23 ans champion)
-                
-                Q: Combien de temps dure une course ?
-                R: Environ 2 heures (distance : 307 km)
-                """,
-                "faq"
-            ),
-        ]
-        
-        for doc in default_docs:
-            self.add_document(doc)
     
     def add_document(self, doc: KnowledgeDoc):
         """Ajouter un document à la knowledge base"""
@@ -197,7 +109,10 @@ class KnowledgeBase:
         return self._simple_search(query, top_k)
     
     def _simple_search(self, query: str, top_k: int = 3) -> List[str]:
-        """Recherche simple par mots-clés - améliorée pour chercher en profondeur"""
+        """Recherche simple par mots-clés - améliorée pour chercher en profondeur
+        
+        Avec seuil minimum de pertinence pour éviter les faux positifs
+        """
         query_lower = query.lower()
         query_words = query_lower.split()
         scores = []
@@ -225,7 +140,8 @@ class KnowledgeBase:
             if query_lower in doc.title.lower():
                 total_score += 10
             
-            if total_score > 0:
+            # SEUIL MINIMUM: au moins 2 points (au moins 1 mot matché ou titre partiel)
+            if total_score >= 2:
                 scores.append((total_score, doc.content))
         
         # Trier par score décroissant et retourner top_k
@@ -308,4 +224,14 @@ def get_knowledge_base(use_chromadb: bool = True) -> KnowledgeBase:
     if _kb_instance is None:
         _kb_instance = KnowledgeBase(use_chromadb=use_chromadb)
         _kb_instance.load_from_files()
+    return _kb_instance
+
+
+def reload_knowledge_base() -> KnowledgeBase:
+    """Forcer le rechargement de la knowledge base (vide le cache et recharge les fichiers)"""
+    global _kb_instance
+    _kb_instance = None
+    _kb_instance = KnowledgeBase(use_chromadb=True)
+    _kb_instance.load_from_files()
+    print(f"[INFO] Knowledge base rechargée. {len(_kb_instance.docs)} documents en mémoire.")
     return _kb_instance
