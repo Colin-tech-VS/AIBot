@@ -1,6 +1,6 @@
 """
 Backend FastAPI - Chatbot Ollama Local (Windows)
-Reçoit les messages utilisateur, appelle Ollama (LLaMA2) et retourne les réponses.
+Reçoit les messages utilisateur, appelle Ollama (Llama 3.2 3B) et retourne les réponses.
 Communication frontend ↔ backend ↔ Ollama fonctionnelle.
 Optimisé pour Windows avec chemin complet à ollama.exe
 """
@@ -18,6 +18,7 @@ import sys
 from pathlib import Path
 
 from backend.f1_bot import answer_f1_question
+from backend.knowledge_base import get_knowledge_base, KnowledgeDoc
 
 # Configuration
 app = FastAPI(title="Chatbot Ollama Local (Windows)")
@@ -211,6 +212,88 @@ async def clear_history() -> dict:
     return {"message": "Historique effacé", "history": chat_history}
 
 
+# -----------------------------------
+# Knowledge Base Endpoints
+# -----------------------------------
+
+@app.get("/kb/docs")
+async def get_kb_documents():
+    """Retourner tous les documents de la knowledge base"""
+    kb = get_knowledge_base()
+    docs = kb.get_all_docs()
+    return {
+        "total": len(docs),
+        "documents": [
+            {"id": doc.doc_id, "title": doc.title, "category": doc.category, "preview": doc.content[:150]}
+            for doc in docs
+        ]
+    }
+
+
+@app.get("/kb/search")
+async def search_kb(q: str):
+    """Rechercher dans la knowledge base"""
+    if not q or len(q) < 3:
+        return {"error": "Query trop court (min 3 caractères)", "results": []}
+    
+    kb = get_knowledge_base()
+    results = kb.search(q, top_k=3)
+    return {
+        "query": q,
+        "results": [{"content": r[:200] + "..." if len(r) > 200 else r} for r in results]
+    }
+
+
+class KBDocumentRequest(BaseModel):
+    """Modèle pour ajouter un document"""
+    doc_id: str
+    title: str
+    content: str
+    category: str = "custom"
+
+
+@app.post("/kb/add")
+async def add_kb_document(doc: KBDocumentRequest):
+    """Ajouter un document à la knowledge base"""
+    try:
+        kb = get_knowledge_base()
+        new_doc = KnowledgeDoc(
+            doc_id=doc.doc_id,
+            title=doc.title,
+            content=doc.content,
+            category=doc.category
+        )
+        kb.add_document(new_doc)
+        return {
+            "status": "success",
+            "message": f"Document '{doc.title}' ajouté à la KB",
+            "doc_id": doc.doc_id
+        }
+    except Exception as e:
+        return JSONResponse(
+            status_code=400,
+            content={"error": f"Erreur lors de l'ajout: {str(e)}"}
+        )
+
+
+@app.post("/kb/reload")
+async def reload_kb():
+    """Recharger la knowledge base (depuis fichiers markdown)"""
+    try:
+        kb = get_knowledge_base()
+        kb.load_from_files()
+        return {
+            "status": "success",
+            "message": "Knowledge base rechargée",
+            "docs_count": len(kb.docs)
+        }
+    except Exception as e:
+        return JSONResponse(
+            status_code=500,
+            content={"error": f"Erreur lors du rechargement: {str(e)}"}
+        )
+
+
 @app.get("/health")
 async def health_check() -> dict:
     """Vérifie la santé du backend et teste Ollama"""
@@ -228,16 +311,26 @@ async def health_check() -> dict:
         )
         ollama_ok = result.returncode == 0
         ollama_version = result.stdout.strip() if ollama_ok else "Non disponible"
+        
+        # Check KB
+        kb = get_knowledge_base()
+        kb_docs_count = len(kb.docs)
     except Exception as e:
         ollama_ok = False
         ollama_version = str(e)
+        kb_docs_count = 0
     
     return {
         "status": "ok",
-        "backend": "FastAPI + Ollama (Windows)",
+        "backend": "FastAPI + Ollama (Windows) + Knowledge Base",
         "ollama_path": OLLAMA_PATH,
         "ollama_available": ollama_ok,
-        "ollama_info": ollama_version
+        "ollama_info": ollama_version,
+        "knowledge_base": {
+            "available": True,
+            "documents_count": kb_docs_count,
+            "chromadb_enabled": True  # À ajuster selon dispo
+        }
     }
 
 

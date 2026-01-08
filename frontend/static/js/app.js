@@ -75,7 +75,7 @@ async function sendMessage(event) {
 
 /**
  * Affiche un message dans la zone de chat
- * Support du markdown et emojis
+ * Support du markdown et emojis (liens cliquables)
  */
 function displayMessage(text, role = "user") {
   const messageDiv = document.createElement("div");
@@ -84,8 +84,10 @@ function displayMessage(text, role = "user") {
   const bubble = document.createElement("div");
   bubble.className = "message-bubble";
   
-  // Convertir le markdown simple en HTML (gras, italique, listes)
+  // Convertir le markdown simple en HTML (gras, italique, liens, listes)
   let htmlContent = text
+    // [texte](url) → <a href="url" target="_blank">texte</a>
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" style="color: #3b82f6; text-decoration: underline; font-weight: 600;">$1</a>')
     // **gras** → <strong>gras</strong>
     .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
     // *italique* → <em>italique</em>

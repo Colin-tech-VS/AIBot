@@ -1,6 +1,6 @@
 """
 Backend FastAPI - Chatbot Ollama Local (Windows)
-Reçoit les messages utilisateur, appelle Ollama (LLaMA2) et retourne les réponses.
+Reçoit les messages utilisateur, appelle Ollama (Llama 3.2 3B) et retourne les réponses.
 Communication frontend ↔ backend ↔ Ollama fonctionnelle.
 Optimisé pour Windows avec chemin complet à ollama.exe
 """
