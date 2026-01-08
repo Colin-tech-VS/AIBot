@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ title or 'Chatbot Ollama' }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='css/style.css') }}" />
+  </head>
+  <body>
+    <div class="container">
+      <!-- Header -->
+      <header class="header">
+        <h1>🤖 Chatbot Ollama Local</h1>
+        <p class="subtitle">Powered by LLaMA2</p>
+      </header>
+
+      <!-- Zone de chat -->
+      <div class="chat-container">
+        <div id="chatBox" class="chat-box">
+          <!-- Les messages s'ajoutent ici dynamiquement -->
+          <div class="message-info">
+            <p>Connecté à Ollama local (LLaMA2).</p>
+            <p>Posez une question pour commencer...</p>
+          </div>
+        </div>
+
+        <!-- Zone de saisie -->
+        <div class="input-area">
+          <form id="chatForm" onsubmit="sendMessage(event)">
+            <div class="input-wrapper">
+              <input
+                type="text"
+                id="messageInput"
+                placeholder="Écrivez votre message..."
+                required
+                autocomplete="off"
+              />
+              <button type="submit" class="send-btn" id="sendBtn">
+                Envoyer
+              </button>
+            </div>
+          </form>
+          <button class="clear-btn" onclick="clearChat()">
+            🗑️ Effacer l'historique
+          </button>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <footer class="footer">
+        <p>Backend: FastAPI | LLM: Ollama + LLaMA2</p>
+      </footer>
+    </div>
+
+    <!-- Script client -->
+    <script src="{{ url_for('static', path='js/app.js') }}"></script>
+  </body>
+</html>
