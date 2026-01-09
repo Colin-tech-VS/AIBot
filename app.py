@@ -22,7 +22,7 @@ from backend.knowledge_base import get_knowledge_base, reload_knowledge_base, Kn
 from backend.optimized_prompts import ConversationMemory
 
 # Nouveaux routers (architecture améliorée)
-from app_new.routers import chat_router, session_router, prompt_router
+# from app_new.routers import chat_router, session_router, prompt_router
 
 # Configuration
 app = FastAPI(title="Chatbot Ollama Local (Multiplateforme)")
@@ -57,15 +57,15 @@ OLLAMA_PATH = None
 for path in OLLAMA_PATHS:
     if path == "ollama":
         OLLAMA_PATH = "ollama"
-        print(f"✓ Ollama: utilisant PATH variable")
+        print(f"OK Ollama: utilisant PATH variable")
         break
     elif isinstance(path, Path) and path.exists():
         OLLAMA_PATH = str(path)
-        print(f"✓ Ollama trouvé : {OLLAMA_PATH}")
+        print(f"OK Ollama trouve : {OLLAMA_PATH}")
         break
 
 if OLLAMA_PATH is None:
-    print("⚠️  ATTENTION: Ollama.exe non trouvé aux chemins connus")
+    print("ATTENTION: Ollama.exe non trouve aux chemins connus")
     print("   Chemins vérifiés :")
     for p in OLLAMA_PATHS[:-1]:
         print(f"   - {p}")
@@ -110,9 +110,9 @@ conversation_memory = ConversationMemory(max_history=10, memory_file="conversati
 # ENREGISTREMENT DES NOUVEAUX ROUTERS (ARCHITECTURE AMÉLIORÉE)
 # -----------------------------------------------------------------------------
 # Ces routers ajoutent des fonctionnalités sans casser l'ancien système
-app.include_router(chat_router.router)      # /api/chat/v2 - Chat avec sessions
-app.include_router(session_router.router)   # /session/* - Gestion sessions
-app.include_router(prompt_router.router)    # /prompt/* - Debug prompts
+# app.include_router(chat_router.router)      # /api/chat/v2 - Chat avec sessions
+# app.include_router(session_router.router)   # /session/* - Gestion sessions
+# app.include_router(prompt_router.router)    # /prompt/* - Debug prompts
 
 # -----------------------------------------------------------------------------
 # OLLAMA API CALL
@@ -266,9 +266,9 @@ if __name__ == "__main__":
     import uvicorn
 
     print("=" * 60)
-    print("🤖 Chatbot Ollama Local - FASTAPI (OPTIMISÉ)")
-    print(f"🚀 http://localhost:8001")
-    print(f"🧠 Modèle : {OLLAMA_MODEL}")
+    print("Chatbot Ollama Local - FASTAPI (OPTIMISE)")
+    print(f"URL: http://localhost:8001")
+    print(f"Modele : {OLLAMA_MODEL}")
     print("=" * 60)
 
     # Disable automatic reload by default to avoid infinite restart loops
