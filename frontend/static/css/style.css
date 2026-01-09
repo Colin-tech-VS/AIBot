@@ -54,9 +54,8 @@ body {
   display: flex;
   flex-direction: column;
   height: 100vh;
-  max-width: 900px;
-  margin: 0 auto;
   width: 100%;
+  margin: 0;
 }
 
 /* Header */
