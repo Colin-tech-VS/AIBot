@@ -362,10 +362,9 @@ function doDeleteConversation() {
 document.addEventListener("DOMContentLoaded", () => {
   try {
     historyPanel = document.getElementById("historyPanel");
-    historyOverlay = document.getElementById("historyOverlay");
     historyContent = document.getElementById("historyContent");
 
-    console.log('Frontend: history UI initialized', {historyPanel: !!historyPanel, historyOverlay: !!historyOverlay, historyContent: !!historyContent});
+    console.log('Frontend: history UI initialized', {historyPanel: !!historyPanel, historyContent: !!historyContent});
   } catch (e) {
     console.error('Erreur initialisation UI:', e);
   }
@@ -426,18 +425,31 @@ document.addEventListener("DOMContentLoaded", () => {
       closeHistoryPanel();
     });
   }
+
+  // Initialiser le dark mode et les infos utilisateur
+  initDarkMode();
+  initUserInfo();
 });
 
 chatForm.addEventListener("submit", sendMessage);
 
-/**
- * Ouvre le panneau d'historique (affiche la liste des conversations)
+/** * Bascule l'ouverture/fermeture du panneau d'historique
+ */
+function toggleHistoryPanel() {
+  if (!historyPanel) return;
+  const isOpen = historyPanel.getAttribute("aria-hidden") === "false";
+  if (isOpen) {
+    closeHistoryPanel();
+  } else {
+    openHistoryPanel();
+  }
+}
+
+/** * Ouvre le panneau d'historique (affiche la liste des conversations)
  */
 async function openHistoryPanel() {
-  if (!historyPanel || !historyContent || !historyOverlay) return;
-  historyOverlay.hidden = false;
+  if (!historyPanel) return;
   historyPanel.setAttribute("aria-hidden", "false");
-
   renderConversationList();
 }
 
@@ -445,9 +457,8 @@ async function openHistoryPanel() {
  * Ferme le panneau d'historique
  */
 function closeHistoryPanel() {
-  if (!historyPanel || !historyOverlay) return;
+  if (!historyPanel) return;
   historyPanel.setAttribute("aria-hidden", "true");
-  historyOverlay.hidden = true;
 }
 
 /**
@@ -484,4 +495,126 @@ function renderHistoryItems(items) {
 
     historyContent.appendChild(el);
   });
+}
+
+/**
+ * Ouvre le panneau profil utilisateur
+ */
+function openUserProfile() {
+  const userProfilePanel = document.getElementById("userProfilePanel");
+  const userProfileOverlay = document.getElementById("userProfileOverlay");
+  if (!userProfilePanel) return;
+  userProfileOverlay.hidden = false;
+  userProfilePanel.setAttribute("aria-hidden", "false");
+}
+
+/**
+ * Ferme le panneau profil utilisateur
+ */
+function closeUserProfile() {
+  const userProfilePanel = document.getElementById("userProfilePanel");
+  const userProfileOverlay = document.getElementById("userProfileOverlay");
+  if (!userProfilePanel) return;
+  userProfilePanel.setAttribute("aria-hidden", "true");
+  userProfileOverlay.hidden = true;
+}
+
+/**
+ * Gère la connexion utilisateur
+ */
+function handleLogin() {
+  const username = prompt("Entrez votre nom d'utilisateur :");
+  if (username && username.trim()) {
+    localStorage.setItem("username", username.trim());
+    updateUserInfo(username.trim());
+  }
+}
+
+/**
+ * Met à jour l'affichage des infos utilisateur
+ */
+function updateUserInfo(username) {
+  const userInfo = document.getElementById("userInfo");
+  if (!userInfo) return;
+  userInfo.innerHTML = `
+    <p>Connecté en tant que <strong>${username}</strong></p>
+    <button class="profile-btn" onclick="handleLogout()">Se déconnecter</button>
+  `;
+}
+
+/**
+ * Gère la déconnexion utilisateur
+ */
+function handleLogout() {
+  localStorage.removeItem("username");
+  const userInfo = document.getElementById("userInfo");
+  if (!userInfo) return;
+  userInfo.innerHTML = `
+    <p class="muted">Non connecté</p>
+    <button class="profile-btn" onclick="handleLogin()">Se connecter</button>
+  `;
+}
+
+/**
+ * Active/désactive le dark mode
+ */
+function toggleDarkMode() {
+  const isDarkMode = document.body.classList.toggle("dark-mode");
+  localStorage.setItem("darkMode", isDarkMode);
+  updateDarkModeVariables(isDarkMode);
+}
+
+/**
+ * Met à jour les variables CSS pour le dark mode
+ */
+function updateDarkModeVariables(isDarkMode) {
+  const root = document.documentElement;
+  if (isDarkMode) {
+    // Couleurs F1 - Dark Mode
+    root.style.setProperty("--bg", "#0f0f0f");           // Noir très foncé
+    root.style.setProperty("--bg-alt", "#1a1a1a");       // Gris très foncé
+    root.style.setProperty("--fg", "#f5f5f5");           // Blanc cassé
+    root.style.setProperty("--fg-light", "#b0b0b0");     // Gris clair
+    root.style.setProperty("--border", "#333333");       // Gris foncé
+    root.style.setProperty("--primary", "#ff1801");      // Rouge F1
+    root.style.setProperty("--primary-dark", "#cc1400"); // Rouge F1 foncé
+    root.style.setProperty("--msg-user", "#ff1801");     // Messages user en rouge F1
+    root.style.setProperty("--msg-bot", "#1f1f1f");      // Messages bot en gris très foncé
+  } else {
+    // Light mode - beige original
+    root.style.setProperty("--bg", "#fffbf7");
+    root.style.setProperty("--bg-alt", "#f5ede4");
+    root.style.setProperty("--fg", "#3e3e3e");
+    root.style.setProperty("--fg-light", "#8b8b8b");
+    root.style.setProperty("--border", "#e8dcd0");
+    root.style.setProperty("--primary", "#d4a574");
+    root.style.setProperty("--primary-dark", "#c19a6b");
+    root.style.setProperty("--msg-user", "#e8dcc8");
+    root.style.setProperty("--msg-bot", "#faf7f2");
+  }
+}
+
+/**
+ * Initialise le dark mode au chargement
+ */
+function initDarkMode() {
+  const darkModeToggle = document.getElementById("darkModeToggle");
+  const isDarkMode = localStorage.getItem("darkMode") === "true";
+  if (darkModeToggle) {
+    darkModeToggle.checked = isDarkMode;
+  }
+  if (isDarkMode) {
+    document.body.classList.add("dark-mode");
+    updateDarkModeVariables(true);
+  }
+}
+
+/**
+ * Initialise les infos utilisateur au chargement
+ */
+function initUserInfo() {
+  const username = localStorage.getItem("username");
+  if (username) {
+    updateUserInfo(username);
+  }
 }
