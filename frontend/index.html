@@ -11,7 +11,10 @@
       <!-- Header -->
       <header class="header">
         <h1>🏎️ <strong>F1 AI Chatbot</strong> 🏁</h1>
-        <p class="subtitle">🤖 Powered by Ollama + LLaMA2</p>
+        <!-- Subtitle removed per request -->
+        <div id="convTitle" class="conv-title">
+          <span id="convTitleText">Aucune conversation active</span>
+        </div>
       </header>
 
       <!-- Zone de chat -->
@@ -40,17 +43,41 @@
               </button>
             </div>
           </form>
-          <button class="clear-btn" onclick="clearChat()">
-            🗑️ Effacer l'historique
-          </button>
+          <div style="display:flex;gap:0.5rem;flex-wrap:wrap;align-items:center;">
+            <button class="clear-btn" onclick="clearChat()">
+              🗑️ Effacer l'historique
+            </button>
+            <button type="button" class="clear-btn" id="openHistoryBtn" onclick="openHistoryPanel()">
+              📚 Historique
+            </button>
+            <button type="button" class="clear-btn" id="quickNewConversationBtn">
+              ➕ Nouvelle
+            </button>
+          </div>
         </div>
       </div>
 
       <!-- Footer -->
       <footer class="footer">
-        <p><strong>⚡ FastAPI</strong> | <strong>🤖 Ollama</strong> | <strong>🏁 F1 Data</strong></p>
+        <p><strong>F1 Chatbot</strong></p>
       </footer>
     </div>
+
+    <!-- Panneau coulissant d'historique -->
+    <div id="historyOverlay" class="history-overlay" onclick="closeHistoryPanel()" hidden></div>
+    <aside id="historyPanel" class="history-panel" aria-hidden="true">
+      <div class="history-header">
+        <h3>Conversations</h3>
+        <div style="display:flex;gap:0.5rem;align-items:center;">
+          <button id="newConversationBtn" class="clear-btn">➕ Nouvelle</button>
+          <button id="closeHistoryBtn" aria-label="Fermer" onclick="closeHistoryPanel()">✖</button>
+        </div>
+      </div>
+      <div id="historyContent" class="history-content">
+        <!-- La liste des conversations sera remplie ici -->
+        <p class="muted">Chargement...</p>
+      </div>
+    </aside>
 
     <!-- Script client -->
     <script src="{{ url_for('static', path='js/app.js') }}"></script>
