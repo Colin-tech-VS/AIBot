@@ -162,36 +162,33 @@ function renderConversationList() {
   if (!historyContent) return;
   historyContent.innerHTML = '';
   if (!conversations || conversations.length===0) {
-    historyContent.innerHTML = `<p class="muted">Aucune conversation.</p>`;
+    historyContent.innerHTML = `<p class="text-sm text-slate-500 dark:text-slate-400">Aucune conversation.</p>`;
     return;
   }
   conversations.forEach(conv => {
     const item = document.createElement('div');
-    item.className = 'conversation-list-item';
+    item.className = 'p-3 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer transition flex justify-between items-center group';
     item.title = conv.title;
 
-    const left = document.createElement('div');
-    left.style.display = 'flex';
-    left.style.flexDirection = 'column';
-    left.style.gap = '2px';
-
-    const title = document.createElement('div');
-    title.className = 'title';
-    title.textContent = conv.title;
-
-    left.appendChild(title);
+    const titleDiv = document.createElement('div');
+    titleDiv.className = 'flex-1 min-w-0';
+    const titleEl = document.createElement('p');
+    titleEl.className = 'text-sm font-medium text-slate-900 dark:text-white truncate';
+    titleEl.textContent = conv.title;
+    titleDiv.appendChild(titleEl);
 
     const actions = document.createElement('div');
-    actions.className = 'conversation-actions';
+    actions.className = 'flex gap-1 opacity-0 group-hover:opacity-100 transition';
 
     const delBtn = document.createElement('button');
-    delBtn.innerText = '🗑️';
+    delBtn.className = 'p-1 rounded hover:bg-red-100 dark:hover:bg-red-900 text-red-900 dark:text-red-400 transition';
     delBtn.title = 'Supprimer';
+    delBtn.innerHTML = '<svg class="w-4 h-4" data-lucide="trash-2"></svg>';
     delBtn.onclick = (e) => { e.stopPropagation(); deleteConversation(conv.id); };
 
     actions.appendChild(delBtn);
 
-    item.appendChild(left);
+    item.appendChild(titleDiv);
     item.appendChild(actions);
 
     item.onclick = () => {
@@ -201,6 +198,11 @@ function renderConversationList() {
 
     historyContent.appendChild(item);
   });
+  
+  // Réinitialiser les icônes Lucide après l'ajout des éléments
+  if (typeof lucide !== 'undefined') {
+    lucide.createIcons();
+  }
 }
 
 /**
@@ -260,13 +262,18 @@ async function sendMessage(event) {
  */
 function displayMessage(text, role = "user", opts = {save: true}) {
   const messageDiv = document.createElement("div");
-  messageDiv.className = `message ${role}`;
+  messageDiv.className = `flex ${role === "user" ? "justify-end" : "justify-start"}`;
 
   const bubble = document.createElement("div");
-  bubble.className = "message-bubble";
+  const baseClass = `max-w-xs lg:max-w-md xl:max-w-lg px-4 py-2 rounded-lg text-sm`;
+  const roleClass = role === "user" 
+    ? "bg-red-900 text-white rounded-br-none" 
+    : "bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white rounded-bl-none";
+  
+  bubble.className = `${baseClass} ${roleClass}`;
   
   let htmlContent = text
-    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" style="color: #3b82f6; text-decoration: underline; font-weight: 600;">$1</a>')
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" class="underline font-semibold hover:opacity-80">$1</a>')
     .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
     .replace(/\*(.+?)\*/g, "<em>$1</em>")
     .replace(/\n/g, "<br>");
@@ -288,11 +295,17 @@ function displayMessage(text, role = "user", opts = {save: true}) {
  */
 function displayLoader() {
   const loadingDiv = document.createElement("div");
-  loadingDiv.className = "message bot";
+  loadingDiv.className = "flex justify-start";
 
   const bubble = document.createElement("div");
-  bubble.className = "message-bubble loading";
-  bubble.innerHTML = "<span>🏎️</span><span>🏁</span><span>⚡</span>";
+  bubble.className = "px-4 py-2 rounded-lg bg-slate-100 dark:bg-slate-800 rounded-bl-none";
+  bubble.innerHTML = `
+    <div class="flex gap-1">
+      <span class="inline-block animate-bounce">🏎️</span>
+      <span class="inline-block animate-bounce" style="animation-delay: 0.1s">🏁</span>
+      <span class="inline-block animate-bounce" style="animation-delay: 0.2s">⚡</span>
+    </div>
+  `;
 
   loadingDiv.appendChild(bubble);
   chatBox.appendChild(loadingDiv);
@@ -458,22 +471,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
 chatForm.addEventListener("submit", sendMessage);
 
-/** * Bascule l'ouverture/fermeture du panneau d'historique
- */
 function toggleHistoryPanel() {
   if (!historyPanel) return;
-  const isOpen = historyPanel.getAttribute("aria-hidden") === "false";
-  if (isOpen) {
-    closeHistoryPanel();
-  } else {
+  const isHidden = historyPanel.classList.contains("hidden");
+  if (isHidden) {
     openHistoryPanel();
+  } else {
+    closeHistoryPanel();
   }
 }
 
-/** * Ouvre le panneau d'historique (affiche la liste des conversations)
+/**
+ * Ouvre le panneau d'historique (affiche la liste des conversations)
  */
 async function openHistoryPanel() {
   if (!historyPanel) return;
+  historyPanel.classList.remove("hidden");
   historyPanel.setAttribute("aria-hidden", "false");
   renderConversationList();
 }
@@ -483,6 +496,7 @@ async function openHistoryPanel() {
  */
 function closeHistoryPanel() {
   if (!historyPanel) return;
+  historyPanel.classList.add("hidden");
   historyPanel.setAttribute("aria-hidden", "true");
 }
 
@@ -529,7 +543,8 @@ function openUserProfile() {
   const userProfilePanel = document.getElementById("userProfilePanel");
   const userProfileOverlay = document.getElementById("userProfileOverlay");
   if (!userProfilePanel) return;
-  userProfileOverlay.hidden = false;
+  userProfileOverlay.classList.remove("hidden");
+  userProfilePanel.classList.remove("translate-x-full");
   userProfilePanel.setAttribute("aria-hidden", "false");
 }
 
@@ -540,8 +555,9 @@ function closeUserProfile() {
   const userProfilePanel = document.getElementById("userProfilePanel");
   const userProfileOverlay = document.getElementById("userProfileOverlay");
   if (!userProfilePanel) return;
+  userProfilePanel.classList.add("translate-x-full");
+  userProfileOverlay.classList.add("hidden");
   userProfilePanel.setAttribute("aria-hidden", "true");
-  userProfileOverlay.hidden = true;
 }
 
 /**
@@ -562,8 +578,8 @@ function updateUserInfo(username) {
   const userInfo = document.getElementById("userInfo");
   if (!userInfo) return;
   userInfo.innerHTML = `
-    <p>Connecté en tant que <strong>${username}</strong></p>
-    <button class="profile-btn" onclick="handleLogout()">Se déconnecter</button>
+    <p class="text-sm">Connecté en tant que <strong>${username}</strong></p>
+    <button class="w-full px-4 py-2 rounded-lg bg-red-900 hover:bg-red-800 text-white transition text-sm font-medium" onclick="handleLogout()">Se déconnecter</button>
   `;
 }
 
@@ -575,58 +591,32 @@ function handleLogout() {
   const userInfo = document.getElementById("userInfo");
   if (!userInfo) return;
   userInfo.innerHTML = `
-    <p class="muted">Non connecté</p>
-    <button class="profile-btn" onclick="handleLogin()">Se connecter</button>
+    <p class="text-sm text-slate-500 dark:text-slate-400">Non connecté</p>
+    <button class="w-full px-4 py-2 rounded-lg bg-red-900 hover:bg-red-800 text-white transition text-sm font-medium mt-2" onclick="handleLogin()">Se connecter</button>
   `;
 }
 
 /**
- * Active/désactive le dark mode
+ * Active/désactive le dark mode avec Tailwind
  */
 function toggleDarkMode() {
-  const isDarkMode = document.body.classList.toggle("dark-mode");
+  const isDarkMode = document.documentElement.classList.toggle("dark");
   localStorage.setItem("darkMode", isDarkMode);
-  updateDarkModeVariables(isDarkMode);
-}
-
-/**
- * Met à jour les variables CSS pour le dark mode
- */
-function updateDarkModeVariables(isDarkMode) {
-  const root = document.documentElement;
-  if (isDarkMode) {
-    // Dark Mode Palette
-    root.style.setProperty("--primary", "#8b0000");
-    root.style.setProperty("--primary-dark", "#6b0000");
-    root.style.setProperty("--bg", "#0f0f0f");
-    root.style.setProperty("--bg-alt", "#1a1a1a");
-    root.style.setProperty("--fg", "#f5f5f5");
-    root.style.setProperty("--fg-light", "#b0b0b0");
-    root.style.setProperty("--border", "#333333");
-  } else {
-    // Light Mode Palette
-    root.style.setProperty("--primary", "#7b1b1e");
-    root.style.setProperty("--primary-dark", "#671a1b");
-    root.style.setProperty("--bg", "#ffffff");
-    root.style.setProperty("--bg-alt", "#f0f0f0");
-    root.style.setProperty("--fg", "#1a1a1a");
-    root.style.setProperty("--fg-light", "#6b6b6b");
-    root.style.setProperty("--border", "#e1e1e1");
-  }
 }
 
 /**
  * Initialise le dark mode au chargement
  */
 function initDarkMode() {
-  const darkModeToggle = document.getElementById("darkModeToggle");
   const isDarkMode = localStorage.getItem("darkMode") === "true";
+  const darkModeToggle = document.getElementById("darkModeToggle");
+  if (isDarkMode) {
+    document.documentElement.classList.add("dark");
+  } else {
+    document.documentElement.classList.remove("dark");
+  }
   if (darkModeToggle) {
     darkModeToggle.checked = isDarkMode;
-  }
-  if (isDarkMode) {
-    document.body.classList.add("dark-mode");
-    updateDarkModeVariables(true);
   }
 }
 
