@@ -68,7 +68,7 @@ if OLLAMA_PATH is None:
 
 # Montage des fichiers statiques
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
-templates = Jinja2Templates(directory=TEMPLATES_DIR)
+app.mount("/image", StaticFiles(directory=IMAGE_DIR), name="image")
 
 # ⚠️ URL API Ollama (Windows par défaut)
 OLLAMA_URL = "http://127.0.0.1:11434/api/generate"
@@ -128,9 +128,9 @@ async def index(request: Request):
         {"request": request, "title": "Chatbot Ollama Local"}
     )
 
-@app.post("/chat", response_model=ChatResponse)
-async def chat(chat_msg: ChatMessage):
-    user_message = chat_msg.message.strip()
+@app.get("/image/F1.jpg")
+async def get_f1_image():
+    "ser_message = chat_msg.message.strip()
     if not user_message:
         return JSONResponse(status_code=400, content={"detail": "Message vide"})
 

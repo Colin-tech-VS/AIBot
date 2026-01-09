@@ -11,11 +11,11 @@
       <!-- Header -->
       <header class="header">
         <div class="header-top">
-          <h1>🏎️ <strong>F1 AI Chatbot</strong> 🏁</h1>
+          <h1><strong>F1 AI Chatbot</strong></h1>
           <div class="header-icons">
-            <button id="newConvNavBtn" class="nav-icon-btn" aria-label="Nouvelle conversation" onclick="createConversation()">➕</button>
+            <button id="newConvNavBtn" class="nav-icon-btn" aria-label="Nouvelle conversation" onclick="createConversation()">+</button>
             <button id="historyToggleBtn" class="nav-icon-btn" aria-label="Historique" onclick="toggleHistoryPanel()">☰</button>
-            <button id="userProfileBtn" class="nav-icon-btn user-profile-btn" aria-label="Profil utilisateur" onclick="openUserProfile()">👤</button>
+            <button id="userProfileBtn" class="nav-icon-btn user-profile-btn" aria-label="Profil utilisateur" onclick="openUserProfile()">⚙</button>
           </div>
         </div>
       </header>
@@ -27,8 +27,8 @@
           <div id="chatBox" class="chat-box">
             <!-- Les messages s'ajoutent ici dynamiquement -->
             <div class="message-info">
-              <p><strong>✅ Connecté à Ollama</strong> (LLaMA2 | Mistral fallback)</p>
-              <p>🏎️ Posez une question F1 pour commencer...</p>
+              <p><strong>Connecté à Ollama</strong> (LLaMA2 | Mistral fallback)</p>
+              <p>Posez une question F1 pour commencer...</p>
             </div>
           </div>
 
@@ -39,7 +39,7 @@
                 <input
                   type="text"
                   id="messageInput"
-                  placeholder="🏁 Ex: Qui a gagné le dernier GP? 🏆"
+                  placeholder="Ex: Qui a gagné le dernier GP?"
                   required
                   autocomplete="off"
                 />
@@ -56,8 +56,8 @@
           <div class="history-header">
             <h3>Conversations</h3>
             <div style="display:flex;gap:0.5rem;align-items:center;">
-              <button id="newConversationBtn" class="history-header-btn" aria-label="Nouvelle conversation">➕</button>
-              <button id="closeHistoryBtn" class="history-header-btn" aria-label="Fermer" onclick="closeHistoryPanel()">✖</button>
+              <button id="newConversationBtn" class="history-header-btn" aria-label="Nouvelle conversation">+</button>
+              <button id="closeHistoryBtn" class="history-header-btn" aria-label="Fermer" onclick="closeHistoryPanel()">✕</button>
             </div>
           </div>
           <div id="historyContent" class="history-content">
@@ -72,7 +72,7 @@
     <div id="userProfilePanel" class="user-profile-panel" aria-hidden="true">
       <div class="profile-header">
         <h3>Profil</h3>
-        <button class="profile-close-btn" aria-label="Fermer" onclick="closeUserProfile()">✖</button>
+        <button class="profile-close-btn" aria-label="Fermer" onclick="closeUserProfile()">✕</button>
       </div>
       <div class="profile-content">
         <!-- Section utilisateur -->
