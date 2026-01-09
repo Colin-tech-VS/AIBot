@@ -51,7 +51,7 @@ function createConversation(fromHistory) {
   
   const conv = {
     id: uid(),
-    title: fromHistory && fromHistory.title ? fromHistory.title : `Conversation ${conversations.length + 1}`,
+    title: fromHistory && fromHistory.title ? fromHistory.title : 'Nouvelle conversation',
     messages: fromHistory && fromHistory.messages ? fromHistory.messages : []
   };
   
@@ -101,7 +101,7 @@ function addMessageToCurrentConversation(role, content) {
   
   // Si c'est le premier message utilisateur et que la conversation a un titre par défaut, la renommer
   if (role === 'user' && (!conv.messages || conv.messages.length === 0)) {
-    const isDefaultTitle = conv.title.startsWith('Conversation ');
+    const isDefaultTitle = conv.title === 'Nouvelle conversation';
     if (isDefaultTitle) {
       conv.title = content.slice(0, 50);
       setConversationTitle(conv.title);
