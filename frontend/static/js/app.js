@@ -570,27 +570,23 @@ function toggleDarkMode() {
 function updateDarkModeVariables(isDarkMode) {
   const root = document.documentElement;
   if (isDarkMode) {
-    // Couleurs F1 - Dark Mode
-    root.style.setProperty("--bg", "#0f0f0f");           // Noir très foncé
-    root.style.setProperty("--bg-alt", "#1a1a1a");       // Gris très foncé
-    root.style.setProperty("--fg", "#f5f5f5");           // Blanc cassé
-    root.style.setProperty("--fg-light", "#b0b0b0");     // Gris clair
-    root.style.setProperty("--border", "#333333");       // Gris foncé
-    root.style.setProperty("--primary", "#ff1801");      // Rouge F1
-    root.style.setProperty("--primary-dark", "#cc1400"); // Rouge F1 foncé
-    root.style.setProperty("--msg-user", "#ff1801");     // Messages user en rouge F1
-    root.style.setProperty("--msg-bot", "#1f1f1f");      // Messages bot en gris très foncé
+    // Dark Mode Palette
+    root.style.setProperty("--primary", "#8b0000");
+    root.style.setProperty("--primary-dark", "#6b0000");
+    root.style.setProperty("--bg", "#0f0f0f");
+    root.style.setProperty("--bg-alt", "#1a1a1a");
+    root.style.setProperty("--fg", "#f5f5f5");
+    root.style.setProperty("--fg-light", "#b0b0b0");
+    root.style.setProperty("--border", "#333333");
   } else {
-    // Light mode - beige original
-    root.style.setProperty("--bg", "#fffbf7");
-    root.style.setProperty("--bg-alt", "#f5ede4");
-    root.style.setProperty("--fg", "#3e3e3e");
-    root.style.setProperty("--fg-light", "#8b8b8b");
-    root.style.setProperty("--border", "#e8dcd0");
-    root.style.setProperty("--primary", "#d4a574");
-    root.style.setProperty("--primary-dark", "#c19a6b");
-    root.style.setProperty("--msg-user", "#e8dcc8");
-    root.style.setProperty("--msg-bot", "#faf7f2");
+    // Light Mode Palette
+    root.style.setProperty("--primary", "#7b1b1e");
+    root.style.setProperty("--primary-dark", "#671a1b");
+    root.style.setProperty("--bg", "#ffffff");
+    root.style.setProperty("--bg-alt", "#f0f0f0");
+    root.style.setProperty("--fg", "#1a1a1a");
+    root.style.setProperty("--fg-light", "#6b6b6b");
+    root.style.setProperty("--border", "#e1e1e1");
   }
 }
 
