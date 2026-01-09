@@ -19,7 +19,7 @@ from backend.knowledge_base import get_knowledge_base
 from backend.optimized_prompts import OptimizedPromptBuilder
 
 # Import Long Term Memory
-from backend.long_term_memory import long_term_memory
+from backend.long_term_memory import long_term_memory, CentralizedMemory
 
 # Import CSV parser
 import csv

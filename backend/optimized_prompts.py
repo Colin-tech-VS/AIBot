@@ -6,6 +6,7 @@ Maximise pertinence, minimise tokens
 from typing import Optional
 import json
 from datetime import datetime
+import os
 
 
 class OptimizedPromptBuilder:
@@ -241,3 +242,76 @@ conversation_memory.add_to_memory("Qui a gagné le dernier GP?", "Max Verstappen
 # Inclure la mémoire dans un prompt
 historique = conversation_memory.get_memory()
 prompt = f"{historique}\nUser: Quelle est la prochaine course?\nAssistant:"
+
+# Ajout d'une classe pour sauvegarder toutes les conversations F1
+class F1ConversationLogger:
+    """Gère la sauvegarde et la vérification des conversations F1."""
+
+    def __init__(self, log_file: str = "f1_conversations.json"):
+        self.log_file = log_file
+        self.conversations = self.load_conversations()
+
+    def log_conversation(self, user_message: str, assistant_response: str):
+        """Ajoute une conversation F1 au fichier de log."""
+        self.conversations.append({"user": user_message, "assistant": assistant_response})
+        self.save_conversations()
+
+    def save_conversations(self):
+        """Sauvegarde les conversations dans un fichier JSON."""
+        with open(self.log_file, "w", encoding="utf-8") as f:
+            json.dump(self.conversations, f, ensure_ascii=False, indent=4)
+
+    def load_conversations(self):
+        """Charge les conversations depuis un fichier JSON."""
+        if os.path.exists(self.log_file):
+            with open(self.log_file, "r", encoding="utf-8") as f:
+                return json.load(f)
+        return []
+
+    def verify_conversations(self):
+        """Vérifie les données des conversations pour détecter les anomalies."""
+        verified = []
+        for convo in self.conversations:
+            if "user" in convo and "assistant" in convo:
+                verified.append(convo)
+            else:
+                print(f"[WARN] Conversation invalide détectée: {convo}")
+        return verified
+
+    # Ajout d'une méthode pour apprentissage automatique supervisé
+    def train_from_validated_data(self):
+        """Entraîne un modèle à partir des données validées."""
+        validated_data = [
+            convo for convo in self.conversations if convo.get("validated")
+        ]
+        if not validated_data:
+            print("[INFO] Aucune donnée validée disponible pour l'entraînement.")
+            return
+
+        # Préparer les données pour l'entraînement
+        training_data = [
+            {
+                "input": convo["user"],
+                "output": convo["assistant"]
+            }
+            for convo in validated_data
+        ]
+
+        # Exemple : Sauvegarder les données d'entraînement dans un fichier JSON
+        with open("validated_training_data.json", "w", encoding="utf-8") as f:
+            json.dump(training_data, f, ensure_ascii=False, indent=4)
+
+        print(f"[INFO] Données d'entraînement sauvegardées : {len(training_data)} exemples.")
+
+# Exemple d'utilisation
+f1_logger = F1ConversationLogger()
+
+# Ajouter une conversation
+f1_logger.log_conversation("Qui a gagné le dernier GP?", "Max Verstappen a gagné le dernier GP.")
+
+# Vérifier les conversations
+verified_conversations = f1_logger.verify_conversations()
+print(f"Conversations vérifiées: {len(verified_conversations)}")
+
+# Entraîner à partir des données validées
+f1_logger.train_from_validated_data()

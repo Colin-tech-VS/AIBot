@@ -14,6 +14,8 @@ from pydantic import BaseModel
 from typing import List, Literal
 import os
 from pathlib import Path
+import subprocess
+import threading
 
 from backend.f1_bot import answer_f1_question
 from backend.knowledge_base import get_knowledge_base, reload_knowledge_base, KnowledgeDoc
@@ -265,7 +267,7 @@ if __name__ == "__main__":
 
     print("=" * 60)
     print("🤖 Chatbot Ollama Local - FASTAPI (OPTIMISÉ)")
-    print(f"🚀 http://localhost:8000")
+    print(f"🚀 http://localhost:8001")
     print(f"🧠 Modèle : {OLLAMA_MODEL}")
     print("=" * 60)
 
@@ -274,4 +276,15 @@ if __name__ == "__main__":
     # To enable reload during development set environment variable DEV_RELOAD=1
     dev_reload = os.environ.get("DEV_RELOAD", "0").lower() in ("1", "true", "yes")
     print(f"Reload enabled: {dev_reload}")
-    uvicorn.run("app:app", host="127.0.0.1", port=8000, reload=dev_reload)
+    uvicorn.run("app:app", host="127.0.0.1", port=8001, reload=dev_reload)
+
+    def launch_auto_train():
+        """Lancer le script auto_train.py dans un thread séparé."""
+        def run_script():
+            subprocess.run(["python", "backend/auto_train.py"], check=True)
+
+        thread = threading.Thread(target=run_script, daemon=True)
+        thread.start()
+
+    # Lancer auto_train.py au démarrage du serveur
+    launch_auto_train()

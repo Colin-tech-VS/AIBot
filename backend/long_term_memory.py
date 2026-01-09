@@ -287,5 +287,48 @@ class LongTermMemory:
         print("[INFO] Toute la mémoire a été effacée.")
 
 
+class CentralizedMemory:
+    def __init__(self, memory_file="centralized_memory.json"):
+        self.memory_file = Path(memory_file)
+        self.memory_file.touch(exist_ok=True)
+        self.load_memory()
+
+    def load_memory(self):
+        try:
+            with open(self.memory_file, "r", encoding="utf-8") as f:
+                self.memory = json.load(f)
+        except json.JSONDecodeError:
+            self.memory = []
+
+    def save_memory(self):
+        with open(self.memory_file, "w", encoding="utf-8") as f:
+            json.dump(self.memory, f, ensure_ascii=False, indent=4)
+
+    def validate_conversation(self, conversation):
+        """Valide automatiquement une conversation si elle respecte les critères."""
+        # Critères de validation
+        if "source" in conversation and conversation["source"] in ["KnowledgeBase", "ErgastAPI"]:
+            conversation["validated"] = True
+        else:
+            conversation["validated"] = False
+
+    def add_conversation(self, user_id, question, answer, source=None):
+        """Ajoute une conversation avec validation automatique."""
+        conversation = {
+            "user_id": user_id,
+            "question": question,
+            "answer": answer,
+            "source": source,
+            "validated": False
+        }
+        self.validate_conversation(conversation)
+        self.memory.append(conversation)
+        self.save_memory()
+
+    def get_validated_conversations(self):
+        """Retourne uniquement les conversations validées."""
+        return [conv for conv in self.memory if conv["validated"]]
+
+
 # Instance globale
 long_term_memory = LongTermMemory()
