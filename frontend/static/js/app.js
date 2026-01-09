@@ -9,14 +9,17 @@ const chatBox = document.getElementById("chatBox");
 const messageInput = document.getElementById("messageInput");
 const chatForm = document.getElementById("chatForm");
 const sendBtn = document.getElementById("sendBtn");
+const mainNavbar = document.getElementById("mainNavbar");
+const navOverlay = document.getElementById("navOverlay");
+const historyPanel = document.getElementById("historyPanel");
+const historyOverlay = document.getElementById("historyOverlay");
+const historyContent = document.getElementById("historyContent");
 
 // État
 let isWaiting = false;
-
-// References to history UI (initialized on DOMContentLoaded)
-let historyPanel = null;
-let historyOverlay = null;
-let historyContent = null;
+let isNavbarOpen = false;
+let isHistoryOpen = false;
+let isNavbarCollapsed = false;
 
 // Conversations store (frontend only, ChatGPT-like)
 let conversations = [];
@@ -183,7 +186,7 @@ function renderConversationList() {
     const delBtn = document.createElement('button');
     delBtn.className = 'p-1 rounded hover:bg-red-100 dark:hover:bg-red-900 text-red-900 dark:text-red-400 transition';
     delBtn.title = 'Supprimer';
-    delBtn.innerHTML = '<svg class="w-4 h-4" data-lucide="trash-2"></svg>';
+    delBtn.innerHTML = '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>';
     delBtn.onclick = (e) => { e.stopPropagation(); deleteConversation(conv.id); };
 
     actions.appendChild(delBtn);
@@ -198,11 +201,6 @@ function renderConversationList() {
 
     historyContent.appendChild(item);
   });
-  
-  // Réinitialiser les icônes Lucide après l'ajout des éléments
-  if (typeof lucide !== 'undefined') {
-    lucide.createIcons();
-  }
 }
 
 /**
@@ -467,14 +465,59 @@ document.addEventListener("DOMContentLoaded", () => {
   // Initialiser le dark mode et les infos utilisateur
   initDarkMode();
   initUserInfo();
+  
+  // Initialiser l'état de collapse de la navbar
+  const savedNavbarCollapsed = localStorage.getItem('navbarCollapsed') === 'true';
+  if (savedNavbarCollapsed && window.innerWidth >= 1024) {
+    mainNavbar.classList.add("collapsed");
+    isNavbarCollapsed = true;
+  }
 });
 
 chatForm.addEventListener("submit", sendMessage);
 
+// Fonctions de gestion de la navbar collapsible
+function toggleNavbar() {
+  // Sur mobile : open/close
+  // Sur desktop : collapse/expand
+  if (window.innerWidth < 1024) {
+    // Mobile
+    isNavbarOpen = !isNavbarOpen;
+    if (isNavbarOpen) {
+      mainNavbar.classList.remove("-translate-x-full");
+      navOverlay.classList.remove("hidden");
+    } else {
+      mainNavbar.classList.add("-translate-x-full");
+      navOverlay.classList.add("hidden");
+    }
+  } else {
+    // Desktop
+    toggleNavbarCollapsed();
+  }
+}
+
+function toggleNavbarCollapsed() {
+  isNavbarCollapsed = !isNavbarCollapsed;
+  localStorage.setItem('navbarCollapsed', isNavbarCollapsed);
+  
+  if (isNavbarCollapsed) {
+    mainNavbar.classList.add("collapsed");
+  } else {
+    mainNavbar.classList.remove("collapsed");
+  }
+}
+
+function closeNavbar() {
+  if (isNavbarOpen) {
+    isNavbarOpen = false;
+    mainNavbar.classList.add("-translate-x-full");
+    navOverlay.classList.add("hidden");
+  }
+}
+
 function toggleHistoryPanel() {
-  if (!historyPanel) return;
-  const isHidden = historyPanel.classList.contains("hidden");
-  if (isHidden) {
+  isHistoryOpen = !isHistoryOpen;
+  if (isHistoryOpen) {
     openHistoryPanel();
   } else {
     closeHistoryPanel();
@@ -487,7 +530,9 @@ function toggleHistoryPanel() {
 async function openHistoryPanel() {
   if (!historyPanel) return;
   historyPanel.classList.remove("hidden");
+  historyPanel.classList.remove("translate-x-full");
   historyPanel.setAttribute("aria-hidden", "false");
+  historyOverlay.classList.remove("hidden");
   renderConversationList();
 }
 
@@ -496,8 +541,10 @@ async function openHistoryPanel() {
  */
 function closeHistoryPanel() {
   if (!historyPanel) return;
-  historyPanel.classList.add("hidden");
+  isHistoryOpen = false;
+  historyPanel.classList.add("translate-x-full");
   historyPanel.setAttribute("aria-hidden", "true");
+  historyOverlay.classList.add("hidden");
 }
 
 /**
