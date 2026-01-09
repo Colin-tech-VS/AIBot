@@ -32,6 +32,36 @@
       #mainNavbar.collapsed [data-navbar-text] {
         display: none;
       }
+
+      /* États du layout chat */
+      #chatContainer.active-chat #chatBox {
+        display: flex;
+        flex-direction: column;
+      }
+
+      #chatContainer.active-chat #inputContainer {
+        height: auto;
+      }
+
+      #chatContainer.active-chat #inputContainer h1 {
+        display: none;
+      }
+
+      #chatContainer.active-chat #inputContainer {
+        padding: 1rem 1.5rem;
+        max-w-none;
+      }
+
+      #chatContainer.active-chat #inputContainer > div {
+        width: 100%;
+        max-width: 100%;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        #chatContainer.active-chat #inputContainer {
+          border-top-color: #1e293b;
+        }
+      }
     </style>
   </head>
   <body class="bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-100 h-screen overflow-hidden">
@@ -79,32 +109,34 @@
       <div id="historyOverlay" class="fixed inset-0 bg-black/50 hidden z-34" onclick="closeHistoryPanel()"></div>
 
       <!-- Zone de chat et historique -->
-      <div class="flex-1 flex flex-col overflow-hidden relative">
+      <div id="chatContainer" class="flex-1 flex flex-col overflow-hidden relative">
 
         <!-- Messages -->
-        <div id="chatBox" class="flex-1 overflow-y-auto p-6 space-y-4">
-          <div class="text-center py-8">
-            <p class="font-semibold text-slate-900 dark:text-white">Connecté à Ollama</p>
-            <p class="text-sm text-slate-500 dark:text-slate-400">(LLaMA2 | Mistral fallback)</p>
-            <p class="text-slate-600 dark:text-slate-300 mt-2">Posez une question F1 pour commencer...</p>
-          </div>
+        <div id="chatBox" class="hidden overflow-y-auto p-6 space-y-4 flex-1">
         </div>
 
-        <!-- Zone de saisie -->
-        <div class="px-6 py-4 border-t border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 flex-shrink-0">
-          <form id="chatForm" onsubmit="sendMessage(event)" class="flex gap-2">
-            <input
-              type="text"
-              id="messageInput"
-              placeholder="Ex: Qui a gagné le dernier GP?"
-              required
-              autocomplete="off"
-              class="flex-1 px-4 py-2 rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-red-900 focus:border-transparent"
-            />
-            <button type="submit" id="sendBtn" class="p-2 rounded-lg bg-red-900 hover:bg-red-800 text-white transition disabled:opacity-50" aria-label="Envoyer">
-              <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
-            </button>
-          </form>
+        <!-- Zone de saisie - Nouveau design -->
+        <div id="inputContainer" class="flex flex-col items-center justify-center h-full px-4 py-8 bg-gradient-to-b from-white dark:from-slate-950 to-slate-50 dark:to-slate-900 transition-all duration-300">
+          <h1 class="text-slate-900 dark:text-white text-3xl font-light text-center mb-12">
+            Comment puis-je vous aider ?
+          </h1>
+          
+          <div class="w-full max-w-2xl">
+            <form id="chatForm" onsubmit="sendMessage(event)" class="bg-red-900 dark:bg-red-950 rounded-full shadow-2xl flex items-center px-6 py-4 border border-red-800 dark:border-red-900">
+              <input
+                type="text"
+                id="messageInput"
+                placeholder="Poser une question"
+                required
+                autocomplete="off"
+                class="flex-1 bg-transparent text-white placeholder-red-200 dark:placeholder-red-300 outline-none text-base focus:outline-none"
+              />
+              
+              <button type="submit" id="sendBtn" class="ml-3 p-2 rounded-full bg-white hover:bg-slate-200 dark:bg-white dark:hover:bg-slate-200 text-slate-900 transition disabled:opacity-50" aria-label="Envoyer">
+                <svg class="w-5 h-5 rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
+              </button>
+            </form>
+          </div>
         </div>
       </div>
 
@@ -157,6 +189,13 @@
             <input type="checkbox" id="darkModeToggle" class="w-4 h-4 rounded cursor-pointer" onchange="toggleDarkMode()">
             <span class="text-sm text-slate-700 dark:text-slate-300">Mode sombre</span>
           </label>
+        </div>
+
+        <!-- Section données -->
+        <div>
+          <h4 class="font-semibold text-slate-900 dark:text-white mb-3">Données</h4>
+          <button id="clearHistoryBtn" class="w-full px-4 py-2 rounded-lg bg-red-600 hover:bg-red-700 text-white transition text-sm font-medium" onclick="clearAllHistory()">Supprimer tout l'historique</button>
+          <p class="text-xs text-slate-500 dark:text-slate-400 mt-2">Cette action est irréversible</p>
         </div>
       </div>
     </div>

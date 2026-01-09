@@ -4,6 +4,24 @@
  * Gestion des messages et affichage en temps réel
  */
 
+/**
+ * Supprime toutes les conversations de l'historique
+ */
+function clearAllHistory() {
+  if (confirm('Êtes-vous sûr de vouloir supprimer tout l\'historique ? Cette action est irréversible.')) {
+    conversations = [];
+    currentConversationId = null;
+    saveConversations();
+    renderConversationList();
+    renderNavbarHistory();
+    chatBox.innerHTML = '';
+    const chatContainer = document.getElementById('chatContainer');
+    chatContainer.classList.remove('active-chat');
+    chatBox.classList.add('hidden');
+    alert('Historique supprimé avec succès');
+  }
+}
+
 // Références au DOM
 const chatBox = document.getElementById("chatBox");
 const messageInput = document.getElementById("messageInput");
@@ -157,10 +175,20 @@ function loadConversationIntoChat(id) {
   currentConversationId = id;
   chatBox.innerHTML = '';
   setConversationTitle(conv.title);
-  if (!conv.messages || conv.messages.length===0) {
-    chatBox.innerHTML = `<div class="message-info"><p class="muted">Conversation vide. Envoyez un message pour commencer.</p></div>`;
+  
+  // Gérer le layout basé sur si la conversation a des messages
+  const chatContainer = document.getElementById("chatContainer");
+  if (!conv.messages || conv.messages.length === 0) {
+    chatBox.classList.add("hidden");
+    chatContainer.classList.remove("active-chat");
+    chatBox.innerHTML = '';
     return;
   }
+  
+  // Si la conversation a des messages, activer le layout actif
+  chatBox.classList.remove("hidden");
+  chatContainer.classList.add("active-chat");
+  
   conv.messages.forEach(m => {
     displayMessage(m.content, m.role, {save:false});
   });
@@ -271,6 +299,14 @@ async function sendMessage(event) {
 
   const message = messageInput.value.trim();
   if (!message || isWaiting) return;
+
+  // Activer le layout actif au premier message
+  const chatContainer = document.getElementById("chatContainer");
+  if (!chatContainer.classList.contains("active-chat")) {
+    chatContainer.classList.add("active-chat");
+    const chatBox = document.getElementById("chatBox");
+    chatBox.classList.remove("hidden");
+  }
 
   displayMessage(message, "user");
 
