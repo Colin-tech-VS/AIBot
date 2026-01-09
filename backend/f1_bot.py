@@ -720,7 +720,8 @@ def _is_f1_question(q: str) -> bool:
         "circuit", "piste", "champion", "victoire", "course", "pilote", "constructeur",
         "pole position", "podium", "drs", "kers", "qualif", "essai", "essais libres",
         "monza", "spa", "monaco", "silverstone", "imola", "suzuka", "interlagos",
-        "gagn", "gagne", "gangé", "perdu", "perd", "classement", "position", "résultat"
+        "gagn", "gagne", "gangé", "perdu", "perd", "classement", "position", "résultat",
+        "victoire", "victoires", "points", "total", "somme", "addition"
     ]
     return any(k in ql for k in f1_keywords)
 
@@ -992,7 +993,7 @@ Réponds maintenant en continuant la conversation naturellement :"""
                     long_term_context=lt_context
                 )
                 response = call_ollama(prompt)
-                if response and not response.startswith("[ERREUR") and len(response) > 50:
+                if response and not response.startswith("[ERREUR") and len(response) > 10:
                     print("[INFO] ✓ Réponse trouvée dans Knowledge Base")
                     return response
 
@@ -1027,7 +1028,7 @@ Réponds maintenant en continuant la conversation naturellement :"""
                         long_term_context=lt_context
                     )
                     response = call_ollama(prompt)
-                    if response and not response.startswith("[ERREUR") and len(response) > 50:
+                    if response and not response.startswith("[ERREUR") and len(response) > 10:
                         return response
             except Exception as e:
                 print(f"[WARN] OpenF1 API globale échouée: {e}")
@@ -1095,7 +1096,7 @@ Réponds maintenant en continuant la conversation naturellement :"""
                         long_term_context=lt_context
                     )
                     response = call_ollama(prompt)
-                    if response and not response.startswith("[ERREUR") and len(response) > 50:
+                    if response and not response.startswith("[ERREUR") and len(response) > 10:
                         return response
             except Exception as e:
                 print(f"[WARN] Wikipedia/Wikidata globale échouée: {e}")
@@ -1132,18 +1133,25 @@ Réponds maintenant en continuant la conversation naturellement :"""
         if is_general:
             print("[INFO] Question générale (non-F1)")
 
-            # Chercher dans KB
+            # Chercher dans KB pour voir si on a quand même une info (ex: FAQ)
             kb = get_knowledge_base()
             kb_results = kb.search(user_question, top_k=2)
             kb_content = "\n".join(kb_results[:2]) if kb_results else ""
 
-            # Prompt pour question générale (permet au LLM d'utiliser ses connaissances)
-            prompt = OptimizedPromptBuilder.build_f1_question(
-                question=user_question,
-                kb_content=kb_content if kb_content and _is_kb_result_relevant(user_question, kb_content) else None,
-                conversation_history=history_text,
-                long_term_context=lt_context
-            )
+            # Utiliser le builder de prompt général si pas d'info KB
+            if kb_content and _is_kb_result_relevant(user_question, kb_content):
+                prompt = OptimizedPromptBuilder.build_f1_question(
+                    question=user_question,
+                    kb_content=kb_content,
+                    conversation_history=history_text,
+                    long_term_context=lt_context
+                )
+            else:
+                prompt = OptimizedPromptBuilder.build_general_question(
+                    question=user_question,
+                    conversation_history=history_text,
+                    long_term_context=lt_context
+                )
             
             response = call_ollama(prompt)
             if response and not response.startswith("[ERREUR"):

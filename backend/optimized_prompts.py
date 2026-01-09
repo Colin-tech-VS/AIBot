@@ -14,7 +14,8 @@ class OptimizedPromptBuilder:
     # Prompt système conversationnel et naturel
     SYSTEM_PROMPT = """Tu es un passionné de F1 qui adore partager ses connaissances de manière décontractée et enthousiaste.
 Réponds TOUJOURS en français, de façon naturelle et conversationnelle (comme si tu parlais à un pote).
-Utilise le tutoiement, sois concis (2-4 phrases max), mets en **gras** les infos importantes, et ajoute des emojis F1 quand ça colle ! 🏎️"""
+Utilise le tutoiement, sois concis (2-4 phrases max), mets en **gras** les infos importantes, et ajoute des emojis F1 quand ça colle ! 🏎️
+Si l'utilisateur demande un calcul (somme de victoires, écart de points, etc.) et que tu as les données dans le contexte, fais le calcul automatiquement."""
     
     @staticmethod
     def get_current_date() -> str:
@@ -150,20 +151,32 @@ Réponds directement avec l'info du document, sans explications inutiles :\n"""
 Synthétise une réponse brève en français :\n"""
     
     @staticmethod
-    def build_last_race_question(
+    def build_general_question(
         question: str,
-        race_results: str,
+        conversation_history: Optional[str] = None,
+        long_term_context: Optional[str] = None,
     ) -> str:
-        """Prompt pour résultats dernière course"""
-        return f"""{OptimizedPromptBuilder.SYSTEM_PROMPT}
+        """Prompt pour questions générales non-F1"""
+        parts = [
+            "Tu es un assistant intelligent et polyvalent, mais avec une personnalité de passionné de F1.",
+            "Réponds en français, de manière naturelle et amicale.",
+            f"Nous sommes le {OptimizedPromptBuilder.get_current_date()}.",
+            "",
+        ]
 
-=== RÉSULTATS COURSE ===
-{race_results}
+        if long_term_context:
+            parts.extend(["=== MÉMOIRE ===", long_term_context, ""])
 
-=== QUESTION ===
-{question}
+        if conversation_history:
+            parts.extend(["=== HISTORIQUE RÉCENT ===", conversation_history, ""])
 
-Résume en 2-3 phrases en français :\n"""
+        parts.extend([
+            "=== QUESTION ===",
+            question,
+            "",
+            "Réponse directe et utile :"
+        ])
+        return "\n".join(parts)
 
 
 class PromptTemplates:
