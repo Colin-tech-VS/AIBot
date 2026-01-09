@@ -173,6 +173,18 @@ async def chat(chat_msg: ChatMessage, background_tasks: BackgroundTasks, current
     user_id = current_user.get("user_id") if current_user else 0
     username = current_user.get("username") if current_user else None
 
+    # GESTION DES COMMANDES SPÉCIALES
+    if user_message.startswith("/learn"):
+        from backend.long_term_memory import long_term_memory
+        bot_response = long_term_memory.force_learn(user_message)
+        
+        # On retourne une réponse courte sans passer par le LLM
+        return ChatResponse(
+            user_message=user_message,
+            bot_response=bot_response,
+            history=get_history_for_session(user_id, conv_id)
+        )
+
     # Récupérer l'historique spécifique à cet utilisateur et cette session
     current_history = get_history_for_session(user_id, conv_id)
 
@@ -293,6 +305,10 @@ async def health_check():
         "model": OLLAMA_MODEL,
         "knowledge_base": {"available": True, "documents_count": len(kb.docs)}
     }
+
+@app.get("/.well-known/appspecific/com.chrome.devtools.json")
+async def chrome_devtools_silence():
+    return {}
 
 # -----------------------------------------------------------------------------
 # MAIN

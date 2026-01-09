@@ -1,5 +1,21 @@
 from pydantic import BaseModel, EmailStr
-from typing import Optional
+from typing import Optional, List
+
+class ConversationMessage(BaseModel):
+    role: str
+    content: str
+    ts: Optional[float] = None
+    
+    class Config:
+        extra = "ignore"
+
+class ConversationSync(BaseModel):
+    id: str
+    title: str
+    messages: List[ConversationMessage]
+    
+    class Config:
+        extra = "ignore"
 
 class UserCreate(BaseModel):
     username: str

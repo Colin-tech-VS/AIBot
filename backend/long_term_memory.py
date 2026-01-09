@@ -108,28 +108,54 @@ class LongTermMemory:
         if any(kw in user_lower for kw in info_keywords):
             self._add_custom_knowledge(user_message)
 
+    def force_learn(self, message: str):
+        """Force l'apprentissage manuel d'une information via la commande /learn."""
+        content = message.replace("/learn", "").strip()
+        if not content:
+            return "Contenu vide pour l'apprentissage."
+            
+        self._add_custom_knowledge(content)
+        
+        print(f"[IA APPREND] 🎯 APPRENTISSAGE MANUEL FORCÉ : '{content}'")
+        print(f"   -> Méthode : Commande utilisateur /learn")
+        print(f"   -> Durée : Permanent")
+        
+        return f"J'ai bien appris et mémorisé : '{content}'"
+
     def _add_learned_fact(self, fact: Dict):
         """Ajoute un fait appris à la base de connaissances."""
         self.learned_facts.append(fact)
         # Garder seulement les 100 derniers faits pour éviter la surcharge
         self.learned_facts = self.learned_facts[-100:]
         self._save_json(self.learned_facts_file, self.learned_facts)
+        
+        content = fact.get("content") or fact.get("user_input", "un fait")
+        print(f"[IA APPREND] 💡 NOUVEAU FAIT RECONNU : '{content}'")
+        print(f"   -> Méthode : Analyse de correction/contexte utilisateur")
+        print(f"   -> Durée : Permanent (Mémoire long terme)")
 
     def _update_user_preference(self, message: str):
         """Met à jour les préférences utilisateur."""
         # Extraction simple de préférence
         message_lower = message.lower()
+        pref_type = "générale"
 
         # Pilote préféré
         if "pilote" in message_lower or "driver" in message_lower:
             self.user_preferences["favorite_driver"] = message
+            pref_type = "pilote préféré"
 
         # Équipe préférée
         if "équipe" in message_lower or "team" in message_lower or "écurie" in message_lower:
             self.user_preferences["favorite_team"] = message
+            pref_type = "écurie préférée"
 
         self.user_preferences["last_updated"] = datetime.now().isoformat()
         self._save_json(self.user_preferences_file, self.user_preferences)
+        
+        print(f"[IA APPREND] ❤️ PRÉFÉRENCE DÉTECTÉE : {pref_type} -> '{message}'")
+        print(f"   -> Méthode : Détection de mots-clés de préférence")
+        print(f"   -> Durée : Permanent (Jusqu'à modification par l'utilisateur)")
 
     def _add_custom_knowledge(self, message: str):
         """Ajoute une connaissance personnalisée fournie par l'utilisateur."""
@@ -139,6 +165,10 @@ class LongTermMemory:
             "timestamp": datetime.now().isoformat()
         }
         self._save_json(self.custom_knowledge_file, self.custom_knowledge)
+        
+        print(f"[IA APPREND] 📚 NOUVELLE CONNAISSANCE : '{message}'")
+        print(f"   -> Méthode : Extraction d'information déclarative")
+        print(f"   -> Durée : Permanent (Base de connaissances personnalisée)")
 
     def add_learned_fact_from_llm(self, fact_text: str):
         """Ajoute un fait appris via le LLM."""
@@ -149,6 +179,10 @@ class LongTermMemory:
         })
         self.learned_facts = self.learned_facts[-200:] # Plus de place pour les faits LLM
         self._save_json(self.learned_facts_file, self.learned_facts)
+        
+        print(f"[IA APPREND] 🤖 ANALYSE LLM : Fait extrait : '{fact_text}'")
+        print(f"   -> Méthode : Intelligence Artificielle (Extraction sémantique)")
+        print(f"   -> Durée : Long terme")
 
     def update_preferences_from_llm(self, prefs: Dict):
         """Met à jour les préférences via des données structurées LLM."""
@@ -156,6 +190,11 @@ class LongTermMemory:
             self.user_preferences[k] = v
         self.user_preferences["last_updated"] = datetime.now().isoformat()
         self._save_json(self.user_preferences_file, self.user_preferences)
+        
+        for k, v in prefs.items():
+            print(f"[IA APPREND] ⚙️ RÉGLAGE UTILISATEUR (via LLM) : {k} = '{v}'")
+        print(f"   -> Méthode : Synthèse intelligente des préférences")
+        print(f"   -> Durée : Permanent")
 
     def get_relevant_context(self, current_question: str, max_items: int = 5) -> str:
         """

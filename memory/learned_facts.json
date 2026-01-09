@@ -44,5 +44,30 @@
     "type": "llm_extracted",
     "content": "Le dernier titre de champion de Formule 1 a été remporté en 2022",
     "timestamp": "2026-01-09T16:30:39.869045"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Colin est un étudiant Epitech",
+    "timestamp": "2026-01-09T16:34:29.545538"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Il aime discuter de Formule 1",
+    "timestamp": "2026-01-09T16:34:29.545538"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "{\"facts\": [\"Une F1 n'est pas équivalente à un kart\", \"Un kart est un véhicule légèrement plus lourd et moins puissant que une F1\"], \"preferences\": {\"None\"}}",
+    "timestamp": "2026-01-09T16:39:23.793749"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Colin utilise désormais son nom complet",
+    "timestamp": "2026-01-09T16:42:55.564703"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Colin a mis à jour ses informations",
+    "timestamp": "2026-01-09T16:42:55.565226"
   }
 ]

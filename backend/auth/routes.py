@@ -1,7 +1,8 @@
-from fastapi import APIRouter, HTTPException, Depends, status, Response, Request
+from fastapi import APIRouter, HTTPException, Depends, status, Response, Request, Body
 from backend.auth.database import get_db_connection
 from backend.auth.security import get_password_hash, verify_password, create_access_token, decode_access_token
-from backend.auth.models import UserCreate, UserLogin, Token, UserResponse, ChangePassword, UserDetailResponse
+from backend.auth.models import UserCreate, UserLogin, Token, UserResponse, ChangePassword, UserDetailResponse, ConversationSync
+from typing import List
 import sqlite3
 import json
 
@@ -139,22 +140,24 @@ def logout(response: Response):
     return {"message": "Déconnexion réussie"}
 
 @router.post("/sync_conversations")
-def sync_conversations(request_data: list, user=Depends(get_current_user)):
+def sync_conversations(request_data: List[ConversationSync] = Body(...), user=Depends(get_current_user)):
     if not user:
         raise HTTPException(status_code=401, detail="Non connecté")
     
-    if not isinstance(request_data, list):
-        return {"status": "ignored", "message": "Format invalide"}
-
     conn = get_db_connection()
     cursor = conn.cursor()
     
     try:
         for conv in request_data:
-            # Vérification basique des champs requis
-            if not all(k in conv for k in ("id", "title", "messages")):
-                continue
-                
+            # Pydantic a déjà validé la structure
+            # Utilisation de model_dump() pour Pydantic v2, fallback sur dict() si v1
+            messages_list = []
+            for m in conv.messages:
+                if hasattr(m, "model_dump"):
+                    messages_list.append(m.model_dump())
+                else:
+                    messages_list.append(m.dict())
+                    
             cursor.execute(
                 """
                 INSERT INTO user_conversations (id, user_id, title, messages_json)
@@ -164,11 +167,12 @@ def sync_conversations(request_data: list, user=Depends(get_current_user)):
                 messages_json = excluded.messages_json,
                 updated_at = CURRENT_TIMESTAMP
                 """,
-                (conv["id"], user["user_id"], conv["title"], json.dumps(conv["messages"]))
+                (conv.id, user["user_id"], conv.title, json.dumps(messages_list))
             )
         conn.commit()
         return {"status": "success", "synced": len(request_data)}
     except Exception as e:
+        conn.rollback()
         raise HTTPException(status_code=500, detail=str(e))
     finally:
         conn.close()

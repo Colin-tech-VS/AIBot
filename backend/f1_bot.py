@@ -951,23 +951,13 @@ def _answer_f1_question_internal(user_question: str, history=None, rag_only: Opt
                 # Formatter l'historique complet pour le LLM
                 history_text = _format_history(history)
 
-                # Construire un prompt qui demande au LLM d'analyser l'historique et répondre
-                prompt = f"""Tu es un assistant expert F1 intelligent. Analyse l'historique de conversation et réponds de manière naturelle.
-
-HISTORIQUE DE CONVERSATION :
-{history_text}
-
-QUESTION ACTUELLE : {user_question}
-
-INSTRUCTIONS :
-- Si l'utilisateur demande "ma première question c'était quoi ?" : Identifie la toute première question User dans l'historique et cite-la directement
-- Si l'utilisateur demande "réponds à ma première question" : Trouve la première question ET réponds-y maintenant de manière complète
-- Si l'utilisateur pose une question contextuelle sur une réponse précédente : Réponds en utilisant le contexte de l'historique
-- Si l'utilisateur demande des calculs ou questions générales : Réponds directement
-- IMPORTANT : Sois naturel, conversationnel et précis. Ne liste pas bêtement l'historique, COMPRENDS la demande et réponds intelligemment
-- Réponds TOUJOURS en français, de manière concise mais complète
-
-Analyse la question et réponds maintenant :"""
+                # Utiliser le builder optimisé pour inclure la mémoire long terme
+                prompt = OptimizedPromptBuilder.build_f1_question(
+                    question=user_question,
+                    conversation_history=history_text,
+                    long_term_context=lt_context,
+                    username=username
+                )
 
                 response = call_ollama(prompt)
                 if response and not response.startswith("[ERREUR"):
@@ -986,22 +976,12 @@ Analyse la question et réponds maintenant :"""
                 # Utiliser le contexte pour répondre intelligemment
                 history_text = _format_history(history)
 
-                prompt = f"""Tu es un assistant F1 conversationnel. L'utilisateur répond à ta question précédente avec une réponse courte.
-
-HISTORIQUE DE CONVERSATION :
-{history_text}
-
-RÉPONSE COURTE DE L'UTILISATEUR : {user_question}
-
-INSTRUCTIONS :
-- Analyse le contexte : qu'est-ce que TU as demandé/proposé juste avant ?
-- Si tu as proposé plusieurs sujets (GP, classements, pilote), réponds selon ce que l'utilisateur choisit
-- Si l'utilisateur dit "oui", continue sur le sujet que tu as proposé
-- Si l'utilisateur dit "non", propose autre chose
-- Sois naturel et enthousiaste comme un pote qui parle de F1
-- Réponds en français, de manière conversationnelle
-
-Réponds maintenant en continuant la conversation naturellement :"""
+                prompt = OptimizedPromptBuilder.build_f1_question(
+                    question=user_question,
+                    conversation_history=history_text,
+                    long_term_context=lt_context,
+                    username=username
+                )
 
                 response = call_ollama(prompt)
                 if response and not response.startswith("[ERREUR"):
