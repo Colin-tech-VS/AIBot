@@ -219,10 +219,20 @@ HEADERS = {
 # Scraping helpers
 # -----------------------------------
 def fetch_url(url: str, timeout: int = 8) -> str:
-    """Récupère le contenu HTML d'une URL avec gestion d'erreur."""
-    resp = requests.get(url, headers=HEADERS, timeout=timeout)
-    resp.raise_for_status()
-    return resp.text
+    """Récupère le contenu HTML d'une URL avec gestion d'erreur gracieuse."""
+    try:
+        resp = requests.get(url, headers=HEADERS, timeout=timeout)
+        resp.raise_for_status()
+        return resp.text
+    except requests.exceptions.HTTPError as e:
+        # Erreur HTTP - retourner chaîne vide silencieusement
+        return ""
+    except requests.exceptions.Timeout:
+        # Timeout - retourner silencieusement
+        return ""
+    except Exception:
+        # Autres erreurs - retourner silencieusement
+        return ""
 
 
 def extract_main_text(html: str, max_chars: int = 1500) -> str:
@@ -259,6 +269,8 @@ def scrape_actuf1() -> str:
     """Scrape ActuF1 - actualités F1 spécialisées."""
     try:
         html = fetch_url("https://www.actuf1.com/", timeout=8)
+        if not html:
+            return ""
         soup = BeautifulSoup(html, "html.parser")
         # Chercher les articles principaux
         articles = soup.find_all("article")[:3]  # Top 3 articles
@@ -269,8 +281,8 @@ def scrape_actuf1() -> str:
             if title and summary:
                 contents.append(f"{title.get_text().strip()}: {summary.get_text().strip()}")
         return " | ".join(contents) if contents else extract_main_text(html, 600)
-    except Exception as e:
-        print(f"[WARN] ActuF1 scraping failed: {e}")
+    except Exception:
+        # Silencieux - ActuF1 est instable
         return ""
 
 
@@ -278,6 +290,8 @@ def scrape_standf1() -> str:
     """Scrape StandF1 - classements et statistiques."""
     try:
         html = fetch_url("https://www.standf1.com/", timeout=8)
+        if not html:
+            return ""
         soup = BeautifulSoup(html, "html.parser")
         # Extraire les tableaux de classements
         tables = soup.find_all("table")[:1]
@@ -286,8 +300,7 @@ def scrape_standf1() -> str:
             data = " | ".join([" ".join([td.get_text().strip() for td in tr.find_all(["td", "th"])]) for tr in rows])
             return data[:600] if data else extract_main_text(html, 600)
         return extract_main_text(html, 600)
-    except Exception as e:
-        print(f"[WARN] StandF1 scraping failed: {e}")
+    except Exception:
         return ""
 
 
@@ -295,6 +308,8 @@ def scrape_fia_calendar() -> str:
     """Scrape FIA - Calendrier 2025."""
     try:
         html = fetch_url("https://www.fia.com/events/fia-formula-one-world-championship/season-2025/2025-fia-formula-one-world-championship", timeout=10)
+        if not html:
+            return ""
         soup = BeautifulSoup(html, "html.parser")
         # Chercher les événements
         events = soup.find_all("div", class_=lambda x: x and "event" in x.lower())[:5]
@@ -306,8 +321,7 @@ def scrape_fia_calendar() -> str:
                     contents.append(text[:100])
             return " | ".join(contents)[:600] if contents else extract_main_text(html, 600)
         return extract_main_text(html, 600)
-    except Exception as e:
-        print(f"[WARN] FIA Calendar scraping failed: {e}")
+    except Exception:
         return ""
 
 
@@ -315,14 +329,15 @@ def scrape_fia_regulations() -> str:
     """Scrape FIA - Régulations F1."""
     try:
         html = fetch_url("https://www.fia.com/regulation/category/110", timeout=10)
+        if not html:
+            return ""
         soup = BeautifulSoup(html, "html.parser")
         # Extraire les régulations
         regs = soup.find_all("a", class_=lambda x: x and "regulation" in x.lower())[:5]
         if regs:
             return " | ".join([reg.get_text().strip()[:80] for reg in regs])[:600]
         return extract_main_text(html, 600)
-    except Exception as e:
-        print(f"[WARN] FIA Regulations scraping failed: {e}")
+    except Exception:
         return ""
 
 
@@ -510,18 +525,40 @@ ERGAST_BASE = "http://ergast.com/api/f1"
 def get_last_race_results() -> Dict:
     url = f"{ERGAST_BASE}/current/last/results.json"
     try:
-        return requests.get(url, timeout=8).json()
-    except Exception as exc:  # pragma: no cover - réseau
-        print(f"[WARN] Ergast results error: {exc}")
+        resp = requests.get(url, timeout=8)
+        resp.raise_for_status()
+        return resp.json()
+    except requests.exceptions.HTTPError:
+        # Erreur HTTP silencieuse (403, 503, etc.)
+        return {}
+    except requests.exceptions.Timeout:
+        # Timeout silencieux
+        return {}
+    except ValueError:
+        # JSON decode error - silencieux
+        return {}
+    except Exception:
+        # Autres erreurs - silencieuses
         return {}
 
 
 def get_current_standings() -> Dict:
     url = f"{ERGAST_BASE}/current/driverStandings.json"
     try:
-        return requests.get(url, timeout=8).json()
-    except Exception as exc:  # pragma: no cover - réseau
-        print(f"[WARN] Ergast standings error: {exc}")
+        resp = requests.get(url, timeout=8)
+        resp.raise_for_status()
+        return resp.json()
+    except requests.exceptions.HTTPError:
+        # Erreur HTTP silencieuse (403, 503, etc.)
+        return {}
+    except requests.exceptions.Timeout:
+        # Timeout silencieux
+        return {}
+    except ValueError:
+        # JSON decode error - silencieux
+        return {}
+    except Exception:
+        # Autres erreurs - silencieuses
         return {}
 
 
