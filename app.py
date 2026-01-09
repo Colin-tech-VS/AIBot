@@ -17,6 +17,10 @@ from pathlib import Path
 
 from backend.f1_bot import answer_f1_question
 from backend.knowledge_base import get_knowledge_base, reload_knowledge_base, KnowledgeDoc
+from backend.optimized_prompts import ConversationMemory
+
+# Nouveaux routers (architecture améliorée)
+from app_new.routers import chat_router, session_router, prompt_router
 
 # Configuration
 app = FastAPI(title="Chatbot Ollama Local (Multiplateforme)")
@@ -91,11 +95,22 @@ class ChatResponse(BaseModel):
     history: List[HistoryItem]
 
 # -----------------------------------------------------------------------------
-# HISTORIQUE
+# HISTORIQUE & MÉMOIRE CONVERSATIONNELLE
 # -----------------------------------------------------------------------------
 
 chat_history: List[HistoryItem] = []
 MAX_HISTORY = 6  # 3 derniers échanges max
+
+# Mémoire conversationnelle persistante
+conversation_memory = ConversationMemory(max_history=10, memory_file="conversation_memory.json")
+
+# -----------------------------------------------------------------------------
+# ENREGISTREMENT DES NOUVEAUX ROUTERS (ARCHITECTURE AMÉLIORÉE)
+# -----------------------------------------------------------------------------
+# Ces routers ajoutent des fonctionnalités sans casser l'ancien système
+app.include_router(chat_router.router)      # /api/chat/v2 - Chat avec sessions
+app.include_router(session_router.router)   # /session/* - Gestion sessions
+app.include_router(prompt_router.router)    # /prompt/* - Debug prompts
 
 # -----------------------------------------------------------------------------
 # OLLAMA API CALL
@@ -141,11 +156,14 @@ async def chat(chat_msg: ChatMessage):
     except Exception as exc:
         return JSONResponse(status_code=500, content={"detail": f"Erreur backend: {exc}"})
 
-    # Historique
+    # Historique en mémoire (session)
     chat_history.append(HistoryItem(role="user", content=user_message))
     chat_history.append(HistoryItem(role="assistant", content=bot_response))
     if len(chat_history) > MAX_HISTORY:
         chat_history[:] = chat_history[-MAX_HISTORY:]
+
+    # Mémoire persistante (fichier JSON)
+    conversation_memory.add_to_memory(user_message, bot_response)
 
     return ChatResponse(
         user_message=user_message,
@@ -160,7 +178,9 @@ async def get_history():
 @app.post("/clear_history")
 async def clear_history():
     chat_history.clear()
-    return {"message": "Historique effacé", "history": chat_history}
+    conversation_memory.history.clear()
+    conversation_memory.save_memory()
+    return {"message": "Historique effacé (session et mémoire persistante)", "history": chat_history}
 
 # -----------------------------------------------------------------------------
 # Knowledge Base Endpoints

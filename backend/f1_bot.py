@@ -15,6 +15,12 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 # Import Knowledge Base
 from backend.knowledge_base import get_knowledge_base
 
+# Import Optimized Prompt Builder
+from backend.optimized_prompts import OptimizedPromptBuilder
+
+# Import Long Term Memory
+from backend.long_term_memory import long_term_memory
+
 # Import CSV parser
 import csv
 
@@ -193,17 +199,15 @@ def find_longest_circuit() -> Optional[Dict]:
 # -----------------------------------
 # News Sources
 # -----------------------------------
+# Sources recommandées
 NEWS_SOURCES = [
-    "https://www.motorsport.com/f1/news/",
-    "https://www.autosport.com/f1/news/",
-    "https://www.actuf1.com/",  # Actualités F1
-    "https://www.standf1.com/",  # Classements/Stats
-]
-
-# Sources complémentaires (officiel FIA)
-FIA_SOURCES = [
-    "https://www.fia.com/events/fia-formula-one-world-championship/season-2025/2025-fia-formula-one-world-championship",  # Calendrier 2025
-    "https://www.fia.com/regulation/category/110",  # Régulations
+    "https://openf1.org/",  # OpenF1 API
+    "https://api.jolpi.ca/ergast/f1/",  # Jolpica API
+    "https://en.wikipedia.org/w/api.php",  # Wikimedia API
+    "https://query.wikidata.org/",  # Wikidata SPARQL
+    "https://dumps.wikimedia.org/",  # Wikimedia dumps
+    "https://en.wikinews.org/wiki/Category:Formula_One",  # Wikinews EN
+    "https://fr.wikinews.org/wiki/Cat%C3%A9gorie:Formule_1",  # Wikinews FR
 ]
 
 HEADERS = {
@@ -291,41 +295,6 @@ def scrape_standf1() -> str:
         return ""
 
 
-def scrape_fia_calendar() -> str:
-    """Scrape FIA - Calendrier 2025."""
-    try:
-        html = fetch_url("https://www.fia.com/events/fia-formula-one-world-championship/season-2025/2025-fia-formula-one-world-championship", timeout=10)
-        soup = BeautifulSoup(html, "html.parser")
-        # Chercher les événements
-        events = soup.find_all("div", class_=lambda x: x and "event" in x.lower())[:5]
-        if events:
-            contents = []
-            for event in events:
-                text = event.get_text().strip()
-                if text:
-                    contents.append(text[:100])
-            return " | ".join(contents)[:600] if contents else extract_main_text(html, 600)
-        return extract_main_text(html, 600)
-    except Exception as e:
-        print(f"[WARN] FIA Calendar scraping failed: {e}")
-        return ""
-
-
-def scrape_fia_regulations() -> str:
-    """Scrape FIA - Régulations F1."""
-    try:
-        html = fetch_url("https://www.fia.com/regulation/category/110", timeout=10)
-        soup = BeautifulSoup(html, "html.parser")
-        # Extraire les régulations
-        regs = soup.find_all("a", class_=lambda x: x and "regulation" in x.lower())[:5]
-        if regs:
-            return " | ".join([reg.get_text().strip()[:80] for reg in regs])[:600]
-        return extract_main_text(html, 600)
-    except Exception as e:
-        print(f"[WARN] FIA Regulations scraping failed: {e}")
-        return ""
-
-
 def get_news_summaries(limit: int = 1) -> List[NewsItem]:
     """Récupère et valide jusqu'à `limit` sources récentes (mix de sources avec liens).
     
@@ -349,7 +318,6 @@ def get_news_summaries(limit: int = 1) -> List[NewsItem]:
         ("Autosport.com", extract_main_text, "https://www.autosport.com/f1/news/", 6),
         ("ActuF1", scrape_actuf1, None, 8),
         ("StandF1", scrape_standf1, None, 8),
-        ("FIA Calendrier", scrape_fia_calendar, None, 10),
     ]
     
     # Paralléliser les appels avec ThreadPoolExecutor
@@ -743,14 +711,33 @@ def _translate_to_french(text: str) -> str:
 
 
 def _is_f1_question(q: str) -> bool:
+    """Détecte si la question concerne la F1 de manière stricte."""
     ql = q.lower()
-    keywords = [
+    f1_keywords = [
         "f1", "formula 1", "formule 1", "grand prix", "gp",
-        "verstappen", "hamilton", "leclerc", "alonso", "perez",
-        "mercedes", "ferrari", "red bull", "mclaren", "aston martin",
-        "circuit", "piste", "champion", "victoire", "course", "pilot"
+        "verstappen", "hamilton", "leclerc", "alonso", "perez", "sainz", "norris", "piastri",
+        "mercedes", "ferrari", "red bull", "mclaren", "aston martin", "alpine", "williams", "haas", "sauber",
+        "circuit", "piste", "champion", "victoire", "course", "pilote", "constructeur",
+        "pole position", "podium", "drs", "kers", "qualif", "essai", "essais libres",
+        "monza", "spa", "monaco", "silverstone", "imola", "suzuka", "interlagos",
+        "gagn", "gagne", "gangé", "perdu", "perd", "classement", "position", "résultat"
     ]
-    return any(k in ql for k in keywords)
+    return any(k in ql for k in f1_keywords)
+
+
+def _is_general_question(q: str) -> bool:
+    """Détecte si la question est une question générale (non-F1)."""
+    ql = q.lower()
+    general_indicators = [
+        "qui est", "c'est quoi", "qu'est-ce que", "comment",
+        "pourquoi", "où", "quand", "définition", "expliquer",
+        "que signifie", "quel est", "quelle est", "calcule",
+        "combien font", "bonjour", "salut", "ça va", "tu vas bien",
+        "ton nom", "qui es-tu", "raconte une blague", "aide-moi"
+    ]
+    # Question générale si présence d'indicateurs généraux
+    # On autorise même si il y a des mots F1 pour être plus souple sur la conversation
+    return any(ind in ql for ind in general_indicators) or len(ql.split()) < 4
 
 
 def _is_circuit_question(question: str) -> bool:
@@ -805,36 +792,137 @@ def _format_history(history) -> str:
 
 
 def answer_f1_question(user_question: str, history=None, rag_only: Optional[bool] = None) -> str:
+    """Entry point for answering questions with long term memory storage."""
+    response = _answer_f1_question_internal(user_question, history, rag_only)
+    
+    # Stocker dans la mémoire long terme
+    if response and not response.startswith("❌") and not response.startswith("[ERREUR"):
+        long_term_memory.store_conversation(user_question, response)
+        
+    return response
+
+
+def _answer_f1_question_internal(user_question: str, history=None, rag_only: Optional[bool] = None) -> str:
     """
-    Pipeline optimisé avec logique adaptée au type de question :
-    
+    Pipeline optimisé avec cascade de sources stricte:
+
     QUESTIONS F1:
-    1. Chercher actualités + stats Ergast F1
-    2. Si pas de réponse, chercher dans KB
-    3. Si toujours rien, dire "Je n'ai pas trouvé"
-    
-    QUESTIONS GÉNÉRALES:
+    1. Chercher dans Knowledge Base (prioritaire)
+    2. Si pas de réponse pertinente: OpenF1 API
+    3. Si pas de réponse: Jolpica/Ergast API
+    4. Si pas de réponse: Wikipedia/Wikidata API
+    5. Si pas de réponse: Wikinews
+    6. Si toujours rien: "Je n'ai pas trouvé de réponse"
+
+    QUESTIONS GÉNÉRALES (non-F1):
     1. Chercher dans Knowledge Base
-    2. Si KB vide, chercher via web search
-    3. Si toujours rien, dire "Je n'ai pas trouvé"
+    2. Si pas de réponse: "Cette question n'est pas liée à la F1. Je suis spécialisé en F1."
+
+    QUESTIONS HORS SCOPE:
+    - Refuser poliment et rediriger vers F1
     """
     try:
         # Nettoyer la question
         user_question = user_question.strip()
         if not user_question:
             return "Veuillez poser une question."
-        
+
         print(f"[INFO] Question reçue: {user_question}")
-        
+
+        # Récupérer le contexte de la mémoire long terme
+        lt_context = long_term_memory.get_relevant_context(user_question)
+        if lt_context:
+            print("[INFO] Contexte long terme récupéré")
+
+        # CAS SPÉCIAL : Question sur la date du jour
+        q_lower = user_question.lower()
+        if any(keyword in q_lower for keyword in ["date", "aujourd'hui", "quel jour", "quelle date", "jour sommes"]):
+            current_date = OptimizedPromptBuilder.get_current_date()
+            return f"On est le **{current_date}** ! 📅 Tu veux savoir ce qui se passe en F1 en ce moment ? 🏎️"
+
+        # CAS SPÉCIAL : Question faisant référence à l'historique
+        # Détecte si la question fait référence au contexte/historique (tolérant aux fautes de frappe)
+        history_keywords = [
+            "première question", "premiere question", "prmeière", "prmeiere", "1ere question", "1ère question",
+            "question précédente", "question precedente", "dernière question", "dernier question",
+            "avant", "tout à l'heure", "tout a l'heure", "ma question", "mes question",
+            "j'ai demandé", "j'ai demande", "jai demandé", "jai demande",
+            "conversation", "historique", "contexte",
+            "répond", "repond", "répondre à", "repondre a", "répondre a", "reponds",
+            "c'était quoi", "cetait quoi", "c'etait quoi", "cétait quoi"
+        ]
+
+        if any(keyword in q_lower for keyword in history_keywords):
+            if history and len(history) > 0:
+                # Formatter l'historique complet pour le LLM
+                history_text = _format_history(history)
+
+                # Construire un prompt qui demande au LLM d'analyser l'historique et répondre
+                prompt = f"""Tu es un assistant expert F1 intelligent. Analyse l'historique de conversation et réponds de manière naturelle.
+
+HISTORIQUE DE CONVERSATION :
+{history_text}
+
+QUESTION ACTUELLE : {user_question}
+
+INSTRUCTIONS :
+- Si l'utilisateur demande "ma première question c'était quoi ?" : Identifie la toute première question User dans l'historique et cite-la directement
+- Si l'utilisateur demande "réponds à ma première question" : Trouve la première question ET réponds-y maintenant de manière complète
+- Si l'utilisateur pose une question contextuelle sur une réponse précédente : Réponds en utilisant le contexte de l'historique
+- Si l'utilisateur demande des calculs ou questions générales : Réponds directement
+- IMPORTANT : Sois naturel, conversationnel et précis. Ne liste pas bêtement l'historique, COMPRENDS la demande et réponds intelligemment
+- Réponds TOUJOURS en français, de manière concise mais complète
+
+Analyse la question et réponds maintenant :"""
+
+                response = call_ollama(prompt)
+                if response and not response.startswith("[ERREUR"):
+                    return response
+
+            return "On vient de commencer à discuter, j'ai pas encore d'historique ! 😊 C'est quoi ta question sur la F1 ? 🏎️"
+
+        # CAS SPÉCIAL : Réponses contextuelles courtes (oui, non, ok, etc.)
+        # Détecte si c'est une réponse courte qui nécessite le contexte précédent
+        short_responses = ["oui", "non", "ok", "d'accord", "daccord", "pourquoi", "pourquoi pas",
+                          "comment", "quand", "où", "qui", "quoi", "lequel", "laquelle",
+                          "raconte", "explique", "dis moi", "dis-moi", "parle moi", "parle-moi"]
+
+        if len(q_lower.split()) <= 3 and any(resp in q_lower for resp in short_responses):
+            if history and len(history) > 0:
+                # Utiliser le contexte pour répondre intelligemment
+                history_text = _format_history(history)
+
+                prompt = f"""Tu es un assistant F1 conversationnel. L'utilisateur répond à ta question précédente avec une réponse courte.
+
+HISTORIQUE DE CONVERSATION :
+{history_text}
+
+RÉPONSE COURTE DE L'UTILISATEUR : {user_question}
+
+INSTRUCTIONS :
+- Analyse le contexte : qu'est-ce que TU as demandé/proposé juste avant ?
+- Si tu as proposé plusieurs sujets (GP, classements, pilote), réponds selon ce que l'utilisateur choisit
+- Si l'utilisateur dit "oui", continue sur le sujet que tu as proposé
+- Si l'utilisateur dit "non", propose autre chose
+- Sois naturel et enthousiaste comme un pote qui parle de F1
+- Réponds en français, de manière conversationnelle
+
+Réponds maintenant en continuant la conversation naturellement :"""
+
+                response = call_ollama(prompt)
+                if response and not response.startswith("[ERREUR"):
+                    return response
+
         # Déterminer le type de question et formatter l'historique
         rag_mode = RAG_ONLY if rag_only is None else rag_only
         is_f1 = _is_f1_question(user_question)
+        is_general = _is_general_question(user_question)
         is_circuit = _is_circuit_question(user_question)
         history_text = _format_history(history)
-        print(f"[INFO] Question F1? {is_f1}, Circuit? {is_circuit}, RAG_ONLY? {rag_mode}")
-        
+        print(f"[INFO] F1? {is_f1}, Générale? {is_general}, Circuit? {is_circuit}")
+
         # ═══════════════════════════════════════════════════════════════
-        # CAS 0 : QUESTIONS SUR CIRCUITS - Chercher dans CSV
+        # CAS 0 : QUESTIONS SUR CIRCUITS - Chercher dans CSV (prioritaire pour circuits)
         # ═══════════════════════════════════════════════════════════════
         if is_circuit:
             print("[INFO] Recherche circuit CSV")
@@ -848,14 +936,13 @@ def answer_f1_question(user_question: str, history=None, rag_only: Optional[bool
                         f"🏎️ Le circuit le plus long en F1 est **{circuit['nom']}** "
                         f"({circuit['lieu']}) avec **{circuit['longueur']}**. {circuit['info']}"
                     )
-                # Si pour une raison quelconque non trouvé, on continue vers recherche générale F1
 
             # Recherche générale de circuit
             query = (
                 user_question
                 .replace('circuit', '')
                 .replace('piste', '')
-                .replace('long', '')  # éviter faux positifs
+                .replace('long', '')
                 .strip()
             )
             circuit = search_circuit(query)
@@ -878,128 +965,317 @@ def answer_f1_question(user_question: str, history=None, rag_only: Optional[bool
 
                 detail_text = " — ".join(details) if details else ""
                 return f"🏎️ {name} {detail_text}"
-        
+
         # ═══════════════════════════════════════════════════════════════
-        # CAS 1 : QUESTIONS F1 - Chercher actualités + Ergast en priorité
+        # CAS 1 : QUESTIONS F1 - CASCADE DE SOURCES
         # ═══════════════════════════════════════════════════════════════
         if is_f1:
-            print("[INFO] Recherche F1 (actualités + Ergast)")
+            print("[INFO] Pipeline F1 avec cascade de sources")
 
-            # Cas spécial: question sur le dernier / perdant du GP
-            ql = user_question.lower()
-            if any(k in ql for k in ["perdant", "dernier", "last", "dernier gp", "dernier grand prix"]):
-                results, standings = _get_ergast_data()
-                last_res = get_last_position_result(results)
-                if last_res:
-                    return f"🏎️ Dernier classé du dernier GP : {last_res}"
-                # sinon on continue avec le flux normal
-
-            # RAG strict: pas de scraping news si activé
-            news_items = [] if rag_mode else get_news_summaries(limit=2)
-            results, standings = _get_ergast_data()
-            
-            has_news = news_items and any(len(item.content) > 30 for item in news_items)
-            has_ergast = results and standings
-            
-            if has_news or has_ergast:
-                fetched_at = ""
-                if _news_cache_time:
-                    fetched_at = time.strftime(" (récupéré le %Y-%m-%d %H:%M)", time.localtime(_news_cache_time))
-
-                news_summary = (
-                    "\n\n".join([f"🔗 {item.source}{fetched_at}\n{item.content}" for item in news_items])
-                    if has_news
-                    else ""
-                )
-                ergast_block = format_ergast_data(results, standings) if has_ergast else ""
-                
-                # Build prompt et appeler Ollama
-                prompt = build_prompt(news_summary, ergast_block, user_question, history_text)
-                response = call_ollama(prompt)
-                
-                try:
-                    if _is_probably_english(response):
-                        response = _translate_to_french(response)
-                except Exception as _:
-                    pass
-                
-                # Vérifier si Ollama a un vrai résultat
-                low = response.lower()
-                if not (low.startswith("[erreur") or "ollama a dépassé le timeout" in low or "ollama introuvable" in low):
-                    return f"🏎️ {response}"
-            
-            # Fallback F1: chercher dans KB si actualités insuffisantes
-            print("[INFO] Actualités insuffisantes, cherche dans KB")
+            # ÉTAPE 1: Knowledge Base (prioritaire) - RECHERCHE EXHAUSTIVE
+            print("[INFO] Étape 1/5: Recherche Knowledge Base (exhaustive)")
             kb = get_knowledge_base()
-            kb_results = kb.search(user_question, top_k=1)
-            if kb_results and _is_kb_result_relevant(user_question, kb_results[0]):
-                return f"📚 {_clamp(kb_results[0], 600)}"
-            
-            print("[INFO] ❌ Aucune réponse F1 trouvée")
-            return "Je n'ai pas trouvé de réponse à cette question."
-        
+
+            # Rechercher dans TOUS les documents de la KB (pas seulement top 2)
+            kb_results = kb.search(user_question, top_k=10)  # Augmenté à 10 pour plus de contexte
+
+            if kb_results and len(kb_results) > 0:
+                # Combiner tous les résultats pertinents
+                kb_content = "\n\n".join(kb_results)
+                print(f"[INFO] KB: {len(kb_results)} résultats trouvés")
+
+                # Ne pas filtrer strictement - laisser le LLM décider
+                prompt = OptimizedPromptBuilder.build_f1_question(
+                    question=user_question,
+                    kb_content=kb_content[:3000],  # Limiter à 3000 chars pour éviter overflow
+                    conversation_history=history_text,
+                    long_term_context=lt_context
+                )
+                response = call_ollama(prompt)
+                if response and not response.startswith("[ERREUR") and len(response) > 50:
+                    print("[INFO] ✓ Réponse trouvée dans Knowledge Base")
+                    return response
+
+            print("[INFO] KB non pertinente ou vide, passage à OpenF1 API")
+
+            # ÉTAPE 2: OpenF1 API (données temps réel + historique) - EXHAUSTIF
+            print("[INFO] Étape 2/5: Tentative OpenF1 API (exhaustive)")
+            openf1_content = []
+            try:
+                # Récupérer plusieurs endpoints OpenF1
+                endpoints = [
+                    ("sessions", {"limit": 5}),
+                    ("drivers", {"limit": 10}),
+                    ("meetings", {"limit": 3}),
+                ]
+
+                for endpoint, params in endpoints:
+                    try:
+                        data = fetch_openf1_data(endpoint, params=params)
+                        if data and isinstance(data, list) and len(data) > 0:
+                            openf1_content.append(f"OpenF1 {endpoint}: {str(data)[:500]}")
+                            print(f"[INFO] ✓ OpenF1 {endpoint}: {len(data)} items")
+                    except Exception as e:
+                        print(f"[WARN] OpenF1 {endpoint} échouée: {e}")
+
+                if openf1_content:
+                    combined_openf1 = "\n".join(openf1_content)
+                    prompt = OptimizedPromptBuilder.build_f1_question(
+                        question=user_question,
+                        news_summary=combined_openf1[:2000],
+                        conversation_history=history_text,
+                        long_term_context=lt_context
+                    )
+                    response = call_ollama(prompt)
+                    if response and not response.startswith("[ERREUR") and len(response) > 50:
+                        return response
+            except Exception as e:
+                print(f"[WARN] OpenF1 API globale échouée: {e}")
+
+            print("[INFO] OpenF1 non pertinente, passage à Jolpica/Ergast")
+
+            # ÉTAPE 3: Jolpica/Ergast API (historique F1)
+            print("[INFO] Étape 3/5: Tentative Jolpica/Ergast API")
+            try:
+                results, standings_data = _get_ergast_data()
+                if results or standings_data:
+                    ergast_summary = format_ergast_data(results, standings_data)
+                    if ergast_summary and "indisponibles" not in ergast_summary:
+                        print("[INFO] ✓ Jolpica/Ergast data disponible")
+
+                        prompt = OptimizedPromptBuilder.build_f1_question(
+                            question=user_question,
+                            standings=ergast_summary,
+                            conversation_history=history_text,
+                            long_term_context=lt_context
+                        )
+                        response = call_ollama(prompt)
+                        if response and not response.startswith("[ERREUR"):
+                            return response
+            except Exception as e:
+                print(f"[WARN] Jolpica/Ergast échouée: {e}")
+
+            print("[INFO] Jolpica/Ergast non pertinente, passage à Wikipedia/Wikidata")
+
+            # ÉTAPE 4: Wikipedia/Wikidata API - EXHAUSTIF
+            print("[INFO] Étape 4/5: Tentative Wikipedia/Wikidata API (exhaustive)")
+            wiki_content = []
+            try:
+                # Recherche Wikipedia multiple
+                search_queries = [
+                    f"Formula 1 {user_question}",
+                    f"F1 {user_question}",
+                    user_question
+                ]
+
+                for search_q in search_queries:
+                    try:
+                        wiki_params = {
+                            "list": "search",
+                            "srsearch": search_q,
+                            "srlimit": 5
+                        }
+                        wiki_data = fetch_wikimedia_api("query", params=wiki_params)
+
+                        if wiki_data and "query" in wiki_data and "search" in wiki_data["query"]:
+                            search_results = wiki_data["query"]["search"]
+                            if len(search_results) > 0:
+                                for result in search_results[:3]:
+                                    wiki_content.append(f"{result['title']}: {result['snippet']}")
+                                print(f"[INFO] ✓ Wikipedia: {len(search_results)} résultats pour '{search_q[:30]}...'")
+                    except Exception as e:
+                        print(f"[WARN] Wikipedia search '{search_q[:30]}' échouée: {e}")
+
+                if wiki_content:
+                    wiki_text = " | ".join(wiki_content[:5])  # Top 5 résultats
+                    prompt = OptimizedPromptBuilder.build_f1_question(
+                        question=user_question,
+                        news_summary=wiki_text[:2000],
+                        conversation_history=history_text,
+                        long_term_context=lt_context
+                    )
+                    response = call_ollama(prompt)
+                    if response and not response.startswith("[ERREUR") and len(response) > 50:
+                        return response
+            except Exception as e:
+                print(f"[WARN] Wikipedia/Wikidata globale échouée: {e}")
+
+            print("[INFO] Wikipedia/Wikidata non pertinente, passage à Wikinews")
+
+            # ÉTAPE 5: Wikinews (actualités F1)
+            print("[INFO] Étape 5/5: Tentative Wikinews")
+            try:
+                wikinews_articles = fetch_wikinews_articles(language="fr")
+                if wikinews_articles and len(wikinews_articles) > 0:
+                    articles_text = " | ".join([f"{art['title']}" for art in wikinews_articles[:3]])
+                    print(f"[INFO] ✓ Wikinews data: {articles_text[:100]}...")
+
+                    prompt = OptimizedPromptBuilder.build_f1_question(
+                        question=user_question,
+                        news_summary=articles_text,
+                        conversation_history=history_text,
+                        long_term_context=lt_context
+                    )
+                    response = call_ollama(prompt)
+                    if response and not response.startswith("[ERREUR"):
+                        return response
+            except Exception as e:
+                print(f"[WARN] Wikinews échouée: {e}")
+
+            # Aucune source n'a répondu
+            print("[INFO] ✗ Aucune source n'a fourni de réponse")
+            return "Désolé, j'ai cherché partout mais je n'ai pas trouvé d'info sur ça... 😕 Tu peux reformuler ta question autrement ? Ou me demander autre chose sur la F1 ? 🏎️"
+
         # ═══════════════════════════════════════════════════════════════
-        # CAS 2 : QUESTIONS GÉNÉRALES - Chercher KB en priorité
+        # CAS 2 : QUESTIONS GÉNÉRALES (non-F1)
         # ═══════════════════════════════════════════════════════════════
-        else:
-            print("[INFO] Recherche générale (KB d'abord)")
+        if is_general:
+            print("[INFO] Question générale (non-F1)")
+
+            # Chercher dans KB
             kb = get_knowledge_base()
             kb_results = kb.search(user_question, top_k=2)
-            
-            # Vérifier que le résultat KB est vraiment pertinent
-            if kb_results and _is_kb_result_relevant(user_question, kb_results[0]):
-                kb_answer = _clamp(kb_results[0], 600)
-                print("[INFO] ✅ Réponse trouvée dans Knowledge Base")
-                return f"📚 {kb_answer}"
-            
-            print("[INFO] KB vide ou non pertinent")
+            kb_content = "\n".join(kb_results[:2]) if kb_results else ""
 
-            # RAG strict: pas de web search. On répond honnêtement.
-            if rag_mode:
-                return "Je n'ai pas cette information dans ma base de connaissances."
+            # Prompt pour question générale (permet au LLM d'utiliser ses connaissances)
+            prompt = OptimizedPromptBuilder.build_f1_question(
+                question=user_question,
+                kb_content=kb_content if kb_content and _is_kb_result_relevant(user_question, kb_content) else None,
+                conversation_history=history_text,
+                long_term_context=lt_context
+            )
+            
+            response = call_ollama(prompt)
+            if response and not response.startswith("[ERREUR"):
+                return response
 
-            # Fallback: web search générale + Ollama (désactivé si RAG_ONLY)
-            web_results = web_search_general(user_question, limit=3)
-            
-            if web_results and web_results[0].content != "La recherche n'a retourné aucun résultat pertinent.":
-                web_summary = "\n\n".join([f"🌐 {item.source}\n{item.content}" for item in web_results])
-                prompt = build_prompt(web_summary, "", user_question, history_text)
-                response = call_ollama(prompt)
-                try:
-                    if _is_probably_english(response):
-                        response = _translate_to_french(response)
-                except Exception as _:
-                    pass
-                return f"🌍 {response}"
-            
-            # FALLBACK FINAL: Répondre comme un humain avec Ollama
-            print("[INFO] Pas de web results, réponse générale Ollama")
-            fallback_prompt = f"""Tu es un assistant utile et amical. Réponds naturellement EN FRANÇAIS à cette question simple.
-Sois direct, honnête et utile. Pas de formatage excessif.
+            # Fallback si Ollama échoue
+            return "Je ne suis pas sûr de comprendre ta question, mais si ça parle de F1, je peux sûrement t'aider ! 🏎️"
 
-Question: {user_question}
+        # ═══════════════════════════════════════════════════════════════
+        # CAS 3 : AUTRES QUESTIONS (CATCH-ALL INTELLIGENT)
+        # ═══════════════════════════════════════════════════════════════
+        print("[INFO] Question non catégorisée, utilisation du LLM direct")
 
-Réponds maintenant:"""
-            fallback_response = call_ollama(fallback_prompt)
-            try:
-                if _is_probably_english(fallback_response):
-                    fallback_response = _translate_to_french(fallback_response)
-            except Exception as _:
-                pass
-            
-            if not (fallback_response.lower().startswith("[erreur") or "timeout" in fallback_response.lower()):
-                return fallback_response
-            
-            # Si Ollama échoue, au moins dire qu'on essaie
-            return "Je ne suis pas sûr, mais je peux essayer de vous aider si vous me donnez plus de détails."
+        prompt = OptimizedPromptBuilder.build_f1_question(
+            question=user_question,
+            conversation_history=history_text,
+            long_term_context=lt_context
+        )
         
+        response = call_ollama(prompt)
+        if response and not response.startswith("[ERREUR"):
+            return response
+
+        # Détecter les salutations pour une réponse de secours chaleureuse
+        q_lower_check = user_question.lower()
+        if any(salut in q_lower_check for salut in ["bonjour", "salut", "hello", "hi", "hey", "coucou"]):
+            return "Salut ! 👋 Content de te voir ! Je suis ton assistant F1 personnel. Tu veux qu'on parle de quoi ? Le dernier GP ? Les classements ? Un pilote en particulier ? 🏎️💨"
+
+        return "Hey ! Je suis spécialisé dans la Formule 1. Si tu as des questions sur les pilotes, les courses, les circuits, les classements... je suis ton expert ! Qu'est-ce qui t'intéresse ? 😊🏁"
+
     except Exception as exc:
         print(f"[ERROR] answer_f1_question: {exc}")
-        return "Je n'ai pas pu répondre à cette question. Désolé!"
+        import traceback
+        traceback.print_exc()
+        return "❌ Une erreur s'est produite lors du traitement de votre question. Veuillez réessayer."
 
 
-if __name__ == "__main__":
-    q = "Quelles sont les dernières infos et qui mène le championnat ?"
-    print("Question :", q)
-    print("Génération en cours...\n")
-    print(answer_f1_question(q))
+def load_f1_wiki_csv_data() -> List[Dict]:
+    """Charge les données depuis les fichiers CSV dans le dossier f1_wiki_csv."""
+    base_path = Path(__file__).parent.parent / "knowledge_base" / "f1_wiki_csv"
+    data = []
+
+    for csv_file in base_path.rglob("*.csv"):
+        try:
+            with open(csv_file, 'r', encoding='utf-8') as f:
+                reader = csv.DictReader(f)
+                for row in reader:
+                    data.append({
+                        'source_file': csv_file.name,
+                        **row
+                    })
+        except Exception as e:
+            print(f"[WARN] Erreur lors du chargement de {csv_file}: {e}")
+
+    return data
+
+
+def search_f1_wiki_data(query: str) -> List[Dict]:
+    """Recherche dans les données chargées depuis f1_wiki_csv."""
+    data = load_f1_wiki_csv_data()
+    query_lower = query.lower().strip()
+
+    if not query_lower:
+        return []
+
+    results = []
+    for entry in data:
+        if any(query_lower in str(value).lower() for value in entry.values()):
+            results.append(entry)
+
+    return results
+
+
+# -----------------------------------
+# Scraping helpers for recommended sites
+# -----------------------------------
+
+def fetch_openf1_data(endpoint: str, params: Optional[Dict] = None) -> Dict:
+    """Fetch data from OpenF1 API."""
+    base_url = "https://openf1.org/api"
+    try:
+        response = requests.get(f"{base_url}/{endpoint}", params=params, headers=HEADERS, timeout=10)
+        response.raise_for_status()
+        return response.json()
+    except requests.exceptions.RequestException as e:
+        print(f"[WARN] OpenF1 API request failed: {e}")
+        return {}
+
+
+def fetch_jolpica_data(endpoint: str, params: Optional[Dict] = None) -> Dict:
+    """Fetch data from Jolpica API."""
+    base_url = "https://api.jolpi.ca/ergast/f1"
+    try:
+        response = requests.get(f"{base_url}/{endpoint}", params=params, headers=HEADERS, timeout=10)
+        response.raise_for_status()
+        return response.json()
+    except requests.exceptions.RequestException as e:
+        print(f"[WARN] Jolpica API request failed: {e}")
+        return {}
+
+
+def fetch_wikimedia_api(endpoint: str, params: Optional[Dict] = None) -> Dict:
+    """Fetch data from Wikimedia API."""
+    base_url = "https://en.wikipedia.org/w/api.php"
+    try:
+        response = requests.get(base_url, params={**params, "action": "query", "format": "json"}, headers=HEADERS, timeout=10)
+        response.raise_for_status()
+        return response.json()
+    except requests.exceptions.RequestException as e:
+        print(f"[WARN] Wikimedia API request failed: {e}")
+        return {}
+
+
+def fetch_wikidata_sparql(query: str) -> Dict:
+    """Fetch data from Wikidata Query Service using SPARQL."""
+    base_url = "https://query.wikidata.org/sparql"
+    try:
+        response = requests.get(base_url, params={"query": query, "format": "json"}, headers=HEADERS, timeout=10)
+        response.raise_for_status()
+        return response.json()
+    except requests.exceptions.RequestException as e:
+        print(f"[WARN] Wikidata SPARQL query failed: {e}")
+        return {}
+
+
+def fetch_wikinews_articles(language: str = "en") -> List[Dict]:
+    """Fetch recent Formula 1 articles from Wikinews."""
+    base_url = f"https://{language}.wikinews.org/w/api.php"
+    try:
+        response = requests.get(base_url, params={"action": "query", "list": "categorymembers", "cmtitle": "Category:Formula_One", "format": "json"}, headers=HEADERS, timeout=10)
+        response.raise_for_status()
+        return response.json().get("query", {}).get("categorymembers", [])
+    except requests.exceptions.RequestException as e:
+        print(f"[WARN] Wikinews API request failed: {e}")
+        return {}
