@@ -98,6 +98,16 @@ function addMessageToCurrentConversation(role, content) {
   }
   const conv = conversations.find(c=>c.id===currentConversationId);
   if (!conv) return;
+  
+  // Si c'est le premier message utilisateur et que la conversation a un titre par défaut, la renommer
+  if (role === 'user' && (!conv.messages || conv.messages.length === 0)) {
+    const isDefaultTitle = conv.title.startsWith('Conversation ');
+    if (isDefaultTitle) {
+      conv.title = content.slice(0, 50);
+      setConversationTitle(conv.title);
+    }
+  }
+  
   conv.messages.push({role, content, ts: Date.now()});
   saveConversations();
   renderConversationList();
@@ -148,13 +158,7 @@ function renderConversationList() {
     title.className = 'title';
     title.textContent = conv.title;
 
-    const preview = document.createElement('div');
-    preview.className = 'muted';
-    const last = conv.messages[conv.messages.length-1];
-    preview.textContent = last ? (last.role==='user' ? last.content.slice(0,50) : last.content.slice(0,50)) : 'Vide';
-
     left.appendChild(title);
-    left.appendChild(preview);
 
     const actions = document.createElement('div');
     actions.className = 'conversation-actions';
@@ -164,12 +168,6 @@ function renderConversationList() {
     delBtn.title = 'Supprimer';
     delBtn.onclick = (e) => { e.stopPropagation(); deleteConversation(conv.id); };
 
-    const renameBtn = document.createElement('button');
-    renameBtn.innerText = '✏️';
-    renameBtn.title = 'Renommer';
-    renameBtn.onclick = (e) => { e.stopPropagation(); renameConversation(conv.id); };
-
-    actions.appendChild(renameBtn);
     actions.appendChild(delBtn);
 
     item.appendChild(left);
@@ -404,25 +402,13 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
   
-  const openBtn = document.getElementById("openHistoryBtn");
   const closeBtn = document.getElementById("closeHistoryBtn");
   const newConvBtn = document.getElementById("newConversationBtn");
-  const quickNewBtn = document.getElementById("quickNewConversationBtn");
   
   console.log('[DOMContentLoaded] Binding buttons:', {
-    openBtn: !!openBtn,
     closeBtn: !!closeBtn,
-    newConvBtn: !!newConvBtn,
-    quickNewBtn: !!quickNewBtn
+    newConvBtn: !!newConvBtn
   });
-  
-  if (openBtn) {
-    openBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      console.log('[openBtn] clicked');
-      openHistoryPanel();
-    });
-  }
   
   if (closeBtn) {
     closeBtn.addEventListener("click", (e) => {
@@ -438,14 +424,6 @@ document.addEventListener("DOMContentLoaded", () => {
       console.log('[newConvBtn in panel] clicked');
       createConversation();
       closeHistoryPanel();
-    });
-  }
-  
-  if (quickNewBtn) {
-    quickNewBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      console.log('[quickNewBtn] clicked');
-      createConversation();
     });
   }
 });

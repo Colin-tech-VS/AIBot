@@ -10,10 +10,12 @@
     <div class="container">
       <!-- Header -->
       <header class="header">
-        <h1>🏎️ <strong>F1 AI Chatbot</strong> 🏁</h1>
-        <!-- Subtitle removed per request -->
-        <div id="convTitle" class="conv-title">
-          <span id="convTitleText">Aucune conversation active</span>
+        <div class="header-top">
+          <h1>🏎️ <strong>F1 AI Chatbot</strong> 🏁</h1>
+          <div class="header-icons">
+            <button id="newConvNavBtn" class="nav-icon-btn" aria-label="Nouvelle conversation" onclick="createConversation()">➕</button>
+            <button id="historyToggleBtn" class="nav-icon-btn" aria-label="Historique" onclick="openHistoryPanel()">☰</button>
+          </div>
         </div>
       </header>
 
@@ -38,29 +40,14 @@
                 required
                 autocomplete="off"
               />
-              <button type="submit" class="send-btn" id="sendBtn">
-                ▶️ Envoyer
+              <button type="submit" class="send-icon-btn" id="sendBtn" aria-label="Envoyer">
+                ➤
               </button>
             </div>
           </form>
-          <div style="display:flex;gap:0.5rem;flex-wrap:wrap;align-items:center;">
-            <button class="clear-btn" onclick="clearChat()">
-              🗑️ Effacer l'historique
-            </button>
-            <button type="button" class="clear-btn" id="openHistoryBtn" onclick="openHistoryPanel()">
-              📚 Historique
-            </button>
-            <button type="button" class="clear-btn" id="quickNewConversationBtn">
-              ➕ Nouvelle
-            </button>
-          </div>
         </div>
       </div>
 
-      <!-- Footer -->
-      <footer class="footer">
-        <p><strong>F1 Chatbot</strong></p>
-      </footer>
     </div>
 
     <!-- Panneau coulissant d'historique -->
@@ -69,8 +56,8 @@
       <div class="history-header">
         <h3>Conversations</h3>
         <div style="display:flex;gap:0.5rem;align-items:center;">
-          <button id="newConversationBtn" class="clear-btn">➕ Nouvelle</button>
-          <button id="closeHistoryBtn" aria-label="Fermer" onclick="closeHistoryPanel()">✖</button>
+          <button id="newConversationBtn" class="history-header-btn" aria-label="Nouvelle conversation">➕</button>
+          <button id="closeHistoryBtn" class="history-header-btn" aria-label="Fermer" onclick="closeHistoryPanel()">✖</button>
         </div>
       </div>
       <div id="historyContent" class="history-content">
