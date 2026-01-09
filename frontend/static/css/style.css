@@ -45,65 +45,91 @@ body {
 /* Container principal */
 .container {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   height: 100vh;
   width: 100vw;
   margin: 0;
   padding: 0;
 }
 
-/* Header */
-.header {
+/* Navbar verticale à droite */
+.navbar {
   background: linear-gradient(135deg, #d4a574 0%, #c19a6b 50%, #a0826d 100%);
   color: white;
-  padding: 0.75rem 1.5rem;
-  box-shadow: 0 2px 8px rgba(193, 154, 107, 0.15);
-  width: 100vw;
+  padding: 1rem 0.5rem;
+  box-shadow: -2px 0 8px rgba(193, 154, 107, 0.15);
+  width: 70px;
   flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
   transition: background 0.3s, box-shadow 0.3s;
+  order: 2;
+  justify-content: flex-start;
 }
 
-/* Dark mode header */
-body.dark-mode .header {
+/* Dark mode navbar */
+body.dark-mode .navbar {
   background: linear-gradient(135deg, #1a1a1a 0%, #ff1801 50%, #1a1a1a 100%);
-  box-shadow: 0 2px 8px rgba(255, 24, 1, 0.2);
+  box-shadow: -2px 0 8px rgba(255, 24, 1, 0.2);
+}
+
+.navbar-brand {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 2rem;
+  height: auto;
+}
+
+.navbar-brand h1 {
+  display: none;
+}
+
+.navbar-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.navbar-buttons .nav-icon-btn {
+  font-size: 1.1rem;
+}
+
+/* Supprimer l'ancien header */
+.header {
+  display: none;
 }
 
 .header-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  gap: 1rem;
-}
-
-.header h1 {
-  font-size: 1rem;
-  font-weight: 700;
-  margin: 0;
-  text-shadow: none;
-  letter-spacing: 0.5px;
-  white-space: nowrap;
-  flex-shrink: 0;
+  display: none;
 }
 
 .header-icons {
-  display: flex;
-  gap: 0.5rem;
-  align-items: center;
-  flex-shrink: 0;
+  display: none;
 }
 
 .nav-icon-btn {
   background: rgba(255, 255, 255, 0.25);
   border: 1px solid rgba(255, 255, 255, 0.35);
   color: white;
-  font-size: 1.2rem;
+  font-size: 1rem;
   cursor: pointer;
-  padding: 0.5rem 0.6rem;
+  padding: 0.4rem;
   line-height: 1;
   border-radius: 6px;
   transition: all 0.2s;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .nav-icon-btn:hover {
@@ -112,11 +138,16 @@ body.dark-mode .header {
 }
 
 .nav-icon-btn:active {
+  width: 40px;
+  height: 40px;
   transform: scale(0.95);
 }
 
 .user-profile-btn {
   font-size: 1rem;
+  width: 40px;
+  height: 40px;
+  margin-top: auto;
 }
 
 .header strong {
@@ -152,6 +183,7 @@ body.dark-mode .header {
   width: 100%;
   overflow: hidden;
   background: var(--bg-alt);
+  order: 1;
 }
 
 /* Chat box (zone des messages) */

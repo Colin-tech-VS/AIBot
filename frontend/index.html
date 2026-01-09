@@ -8,17 +8,17 @@
   </head>
   <body>
     <div class="container">
-      <!-- Header -->
-      <header class="header">
-        <div class="header-top">
-          <h1><strong>F1 AI Chatbot</strong></h1>
-          <div class="header-icons">
-            <button id="newConvNavBtn" class="nav-icon-btn" aria-label="Nouvelle conversation" onclick="createConversation()">+</button>
-            <button id="historyToggleBtn" class="nav-icon-btn" aria-label="Historique" onclick="toggleHistoryPanel()">☰</button>
-            <button id="userProfileBtn" class="nav-icon-btn user-profile-btn" aria-label="Profil utilisateur" onclick="openUserProfile()">⚙</button>
-          </div>
+      <!-- Navbar verticale sur la droite -->
+      <nav class="navbar">
+        <div class="navbar-brand">
+          🏎️
         </div>
-      </header>
+        <div class="navbar-buttons">
+          <button id="newConvNavBtn" class="nav-icon-btn" aria-label="Nouvelle conversation" onclick="createConversation()">+</button>
+          <button id="historyToggleBtn" class="nav-icon-btn" aria-label="Historique" onclick="toggleHistoryPanel()">☰</button>
+        </div>
+        <button id="userProfileBtn" class="nav-icon-btn user-profile-btn" aria-label="Profil utilisateur" onclick="openUserProfile()">⚙</button>
+      </nav>
 
       <!-- Zone de chat et historique -->
       <div class="main-content">
