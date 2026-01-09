@@ -67,10 +67,17 @@ function createConversation(fromHistory) {
   console.log('[createConversation] DONE');
 }
 
-function deleteConversation(id) {
+function isConversationEmpty(conv) {
+  return !conv || !conv.messages || conv.messages.length === 0;
+}
+
+function deleteConversation(id, silent = false) {
   const idx = conversations.findIndex(c=>c.id===id);
   if (idx===-1) return;
-  if (!confirm('Supprimer cette conversation ?')) return;
+  
+  // Demander confirmation uniquement si ce n'est pas une suppression silencieuse
+  if (!silent && !confirm('Supprimer cette conversation ?')) return;
+  
   conversations.splice(idx,1);
   if (currentConversationId===id) {
     if (conversations.length>0) currentConversationId = conversations[0].id;
@@ -80,6 +87,11 @@ function deleteConversation(id) {
   renderConversationList();
   if (currentConversationId) loadConversationIntoChat(currentConversationId);
   else chatBox.innerHTML = `<div class="message-info"><p class="muted">Aucune conversation. Créez-en une.</p></div>`;
+}
+
+function deleteEmptyConversations() {
+  const emptyIds = conversations.filter(conv => isConversationEmpty(conv)).map(conv => conv.id);
+  emptyIds.forEach(id => deleteConversation(id, true));
 }
 
 function renameConversation(id) {
@@ -114,6 +126,15 @@ function addMessageToCurrentConversation(role, content) {
 }
 
 function loadConversationIntoChat(id) {
+  // Avant de changer, supprimer les conversations vides (sauf celle qu'on va charger)
+  const previousConvId = currentConversationId;
+  if (previousConvId && previousConvId !== id) {
+    const previousConv = conversations.find(c => c.id === previousConvId);
+    if (previousConv && isConversationEmpty(previousConv)) {
+      deleteConversation(previousConvId, true);
+    }
+  }
+  
   const conv = conversations.find(c=>c.id===id);
   if (!conv) return;
   currentConversationId = id;
@@ -370,6 +391,10 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   loadConversationsFromStorage();
+  
+  // Nettoyer les conversations vides au démarrage
+  deleteEmptyConversations();
+  
   if (!conversations || conversations.length === 0) {
     (async () => {
       try {
