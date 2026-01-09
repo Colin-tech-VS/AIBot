@@ -1,0 +1,81 @@
+Entrant,Constructor,Chassis,Engine,Tyre,Driver,Rounds
+Scuderia Sud Americana,Maserati,250F,Maserati 250F1 2.5 L6,P,Juan Manuel Fangio,1
+Scuderia Sud Americana,Maserati,250F,Maserati 250F1 2.5 L6,P,Carlos Menditeguy,1
+Ken Kavanagh,Maserati,250F,Maserati 250F1 2.5 L6,P,Jean Behra,1
+Ken Kavanagh,Maserati,250F,Maserati 250F1 2.5 L6,P,Luigi Taramazzo,2
+Ken Kavanagh,Maserati,250F,Maserati 250F1 2.5 L6,P,Ken Kavanagh,"2, 5"
+Jo Bonnier,Maserati,250F,Maserati 250F1 2.5 L6,P,Harry Schell,1
+Jo Bonnier,Maserati,250F,Maserati 250F1 2.5 L6,P,Jo Bonnier,"2–3, 5, 7, 9"
+Jo Bonnier,Maserati,250F,Maserati 250F1 2.5 L6,P,Phil Hill,6
+Jo Bonnier,Maserati,250F,Maserati 250F1 2.5 L6,P,Giulio Cabianca,10
+Jo Bonnier,Maserati,250F,Maserati 250F1 2.5 L6,P,Hans Herrmann,10–11
+Francesco Godia Sales,Maserati,250F,Maserati 250F1 2.5 L6,P,Paco Godia,"1–2, 5–6"
+H.H. Gould,Maserati,250F,Maserati 250F1 2.5 L6,D,Horace Gould,1–3
+H.H. Gould,Maserati,250F,Maserati 250F1 2.5 L6,D,Masten Gregory,3
+R.R.C. Walker Racing Team,Cooper-Climax,T43 T45,Climax FPF 2.0 L4,C D,Stirling Moss,1
+R.R.C. Walker Racing Team,Cooper-Climax,T43 T45,Climax FPF 2.0 L4,C D,Maurice Trintignant,"2–3, 7–11"
+R.R.C. Walker Racing Team,Cooper-Climax,T43 T45,Climax FPF 2.0 L4,C D,Ron Flockhart,2
+R.R.C. Walker Racing Team,Cooper-Climax,T43,Climax FPF 1.5 L4,D,Wolfgang Seidel,8
+R.R.C. Walker Racing Team,Cooper-Climax,T43,Climax FPF 1.5 L4,D,François Picard,11
+Scuderia Ferrari,Ferrari,246,Ferrari 143 2.4 V6,E,Luigi Musso,"1–3, 5–6"
+Scuderia Ferrari,Ferrari,246,Ferrari 143 2.4 V6,E,Peter Collins,"1–3, 5–8"
+Scuderia Ferrari,Ferrari,246,Ferrari 143 2.4 V6,E,Mike Hawthorn,"1–3, 5–11"
+Scuderia Ferrari,Ferrari,246,Ferrari 143 2.4 V6,E,Wolfgang von Trips,"2, 6–10"
+Scuderia Ferrari,Ferrari,246,Ferrari 143 2.4 V6,E,Olivier Gendebien,"5, 10–11"
+Scuderia Ferrari,Ferrari,246,Ferrari 143 2.4 V6,E,Phil Hill,10–11
+Scuderia Ferrari,Ferrari,156,Ferrari D156 1.5 V6,E,Phil Hill,8
+Owen Racing Organisation,BRM,P25,BRM P25 2.5 L4,D,Jean Behra,"2–3, 5–11"
+Owen Racing Organisation,BRM,P25,BRM P25 2.5 L4,D,Harry Schell,"2–3, 5–11"
+Owen Racing Organisation,BRM,P25,BRM P25 2.5 L4,D,Maurice Trintignant,6
+Owen Racing Organisation,BRM,P25,BRM P25 2.5 L4,D,Jo Bonnier,10–11
+Owen Racing Organisation,BRM,P25,BRM P25 2.5 L4,D,Ron Flockhart,11
+Bernie C. Ecclestone,Connaught-Alta,B,Alta GP 2.5 L4,A,Bernie Ecclestone,"2, 7"
+Bernie C. Ecclestone,Connaught-Alta,B,Alta GP 2.5 L4,A,Bruce Kessler,2
+Bernie C. Ecclestone,Connaught-Alta,B,Alta GP 2.5 L4,A,Paul Emery,2
+Bernie C. Ecclestone,Connaught-Alta,B,Alta GP 2.5 L4,A,Jack Fairman,7
+Bernie C. Ecclestone,Connaught-Alta,B,Alta GP 2.5 L4,A,Ivor Bueb,7
+Cooper Car Company,Cooper-Climax,T45 T44,Climax FPF 2.0 L4,D,Jack Brabham,"2–3, 5–7, 9–10"
+Cooper Car Company,Cooper-Climax,T45 T44,Climax FPF 2.0 L4,D,Roy Salvadori,"2–3, 5–11"
+Cooper Car Company,Cooper-Climax,T45 T44,Climax FPF 2.0 L4,D,Ian Burgess,7
+Cooper Car Company,Cooper-Climax,T45 T44,Climax FPF 2.0 L4,D,Jack Fairman,11
+Cooper Car Company,Cooper-Climax,T45,Climax FPF 1.5 L4,D,Bruce McLaren,"8, 11"
+Cooper Car Company,Cooper-Climax,T45,Climax FPF 1.5 L4,D,Jack Brabham,"8, 11"
+Team Lotus,Lotus-Climax,12 16,Climax FPF 2.0 L4 Climax FPF 2.2 L4,D,Cliff Allison,"2–3, 5–8, 10–11"
+Team Lotus,Lotus-Climax,12 16,Climax FPF 2.0 L4 Climax FPF 2.2 L4,D,Graham Hill,"2–3, 5–7, 9–11"
+Team Lotus,Lotus-Climax,12 16,Climax FPF 2.0 L4 Climax FPF 2.2 L4,D,Alan Stacey,7
+Team Lotus,Lotus-Climax,16,Climax FPF 1.5 L4,D,Graham Hill,8
+Vandervell Products,Vanwall,VW 5,Vanwall 254 2.5 L4,D,Stirling Moss,"2–3, 5–11"
+Vandervell Products,Vanwall,VW 5,Vanwall 254 2.5 L4,D,Tony Brooks,"2–3, 5–11"
+Vandervell Products,Vanwall,VW 5,Vanwall 254 2.5 L4,D,Stuart Lewis-Evans,"2–3, 5–7, 9–11"
+Maria Teresa de Filippis,Maserati,250F,Maserati 250F1 2.5 L6,P,Maria Teresa de Filippis,"2, 5, 10"
+Giorgio Scarlatti,Maserati,250F,Maserati 250F1 2.5 L6,P,Giorgio Scarlatti,2–3
+Giorgio Scarlatti,Maserati,250F,Maserati 250F1 2.5 L6,P,Jo Bonnier,6
+Scuderia Centro Sud,Maserati,250F,Maserati 250F1 2.5 L6,P,Gerino Gerini,"2, 6–7, 10–11"
+Scuderia Centro Sud,Maserati,250F,Maserati 250F1 2.5 L6,P,Maurice Trintignant,5
+Scuderia Centro Sud,Maserati,250F,Maserati 250F1 2.5 L6,P,Masten Gregory,5
+Scuderia Centro Sud,Maserati,250F,Maserati 250F1 2.5 L6,P,Wolfgang Seidel,"5, 11"
+Scuderia Centro Sud,Maserati,250F,Maserati 250F1 2.5 L6,P,Carroll Shelby,"6–7, 10"
+Scuderia Centro Sud,Maserati,250F,Maserati 250F1 2.5 L6,P,Troy Ruttman,"6, 8"
+Scuderia Centro Sud,Maserati,250F,Maserati 250F1 2.5 L6,P,Jo Bonnier,8
+Scuderia Centro Sud,Maserati,250F,Maserati 250F1 2.5 L6,P,Hans Herrmann,8
+Scuderia Centro Sud,Maserati,250F,Maserati 250F1 2.5 L6,P,Cliff Allison,9
+Scuderia Centro Sud,Maserati,250F,Maserati 250F1 2.5 L6,P,Maria Teresa de Filippis,9
+OSCA Automobili,OSCA,F2,OSCA 372 1.5 L4,P,Giulio Cabianca,2
+OSCA Automobili,OSCA,F2,OSCA 372 1.5 L4,P,Luigi Piotti,2
+André Testut,Maserati,250F,Maserati 250F1 2.5 L6,P,André Testut,2
+André Testut,Maserati,250F,Maserati 250F1 2.5 L6,P,Louis Chiron,2
+Ecurie Maarsbergen,Porsche,RSK,Porsche 547/3 1.5 F4,D,Carel Godin de Beaufort,3
+Ecurie Maarsbergen,Porsche,RS550,Porsche 547/3 1.5 F4,D,Carel Godin de Beaufort,8
+Juan Manuel Fangio,Maserati,250F,Maserati 250F1 2.5 L6,P,Juan Manuel Fangio,6
+Dick Gibson,Cooper-Climax,T43,Climax FPF 1.5 L4,D,Dick Gibson,8
+Dr Ing F. Porsche KG,Porsche,RSK,Porsche 547/3 1.5 F4,?,Edgar Barth,8
+High Efficiency Motors,Cooper-Climax,T43,Climax FPF 1.5 L4,D,Ian Burgess,8
+Ecurie Eperon d'Or,Cooper-Climax,T43,Climax FPF 1.5 L4,D,Christian Goethals,8
+Ecurie Demi Litre,Lotus-Climax,12,Climax FPF 1.5 L4,D,Ivor Bueb,8
+J.B. Naylor,Cooper-Climax,T45,Climax FPF 1.5 L4,D,Brian Naylor,8
+Tony Marsh,Cooper-Climax,T45,Climax FPF 1.5 L4,D,Tony Marsh,8
+Temple Buell,Maserati,250F,Maserati 250F1 2.5 L6,D,Carroll Shelby,9–10
+Temple Buell,Maserati,250F,Maserati 250F1 2.5 L6,D,Masten Gregory,10–11
+André Guelfi,Cooper-Climax,T45,Climax FPF 1.5 L4,D,André Guelfi,11
+British Racing Partnership,Cooper-Climax,T45,Climax FPF 1.5 L4,D,Tom Bridger,11
+Robert La Caze,Cooper-Climax,T45,Climax FPF 1.5 L4,D,Robert La Caze,11

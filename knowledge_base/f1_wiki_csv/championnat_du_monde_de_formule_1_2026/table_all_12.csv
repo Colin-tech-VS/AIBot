@@ -1,0 +1,14 @@
+Couleur,Résultat
+Or,Vainqueur
+Argent,2e place
+Bronze,3e place
+Vert,Classé dans les points
+Bleu,Classé hors des points Non classé (Nc.)
+Violet,Abandon (Abd.)
+Rouge,Non qualifié (Nq.) Non pré-qualifié (Npq.)
+Noir,Disqualifié (Dsq.)
+Blanc,Non partant (Np.) Forfait (Forf.) Suspendu (Susp.) Course annulée (A.)
+Gras,Pole position
+Italique,Meilleur tour en course
+*,Le pilote a abandonné mais est classé pour avoir parcouru plus de 90 % de la distance de course.
++,Résultat en course Sprint (si  arrivée dans les points).

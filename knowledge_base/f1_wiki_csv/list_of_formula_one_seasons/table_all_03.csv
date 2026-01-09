@@ -1,0 +1,78 @@
+Season,Races,Countries,First,Last,Drivers' Champion (team),Constructors' Champion,Winners
+1950,7,7,British,Italian,Giuseppe Farina (ITA) (Alfa Romeo),Not awarded,3.0
+1951,8,8,Swiss,Spanish,Juan Manuel Fangio (ARG) (Alfa Romeo),Not awarded,6.0
+1952,8,8,Swiss,Italian,Alberto Ascari (ITA) (Ferrari),Not awarded,3.0
+1953,9,9,Argentine,Italian,Alberto Ascari (ITA) (Ferrari),Not awarded,5.0
+1954,9,9,Argentine,Spanish,Juan Manuel Fangio (ARG) (Maserati/Mercedes),Not awarded,4.0
+1955,7,7,Argentine,Italian,Juan Manuel Fangio (ARG) (Mercedes),Not awarded,4.0
+1956,8,8,Argentine,Italian,Juan Manuel Fangio (ARG) (Ferrari),Not awarded,5.0
+1957,8,7,Argentine,Italian,Juan Manuel Fangio (ARG) (Maserati),Not awarded,4.0
+1958,11,11,Argentine,Moroccan,Mike Hawthorn (GBR) (Ferrari),Vanwall (GBR),6.0
+1959,9,8,Monaco,United States,Jack Brabham (AUS) (Cooper),Cooper-Climax (GBR),6.0
+1960,10,9,Argentine,United States,Jack Brabham (AUS) (Cooper),Cooper-Climax (GBR),5.0
+1961,8,8,Monaco,United States,Phil Hill (USA) (Ferrari),Ferrari (ITA),5.0
+1962,9,9,Dutch,South African,Graham Hill (GBR) (BRM),BRM (GBR),4.0
+1963,10,10,Monaco,South African,Jim Clark (GBR) (Lotus),Lotus-Climax (GBR),3.0
+1964,10,10,Monaco,Mexican,John Surtees (GBR) (Ferrari/NART),Ferrari (ITA),5.0
+1965,10,10,South African,Mexican,Jim Clark (GBR) (Lotus),Lotus-Climax (GBR),4.0
+1966,9,9,Monaco,Mexican,Jack Brabham (AUS) (Brabham),Brabham-Repco (GBR),5.0
+1967,11,11,South African,Mexican,Denny Hulme (NZL) (Brabham),Brabham-Repco (GBR),7.0
+1968,12,12,South African,Mexican,Graham Hill (GBR) (Lotus),Lotus-Ford (GBR),7.0
+1969,11,11,South African,Mexican,Jackie Stewart (GBR) (Matra),Matra-Ford (FRA),5.0
+1970,13,13,South African,Mexican,Jochen Rindt (AUT) (Lotus),Lotus-Ford (GBR),7.0
+1971,11,11,South African,United States,Jackie Stewart (GBR) (Tyrrell),Tyrrell-Ford (GBR),6.0
+1972,12,12,Argentine,United States,Emerson Fittipaldi (BRA) (Lotus),Lotus-Ford (GBR),5.0
+1973,15,15,Argentine,United States,Jackie Stewart (GBR) (Tyrrell),Lotus-Ford (GBR),5.0
+1974,15,15,Argentine,United States,Emerson Fittipaldi (BRA) (McLaren),McLaren-Ford (GBR),7.0
+1975,14,14,Argentine,United States,Niki Lauda (AUT) (Ferrari),Ferrari (ITA),9.0
+1976,16,15,Brazilian[c],Japanese,James Hunt (GBR) (McLaren),Ferrari (ITA),7.0
+1977,17,16,Argentine,Japanese,Niki Lauda (AUT) (Ferrari),Ferrari (ITA),8.0
+1978,16,15,Argentine,Canadian,Mario Andretti (USA) (Lotus),Lotus-Ford (GBR),6.0
+1979,15,14,Argentine,United States,Jody Scheckter (RSA) (Ferrari),Ferrari (ITA),7.0
+1980,14,13,Argentine,United States,Alan Jones (AUS) (Williams),Williams-Ford (GBR),7.0
+1981,15,13,United States West,Caesars Palace,Nelson Piquet (BRA) (Brabham),Williams-Ford (GBR),7.0
+1982,16,12,South African,Caesars Palace,Keke Rosberg (FIN) (Williams),Ferrari (ITA),11.0
+1983,15,13,Brazilian,South African,Nelson Piquet (BRA) (Brabham),Ferrari (ITA),8.0
+1984,16,14,Brazilian,Portuguese,Niki Lauda (AUT) (McLaren),McLaren-TAG (GBR),5.0
+1985,16,14,Brazilian,Australian,Alain Prost (FRA) (McLaren),McLaren-TAG (GBR),8.0
+1986,16,15,Brazilian,Australian,Alain Prost (FRA) (McLaren),Williams-Honda (GBR),5.0
+1987,16,15,Brazilian,Australian,Nelson Piquet (BRA) (Williams),Williams-Honda (GBR),5.0
+1988,16,15,Brazilian,Australian,Ayrton Senna (BRA) (McLaren),McLaren-Honda (GBR),3.0
+1989,16,15,Brazilian,Australian,Alain Prost (FRA) (McLaren),McLaren-Honda (GBR),6.0
+1990,16,15,United States,Australian,Ayrton Senna (BRA) (McLaren),McLaren-Honda (GBR),6.0
+1991,16,15,United States,Australian,Ayrton Senna (BRA) (McLaren),McLaren-Honda (GBR),5.0
+1992,16,15,South African,Australian,Nigel Mansell (GBR) (Williams),Williams-Renault (GBR),5.0
+1993,16,14,South African,Australian,Alain Prost (FRA) (Williams),Williams-Renault (GBR),4.0
+1994,16,13,Brazilian,Australian,Michael Schumacher (GER) (Benetton),Williams-Renault (GBR),4.0
+1995,17,14,Brazilian,Australian,Michael Schumacher (GER) (Benetton),Benetton-Renault (GBR),5.0
+1996,16,14,Australian,Japanese,Damon Hill (GBR) (Williams),Williams-Renault (GBR),4.0
+1997,17,14,Australian,European,Jacques Villeneuve (CAN) (Williams),Williams-Renault (GBR),6.0
+1998,16,14,Australian,Japanese,Mika Häkkinen (FIN) (McLaren),McLaren-Mercedes (GBR),4.0
+1999,16,14,Australian,Japanese,Mika Häkkinen (FIN) (McLaren),Ferrari (ITA),6.0
+2000,17,15,Australian,Malaysian,Michael Schumacher (GER) (Ferrari),Ferrari (ITA),4.0
+2001,17,15,Australian,Japanese,Michael Schumacher (GER) (Ferrari),Ferrari (ITA),5.0
+2002,17,15,Australian,Japanese,Michael Schumacher (GER) (Ferrari),Ferrari (ITA),4.0
+2003,16,14,Australian,Japanese,Michael Schumacher (GER) (Ferrari),Ferrari (ITA),8.0
+2004,18,16,Australian,Brazilian,Michael Schumacher (GER) (Ferrari),Ferrari (ITA),5.0
+2005,19,17,Australian,Chinese,Fernando Alonso (ESP) (Renault),Renault (FRA),5.0
+2006,18,16,Bahrain,Brazilian,Fernando Alonso (ESP) (Renault),Renault (FRA),5.0
+2007,17,17,Australian,Brazilian,Kimi Räikkönen (FIN) (Ferrari),Ferrari (ITA)[d],4.0
+2008,18,17,Australian,Brazilian,Lewis Hamilton (GBR) (McLaren),Ferrari (ITA),7.0
+2009,17,16,Australian,Abu Dhabi,Jenson Button (GBR) (Brawn),Brawn-Mercedes (GBR),6.0
+2010,19,18,Bahrain,Abu Dhabi,Sebastian Vettel (GER) (Red Bull),Red Bull-Renault (AUT),5.0
+2011,19,18,Australian[e],Brazilian,Sebastian Vettel (GER) (Red Bull),Red Bull-Renault (AUT),5.0
+2012,20,19,Australian,Brazilian,Sebastian Vettel (GER) (Red Bull),Red Bull-Renault (AUT),8.0
+2013,19,19,Australian,Brazilian,Sebastian Vettel (GER) (Red Bull),Red Bull-Renault (AUT),5.0
+2014,19,19,Australian,Abu Dhabi,Lewis Hamilton (GBR) (Mercedes),Mercedes (GER),3.0
+2015,19,19,Australian,Abu Dhabi,Lewis Hamilton (GBR) (Mercedes),Mercedes (GER),3.0
+2016,21,21,Australian,Abu Dhabi,Nico Rosberg (GER) (Mercedes),Mercedes (GER),4.0
+2017,20,20,Australian,Abu Dhabi,Lewis Hamilton (GBR) (Mercedes),Mercedes (GER),5.0
+2018,21,21,Australian,Abu Dhabi,Lewis Hamilton (GBR) (Mercedes),Mercedes (GER),5.0
+2019,21,21,Australian,Abu Dhabi,Lewis Hamilton (GBR) (Mercedes),Mercedes (GER),5.0
+2020,17[f],12,Austrian,Abu Dhabi,Lewis Hamilton (GBR) (Mercedes),Mercedes (GER),5.0
+2021,22[g],20,Bahrain,Abu Dhabi,Max Verstappen (NED) (Red Bull),Mercedes (GER),6.0
+2022,22[h],20,Bahrain,Abu Dhabi,Max Verstappen (NED) (Red Bull),Red Bull-RBPT (AUT),5.0
+2023,22[i],20,Bahrain,Abu Dhabi,Max Verstappen (NED) (Red Bull),Red Bull-Honda RBPT (AUT),3.0
+2024,24,21,Bahrain,Abu Dhabi,Max Verstappen (NED) (Red Bull),McLaren-Mercedes (GBR),7.0
+2025,24,21,Australian,Abu Dhabi,Lando Norris (GBR) (McLaren),McLaren-Mercedes (GBR),4.0
+2026,24,21,Australian,Abu Dhabi,,,

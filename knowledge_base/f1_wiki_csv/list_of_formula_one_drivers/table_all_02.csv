@@ -1,0 +1,4 @@
+Symbol,Meaning
+~,Driver has competed in 2025 and has won the World Drivers' Championship
+*,Driver has competed in 2025 and has not won the World Drivers' Championship
+^,Driver has won the World Drivers' Championship and has not competed in 2025

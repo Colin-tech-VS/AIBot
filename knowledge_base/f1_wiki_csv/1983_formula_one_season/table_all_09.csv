@@ -1,0 +1,41 @@
+Pos,Constructor,Car no.,BRA,USW,FRA,SMR,MON,BEL,DET,CAN,GBR,GER,AUT,NED,ITA,EUR,RSA,Pts
+1,Ferrari,27,5,Ret,4,1,4,2,Ret,3,3,Ret,Ret,2,4,Ret,Ret,89
+1,Ferrari,28,10,3,7,3,Ret,Ret,Ret,1,5,1,2,1,2,9,Ret,89
+2,Renault,15,7,11,1,2,3,1,8,5,1,4,1,Ret,Ret,2,Ret,79
+2,Renault,16,Ret,13,3,Ret,Ret,3,Ret,2,Ret,Ret,4,Ret,3,10,6,79
+3,Brabham-BMW,5,1,Ret,2,Ret,2,4,4,Ret,2,13,3,Ret,1,1,3,72
+3,Brabham-BMW,6,Ret,10,Ret,Ret,Ret,Ret,Ret,Ret,Ret,3,Ret,9,Ret,7,1,72
+4,Williams-Ford,1,DSQ,Ret,5,4,1,5,2,4,11,10,8,Ret,11,Ret,,36
+4,Williams-Ford,2,4,4,6,7,Ret,6,5,Ret,12,6,Ret,Ret,DNQ,DNQ,,36
+4,Williams-Ford,42,,,,,,,,,,,,,,13,,36
+5,McLaren-Ford,7,Ret,1,Ret,5,DNQ,Ret,3,6,9,5,9,3,,,,34
+5,McLaren-Ford,8,3,2,Ret,Ret,DNQ,Ret,Ret,Ret,6,DSQ,6,,,,,34
+6,Alfa Romeo,22,EX,Ret,12,Ret,Ret,Ret,Ret,Ret,8,2,Ret,Ret,Ret,4,2,18
+6,Alfa Romeo,23,Ret,Ret,Ret,10,6,Ret,12,10,7,Ret,Ret,5,Ret,Ret,Ret,18
+7,Tyrrell-Ford,3,Ret,9,8,Ret,Ret,14,1,8,13,Ret,Ret,6,Ret,Ret,Ret,12
+7,Tyrrell-Ford,4,11,8,Ret,Ret,5,12,Ret,DSQ,14,12,Ret,Ret,Ret,Ret,7,12
+8,Lotus-Renault,11,,Ret,Ret,Ret,Ret,9,Ret,Ret,Ret,Ret,Ret,Ret,5,Ret,Ret,11
+8,Lotus-Renault,12,,,,,,,,,4,Ret,5,Ret,8,3,NC,11
+9,Toleman-Hart,35,8,Ret,Ret,Ret,Ret,7,Ret,Ret,Ret,Ret,Ret,4,6,5,4,10
+9,Toleman-Hart,36,Ret,Ret,13,Ret,DNQ,8,9,Ret,Ret,Ret,Ret,13,7,6,Ret,10
+10,Arrows-Ford,29,6,5,10,6,Ret,11,11,Ret,17,7,Ret,8,10,Ret,8,4
+10,Arrows-Ford,30,9,Ret,Ret,8,7,Ret,7,7,15,9,13,14,Ret,11,9,4
+11,Williams-Honda,1,,,,,,,,,,,,,,,5,2
+11,Williams-Honda,2,,,,,,,,,,,,,,,Ret,2
+12,Theodore-Ford,33,NC,Ret,Ret,Ret,DNPQ,Ret,NC,Ret,16,Ret,Ret,12,13,12,,1
+12,Theodore-Ford,34,13,6,11,Ret,DNPQ,10,Ret,Ret,DNQ,11,DNQ,DNQ,12,,,1
+=[17],Lotus-Ford,11,DSQ,,,,,,,,,,,,,,,1
+=[17],Lotus-Ford,12,12,12,Ret,12,Ret,Ret,6,Ret,,,,,,,,1
+—,Ligier-Ford,25,Ret,Ret,9,Ret,Ret,Ret,Ret,Ret,10,8,7,Ret,9,Ret,10,0
+—,Ligier-Ford,26,Ret,7,Ret,9,Ret,13,10,Ret,Ret,Ret,DNQ,10,DNQ,15,NC,0
+—,Spirit-Honda,40,,,,,,,,,Ret,Ret,12,7,Ret,14,,0
+—,ATS-BMW,9,15,Ret,Ret,11,Ret,Ret,Ret,9,Ret,DNQ,Ret,DSQ,Ret,8,Ret,0
+—,Osella-Alfa Romeo,31,,,,,,,,,DNQ,DNQ,10,11,Ret,DNQ,Ret,0
+—,Osella-Alfa Romeo,32,,,,DNQ,DNQ,DNQ,Ret,DNQ,Ret,Ret,11,DNQ,Ret,Ret,Ret,0
+—,McLaren-TAG,7,,,,,,,,,,,,,Ret,Ret,DSQ,0
+—,McLaren-TAG,8,,,,,,,,,,,,Ret,Ret,Ret,11,0
+—,RAM-Ford,17,14,Ret,DNQ,DNQ,DNQ,DNQ,,DNQ,DNQ,DNQ,DNQ,DNQ,DNQ,DNQ,12,0
+—,RAM-Ford,18,,,DNQ,,,,,,,,,,,,,0
+—,Osella-Ford,31,Ret,DNQ,Ret,Ret,DNQ,Ret,DNQ,Ret,,,,,,,,0
+—,Osella-Ford,32,DNQ,DNQ,DNQ,,,,,,,,,,,,,0
+Pos,Constructor,Car no.,BRA,USW,FRA,SMR,MON,BEL,DET,CAN,GBR,GER,AUT,NED,ITA,EUR,RSA,Pts

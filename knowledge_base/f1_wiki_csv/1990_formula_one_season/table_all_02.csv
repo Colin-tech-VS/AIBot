@@ -1,0 +1,47 @@
+Entrant,Constructor,Chassis,Engine,Tyre,No,Driver,Rounds
+Scuderia Ferrari,Ferrari,641,Ferrari Tipo 036 3.5 V12 Ferrari Tipo 037 3.5 V12,G,1,Alain Prost,All
+Scuderia Ferrari,Ferrari,641,Ferrari Tipo 036 3.5 V12 Ferrari Tipo 037 3.5 V12,G,2,Nigel Mansell,All
+Tyrrell Racing Organisation,Tyrrell-Ford,018 019,Ford Cosworth DFR 3.5 V8,P,3,Satoru Nakajima,All
+Tyrrell Racing Organisation,Tyrrell-Ford,018 019,Ford Cosworth DFR 3.5 V8,P,4,Jean Alesi,All
+Canon Williams,Williams-Renault,FW13B,Renault RS2 3.5 V10,G,5,Thierry Boutsen,All
+Canon Williams,Williams-Renault,FW13B,Renault RS2 3.5 V10,G,6,Riccardo Patrese,All
+Motor Racing Developments,Brabham-Judd,BT58 BT59,Judd EV 3.5 V8,P,7,Gregor Foitek,1–2
+Motor Racing Developments,Brabham-Judd,BT58 BT59,Judd EV 3.5 V8,P,7,David Brabham,3–16
+Motor Racing Developments,Brabham-Judd,BT58 BT59,Judd EV 3.5 V8,P,8,Stefano Modena,All
+Footwork Arrows Ford,Arrows-Ford,A11 A11B,Ford Cosworth DFR 3.5 V8,G,9,Michele Alboreto,All
+Footwork Arrows Ford,Arrows-Ford,A11 A11B,Ford Cosworth DFR 3.5 V8,G,10,Bernd Schneider,"1, 14"
+Footwork Arrows Ford,Arrows-Ford,A11 A11B,Ford Cosworth DFR 3.5 V8,G,10,Alex Caffi,"2–13, 15–16"
+Camel Team Lotus,Lotus-Lamborghini,102,Lamborghini LE3512 3.5 V12,G,11,Derek Warwick,All
+Camel Team Lotus,Lotus-Lamborghini,102,Lamborghini LE3512 3.5 V12,G,12,Martin Donnelly,1–14
+Camel Team Lotus,Lotus-Lamborghini,102,Lamborghini LE3512 3.5 V12,G,12,Johnny Herbert,15–16
+Fondmetal Osella,Osella-Ford,FA1M FA1ME,Ford Cosworth DFR 3.5 V8,P,14,Olivier Grouillard,All
+Leyton House Racing,Leyton House-Judd,CG901,Judd EV 3.5 V8,G,15,Maurício Gugelmin,All
+Leyton House Racing,Leyton House-Judd,CG901,Judd EV 3.5 V8,G,16,Ivan Capelli,All
+AGS,AGS-Ford,JH24 JH25,Ford Cosworth DFR 3.5 V8,G,17,Gabriele Tarquini,All
+AGS,AGS-Ford,JH24 JH25,Ford Cosworth DFR 3.5 V8,G,18,Yannick Dalmas,All
+Benetton Formula,Benetton-Ford,B189B B190,Ford HBA4 3.5 V8,G,19,Alessandro Nannini,1–14
+Benetton Formula,Benetton-Ford,B189B B190,Ford HBA4 3.5 V8,G,19,Roberto Moreno,15–16
+Benetton Formula,Benetton-Ford,B189B B190,Ford HBA4 3.5 V8,G,20,Nelson Piquet,All
+BMS Scuderia Italia,Dallara-Ford,F190,Ford Cosworth DFR 3.5 V8,P,21,Gianni Morbidelli,1–2
+BMS Scuderia Italia,Dallara-Ford,F190,Ford Cosworth DFR 3.5 V8,P,21,Emanuele Pirro,3–16
+BMS Scuderia Italia,Dallara-Ford,F190,Ford Cosworth DFR 3.5 V8,P,22,Andrea de Cesaris,All
+SCM Minardi Team,Minardi-Ford,M189 M190,Ford Cosworth DFR 3.5 V8,P,23,Pierluigi Martini,All
+SCM Minardi Team,Minardi-Ford,M189 M190,Ford Cosworth DFR 3.5 V8,P,24,Paolo Barilla,1–14
+SCM Minardi Team,Minardi-Ford,M189 M190,Ford Cosworth DFR 3.5 V8,P,24,Gianni Morbidelli,15–16
+Équipe Ligier Gitanes,Ligier-Ford,JS33B,Ford Cosworth DFR 3.5 V8,G,25,Nicola Larini,All
+Équipe Ligier Gitanes,Ligier-Ford,JS33B,Ford Cosworth DFR 3.5 V8,G,26,Philippe Alliot,All
+Honda Marlboro McLaren,McLaren-Honda,MP4/5B,Honda RA100E 3.5 V10,G,27,Ayrton Senna,All
+Honda Marlboro McLaren,McLaren-Honda,MP4/5B,Honda RA100E 3.5 V10,G,28,Gerhard Berger,All
+ESPO Larrousse F1,Lola-Lamborghini,LC89B LC90,Lamborghini LE3512 3.5 V12,G,29,Éric Bernard,All
+ESPO Larrousse F1,Lola-Lamborghini,LC89B LC90,Lamborghini LE3512 3.5 V12,G,30,Aguri Suzuki,All
+Subaru Coloni Racing  Coloni Racing,Subaru Coloni,C3B,Subaru 1235 3.5 F12,G,31,Bertrand Gachot,1–8
+Subaru Coloni Racing  Coloni Racing,Coloni-Ford,C3C,Ford Cosworth DFR 3.5 V8,G,31,Bertrand Gachot,9–16
+EuroBrun Racing,EuroBrun-Judd,ER189B,Judd CV 3.5 V8,P,33,Roberto Moreno,1–14
+EuroBrun Racing,EuroBrun-Judd,ER189B,Judd CV 3.5 V8,P,34,Claudio Langes,1–14
+Onyx Grand Prix  Monteverdi Formula One,Onyx-Ford,ORE-1 ORE-1B,Ford Cosworth DFR 3.5 V8,G,35,Stefan Johansson,1–2
+Onyx Grand Prix  Monteverdi Formula One,Onyx-Ford,ORE-1 ORE-1B,Ford Cosworth DFR 3.5 V8,G,35,Gregor Foitek,3–10
+Onyx Grand Prix  Monteverdi Formula One,Onyx-Ford,ORE-1 ORE-1B,Ford Cosworth DFR 3.5 V8,G,36,JJ Lehto,1–10
+Life Racing Engines,Life,L190,Life F35 3.5 W12,G,39,Gary Brabham,1–2
+Life Racing Engines,Life,L190,Life F35 3.5 W12,G,39,Bruno Giacomelli,3–12
+Life Racing Engines,Life-Judd,L190,Judd CV 3.5 V8,G,39,Bruno Giacomelli,13–14
+Sources:[citation needed],Sources:[citation needed],Sources:[citation needed],Sources:[citation needed],Sources:[citation needed],Sources:[citation needed],Sources:[citation needed],Sources:[citation needed]

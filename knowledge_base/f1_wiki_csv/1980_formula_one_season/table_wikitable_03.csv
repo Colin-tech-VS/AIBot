@@ -1,0 +1,43 @@
+Pos,Driver,ARG,BRA,RSA,USW,BEL,MON,FRA,GBR,GER,AUT,NED,ITA,CAN,USA,Pts[7]
+1,Alan Jones,1,3,Ret,Ret,2,Ret,1,1,(3),2,11,2,1,1,67
+2,Nelson Piquet,2,Ret,4,1,Ret,3,4,2,4,5,1,1,Ret,Ret,54
+3,Carlos Reutemann,Ret,Ret,5,Ret,3,1,6,3,2,3,(4),(3),2,2,42
+4,Jacques Laffite,Ret,Ret,2,Ret,11,2,3,Ret,1,4,3,9,8,5,34
+5,Didier Pironi,Ret,4,3,6,1,Ret,2,Ret,Ret,Ret,Ret,6,3,3,32
+6,René Arnoux,Ret,1,1,9,4,Ret,5,NC,Ret,9,2,10,Ret,7,29
+7,Elio de Angelis,Ret,2,Ret,Ret,10,9,Ret,Ret,16,6,Ret,4,10,4,13
+8,Jean-Pierre Jabouille,Ret,Ret,Ret,10,Ret,Ret,Ret,Ret,Ret,1,Ret,Ret,Ret,,9
+9,Riccardo Patrese,Ret,6,Ret,2,Ret,8,9,9,9,14,Ret,Ret,Ret,Ret,7
+10,Keke Rosberg,3,9,Ret,Ret,7,DNQ,Ret,DNQ,Ret,16,DNQ,5,9,10,6
+11,John Watson,Ret,11,11,4,NC,DNQ,7,8,Ret,Ret,Ret,Ret,4,NC,6
+12,Derek Daly,4,14,Ret,8,9,Ret,11,4,10,Ret,Ret,Ret,Ret,Ret,6
+13,Jean-Pierre Jarier,Ret,12,7,Ret,5,Ret,Ret,5,15,Ret,5,13,7,NC,6
+14,Gilles Villeneuve,Ret,16,Ret,Ret,6,5,8,Ret,6,8,7,Ret,5,Ret,6
+15,Emerson Fittipaldi,NC,15,8,3,Ret,6,Ret,12,Ret,11,Ret,Ret,Ret,Ret,5
+16,Alain Prost,6,5,DNS,,Ret,Ret,Ret,6,11,7,6,7,Ret,DNS,5
+17,Jochen Mass,Ret,10,6,7,Ret,4,10,13,8,DNQ,,,11,Ret,4
+18,Bruno Giacomelli,5,13,Ret,Ret,Ret,Ret,Ret,Ret,5,Ret,Ret,Ret,Ret,Ret,4
+19,Jody Scheckter,Ret,Ret,Ret,5,8,Ret,12,10,13,13,9,8,DNQ,11,2
+20,Mario Andretti,Ret,Ret,12,Ret,Ret,7,Ret,Ret,7,Ret,8,Ret,Ret,6,1
+21,Héctor Rebaque,,,,,,,,7,Ret,10,Ret,Ret,6,Ret,1
+—,Marc Surer,Ret,7,DNS,,,,Ret,Ret,12,12,10,Ret,DNQ,8,0
+—,Ricardo Zunino,7,8,10,Ret,Ret,DNQ,Ret,,,,,,,,0
+—,Rupert Keegan,,,,,,,,11,DNQ,15,DNQ,11,DNQ,9,0
+—,Clay Regazzoni,NC,Ret,9,Ret,,,,,,,,,,,0
+—,Jan Lammers,DNQ,DNQ,DNQ,Ret,12,NC,DNQ,DNQ,14,DNQ,DNQ,DNQ,12,Ret,0
+—,Eddie Cheever,DNQ,DNQ,Ret,Ret,DNQ,DNQ,Ret,Ret,Ret,Ret,Ret,12,Ret,Ret,0
+—,Geoff Lees,,,13,DNQ,DNQ,DNQ,DNQ,,,,Ret,DNQ,,DNQ,0
+—,Patrick Depailler,Ret,Ret,NC,Ret,Ret,Ret,Ret,Ret,,,,,,,0
+—,Nigel Mansell,,,,,,,,,,Ret,Ret,DNQ,,,0
+—,Vittorio Brambilla,,,,,,,,,,,Ret,Ret,,,0
+—,Andrea de Cesaris,,,,,,,,,,,,,Ret,Ret,0
+—,Mike Thackwell,,,,,,,,,,,DNQ,,Ret,DNQ,0
+—,Tiff Needell,,,,,Ret,DNQ,,,,,,,,,0
+—,David Kennedy,DNQ,DNQ,DNQ,DNQ,DNQ,DNQ,DNQ,,,,,,,,0
+—,Stefan Johansson,DNQ,DNQ,,,,,,,,,,,,,0
+—,Stephen South,,,,DNQ,,,,,,,,,,,0
+—,Desiré Wilson,,,,,,,,DNQ,,,,,,,0
+—,Harald Ertl,,,,,,,,,DNQ,,,,,,0
+—,Manfred Winkelhock,,,,,,,,,,,,DNQ,,,0
+—,Kevin Cogan,,,,,,,,,,,,,DNQ,,0
+Pos,Driver,ARG,BRA,RSA,USW,BEL,MON,FRA,GBR,GER,AUT,NED,ITA,CAN,USA,Pts

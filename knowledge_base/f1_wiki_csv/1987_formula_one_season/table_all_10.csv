@@ -1,0 +1,54 @@
+0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19
+Pos Constructor Car no. BRA SMR BEL MON DET FRA GBR GER HUN AUT ITA POR ESP MEX JPN AUS Pts 1  Williams-Honda 5 6P 1 RetP RetP 5P 1P 1F RetPF 14†P 1F 3 Ret 1 1P DNS 9† 137 6 2F DNS Ret 2 2 2F 2P 1 1F 2P 1P 3 4P 2F 15† Ret 2  McLaren-TAG 1 1 Ret 1F 9† 3 3 Ret 7† 3 6 14 1 2 Ret 7F Ret 76 2 3 4 2 Ret 7 8 Ret 2 Ret 7 6 5 3 Ret 3 Ret 3  Lotus-Honda 11 7 6† 5 10 Ret NC 4 Ret Ret 13 11 8 9 Ret 6 Ret 64 12 Ret 2P Ret 1F 1F 4 3 3 2 5 2F 7 5 Ret 2 DSQ 4  Ferrari 27 8† 3 Ret 3 Ret Ret Ret Ret Ret Ret Ret Ret 15† Ret 4 2 53 28 4 Ret Ret 4 4 Ret Ret Ret Ret Ret 4 2PF RetF Ret 1P 1PF 5  Benetton-Ford 19 Ret RetF Ret 8 Ret 5 6 Ret Ret 3 7 4† Ret 5 Ret Ret 28 20 5 Ret Ret Ret Ret Ret 7 Ret 4 4 5 14 16† Ret 5 3 6  Tyrrell-Ford 3 10 Ret Ret 5 11 7 8 5 7 14 14 10 Ret 7 8 4 11 4 11 8 9 Ret Ret 6 Ret 4 9 Ret 12 12 7 8 12 Ret 7  Arrows-Megatron 17 Ret 11† Ret Ret Ret Ret 5 Ret 6 Ret Ret 13 10 Ret 10 Ret 11 18 Ret Ret 4 Ret 6 Ret Ret Ret 8 Ret Ret 6 8† 4 9† Ret 8  Brabham-BMW 7 Ret 9 Ret Ret 9 Ret Ret Ret 5 Ret Ret Ret 13 3 11 Ret 10 8 Ret Ret 3† Ret Ret Ret Ret Ret Ret Ret Ret Ret Ret Ret Ret 8† 9  Lola-Ford 29 9 14 5* 3 30 10 8 Ret Ret Ret Ret 6 Ret 12 Ret Ret 6 6 Ret Ret 10  Zakspeed 9 Ret 5 Ret 7 Ret Ret NC NC Ret DSQ Ret Ret 11 Ret Ret Ret 2 10 9 7 Ret EX 8 Ret Ret Ret Ret 9 9 DNS Ret Ret Ret 7 11  Ligier-Megatron 25 DNS 6 11 10 Ret Ret Ret Ret 10 10 Ret Ret Ret Ret Ret 1 26 Ret 7† 12 Ret Ret EX Ret 12 8 8 Ret Ret Ret 13 Ret 12  AGS-Ford 14 12 13 10† 13 12 9 9 Ret 13 NC DNQ DNQ Ret DNQ Ret 6 1 13  March-Ford 16 DNS Ret Ret 6 Ret Ret Ret Ret 10 11 13 9 12 Ret Ret Ret 1 —  Minardi-Motori Moderni 23 DSQ Ret Ret DNS Ret Ret Ret Ret Ret Ret Ret Ret 14 Ret Ret Ret 0 24 Ret Ret Ret Ret Ret Ret Ret Ret 11 Ret 16 11† Ret Ret Ret Ret —  Osella-Alfa Romeo 21 Ret 12† Ret Ret Ret Ret Ret Ret Ret Ret Ret Ret DNQ Ret Ret DNQ 0 22 Ret Ret Ret DNQ —  Coloni-Ford 32 DNQ Ret 0 Pos Constructor Car no. BRA SMR BEL MON DET FRA GBR GER HUN AUT ITA POR ESP MEX JPN AUS Pts,"Key Colour Result Gold Winner Silver Second place Bronze Third place Green Other points position Blue Other classified position Not classified, finished (NC) Purple Not classified, retired (Ret) Red Did not qualify (DNQ) Black Disqualified (DSQ) White Did not start (DNS) Race cancelled (C) Blank Did not practice (DNP) Excluded (EX) Did not arrive (DNA) Withdrawn (WD) Did not enter (empty cell) Annotation Meaning P Pole position F Fastest lap",,,,,,,,,,,,,,,,,,
+Pos,Constructor,Car no.,BRA,SMR,BEL,MON,DET,FRA,GBR,GER,HUN,AUT,ITA,POR,ESP,MEX,JPN,AUS,Pts
+1,Williams-Honda,5,6P,1,RetP,RetP,5P,1P,1F,RetPF,14†P,1F,3,Ret,1,1P,DNS,9†,137
+1,Williams-Honda,6,2F,DNS,Ret,2,2,2F,2P,1,1F,2P,1P,3,4P,2F,15†,Ret,137
+2,McLaren-TAG,1,1,Ret,1F,9†,3,3,Ret,7†,3,6,14,1,2,Ret,7F,Ret,76
+2,McLaren-TAG,2,3,4,2,Ret,7,8,Ret,2,Ret,7,6,5,3,Ret,3,Ret,76
+3,Lotus-Honda,11,7,6†,5,10,Ret,NC,4,Ret,Ret,13,11,8,9,Ret,6,Ret,64
+3,Lotus-Honda,12,Ret,2P,Ret,1F,1F,4,3,3,2,5,2F,7,5,Ret,2,DSQ,64
+4,Ferrari,27,8†,3,Ret,3,Ret,Ret,Ret,Ret,Ret,Ret,Ret,Ret,15†,Ret,4,2,53
+4,Ferrari,28,4,Ret,Ret,4,4,Ret,Ret,Ret,Ret,Ret,4,2PF,RetF,Ret,1P,1PF,53
+5,Benetton-Ford,19,Ret,RetF,Ret,8,Ret,5,6,Ret,Ret,3,7,4†,Ret,5,Ret,Ret,28
+5,Benetton-Ford,20,5,Ret,Ret,Ret,Ret,Ret,7,Ret,4,4,5,14,16†,Ret,5,3,28
+6,Tyrrell-Ford,3,10,Ret,Ret,5,11,7,8,5,7,14,14,10,Ret,7,8,4,11
+6,Tyrrell-Ford,4,11,8,9,Ret,Ret,6,Ret,4,9,Ret,12,12,7,8,12,Ret,11
+7,Arrows-Megatron,17,Ret,11†,Ret,Ret,Ret,Ret,5,Ret,6,Ret,Ret,13,10,Ret,10,Ret,11
+7,Arrows-Megatron,18,Ret,Ret,4,Ret,6,Ret,Ret,Ret,8,Ret,Ret,6,8†,4,9†,Ret,11
+8,Brabham-BMW,7,Ret,9,Ret,Ret,9,Ret,Ret,Ret,5,Ret,Ret,Ret,13,3,11,Ret,10
+8,Brabham-BMW,8,Ret,Ret,3†,Ret,Ret,Ret,Ret,Ret,Ret,Ret,Ret,Ret,Ret,Ret,Ret,8†,10
+9,Lola-Ford,29,,,,,,,,,,,,,,9,14,5*,3
+9,Lola-Ford,30,,10,8,Ret,Ret,Ret,Ret,6,Ret,12,Ret,Ret,6,6,Ret,Ret,3
+10,Zakspeed,9,Ret,5,Ret,7,Ret,Ret,NC,NC,Ret,DSQ,Ret,Ret,11,Ret,Ret,Ret,2
+10,Zakspeed,10,9,7,Ret,EX,8,Ret,Ret,Ret,Ret,9,9,DNS,Ret,Ret,Ret,7,2
+11,Ligier-Megatron,25,,DNS,6,11,10,Ret,Ret,Ret,Ret,10,10,Ret,Ret,Ret,Ret,Ret,1
+11,Ligier-Megatron,26,,Ret,7†,12,Ret,Ret,EX,Ret,12,8,8,Ret,Ret,Ret,13,Ret,1
+12,AGS-Ford,14,12,13,10†,13,12,9,9,Ret,13,NC,DNQ,DNQ,Ret,DNQ,Ret,6,1
+13,March-Ford,16,DNS,Ret,Ret,6,Ret,Ret,Ret,Ret,10,11,13,9,12,Ret,Ret,Ret,1
+—,Minardi-Motori Moderni,23,DSQ,Ret,Ret,DNS,Ret,Ret,Ret,Ret,Ret,Ret,Ret,Ret,14,Ret,Ret,Ret,0
+—,Minardi-Motori Moderni,24,Ret,Ret,Ret,Ret,Ret,Ret,Ret,Ret,11,Ret,16,11†,Ret,Ret,Ret,Ret,0
+—,Osella-Alfa Romeo,21,Ret,12†,Ret,Ret,Ret,Ret,Ret,Ret,Ret,Ret,Ret,Ret,DNQ,Ret,Ret,DNQ,0
+—,Osella-Alfa Romeo,22,,Ret,,,,,,,,,Ret,Ret,DNQ,,,,0
+—,Coloni-Ford,32,,,,,,,,,,,DNQ,,Ret,,,,0
+Pos,Constructor,Car no.,BRA,SMR,BEL,MON,DET,FRA,GBR,GER,HUN,AUT,ITA,POR,ESP,MEX,JPN,AUS,Pts
+Key,Key,,,,,,,,,,,,,,,,,,
+Colour,Result,,,,,,,,,,,,,,,,,,
+Gold,Winner,,,,,,,,,,,,,,,,,,
+Silver,Second place,,,,,,,,,,,,,,,,,,
+Bronze,Third place,,,,,,,,,,,,,,,,,,
+Green,Other points position,,,,,,,,,,,,,,,,,,
+Blue,Other classified position,,,,,,,,,,,,,,,,,,
+Blue,"Not classified, finished (NC)",,,,,,,,,,,,,,,,,,
+Purple,"Not classified, retired (Ret)",,,,,,,,,,,,,,,,,,
+Red,Did not qualify (DNQ),,,,,,,,,,,,,,,,,,
+Black,Disqualified (DSQ),,,,,,,,,,,,,,,,,,
+White,Did not start (DNS),,,,,,,,,,,,,,,,,,
+White,Race cancelled (C),,,,,,,,,,,,,,,,,,
+Blank,Did not practice (DNP),,,,,,,,,,,,,,,,,,
+Blank,Excluded (EX),,,,,,,,,,,,,,,,,,
+Blank,Did not arrive (DNA),,,,,,,,,,,,,,,,,,
+Blank,Withdrawn (WD),,,,,,,,,,,,,,,,,,
+Blank,Did not enter (empty cell),,,,,,,,,,,,,,,,,,
+Annotation,Meaning,,,,,,,,,,,,,,,,,,
+P,Pole position,,,,,,,,,,,,,,,,,,
+F,Fastest lap,,,,,,,,,,,,,,,,,,

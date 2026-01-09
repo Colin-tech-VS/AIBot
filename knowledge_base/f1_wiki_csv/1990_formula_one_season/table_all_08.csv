@@ -1,0 +1,22 @@
+Key,Key
+Colour,Result
+Gold,Winner
+Silver,Second place
+Bronze,Third place
+Green,Other points position
+Blue,Other classified position
+Blue,"Not classified, finished (NC)"
+Purple,"Not classified, retired (Ret)"
+Red,Did not qualify (DNQ)
+Red,Did not pre-qualify (DNPQ)
+Black,Disqualified (DSQ)
+White,Did not start (DNS)
+White,Race cancelled (C)
+Blank,Did not practice (DNP)
+Blank,Excluded (EX)
+Blank,Did not arrive (DNA)
+Blank,Withdrawn (WD)
+Blank,Did not enter (empty cell)
+Annotation,Meaning
+P,Pole position
+F,Fastest lap

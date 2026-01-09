@@ -1,0 +1,37 @@
+Pos,Constructor,RSA,BRA,USW,SMR,BEL,MON,DET,CAN,NED,GBR,FRA,GER,AUT,SUI,ITA,CPL,Points
+1,Ferrari,Ret,Ret,DSQ,2,DNS,,,,8,3,4,1,4,DNS,2,DNS,74
+1,Ferrari,18,6,Ret,1F,DNS,2,3,9PF,1,2,3,DNSP,,,3P,Ret,74
+2,McLaren-Ford,6,2,6,,1F,Ret,1,3,9,Ret,Ret,Ret,9,13,4,2,69
+2,McLaren-Ford,4,Ret,1F,,DSQ,Ret,Ret,Ret,4,1,8,DNS,5,3,Ret,Ret,69
+3,Renault,1F,1PF,Ret,Ret,RetP,7,NCPF,Ret,Ret,6,2,Ret,8,2PF,Ret,4P,62
+3,Renault,3P,Ret,Ret,RetP,Ret,RetP,10,Ret,RetP,Ret,1P,2,Ret,16,1F,Ret,62
+4,Williams-Ford,2,Ret,Ret,,Ret,6,5,7,5,5,7,Ret,Ret,9,Ret,6,58
+4,Williams-Ford,5,DSQ,2,,2,Ret,4,Ret,3,RetP,5,3,2,1,8,5,58
+5,Lotus-Ford,8,Ret,5,,4,5,Ret,4,Ret,4,Ret,Ret,1,6,Ret,Ret,30
+5,Lotus-Ford,Ret,3,7,,Ret,4,Ret,Ret,DNQ,Ret,12,9,Ret,8,7,Ret,30
+6,Tyrrell-Ford,7,4,4,3,Ret,10,Ret,Ret,7,Ret,6,4,Ret,7,5,1F,25
+6,Tyrrell-Ford,16,7,10,Ret,Ret,8,9,NC,Ret,8F,10,7,Ret,11,Ret,8,25
+7,Brabham-BMW,Ret,,,,5,Ret,DNQ,1,2,Ret,Ret,RetF,RetPF,4,Ret,Ret,22
+7,Brabham-BMW,Ret,,,,Ret,,,,15,Ret,RetF,Ret,Ret,5,Ret,Ret,22
+8,Talbot Ligier-Matra,Ret,Ret,Ret,,3,Ret,2,10,DNQ,Ret,16,Ret,Ret,Ret,6,3,20
+8,Talbot Ligier-Matra,Ret,Ret,Ret,,9,Ret,6,Ret,Ret,Ret,14,Ret,3,Ret,Ret,Ret,20
+9,Brabham-Ford,,DSQ,Ret,,,,,,,,,,,,,,19
+9,Brabham-Ford,,Ret,3,,,1F,Ret,2,,,,,,,,,19
+10,Alfa Romeo,13,Ret,RetP,Ret,Ret,3,Ret,6,Ret,Ret,Ret,Ret,Ret,10,10,9,7
+10,Alfa Romeo,11,Ret,Ret,Ret,Ret,Ret,Ret,Ret,11,7,9,5,Ret,12,Ret,10,7
+11,Arrows-Ford,DNQ,DNQ,Ret,,7,9,8,5,10,Ret,13,6,Ret,15,Ret,7,5
+11,Arrows-Ford,DNQ,10,DNQ,,Ret,DNQ,Ret,8,6,9,Ret,Ret,6,DNQ,12,11,5
+12,ATS-Ford,10,5,Ret,DSQ,Ret,Ret,Ret,DNQ,12,DNQ,11,Ret,Ret,Ret,DNQ,NC,4
+12,ATS-Ford,9,Ret,Ret,5,Ret,Ret,Ret,Ret,13,DNQ,Ret,Ret,DNQ,14,9,DNQ,4
+13,Osella-Ford,Ret,9,Ret,4,Ret,DNQ,Ret,Ret,14,Ret,Ret,Ret,DNQ,Ret,Ret,DNS,3
+13,Osella-Ford,DNQ,DNPQ,DNQ,Ret,DNPQ,DNPQ,DNS,Ret,,,,,,,,,3
+14,Fittipaldi-Ford,17,Ret,DNQ,,6,DNPQ,11,DNQ,Ret,Ret,DNQ,11,7,DNQ,11,DNQ,1
+—,March-Ford,12,8,8,,Ret,DNQ,7,11,Ret,10,Ret,DNQ,Ret,Ret,DNQ,12,0
+—,March-Ford,15,Ret,9,,8,DNPQ,Ret,Ret,Ret,DNQ,DNQ,Ret,DNQ,Ret,DNQ,13,0
+—,March-Ford,,,,,DNPQ,DNPQ,DNQ,DNQ,DNPQ,,,,,,,,0
+—,Ensign-Ford,WD,DNQ,Ret,,DNQ,DNQ,Ret,Ret,DNQ,Ret,DNQ,8,Ret,Ret,NC,DNS,0
+—,Toleman-Hart,Ret,DNQ,DNPQ,Ret,Ret,DNQ,,,RetF,Ret,15,10,Ret,Ret,Ret,Ret,0
+—,Toleman-Hart,DNQ,DNQ,DNQ,NC,Ret,DNPQ,,,DNQ,Ret,Ret,DNQ,Ret,Ret,Ret,DNQ,0
+—,Theodore-Ford,14,Ret,Ret,,DNQ,DNQ,DNQ,Ret,Ret,DNQ,DNQ,DNQ,Ret,DNQ,DNQ,Ret,0
+Pos,Constructor,RSA,BRA,USW,SMR,BEL,MON,DET,CAN,NED,GBR,FRA,GER,AUT,SUI,ITA,CPL,Points
+Source:[133],Source:[133],Source:[133],Source:[133],Source:[133],Source:[133],Source:[133],Source:[133],Source:[133],Source:[133],Source:[133],Source:[133],Source:[133],Source:[133],Source:[133],Source:[133],Source:[133],Source:[133],Source:[133]

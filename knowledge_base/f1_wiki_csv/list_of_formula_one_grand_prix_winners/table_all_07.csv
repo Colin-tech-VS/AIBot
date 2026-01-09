@@ -1,0 +1,93 @@
+Year,Driver(s),Constructor(s),Wins,Races,Percentage
+1950,Juan Manuel Fangio,Alfa Romeo,3,7,42.86%
+1950,Giuseppe Farina,Alfa Romeo,3,7,42.86%
+1951,Juan Manuel Fangio,Alfa Romeo,3,8,37.50%
+1952,Alberto Ascari,Ferrari,6,8,75.00%
+1953,Alberto Ascari,Ferrari,5,9,55.56%
+1954,Juan Manuel Fangio,"Maserati, Mercedes",6,9,66.67%
+1955,Juan Manuel Fangio,Mercedes,4,7,57.14%
+1956,Juan Manuel Fangio,Ferrari,3,8,37.50%
+1957,Juan Manuel Fangio,Maserati,4,8,50.00%
+1958,Stirling Moss,Vanwall,4,11,36.36%
+1959,Jack Brabham,Cooper-Climax,2,9,22.22%
+1959,Tony Brooks,"Ferrari, Vanwall",2,9,22.22%
+1959,Stirling Moss,"Cooper-Climax, Cooper-BRM",2,9,22.22%
+1960,Jack Brabham,Cooper-Climax,5,10,50.00%
+1961,Phil Hill,Ferrari,2,8,25.00%
+1961,Wolfgang von Trips,Ferrari,2,8,25.00%
+1961,Stirling Moss,"Lotus-Climax, Ferguson-Climax",2,8,25.00%
+1962,Graham Hill,BRM,4,9,44.44%
+1963,Jim Clark,Lotus-Climax,7,10,70.00%
+1964,Jim Clark,Lotus-Climax,3,10,30.00%
+1965,Jim Clark,Lotus-Climax,6,10,60.00%
+1966,Jack Brabham,Brabham-Repco,4,9,44.44%
+1967,Jim Clark,Lotus-Ford,4,11,36.36%
+1968,Jackie Stewart,Matra-Ford,3,12,25.00%
+1968,Graham Hill,Lotus-Ford,3,12,25.00%
+1969,Jackie Stewart,Matra-Ford,6,11,54.55%
+1970,Jochen Rindt,Lotus-Ford,5,13,38.46%
+1971,Jackie Stewart,Tyrrell-Ford,6,11,54.55%
+1972,Emerson Fittipaldi,Lotus-Ford,5,12,41.67%
+1973,Jackie Stewart,Tyrrell-Ford,5,15,33.33%
+1974,Ronnie Peterson,Lotus-Ford,3,15,20.00%
+1974,Emerson Fittipaldi,McLaren-Ford,3,15,20.00%
+1974,Carlos Reutemann,Brabham-Ford,3,15,20.00%
+1975,Niki Lauda,Ferrari,5,14,35.71%
+1976,James Hunt,McLaren-Ford,6,16,37.50%
+1977,Mario Andretti,Lotus-Ford,4,17,23.53%
+1978,Mario Andretti,Lotus-Ford,6,16,37.50%
+1979,Alan Jones,Williams-Ford,4,15,26.67%
+1980,Alan Jones,Williams-Ford,5,14,35.71%
+1981,Nelson Piquet,Brabham-Ford,3,15,20.00%
+1981,Alain Prost,Renault,3,15,20.00%
+1982,Didier Pironi,Ferrari,2,16,12.50%
+1982,Alain Prost,Renault,2,16,12.50%
+1982,René Arnoux,Renault,2,16,12.50%
+1982,Niki Lauda,McLaren-Ford,2,16,12.50%
+1982,John Watson,McLaren-Ford,2,16,12.50%
+1983,Alain Prost,Renault,4,15,26.67%
+1984,Alain Prost,McLaren-TAG,7,16,43.75%
+1985,Alain Prost,McLaren-TAG,5,16,31.25%
+1986,Nigel Mansell,Williams-Honda,5,16,31.25%
+1987,Nigel Mansell,Williams-Honda,6,16,37.50%
+1988,Ayrton Senna,McLaren-Honda,8,16,50.00%
+1989,Ayrton Senna,McLaren-Honda,6,16,37.50%
+1990,Ayrton Senna,McLaren-Honda,6,16,37.50%
+1991,Ayrton Senna,McLaren-Honda,7,16,43.75%
+1992,Nigel Mansell,Williams-Renault,9,16,56.25%
+1993,Alain Prost,Williams-Renault,7,16,43.75%
+1994,Michael Schumacher,Benetton-Ford,8,16,50.00%
+1995,Michael Schumacher,Benetton-Renault,9,17,52.94%
+1996,Damon Hill,Williams-Renault,8,16,50.00%
+1997,Jacques Villeneuve,Williams-Renault,7,17,41.18%
+1998,Mika Häkkinen,McLaren-Mercedes,8,16,50.00%
+1999,Mika Häkkinen,McLaren-Mercedes,5,16,31.25%
+2000,Michael Schumacher,Ferrari,9,17,52.94%
+2001,Michael Schumacher,Ferrari,9,17,52.94%
+2002,Michael Schumacher,Ferrari,11,17,64.71%
+2003,Michael Schumacher,Ferrari,6,16,37.50%
+2004,Michael Schumacher,Ferrari,13,18,72.22%
+2005,Kimi Räikkönen,McLaren-Mercedes,7,19,36.84%
+2005,Fernando Alonso,Renault,7,19,36.84%
+2006,Michael Schumacher,Ferrari,7,18,38.89%
+2006,Fernando Alonso,Renault,7,18,38.89%
+2007,Kimi Räikkönen,Ferrari,6,17,35.29%
+2008,Felipe Massa,Ferrari,6,18,33.33%
+2009,Jenson Button,Brawn-Mercedes,6,17,35.29%
+2010,Fernando Alonso,Ferrari,5,19,26.32%
+2010,Sebastian Vettel,Red Bull-Renault,5,19,26.32%
+2011,Sebastian Vettel,Red Bull-Renault,11,19,57.89%
+2012,Sebastian Vettel,Red Bull-Renault,5,20,25.00%
+2013,Sebastian Vettel,Red Bull-Renault,13,19,68.42%
+2014,Lewis Hamilton,Mercedes,11,19,57.89%
+2015,Lewis Hamilton,Mercedes,10,19,52.63%
+2016,Lewis Hamilton,Mercedes,10,21,47.62%
+2017,Lewis Hamilton,Mercedes,9,20,45.00%
+2018,Lewis Hamilton,Mercedes,11,21,52.38%
+2019,Lewis Hamilton,Mercedes,11,21,52.38%
+2020,Lewis Hamilton,Mercedes,11,17,64.71%
+2021,Max Verstappen,Red Bull Racing-Honda,10,22,45.45%
+2022,Max Verstappen,Red Bull Racing-RBPT,15,22,68.18%
+2023,Max Verstappen,Red Bull Racing-Honda RBPT,19,22,86.36%
+2024,Max Verstappen,Red Bull Racing-Honda RBPT,9,24,37.50%
+2025,Max Verstappen,Red Bull Racing-Honda RBPT,8,24,33.33%

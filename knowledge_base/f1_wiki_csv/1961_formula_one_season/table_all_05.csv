@@ -1,0 +1,78 @@
+0,1,2,3,4,5,6,7,8,9,10
+Pos. Driver MON NED BEL FRA GBR GER ITA USA Pts. 1  Phil Hill 3 2P 1P 9PF 2P (3PF) 1 34 (38) 2  Wolfgang von Trips 4 1 2 Ret 1 2 RetP 33 3  Stirling Moss 1PF 4 8 Ret DSQ 1 Ret Ret 21 4  Dan Gurney 5 10 6 2 7 7 2 2 21 5  Richie Ginther 2F 5 3F 15 3 8 Ret 16 6  Innes Ireland DNS Ret 4 10 Ret Ret 1 12 7  Jim Clark 10 3F 12 3 Ret 4 Ret 7 11 8  Bruce McLaren 6 12 Ret 5 8 6 3 4 11 9  Giancarlo Baghetti 1 Ret RetF 9 10  Tony Brooks 13 9 13 Ret 9F Ret 5 3 6 11  Jack Brabham Ret 6 Ret Ret 4 Ret Ret RetPF 4 12  John Surtees 11 7 5 Ret Ret 5 Ret Ret 4 13  Olivier Gendebien DNQ 4 11 3 14  Jackie Lewis 9 Ret Ret 9 4 3 15  Jo Bonnier 12 11 7 7 5 Ret Ret 6 3 16  Graham Hill Ret 8 Ret 6 Ret Ret Ret 5 3 17  Roy Salvadori 8 6 10 6 Ret 2 —  Maurice Trintignant 7 Ret 13 Ret 9 0 —  Carel Godin de Beaufort 14 11 Ret 16 14 7 0 —  Lorenzo Bandini Ret 12 Ret 8 0 —  Cliff Allison 8 DNS 0 —  Roger Penske 8 0 —  Hans Herrmann 9 15 13 0 —  Peter Ryan 9 0 —  Masten Gregory DNQ DNS 10 12 11 Ret Ret 0 —  Henry Taylor DNQ DNS 10 Ret 11 0 —  Tim Parnell Ret 10 0 —  Hap Sharp 10 0 —  Tony Maggs 13 11 0 —  Michael May Ret 11 DNS 0 —  Ian Burgess DNS DNS 14 14 12 0 —  Renato Pirocchi 12 0 —  Trevor Taylor 13 0 —  Tony Marsh DNS Ret 15 0 —  Keith Greene 15 0 —  Gerry Ashmore Ret 16 Ret 0 —  Wolfgang Seidel DNS 17 Ret Ret 0 —  Bernard Collomb Ret NC 0 —  Lucien Bianchi DNQ Ret Ret Ret 0 —  Willy Mairesse Ret Ret Ret 0 —  Jack Fairman DSQ Ret 0 —  Giorgio Scarlatti Ret 0 —  Massimo Natili Ret 0 —  Ricardo Rodríguez Ret 0 —  Gaetano Starrabba Ret 0 —  Nino Vaccarella Ret 0 —  Roberto Bussinello Ret 0 —  Brian Naylor Ret 0 —  Roberto Lippi Ret 0 —  Jim Hall Ret 0 —  Lloyd Ruby Ret 0 —  Walt Hansgen Ret 0 —  André Pilette DNQ 0 Pos. Driver MON NED BEL FRA GBR GER ITA USA Pts,"Key Colour Result Gold Winner Silver Second place Bronze Third place Green Other points position Blue Other classified position Not classified, finished (NC) Purple Not classified, retired (Ret) Red Did not qualify (DNQ) Black Disqualified (DSQ) White Did not start (DNS) Race cancelled (C) Blank Did not practice (DNP) Excluded (EX) Did not arrive (DNA) Withdrawn (WD) Did not enter (empty cell) Annotation Meaning P Pole position F Fastest lap",,,,,,,,,
+Pos.,Driver,MON,NED,BEL,FRA,GBR,GER,ITA,USA,Pts.
+1,Phil Hill,3,2P,1P,9PF,2P,(3PF),1,,34 (38)
+2,Wolfgang von Trips,4,1,2,Ret,1,2,RetP,,33
+3,Stirling Moss,1PF,4,8,Ret,DSQ,1,Ret,Ret,21
+4,Dan Gurney,5,10,6,2,7,7,2,2,21
+5,Richie Ginther,2F,5,3F,15,3,8,Ret,,16
+6,Innes Ireland,DNS,,Ret,4,10,Ret,Ret,1,12
+7,Jim Clark,10,3F,12,3,Ret,4,Ret,7,11
+8,Bruce McLaren,6,12,Ret,5,8,6,3,4,11
+9,Giancarlo Baghetti,,,,1,Ret,,RetF,,9
+10,Tony Brooks,13,9,13,Ret,9F,Ret,5,3,6
+11,Jack Brabham,Ret,6,Ret,Ret,4,Ret,Ret,RetPF,4
+12,John Surtees,11,7,5,Ret,Ret,5,Ret,Ret,4
+13,Olivier Gendebien,DNQ,,4,,,,,11,3
+14,Jackie Lewis,,,9,Ret,Ret,9,4,,3
+15,Jo Bonnier,12,11,7,7,5,Ret,Ret,6,3
+16,Graham Hill,Ret,8,Ret,6,Ret,Ret,Ret,5,3
+17,Roy Salvadori,,,,8,6,10,6,Ret,2
+—,Maurice Trintignant,7,,Ret,13,,Ret,9,,0
+—,Carel Godin de Beaufort,,14,11,Ret,16,14,7,,0
+—,Lorenzo Bandini,,,Ret,,12,Ret,8,,0
+—,Cliff Allison,8,,DNS,,,,,,0
+—,Roger Penske,,,,,,,,8,0
+—,Hans Herrmann,9,15,,,,13,,,0
+—,Peter Ryan,,,,,,,,9,0
+—,Masten Gregory,DNQ,DNS,10,12,11,,Ret,Ret,0
+—,Henry Taylor,DNQ,,DNS,10,Ret,,11,,0
+—,Tim Parnell,,,,,Ret,,10,,0
+—,Hap Sharp,,,,,,,,10,0
+—,Tony Maggs,,,,,13,11,,,0
+—,Michael May,Ret,,,11,,DNS,,,0
+—,Ian Burgess,,DNS,DNS,14,14,12,,,0
+—,Renato Pirocchi,,,,,,,12,,0
+—,Trevor Taylor,,13,,,,,,,0
+—,Tony Marsh,,,DNS,,Ret,15,,,0
+—,Keith Greene,,,,,15,,,,0
+—,Gerry Ashmore,,,,,Ret,16,Ret,,0
+—,Wolfgang Seidel,,,DNS,,17,Ret,Ret,,0
+—,Bernard Collomb,,,,Ret,,NC,,,0
+—,Lucien Bianchi,DNQ,,Ret,Ret,Ret,,,,0
+—,Willy Mairesse,,,Ret,Ret,,Ret,,,0
+—,Jack Fairman,,,,,DSQ,,Ret,,0
+—,Giorgio Scarlatti,,,,Ret,,,,,0
+—,Massimo Natili,,,,,Ret,,,,0
+—,Ricardo Rodríguez,,,,,,,Ret,,0
+—,Gaetano Starrabba,,,,,,,Ret,,0
+—,Nino Vaccarella,,,,,,,Ret,,0
+—,Roberto Bussinello,,,,,,,Ret,,0
+—,Brian Naylor,,,,,,,Ret,,0
+—,Roberto Lippi,,,,,,,Ret,,0
+—,Jim Hall,,,,,,,,Ret,0
+—,Lloyd Ruby,,,,,,,,Ret,0
+—,Walt Hansgen,,,,,,,,Ret,0
+—,André Pilette,,,,,,,DNQ,,0
+Pos.,Driver,MON,NED,BEL,FRA,GBR,GER,ITA,USA,Pts
+Key,Key,,,,,,,,,
+Colour,Result,,,,,,,,,
+Gold,Winner,,,,,,,,,
+Silver,Second place,,,,,,,,,
+Bronze,Third place,,,,,,,,,
+Green,Other points position,,,,,,,,,
+Blue,Other classified position,,,,,,,,,
+Blue,"Not classified, finished (NC)",,,,,,,,,
+Purple,"Not classified, retired (Ret)",,,,,,,,,
+Red,Did not qualify (DNQ),,,,,,,,,
+Black,Disqualified (DSQ),,,,,,,,,
+White,Did not start (DNS),,,,,,,,,
+White,Race cancelled (C),,,,,,,,,
+Blank,Did not practice (DNP),,,,,,,,,
+Blank,Excluded (EX),,,,,,,,,
+Blank,Did not arrive (DNA),,,,,,,,,
+Blank,Withdrawn (WD),,,,,,,,,
+Blank,Did not enter (empty cell),,,,,,,,,
+Annotation,Meaning,,,,,,,,,
+P,Pole position,,,,,,,,,
+F,Fastest lap,,,,,,,,,
