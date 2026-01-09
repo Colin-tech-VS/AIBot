@@ -60,6 +60,13 @@ body {
   box-shadow: 0 2px 8px rgba(193, 154, 107, 0.15);
   width: 100vw;
   flex-shrink: 0;
+  transition: background 0.3s, box-shadow 0.3s;
+}
+
+/* Dark mode header */
+body.dark-mode .header {
+  background: linear-gradient(135deg, #1a1a1a 0%, #ff1801 50%, #1a1a1a 100%);
+  box-shadow: 0 2px 8px rgba(255, 24, 1, 0.2);
 }
 
 .header-top {
