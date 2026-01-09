@@ -52,6 +52,16 @@ function loadConversationsFromStorage() {
 function createConversation(fromHistory) {
   console.log('[createConversation] START', {count: conversations.length});
   
+  // Si pas d'historique fourni et qu'une conversation vide existe déjà, la charger
+  if (!fromHistory && conversations.length > 0) {
+    const existingEmpty = conversations.find(c => isConversationEmpty(c));
+    if (existingEmpty) {
+      console.log('[createConversation] Conversation vide existante trouvée, chargement:', {id: existingEmpty.id});
+      loadConversationIntoChat(existingEmpty.id);
+      return;
+    }
+  }
+  
   const conv = {
     id: uid(),
     title: fromHistory && fromHistory.title ? fromHistory.title : 'Nouvelle conversation',
@@ -65,6 +75,7 @@ function createConversation(fromHistory) {
   
   saveConversations();
   renderConversationList();
+  renderNavbarHistory();
   loadConversationIntoChat(conv.id);
   
   console.log('[createConversation] DONE');
@@ -88,6 +99,7 @@ function deleteConversation(id, silent = false) {
   }
   saveConversations();
   renderConversationList();
+  renderNavbarHistory();
   if (currentConversationId) loadConversationIntoChat(currentConversationId);
   else chatBox.innerHTML = `<div class="message-info"><p class="muted">Aucune conversation. Créez-en une.</p></div>`;
 }
@@ -105,6 +117,7 @@ function renameConversation(id) {
   conv.title = newTitle;
   saveConversations();
   renderConversationList();
+  renderNavbarHistory();
 }
 
 function addMessageToCurrentConversation(role, content) {
@@ -120,6 +133,7 @@ function addMessageToCurrentConversation(role, content) {
     if (isDefaultTitle) {
       conv.title = content.slice(0, 50);
       setConversationTitle(conv.title);
+      renderNavbarHistory();
     }
   }
   
@@ -200,6 +214,52 @@ function renderConversationList() {
     };
 
     historyContent.appendChild(item);
+  });
+}
+
+// Remplir l'historique dans la navbar
+function renderNavbarHistory() {
+  const navbarHistoryList = document.getElementById('navbarHistoryList');
+  if (!navbarHistoryList) return;
+  
+  navbarHistoryList.innerHTML = '';
+  if (!conversations || conversations.length === 0) {
+    navbarHistoryList.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">Aucune conversation</p>`;
+    return;
+  }
+  
+  conversations.forEach(conv => {
+    const item = document.createElement('button');
+    item.className = 'flex items-center gap-2 w-full p-2 rounded hover:bg-red-800 dark:hover:bg-red-900 transition text-left text-white text-sm group';
+    item.title = conv.title;
+    
+    const icon = document.createElement('svg');
+    icon.className = 'w-4 h-4 flex-shrink-0';
+    icon.setAttribute('fill', 'none');
+    icon.setAttribute('stroke', 'currentColor');
+    icon.setAttribute('viewBox', '0 0 24 24');
+    icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>';
+    
+    const textSpan = document.createElement('span');
+    textSpan.className = 'flex-1 truncate whitespace-nowrap overflow-hidden';
+    textSpan.textContent = conv.title;
+    
+    item.appendChild(icon);
+    item.appendChild(textSpan);
+    
+    // Bouton supprimer au hover
+    const delBtn = document.createElement('button');
+    delBtn.className = 'p-1 rounded hover:bg-red-700 text-white opacity-0 group-hover:opacity-100 transition flex-shrink-0';
+    delBtn.title = 'Supprimer';
+    delBtn.innerHTML = '<svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>';
+    delBtn.onclick = (e) => { e.stopPropagation(); deleteConversation(conv.id); };
+    item.appendChild(delBtn);
+    
+    item.onclick = () => {
+      loadConversationIntoChat(conv.id);
+    };
+    
+    navbarHistoryList.appendChild(item);
   });
 }
 
@@ -426,6 +486,7 @@ document.addEventListener("DOMContentLoaded", () => {
     })();
   } else {
     renderConversationList();
+    renderNavbarHistory();
     if (conversations.length>0) loadConversationIntoChat(conversations[0].id);
   }
   messageInput.focus();
