@@ -968,164 +968,80 @@ Réponds maintenant en continuant la conversation naturellement :"""
                 return f"🏎️ {name} {detail_text}"
 
         # ═══════════════════════════════════════════════════════════════
-        # CAS 1 : QUESTIONS F1 - CASCADE DE SOURCES
+        # CAS 1 : QUESTIONS F1 - COLLECTE DE CONTEXTE ET CASCADE
         # ═══════════════════════════════════════════════════════════════
         if is_f1:
-            print("[INFO] Pipeline F1 avec cascade de sources")
+            print("[INFO] Pipeline F1 optimisé")
+            
+            kb_content = None
+            ergast_summary = None
+            openf1_data = None
+            wiki_data = None
 
-            # ÉTAPE 1: Knowledge Base (prioritaire) - RECHERCHE EXHAUSTIVE
-            print("[INFO] Étape 1/5: Recherche Knowledge Base (exhaustive)")
-            kb = get_knowledge_base()
+            # ÉTAPE 1: Knowledge Base (toujours utile)
+            try:
+                kb = get_knowledge_base()
+                kb_results = kb.search(user_question, top_k=10)
+                if kb_results:
+                    kb_content = "\n\n".join(kb_results)[:3000]
+                    print(f"[INFO] KB: {len(kb_results)} résultats trouvés")
+            except Exception as e:
+                print(f"[WARN] KB search failed: {e}")
 
-            # Rechercher dans TOUS les documents de la KB (pas seulement top 2)
-            kb_results = kb.search(user_question, top_k=10)  # Augmenté à 10 pour plus de contexte
+            # ÉTAPE 2: Vérifier si besoin de classements/standings (Ergast)
+            if any(kw in q_lower for kw in ["classement", "standing", "points", "premier", "deuxieme", "leader"]):
+                try:
+                    results, standings_data = _get_ergast_data()
+                    if results or standings_data:
+                        ergast_summary = format_ergast_data(results, standings_data)
+                        print("[INFO] Standings Ergast récupérés")
+                except Exception as e:
+                    print(f"[WARN] Ergast failed: {e}")
 
-            if kb_results and len(kb_results) > 0:
-                # Combiner tous les résultats pertinents
-                kb_content = "\n\n".join(kb_results)
-                print(f"[INFO] KB: {len(kb_results)} résultats trouvés")
+            # ÉTAPE 3: Appel LLM avec le meilleur contexte possible
+            prompt = OptimizedPromptBuilder.build_f1_question(
+                question=user_question,
+                kb_content=kb_content,
+                standings=ergast_summary,
+                conversation_history=history_text,
+                long_term_context=lt_context
+            )
+            
+            response = call_ollama(prompt)
+            
+            # Si le LLM n'est pas sûr, on essaie de chercher sur le web (Wiki/OpenF1)
+            if not response or "désolé" in response.lower() or "pas d'info" in response.lower() or len(response) < 20:
+                print("[INFO] LLM incertain avec KB/Standings, tentative recherche web...")
+                
+                # Chercher Wikipedia
+                wiki_content = []
+                try:
+                    search_queries = [f"F1 {user_question}", user_question]
+                    for search_q in search_queries:
+                        wiki_params = {"list": "search", "srsearch": search_q, "srlimit": 3}
+                        data = fetch_wikimedia_api("query", params=wiki_params)
+                        if data and "query" in data and "search" in data["query"]:
+                            for r in data["query"]["search"]:
+                                wiki_content.append(f"{r['title']}: {r['snippet']}")
+                    wiki_data = " | ".join(wiki_content[:5])
+                except: pass
 
-                # Ne pas filtrer strictement - laisser le LLM décider
+                # Nouveau prompt avec recherche web
                 prompt = OptimizedPromptBuilder.build_f1_question(
                     question=user_question,
-                    kb_content=kb_content[:3000],  # Limiter à 3000 chars pour éviter overflow
+                    kb_content=kb_content,
+                    standings=ergast_summary,
+                    news_summary=wiki_data,
                     conversation_history=history_text,
                     long_term_context=lt_context
                 )
                 response = call_ollama(prompt)
-                if response and not response.startswith("[ERREUR") and len(response) > 10:
-                    print("[INFO] ✓ Réponse trouvée dans Knowledge Base")
-                    return response
 
-            print("[INFO] KB non pertinente ou vide, passage à OpenF1 API")
+            if response and not response.startswith("[ERREUR"):
+                return response
 
-            # ÉTAPE 2: OpenF1 API (données temps réel + historique) - EXHAUSTIF
-            print("[INFO] Étape 2/5: Tentative OpenF1 API (exhaustive)")
-            openf1_content = []
-            try:
-                # Récupérer plusieurs endpoints OpenF1
-                endpoints = [
-                    ("sessions", {"limit": 5}),
-                    ("drivers", {"limit": 10}),
-                    ("meetings", {"limit": 3}),
-                ]
-
-                for endpoint, params in endpoints:
-                    try:
-                        data = fetch_openf1_data(endpoint, params=params)
-                        if data and isinstance(data, list) and len(data) > 0:
-                            openf1_content.append(f"OpenF1 {endpoint}: {str(data)[:500]}")
-                            print(f"[INFO] ✓ OpenF1 {endpoint}: {len(data)} items")
-                    except Exception as e:
-                        print(f"[WARN] OpenF1 {endpoint} échouée: {e}")
-
-                if openf1_content:
-                    combined_openf1 = "\n".join(openf1_content)
-                    prompt = OptimizedPromptBuilder.build_f1_question(
-                        question=user_question,
-                        news_summary=combined_openf1[:2000],
-                        conversation_history=history_text,
-                        long_term_context=lt_context
-                    )
-                    response = call_ollama(prompt)
-                    if response and not response.startswith("[ERREUR") and len(response) > 10:
-                        return response
-            except Exception as e:
-                print(f"[WARN] OpenF1 API globale échouée: {e}")
-
-            print("[INFO] OpenF1 non pertinente, passage à Jolpica/Ergast")
-
-            # ÉTAPE 3: Jolpica/Ergast API (historique F1)
-            print("[INFO] Étape 3/5: Tentative Jolpica/Ergast API")
-            try:
-                results, standings_data = _get_ergast_data()
-                if results or standings_data:
-                    ergast_summary = format_ergast_data(results, standings_data)
-                    if ergast_summary and "indisponibles" not in ergast_summary:
-                        print("[INFO] ✓ Jolpica/Ergast data disponible")
-
-                        prompt = OptimizedPromptBuilder.build_f1_question(
-                            question=user_question,
-                            standings=ergast_summary,
-                            conversation_history=history_text,
-                            long_term_context=lt_context
-                        )
-                        response = call_ollama(prompt)
-                        if response and not response.startswith("[ERREUR"):
-                            return response
-            except Exception as e:
-                print(f"[WARN] Jolpica/Ergast échouée: {e}")
-
-            print("[INFO] Jolpica/Ergast non pertinente, passage à Wikipedia/Wikidata")
-
-            # ÉTAPE 4: Wikipedia/Wikidata API - EXHAUSTIF
-            print("[INFO] Étape 4/5: Tentative Wikipedia/Wikidata API (exhaustive)")
-            wiki_content = []
-            try:
-                # Recherche Wikipedia multiple
-                search_queries = [
-                    f"Formula 1 {user_question}",
-                    f"F1 {user_question}",
-                    user_question
-                ]
-
-                for search_q in search_queries:
-                    try:
-                        wiki_params = {
-                            "list": "search",
-                            "srsearch": search_q,
-                            "srlimit": 5
-                        }
-                        wiki_data = fetch_wikimedia_api("query", params=wiki_params)
-
-                        if wiki_data and "query" in wiki_data and "search" in wiki_data["query"]:
-                            search_results = wiki_data["query"]["search"]
-                            if len(search_results) > 0:
-                                for result in search_results[:3]:
-                                    wiki_content.append(f"{result['title']}: {result['snippet']}")
-                                print(f"[INFO] ✓ Wikipedia: {len(search_results)} résultats pour '{search_q[:30]}...'")
-                    except Exception as e:
-                        print(f"[WARN] Wikipedia search '{search_q[:30]}' échouée: {e}")
-
-                if wiki_content:
-                    wiki_text = " | ".join(wiki_content[:5])  # Top 5 résultats
-                    prompt = OptimizedPromptBuilder.build_f1_question(
-                        question=user_question,
-                        news_summary=wiki_text[:2000],
-                        conversation_history=history_text,
-                        long_term_context=lt_context
-                    )
-                    response = call_ollama(prompt)
-                    if response and not response.startswith("[ERREUR") and len(response) > 10:
-                        return response
-            except Exception as e:
-                print(f"[WARN] Wikipedia/Wikidata globale échouée: {e}")
-
-            print("[INFO] Wikipedia/Wikidata non pertinente, passage à Wikinews")
-
-            # ÉTAPE 5: Wikinews (actualités F1)
-            print("[INFO] Étape 5/5: Tentative Wikinews")
-            try:
-                wikinews_articles = fetch_wikinews_articles(language="fr")
-                if wikinews_articles and len(wikinews_articles) > 0:
-                    articles_text = " | ".join([f"{art['title']}" for art in wikinews_articles[:3]])
-                    print(f"[INFO] ✓ Wikinews data: {articles_text[:100]}...")
-
-                    prompt = OptimizedPromptBuilder.build_f1_question(
-                        question=user_question,
-                        news_summary=articles_text,
-                        conversation_history=history_text,
-                        long_term_context=lt_context
-                    )
-                    response = call_ollama(prompt)
-                    if response and not response.startswith("[ERREUR"):
-                        return response
-            except Exception as e:
-                print(f"[WARN] Wikinews échouée: {e}")
-
-            # Aucune source n'a répondu
-            print("[INFO] ✗ Aucune source n'a fourni de réponse")
-            return "Désolé, j'ai cherché partout mais je n'ai pas trouvé d'info sur ça... 😕 Tu peux reformuler ta question autrement ? Ou me demander autre chose sur la F1 ? 🏎️"
+            # Fallback final si toujours rien
+            return "Désolé, j'ai cherché dans ma base et sur le web mais je n'ai pas trouvé de détails précis sur ça... 😕 Tu peux me demander autre chose sur la F1 ? 🏎️"
 
         # ═══════════════════════════════════════════════════════════════
         # CAS 2 : QUESTIONS GÉNÉRALES (non-F1)

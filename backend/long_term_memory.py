@@ -182,47 +182,64 @@ class LongTermMemory:
     def _search_past_conversations(self, query: str, max_results: int = 3) -> str:
         """
         Cherche dans les conversations passées pour trouver des échanges similaires.
+        Amélioré avec une meilleure gestion des typos et de la pertinence.
         """
         if not self.all_conversations_file.exists():
             return ""
 
-        query_lower = query.lower()
-        query_words = set(query_lower.split())
+        def tokenize(text):
+            # Nettoyage et tokenisation simple
+            import re
+            text = re.sub(r'[^\w\s]', ' ', text.lower())
+            return set([t for t in text.split() if len(t) > 2])
+
+        query_words = tokenize(query)
+        if not query_words:
+            return ""
 
         relevant_conversations = []
 
         try:
             with open(self.all_conversations_file, "r", encoding="utf-8") as f:
-                # Lire les dernières N lignes pour performance
-                lines = f.readlines()[-100:]  # Dernières 100 conversations
+                # Lire les dernières 200 lignes pour plus de chance de trouver
+                lines = f.readlines()[-200:]
 
                 for line in lines:
                     try:
                         entry = json.loads(line)
-                        user_msg = entry.get("user", "").lower()
-
-                        # Calculer similarité simple (mots communs)
-                        user_words = set(user_msg.split())
-                        common_words = query_words.intersection(user_words)
-
-                        if len(common_words) >= 2:  # Au moins 2 mots en commun
+                        user_msg = entry.get("user", "")
+                        assistant_msg = entry.get("assistant", "")
+                        
+                        user_words = tokenize(user_msg)
+                        assistant_words = tokenize(assistant_msg)
+                        
+                        # Intersection avec les mots de l'utilisateur ET de l'assistant (contexte)
+                        common_user = query_words.intersection(user_words)
+                        common_assistant = query_words.intersection(assistant_words)
+                        
+                        score = len(common_user) * 2 + len(common_assistant)
+                        
+                        if score >= 2:  # Seuil de pertinence
                             relevant_conversations.append({
-                                "similarity": len(common_words),
-                                "user": entry.get("user"),
-                                "assistant": entry.get("assistant"),
+                                "score": score,
+                                "user": user_msg,
+                                "assistant": assistant_msg,
                                 "timestamp": entry.get("timestamp")
                             })
                     except json.JSONDecodeError:
                         continue
 
-            # Trier par similarité et prendre les meilleurs
-            relevant_conversations.sort(key=lambda x: x["similarity"], reverse=True)
+            # Trier par score et récence
+            relevant_conversations.sort(key=lambda x: x["score"], reverse=True)
             top_conversations = relevant_conversations[:max_results]
 
             # Formater
             result = []
             for conv in top_conversations:
-                result.append(f"User: {conv['user']}\nAssistant: {conv['assistant'][:150]}...")
+                # Tronquer si trop long pour économiser des tokens
+                user_part = conv['user'][:200]
+                assistant_part = conv['assistant'][:300]
+                result.append(f"Utilisateur: {user_part}\nIA: {assistant_part}")
 
             return "\n---\n".join(result)
 
