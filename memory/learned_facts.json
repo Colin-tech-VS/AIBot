@@ -1,0 +1,48 @@
+[
+  {
+    "type": "correction",
+    "user_input": "Non yves, il faut que tu retienne cela si jamais on te demande un jour",
+    "context": "Je vais m'assurer de garder ça pour toi, Yves ! N'hésite pas à me poser les questions, je suis là po",
+    "timestamp": "2026-01-09T14:19:12.449573"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Il s'agit de la première conversation avec Colin",
+    "timestamp": "2026-01-09T16:10:23.710902"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Le nom de l'utilisateur est Colin",
+    "timestamp": "2026-01-09T16:15:19.925744"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "La passion de Colin pour le F1 est importante",
+    "timestamp": "2026-01-09T16:15:19.926798"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Max Verstappen est le dernier champion du monde de Formule 1",
+    "timestamp": "2026-01-09T16:27:46.645155"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Max Verstappen a remporté son second titre consécutif en 2022",
+    "timestamp": "2026-01-09T16:27:46.647159"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "{\"facts\": [\"Max Verstappen est le dernier champion du monde de Formule 1\", \"Max Verstappen a remporté son second titre consécutif en 2022\"], \"preferences\": null}",
+    "timestamp": "2026-01-09T16:27:46.647159"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Max Verstappen est le dernier champion du monde de Formule 1",
+    "timestamp": "2026-01-09T16:30:39.869045"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Le dernier titre de champion de Formule 1 a été remporté en 2022",
+    "timestamp": "2026-01-09T16:30:39.869045"
+  }
+]

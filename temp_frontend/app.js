@@ -12,19 +12,6 @@ const sendBtn = document.getElementById("sendBtn");
 
 // État
 let isWaiting = false;
-let currentUser = null;
-let isLoginMode = true;
-
-// Références au DOM (Auth)
-const authModal = document.getElementById("authModal");
-const authForm = document.getElementById("authForm");
-const authModalTitle = document.getElementById("authModalTitle");
-const authSubmitBtn = document.getElementById("authSubmitBtn");
-const emailGroup = document.getElementById("emailGroup");
-const authUsernameInput = document.getElementById("authUsername");
-const authEmailInput = document.getElementById("authEmail");
-const authPasswordInput = document.getElementById("authPassword");
-const userInfo = document.getElementById("userInfo");
 
 // References to history UI (initialized on DOMContentLoaded)
 let historyPanel = null;
@@ -39,62 +26,9 @@ function uid() {
   return Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
 }
 
-async function syncConversationsWithServer() {
-  if (!currentUser) return;
-  
-  try {
-    const response = await fetch("/auth/sync_conversations", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${localStorage.getItem("token")}`
-      },
-      body: JSON.stringify(conversations)
-    });
-    
-    if (!response.ok) console.error("Échec de la synchronisation");
-  } catch (e) {
-    console.error("Erreur sync:", e);
-  }
-}
-
-async function loadConversationsFromServer() {
-  if (!currentUser) return;
-  
-  // On commence par charger ce qu'on a localement pour cet utilisateur spécifique
-  loadConversationsFromStorage();
-  renderConversationList();
-  if (conversations.length > 0) loadConversationIntoChat(conversations[0].id);
-
-  try {
-    const response = await fetch("/auth/conversations", {
-      headers: {
-        "Authorization": `Bearer ${localStorage.getItem("token")}`
-      }
-    });
-    
-    if (response.ok) {
-      const serverConvs = await response.json();
-      if (serverConvs.length > 0) {
-        conversations = serverConvs;
-        saveConversations();
-        renderConversationList();
-        if (conversations.length > 0) loadConversationIntoChat(conversations[0].id);
-      } else if (conversations.length === 0) {
-        // Si rien sur le serveur ET rien localement, créer une conv par défaut
-        createConversation();
-      }
-    }
-  } catch (e) {
-    console.error("Erreur chargement serveur:", e);
-  }
-}
-
 function saveConversations() {
   try {
-    const storageKey = currentUser ? `conversations_${currentUser}` : 'conversations_guest';
-    localStorage.setItem(storageKey, JSON.stringify(conversations));
-    if (currentUser) syncConversationsWithServer(); // Sync à chaque sauvegarde si connecté
+    localStorage.setItem('conversations', JSON.stringify(conversations));
   } catch (e) {
     console.error('Impossible de sauvegarder les conversations', e);
   }
@@ -102,12 +36,9 @@ function saveConversations() {
 
 function loadConversationsFromStorage() {
   try {
-    const storageKey = currentUser ? `conversations_${currentUser}` : 'conversations_guest';
-    const raw = localStorage.getItem(storageKey);
+    const raw = localStorage.getItem('conversations');
     if (raw) {
       conversations = JSON.parse(raw);
-    } else {
-      conversations = [];
     }
   } catch (e) {
     console.error('Erreur lecture conversations', e);
@@ -274,10 +205,7 @@ async function sendMessage(event) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ 
-        message: message,
-        conversation_id: currentConversationId || "default"
-      }),
+      body: JSON.stringify({ message: message }),
     });
 
     if (!response.ok) {
@@ -441,10 +369,29 @@ document.addEventListener("DOMContentLoaded", () => {
     console.error('Erreur initialisation UI:', e);
   }
 
-  // Initialiser le dark mode et les infos utilisateur (qui chargera les conversations)
-  initDarkMode();
-  initUserInfo();
-  
+  loadConversationsFromStorage();
+  if (!conversations || conversations.length === 0) {
+    (async () => {
+      try {
+        const res = await fetch('/history');
+        if (res.ok) {
+          const data = await res.json();
+          const msgs = data.history || [];
+          const messages = msgs.map(m => ({role: m.role, content: m.content, ts: Date.now()}));
+          if (messages.length>0) createConversation({title: 'Session serveur', messages});
+          else createConversation();
+        } else {
+          createConversation();
+        }
+      } catch (e) {
+        console.error('Impossible de récupérer /history pour initialiser', e);
+        createConversation();
+      }
+    })();
+  } else {
+    renderConversationList();
+    if (conversations.length>0) loadConversationIntoChat(conversations[0].id);
+  }
   messageInput.focus();
 
   messageInput.addEventListener("keydown", (e) => {
@@ -457,9 +404,15 @@ document.addEventListener("DOMContentLoaded", () => {
   const closeBtn = document.getElementById("closeHistoryBtn");
   const newConvBtn = document.getElementById("newConversationBtn");
   
+  console.log('[DOMContentLoaded] Binding buttons:', {
+    closeBtn: !!closeBtn,
+    newConvBtn: !!newConvBtn
+  });
+  
   if (closeBtn) {
     closeBtn.addEventListener("click", (e) => {
       e.preventDefault();
+      console.log('[closeBtn] clicked');
       closeHistoryPanel();
     });
   }
@@ -467,10 +420,15 @@ document.addEventListener("DOMContentLoaded", () => {
   if (newConvBtn) {
     newConvBtn.addEventListener('click', (e) => {
       e.preventDefault();
+      console.log('[newConvBtn in panel] clicked');
       createConversation();
       closeHistoryPanel();
     });
   }
+
+  // Initialiser le dark mode et les infos utilisateur
+  initDarkMode();
+  initUserInfo();
 });
 
 chatForm.addEventListener("submit", sendMessage);
@@ -562,262 +520,39 @@ function closeUserProfile() {
 }
 
 /**
- * Gestion de l'authentification réelle
+ * Gère la connexion utilisateur
  */
-function openAuthModal(mode = 'login') {
-  if (authModal) {
-    // Ajuster le mode avant d'ouvrir
-    if (mode === 'register' && isLoginMode) {
-      toggleAuthMode();
-    } else if (mode === 'login' && !isLoginMode) {
-      toggleAuthMode();
-    }
-    authModal.hidden = false;
+function handleLogin() {
+  const username = prompt("Entrez votre nom d'utilisateur :");
+  if (username && username.trim()) {
+    localStorage.setItem("username", username.trim());
+    updateUserInfo(username.trim());
   }
-  closeUserProfile();
-}
-
-function closeAuthModal() {
-  if (authModal) {
-    authModal.hidden = true;
-  }
-  if (authForm) authForm.reset();
-}
-
-function toggleAuthMode(e) {
-  if (e) e.preventDefault();
-  isLoginMode = !isLoginMode;
-  
-  authModalTitle.innerText = isLoginMode ? "Connexion" : "Inscription";
-  authSubmitBtn.innerText = isLoginMode ? "Se connecter" : "S'inscrire";
-  emailGroup.hidden = isLoginMode;
-  document.getElementById("authSwitchText").innerText = isLoginMode ? "Pas encore de compte ?" : "Déjà un compte ?";
-  document.getElementById("authSwitchLink").innerText = isLoginMode ? "S'inscrire" : "Se connecter";
-}
-
-async function handleAuthSubmit(e) {
-  e.preventDefault();
-  
-  const username = authUsernameInput.value;
-  const password = authPasswordInput.value;
-  const email = authEmailInput.value;
-  
-  const endpoint = isLoginMode ? "/auth/login" : "/auth/register";
-  const payload = isLoginMode ? { username, password } : { username, email, password };
-  
-  try {
-    const response = await fetch(endpoint, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload)
-    });
-    
-    const data = await response.json();
-    
-    if (!response.ok) {
-      throw new Error(data.detail || "Erreur d'authentification");
-    }
-    
-    if (isLoginMode) {
-      currentUser = data.username;
-      localStorage.setItem("token", data.access_token);
-      localStorage.setItem("username", data.username);
-      updateUserUI(); // On n'attend pas forcément ici car c'est de l'UI secondaire
-      closeAuthModal();
-      loadConversationsFromServer();
-      showNotification(`Bienvenue ${currentUser} !`, 'success');
-    } else {
-      showNotification("Compte créé avec succès !", 'success');
-      // Une fois inscrit, on tente la connexion automatique
-      isLoginMode = true;
-      // On ferme la modal après inscription pour éviter qu'elle reste si handleAuthSubmit est rappelé
-      // Mais handleAuthSubmit(e) va la rouvrir ou la garder car isLoginMode est true maintenant
-      // On va plutôt simuler le clic de connexion ou appeler directement la logique
-      handleAuthSubmit(e);
-    }
-  } catch (error) {
-    showNotification(error.message, 'error');
-  }
-}
-
-function handleLogout() {
-  localStorage.removeItem("token");
-  localStorage.removeItem("username");
-  currentUser = null;
-  
-  // Vider l'état des conversations
-  conversations = [];
-  currentConversationId = null;
-  chatBox.innerHTML = '<div class="message-info"><p class="muted">Déconnecté. Veuillez vous connecter pour voir vos conversations.</p></div>';
-  setConversationTitle("Non connecté");
-  
-  updateUserUI();
-  showNotification("Vous avez été déconnecté", 'info');
 }
 
 /**
- * Affiche une notification toast
+ * Met à jour l'affichage des infos utilisateur
  */
-function showNotification(message, type = 'info') {
-  let container = document.querySelector('.toast-container');
-  if (!container) {
-    container = document.createElement('div');
-    container.className = 'toast-container';
-    document.body.appendChild(container);
-  }
-
-  const toast = document.createElement('div');
-  toast.className = `toast ${type}`;
-  
-  let icon = 'ℹ️';
-  if (type === 'success') icon = '✅';
-  if (type === 'error') icon = '❌';
-
-  toast.innerHTML = `<span>${icon}</span><span>${message}</span>`;
-  container.appendChild(toast);
-
-  // Auto-remove after 3 seconds
-  setTimeout(() => {
-    toast.classList.add('fade-out');
-    setTimeout(() => {
-      toast.remove();
-      if (container.childNodes.length === 0) container.remove();
-    }, 300);
-  }, 3000);
-}
-
-async function updateUserUI() {
+function updateUserInfo(username) {
   const userInfo = document.getElementById("userInfo");
-  const securitySection = document.getElementById("securitySection");
-  const extraActionsSection = document.getElementById("extraActionsSection");
   if (!userInfo) return;
-  
-  if (currentUser) {
-    userInfo.innerHTML = `<p class="muted">Chargement de vos données...</p>`;
-    if (securitySection) securitySection.hidden = false;
-    if (extraActionsSection) extraActionsSection.hidden = false;
-
-    try {
-      const response = await fetch("/auth/me", {
-        headers: { "Authorization": `Bearer ${localStorage.getItem("token")}` }
-      });
-      if (response.ok) {
-        const data = await response.json();
-        const dateStr = new Date(data.created_at).toLocaleDateString('fr-FR', {
-          year: 'numeric', month: 'long', day: 'numeric'
-        });
-
-        userInfo.innerHTML = `
-          <div style="background: var(--bg-alt); padding: 1rem; border-radius: 8px; border: 1px solid var(--border); font-size: 0.9rem;">
-            <p style="margin-bottom: 5px;">👤 <strong>Nom:</strong> ${data.username}</p>
-            <p style="margin-bottom: 5px;">📧 <strong>Email:</strong> ${data.email}</p>
-            <p style="margin-bottom: 10px; font-size: 0.8rem; color: var(--fg-light);">📅 Membre depuis: ${dateStr}</p>
-            <div style="border-top: 1px solid var(--border); padding-top: 10px; margin-top: 5px;">
-              <p style="font-size: 0.75rem; color: var(--fg-light); margin-bottom: 10px;"><em>Conformément au RGPD, vous disposez d'un droit d'accès et de rectification de vos données.</em></p>
-              <button class="profile-btn logout-btn" onclick="handleLogout()" style="background:#ff4444; width: 100%;">Se déconnecter</button>
-            </div>
-          </div>
-        `;
-      } else {
-        userInfo.innerHTML = `<p>Connecté en tant que <strong>${currentUser}</strong></p>
-        <button class="profile-btn logout-btn" onclick="handleLogout()" style="background:#ff4444; margin-top:10px;">Se déconnecter</button>`;
-      }
-    } catch (e) {
-      console.error("Erreur recup user data:", e);
-      userInfo.innerHTML = `<p>Connecté en tant que <strong>${currentUser}</strong></p>
-      <button class="profile-btn logout-btn" onclick="handleLogout()" style="background:#ff4444; margin-top:10px;">Se déconnecter</button>`;
-    }
-  } else {
-    if (securitySection) securitySection.hidden = true;
-    if (extraActionsSection) extraActionsSection.hidden = true;
-    userInfo.innerHTML = `
-      <p class="muted">Non connecté</p>
-      <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 10px;">
-        <button id="loginBtn" class="profile-btn" onclick="openAuthModal('login')">Se connecter</button>
-        <button id="registerBtn" class="profile-btn" onclick="openAuthModal('register')" style="background: var(--bg-alt); color: var(--fg); border: 1px solid var(--border);">S'inscrire</button>
-      </div>
-    `;
-  }
-}
-
-async function handleChangePassword(e) {
-  e.preventDefault();
-  const old_password = document.getElementById("oldPassword").value;
-  const new_password = document.getElementById("newPassword").value;
-
-  try {
-    const response = await fetch("/auth/change-password", {
-      method: "POST",
-      headers: { 
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${localStorage.getItem("token")}`
-      },
-      body: JSON.stringify({ old_password, new_password })
-    });
-
-    const data = await response.json();
-    if (response.ok) {
-      showNotification("Mot de passe modifié avec succès !", "success");
-      e.target.reset();
-    } else {
-      throw new Error(data.detail || "Erreur lors du changement de mot de passe");
-    }
-  } catch (error) {
-    showNotification(error.message, "error");
-  }
+  userInfo.innerHTML = `
+    <p>Connecté en tant que <strong>${username}</strong></p>
+    <button class="profile-btn" onclick="handleLogout()">Se déconnecter</button>
+  `;
 }
 
 /**
- * Supprime le compte utilisateur après confirmation
+ * Gère la déconnexion utilisateur
  */
-async function handleDeleteAccount() {
-  const confirmed = confirm("⚠️ ÊTES-VOUS SÛR ? Cette action est irréversible et supprimera TOUTES vos conversations.");
-  if (!confirmed) return;
-
-  const doubleConfirmed = confirm("Dernière confirmation : Supprimer définitivement votre compte ?");
-  if (!doubleConfirmed) return;
-
-  try {
-    const response = await fetch("/auth/delete-account", {
-      method: "DELETE",
-      headers: { 
-        "Authorization": `Bearer ${localStorage.getItem("token")}`
-      }
-    });
-
-    if (response.ok) {
-      showNotification("Compte supprimé avec succès", "info");
-      handleLogout(); // Déconnexion et nettoyage local
-      closeUserProfile();
-    } else {
-      const data = await response.json();
-      throw new Error(data.detail || "Erreur lors de la suppression du compte");
-    }
-  } catch (error) {
-    showNotification(error.message, "error");
-  }
-}
-
-/**
- * Initialise les informations utilisateur au chargement
- */
-function initUserInfo() {
-  const savedUser = localStorage.getItem("username");
-  const savedToken = localStorage.getItem("token");
-  if (savedUser && savedToken) {
-    currentUser = savedUser;
-    loadConversationsFromServer();
-  } else {
-    currentUser = null;
-    loadConversationsFromStorage();
-    if (conversations.length === 0) {
-      createConversation();
-    } else {
-      renderConversationList();
-      loadConversationIntoChat(conversations[0].id);
-    }
-  }
-  updateUserUI();
+function handleLogout() {
+  localStorage.removeItem("username");
+  const userInfo = document.getElementById("userInfo");
+  if (!userInfo) return;
+  userInfo.innerHTML = `
+    <p class="muted">Non connecté</p>
+    <button class="profile-btn" onclick="handleLogin()">Se connecter</button>
+  `;
 }
 
 /**
@@ -874,4 +609,12 @@ function initDarkMode() {
   }
 }
 
-
+/**
+ * Initialise les infos utilisateur au chargement
+ */
+function initUserInfo() {
+  const username = localStorage.getItem("username");
+  if (username) {
+    updateUserInfo(username);
+  }
+}

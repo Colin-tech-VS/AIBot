@@ -16,7 +16,8 @@ class OptimizedPromptBuilder:
     SYSTEM_PROMPT = """Tu es un passionné de F1 qui adore partager ses connaissances de manière décontractée et enthousiaste.
 Réponds TOUJOURS en français, de façon naturelle et conversationnelle (comme si tu parlais à un pote).
 Utilise le tutoiement, sois concis (2-4 phrases max), mets en **gras** les infos importantes, et ajoute des emojis F1 quand ça colle ! 🏎️
-Si l'utilisateur demande un calcul (somme de victoires, écart de points, etc.) et que tu as les données dans le contexte, fais le calcul automatiquement."""
+Si l'utilisateur demande un calcul (somme de victoires, écart de points, pourcentage, etc.), utilise les données précises du contexte pour effectuer le calcul toi-même et donner le résultat exact.
+Note : La dernière saison complète est 2024, Max Verstappen est le champion en titre."""
     
     @staticmethod
     def get_current_date() -> str:
@@ -58,6 +59,7 @@ Si l'utilisateur demande un calcul (somme de victoires, écart de points, etc.) 
         kb_content: Optional[str] = None,
         conversation_history: Optional[str] = None,
         long_term_context: Optional[str] = None,
+        username: Optional[str] = None,
     ) -> str:
         """
         Construire prompt minimal pour questions F1
@@ -68,8 +70,12 @@ Si l'utilisateur demande un calcul (somme de victoires, écart de points, etc.) 
         parts = [
             OptimizedPromptBuilder.SYSTEM_PROMPT,
             f"Nous sommes le {OptimizedPromptBuilder.get_current_date()}.",
-            "",
         ]
+
+        if username:
+            parts.append(f"L'utilisateur s'appelle {username}. Utilise son nom de temps en temps pour personnaliser la réponse.")
+        
+        parts.append("")
 
         # Ajouter la mémoire long terme (préférences, faits appris)
         if long_term_context:
@@ -156,14 +162,19 @@ Synthétise une réponse brève en français :\n"""
         question: str,
         conversation_history: Optional[str] = None,
         long_term_context: Optional[str] = None,
+        username: Optional[str] = None,
     ) -> str:
         """Prompt pour questions générales non-F1"""
         parts = [
             "Tu es un assistant intelligent et polyvalent, mais avec une personnalité de passionné de F1.",
             "Réponds en français, de manière naturelle et amicale.",
             f"Nous sommes le {OptimizedPromptBuilder.get_current_date()}.",
-            "",
         ]
+
+        if username:
+            parts.append(f"L'utilisateur s'appelle {username}. Utilise son nom de temps en temps.")
+        
+        parts.append("")
 
         if long_term_context:
             parts.extend(["=== MÉMOIRE ===", long_term_context, ""])
@@ -178,6 +189,19 @@ Synthétise une réponse brève en français :\n"""
             "Réponse directe et utile :"
         ])
         return "\n".join(parts)
+
+    @staticmethod
+    def build_fact_extraction_prompt(user_message: str, assistant_response: str) -> str:
+        """Prompt pour extraire des faits et préférences d'un échange."""
+        return f"""Analyse cet échange et extrais uniquement les NOUVEAUX faits importants sur l'utilisateur ou ses préférences.
+Si rien de nouveau n'est appris, réponds "RIEN".
+Si des infos sont apprises, réponds au format JSON: {{"facts": ["fait 1", "fait 2"], "preferences": {{"cle": "valeur"}}}}
+
+ÉCHANGE :
+Utilisateur: {user_message}
+Assistant: {assistant_response}
+
+Extraction :"""
 
 
 class PromptTemplates:

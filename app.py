@@ -6,20 +6,25 @@ Compatible: Windows, macOS, Linux
 """
 
 import requests
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, BackgroundTasks, Depends
 from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
-from typing import List, Literal
+from typing import List, Literal, Dict
 import os
 from pathlib import Path
 import subprocess
 import threading
 
-from backend.f1_bot import answer_f1_question
+from backend.f1_bot import answer_f1_question, perform_background_learning
 from backend.knowledge_base import get_knowledge_base, reload_knowledge_base, KnowledgeDoc
 from backend.optimized_prompts import ConversationMemory
+from backend.auth.routes import router as auth_router, get_current_user
+from backend.auth.database import init_db
+
+# Initialisation de la base de données au démarrage
+init_db()
 
 # Nouveaux routers (architecture améliorée)
 # from app_new.routers import chat_router, session_router, prompt_router
@@ -90,6 +95,7 @@ class HistoryItem(BaseModel):
 
 class ChatMessage(BaseModel):
     message: str
+    conversation_id: str = "default"
 
 class ChatResponse(BaseModel):
     user_message: str
@@ -100,8 +106,17 @@ class ChatResponse(BaseModel):
 # HISTORIQUE & MÉMOIRE CONVERSATIONNELLE
 # -----------------------------------------------------------------------------
 
-chat_history: List[HistoryItem] = []
+# Dictionnaire des historiques par user_id puis conversation_id
+# sessions_history[user_id][conv_id] = list of messages
+sessions_history: Dict[int, Dict[str, List[HistoryItem]]] = {}
 MAX_HISTORY = 6  # 3 derniers échanges max
+
+def get_history_for_session(user_id: int, conv_id: str) -> List[HistoryItem]:
+    if user_id not in sessions_history:
+        sessions_history[user_id] = {}
+    if conv_id not in sessions_history[user_id]:
+        sessions_history[user_id][conv_id] = []
+    return sessions_history[user_id][conv_id]
 
 # Mémoire conversationnelle persistante
 conversation_memory = ConversationMemory(max_history=10, memory_file="conversation_memory.json")
@@ -110,6 +125,7 @@ conversation_memory = ConversationMemory(max_history=10, memory_file="conversati
 # ENREGISTREMENT DES NOUVEAUX ROUTERS (ARCHITECTURE AMÉLIORÉE)
 # -----------------------------------------------------------------------------
 # Ces routers ajoutent des fonctionnalités sans casser l'ancien système
+app.include_router(auth_router)
 # app.include_router(chat_router.router)      # /api/chat/v2 - Chat avec sessions
 # app.include_router(session_router.router)   # /session/* - Gestion sessions
 # app.include_router(prompt_router.router)    # /prompt/* - Debug prompts
@@ -146,43 +162,58 @@ async def index(request: Request):
     )
 
 @app.post("/chat", response_model=ChatResponse)
-async def chat(chat_msg: ChatMessage):
+async def chat(chat_msg: ChatMessage, background_tasks: BackgroundTasks, current_user = Depends(get_current_user)):
     user_message = chat_msg.message.strip()
+    conv_id = chat_msg.conversation_id
+    
     if not user_message:
         return JSONResponse(status_code=400, content={"detail": "Message vide"})
 
+    # Récupérer l'ID utilisateur (0 si non connecté)
+    user_id = current_user.get("user_id") if current_user else 0
+    username = current_user.get("username") if current_user else None
+
+    # Récupérer l'historique spécifique à cet utilisateur et cette session
+    current_history = get_history_for_session(user_id, conv_id)
+
     try:
         # Appeler le pipeline F1 (news + stats + Ollama) avec historique
-        # rag_only=None : utilise la config globale RAG_ONLY; pour forcer, passer True/False
-        bot_response = answer_f1_question(user_message, history=chat_history, rag_only=None)
+        bot_response = answer_f1_question(user_message, history=current_history, rag_only=None, username=username)
     except Exception as exc:
         return JSONResponse(status_code=500, content={"detail": f"Erreur backend: {exc}"})
 
     # Historique en mémoire (session)
-    chat_history.append(HistoryItem(role="user", content=user_message))
-    chat_history.append(HistoryItem(role="assistant", content=bot_response))
-    if len(chat_history) > MAX_HISTORY:
-        chat_history[:] = chat_history[-MAX_HISTORY:]
+    current_history.append(HistoryItem(role="user", content=user_message))
+    current_history.append(HistoryItem(role="assistant", content=bot_response))
+    if len(current_history) > MAX_HISTORY:
+        if user_id not in sessions_history:
+            sessions_history[user_id] = {}
+        sessions_history[user_id][conv_id] = current_history[-MAX_HISTORY:]
 
-    # Mémoire persistante (fichier JSON)
+    # Mémoire persistante (fichier JSON global pour apprentissage)
     conversation_memory.add_to_memory(user_message, bot_response)
+
+    # Lancer l'apprentissage automatique en arrière-plan
+    background_tasks.add_task(perform_background_learning, user_message, bot_response)
 
     return ChatResponse(
         user_message=user_message,
         bot_response=bot_response,
-        history=chat_history
+        history=current_history
     )
 
 @app.get("/history")
-async def get_history():
-    return {"history": chat_history}
+async def get_history(conversation_id: str = "default", current_user = Depends(get_current_user)):
+    user_id = current_user.get("user_id") if current_user else 0
+    return {"history": get_history_for_session(user_id, conversation_id)}
 
 @app.post("/clear_history")
-async def clear_history():
-    chat_history.clear()
-    conversation_memory.history.clear()
-    conversation_memory.save_memory()
-    return {"message": "Historique effacé (session et mémoire persistante)", "history": chat_history}
+async def clear_history(conversation_id: str = "default", current_user = Depends(get_current_user)):
+    user_id = current_user.get("user_id") if current_user else 0
+    if user_id in sessions_history and conversation_id in sessions_history[user_id]:
+        sessions_history[user_id][conversation_id].clear()
+    
+    return {"message": f"Historique '{conversation_id}' effacé pour l'utilisateur {user_id}", "history": []}
 
 # -----------------------------------------------------------------------------
 # Knowledge Base Endpoints
@@ -236,6 +267,11 @@ async def reload_kb():
         }
     except Exception as e:
         return JSONResponse(status_code=500, content={"error": f"Erreur lors du rechargement: {str(e)}"})
+
+@app.get("/memory/summary")
+async def get_memory_summary():
+    from backend.long_term_memory import long_term_memory
+    return long_term_memory.get_learning_summary()
 
 # -----------------------------------------------------------------------------
 # Health check

@@ -845,9 +845,49 @@ def _format_history(history) -> str:
     return "\n".join(lines)
 
 
-def answer_f1_question(user_question: str, history=None, rag_only: Optional[bool] = None) -> str:
+def perform_background_learning(user_message: str, assistant_response: str):
+    """Extrait des connaissances de l'échange via le LLM en arrière-plan."""
+    try:
+        from backend.optimized_prompts import OptimizedPromptBuilder
+        from backend.long_term_memory import long_term_memory
+        import json
+
+        prompt = OptimizedPromptBuilder.build_fact_extraction_prompt(user_message, assistant_response)
+        raw_response = call_ollama(prompt)
+
+        if not raw_response or "RIEN" in raw_response.upper():
+            return
+
+        # Tentative de parser le JSON
+        try:
+            # Nettoyer la réponse si le LLM a ajouté du texte avant/après
+            start = raw_response.find("{")
+            end = raw_response.rfind("}") + 1
+            if start != -1 and end != 0:
+                json_str = raw_response[start:end]
+                data = json.loads(json_str)
+                
+                if "facts" in data and isinstance(data["facts"], list):
+                    for fact in data["facts"]:
+                        long_term_memory.add_learned_fact_from_llm(fact)
+                
+                if "preferences" in data and isinstance(data["preferences"], dict):
+                    long_term_memory.update_preferences_from_llm(data["preferences"])
+                    
+                print(f"[INFO] Apprentissage réussi : {len(data.get('facts', []))} faits, {len(data.get('preferences', {}))} prefs")
+        except Exception as e:
+            # Si pas JSON, peut-être juste du texte
+            if len(raw_response) > 10 and len(raw_response) < 200:
+                long_term_memory.add_learned_fact_from_llm(raw_response)
+                print(f"[INFO] Apprentissage (texte) : {raw_response}")
+
+    except Exception as e:
+        print(f"[WARN] Erreur lors de l'apprentissage en arrière-plan : {e}")
+
+
+def answer_f1_question(user_question: str, history=None, rag_only: Optional[bool] = None, username: Optional[str] = None) -> str:
     """Entry point for answering questions with long term memory storage."""
-    response = _answer_f1_question_internal(user_question, history, rag_only)
+    response = _answer_f1_question_internal(user_question, history, rag_only, username)
     
     # Stocker dans la mémoire long terme
     if response and not response.startswith("❌") and not response.startswith("[ERREUR"):
@@ -856,7 +896,7 @@ def answer_f1_question(user_question: str, history=None, rag_only: Optional[bool
     return response
 
 
-def _answer_f1_question_internal(user_question: str, history=None, rag_only: Optional[bool] = None) -> str:
+def _answer_f1_question_internal(user_question: str, history=None, rag_only: Optional[bool] = None, username: Optional[str] = None) -> str:
     """
     Pipeline optimisé avec cascade de sources stricte:
 
@@ -1042,7 +1082,7 @@ Réponds maintenant en continuant la conversation naturellement :"""
                 print(f"[WARN] KB search failed: {e}")
 
             # ÉTAPE 2: Vérifier si besoin de classements/standings (Ergast)
-            if any(kw in q_lower for kw in ["classement", "standing", "points", "premier", "deuxieme", "leader"]):
+            if any(kw in q_lower for kw in ["classement", "standing", "points", "premier", "deuxieme", "leader", "champion", "victoire", "gagné", "gagne"]):
                 try:
                     results, standings_data = _get_ergast_data()
                     if results or standings_data:
@@ -1057,7 +1097,8 @@ Réponds maintenant en continuant la conversation naturellement :"""
                 kb_content=kb_content,
                 standings=ergast_summary,
                 conversation_history=history_text,
-                long_term_context=lt_context
+                long_term_context=lt_context,
+                username=username
             )
             
             response = call_ollama(prompt)
@@ -1086,7 +1127,8 @@ Réponds maintenant en continuant la conversation naturellement :"""
                     standings=ergast_summary,
                     news_summary=wiki_data,
                     conversation_history=history_text,
-                    long_term_context=lt_context
+                    long_term_context=lt_context,
+                    username=username
                 )
                 response = call_ollama(prompt)
 
@@ -1113,13 +1155,15 @@ Réponds maintenant en continuant la conversation naturellement :"""
                     question=user_question,
                     kb_content=kb_content,
                     conversation_history=history_text,
-                    long_term_context=lt_context
+                    long_term_context=lt_context,
+                    username=username
                 )
             else:
                 prompt = OptimizedPromptBuilder.build_general_question(
                     question=user_question,
                     conversation_history=history_text,
-                    long_term_context=lt_context
+                    long_term_context=lt_context,
+                    username=username
                 )
             
             response = call_ollama(prompt)
@@ -1137,7 +1181,8 @@ Réponds maintenant en continuant la conversation naturellement :"""
         prompt = OptimizedPromptBuilder.build_f1_question(
             question=user_question,
             conversation_history=history_text,
-            long_term_context=lt_context
+            long_term_context=lt_context,
+            username=username
         )
         
         response = call_ollama(prompt)
@@ -1147,8 +1192,12 @@ Réponds maintenant en continuant la conversation naturellement :"""
         # Détecter les salutations pour une réponse de secours chaleureuse
         q_lower_check = user_question.lower()
         if any(salut in q_lower_check for salut in ["bonjour", "salut", "hello", "hi", "hey", "coucou"]):
+            if username:
+                return f"Salut {username} ! 👋 Ravi de te revoir. Je suis ton assistant F1 personnel. Tu veux qu'on parle de quoi ? Le dernier GP ? Les classements ? Un pilote en particulier ? 🏎️💨"
             return "Salut ! 👋 Content de te voir ! Je suis ton assistant F1 personnel. Tu veux qu'on parle de quoi ? Le dernier GP ? Les classements ? Un pilote en particulier ? 🏎️💨"
 
+        if username:
+            return f"Hey {username} ! Je suis spécialisé dans la Formule 1. Si tu as des questions sur les pilotes, les courses, les circuits, les classements... je suis ton expert ! Qu'est-ce qui t'intéresse ? 😊🏁"
         return "Hey ! Je suis spécialisé dans la Formule 1. Si tu as des questions sur les pilotes, les courses, les circuits, les classements... je suis ton expert ! Qu'est-ce qui t'intéresse ? 😊🏁"
 
     except Exception as exc:

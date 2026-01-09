@@ -140,6 +140,23 @@ class LongTermMemory:
         }
         self._save_json(self.custom_knowledge_file, self.custom_knowledge)
 
+    def add_learned_fact_from_llm(self, fact_text: str):
+        """Ajoute un fait appris via le LLM."""
+        self.learned_facts.append({
+            "type": "llm_extracted",
+            "content": fact_text,
+            "timestamp": datetime.now().isoformat()
+        })
+        self.learned_facts = self.learned_facts[-200:] # Plus de place pour les faits LLM
+        self._save_json(self.learned_facts_file, self.learned_facts)
+
+    def update_preferences_from_llm(self, prefs: Dict):
+        """Met à jour les préférences via des données structurées LLM."""
+        for k, v in prefs.items():
+            self.user_preferences[k] = v
+        self.user_preferences["last_updated"] = datetime.now().isoformat()
+        self._save_json(self.user_preferences_file, self.user_preferences)
+
     def get_relevant_context(self, current_question: str, max_items: int = 5) -> str:
         """
         Récupère le contexte pertinent de la mémoire long terme.

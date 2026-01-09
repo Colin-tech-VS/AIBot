@@ -79,24 +79,9 @@
         <div class="profile-section">
           <h4>Compte</h4>
           <div id="userInfo" class="user-info">
-            <p class="muted">Chargement...</p>
+            <p class="muted">Non connecté</p>
+            <button id="loginBtn" class="profile-btn" onclick="handleLogin()">Se connecter</button>
           </div>
-        </div>
-
-        <!-- Section Sécurité (affichée si connecté) -->
-        <div id="securitySection" class="profile-section" hidden>
-          <h4>Sécurité</h4>
-          <form id="changePasswordForm" onsubmit="handleChangePassword(event)" style="display: flex; flex-direction: column; gap: 10px;">
-            <div class="form-group" style="margin-bottom: 5px;">
-              <label for="oldPassword" style="font-size: 0.8rem;">Ancien mot de passe</label>
-              <input type="password" id="oldPassword" required style="padding: 0.5rem;">
-            </div>
-            <div class="form-group" style="margin-bottom: 5px;">
-              <label for="newPassword" style="font-size: 0.8rem;">Nouveau mot de passe</label>
-              <input type="password" id="newPassword" required style="padding: 0.5rem;">
-            </div>
-            <button type="submit" class="profile-btn" style="padding: 0.5rem; font-size: 0.8rem; background: var(--bg-alt); border: 1px solid var(--border); color: var(--fg);">Changer le mot de passe</button>
-          </form>
         </div>
 
         <!-- Section apparence -->
@@ -109,43 +94,6 @@
               <span class="toggle-text">Mode sombre</span>
             </label>
           </div>
-        </div>
-
-        <!-- Section Actions supplémentaires -->
-        <div id="extraActionsSection" class="profile-section" style="border-top: 1px solid var(--border); padding-top: 1rem; margin-top: 0.5rem;" hidden>
-          <button class="profile-btn" onclick="toggleHistoryPanel(); closeUserProfile();" style="background: var(--bg-alt); border: 1px solid var(--border); color: var(--fg); width: 100%; margin-bottom: 10px;">📜 Accéder à l'historique</button>
-          <button class="profile-btn" onclick="handleDeleteAccount()" style="background: transparent; border: 1px solid #ff4444; color: #ff4444; width: 100%; font-size: 0.8rem;">⚠️ Supprimer le compte</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Modale Authentification -->
-    <div id="authModal" class="modal" hidden>
-      <div class="modal-content">
-        <div class="modal-header">
-          <h3 id="authModalTitle">Connexion</h3>
-          <button class="close-btn" onclick="closeAuthModal()">✖</button>
-        </div>
-        <div class="modal-body">
-          <form id="authForm" onsubmit="handleAuthSubmit(event)">
-            <div class="form-group">
-              <label for="authUsername">Nom d'utilisateur</label>
-              <input type="text" id="authUsername" required>
-            </div>
-            <div id="emailGroup" class="form-group" hidden>
-              <label for="authEmail">Email</label>
-              <input type="email" id="authEmail">
-            </div>
-            <div class="form-group">
-              <label for="authPassword">Mot de passe</label>
-              <input type="password" id="authPassword" required>
-            </div>
-            <button type="submit" id="authSubmitBtn" class="auth-submit-btn">Se connecter</button>
-          </form>
-          <p class="auth-switch">
-            <span id="authSwitchText">Pas encore de compte ?</span>
-            <a href="#" id="authSwitchLink" onclick="toggleAuthMode(event)">S'inscrire</a>
-          </p>
         </div>
       </div>
     </div>
