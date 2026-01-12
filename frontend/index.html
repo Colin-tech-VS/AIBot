@@ -63,19 +63,19 @@
   <body class="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 h-screen overflow-hidden">
     <div class="flex h-full">
       <!-- Navbar collapsible -->
-      <nav id="mainNavbar" class="bg-red-900 dark:bg-slate-800 border-r border-red-950 dark:border-slate-700 flex flex-col py-4 shadow-sm overflow-hidden fixed lg:relative left-0 top-0 h-full z-40 -translate-x-full lg:translate-x-0">
+      <nav id="mainNavbar" class="bg-[#E10600] dark:bg-red-900 border-r border-[#B30400] dark:border-red-950 flex flex-col py-4 shadow-sm overflow-hidden fixed lg:relative left-0 top-0 h-full z-40 -translate-x-full lg:translate-x-0">
         <!-- Header avec emoji F1 et titre -->
-        <div class="px-6 py-4 flex items-center gap-3 border-b border-red-800 dark:border-slate-700">
+        <div class="px-6 py-4 flex items-center gap-3 border-b border-red-800 dark:border-red-800">
           <button class="text-2xl hover:opacity-80 transition" onclick="toggleNavbar()" title="Ouvrir/Fermer menu">🏎️</button>
           <span class="text-white font-semibold whitespace-nowrap overflow-hidden" data-navbar-text>AIBot F1</span>
-          <button id="navToggleBtn" class="p-2 rounded-lg hover:bg-red-800 dark:hover:bg-slate-700 transition text-white lg:hidden ml-auto" onclick="closeNavbar()">
+          <button id="navToggleBtn" class="p-2 rounded-lg hover:bg-red-800 dark:hover:bg-red-800 transition text-white lg:hidden ml-auto" onclick="closeNavbar()">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
           </button>
         </div>
 
         <!-- Boutons de navigation -->
-        <div class="flex flex-col gap-2 px-4 py-4 border-b border-red-800 dark:border-slate-700">
-          <button id="newConvNavBtn" class="flex items-center gap-3 p-3 rounded-lg hover:bg-red-800 dark:hover:bg-slate-700 transition text-white text-left" onclick="createConversation()" data-navbar-button>
+        <div class="flex flex-col gap-2 px-4 py-4 border-b border-red-800 dark:border-red-800">
+          <button id="newConvNavBtn" class="flex items-center gap-3 p-3 rounded-lg hover:bg-red-800 dark:hover:bg-red-800 transition text-white text-left" onclick="createConversation()" data-navbar-button>
             <svg class="w-6 h-6 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
             <span data-navbar-text class="whitespace-nowrap overflow-hidden">Nouvelle discussion</span>
           </button>
@@ -90,8 +90,8 @@
         </div>
 
         <!-- Bouton paramètres en bas -->
-        <div class="px-4 py-6 border-t border-red-800 dark:border-slate-700">
-          <button id="userProfileBtn" class="flex items-center gap-3 p-3 rounded-lg hover:bg-red-800 dark:hover:bg-slate-700 transition text-white w-full text-left" onclick="openUserProfile()" data-navbar-button>
+        <div class="px-4 py-6 border-t border-red-800 dark:border-red-800">
+          <button id="userProfileBtn" class="flex items-center gap-3 p-3 rounded-lg hover:bg-red-800 dark:hover:bg-red-800 transition text-white w-full text-left" onclick="openUserProfile()" data-navbar-button>
             <svg class="w-6 h-6 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
             <span data-navbar-text class="whitespace-nowrap overflow-hidden">Paramètres</span>
           </button>
@@ -118,14 +118,14 @@
           </h1>
           
           <div class="w-full max-w-2xl">
-            <form id="chatForm" onsubmit="sendMessage(event)" class="bg-red-900 dark:bg-slate-700 rounded-full shadow-2xl flex items-center px-6 py-4 border border-red-800 dark:border-slate-600">
+            <form id="chatForm" onsubmit="sendMessage(event)" class="bg-[#E10600] dark:bg-red-900 rounded-full shadow-2xl flex items-center px-6 py-4 border border-[#B30400] dark:border-red-800">
               <input
                 type="text"
                 id="messageInput"
                 placeholder="Poser une question"
                 required
                 autocomplete="off"
-                class="flex-1 bg-transparent text-white placeholder-red-200 dark:placeholder-red-300 outline-none text-base focus:outline-none"
+                class="flex-1 bg-transparent text-white placeholder-white dark:placeholder-white outline-none text-base focus:outline-none"
               />
               
               <button type="submit" id="sendBtn" class="ml-3 p-2 rounded-full bg-white hover:bg-slate-200 dark:bg-white dark:hover:bg-slate-200 text-slate-900 transition disabled:opacity-50" aria-label="Envoyer">
@@ -181,7 +181,7 @@
         <!-- Section données -->
         <div>
           <h4 class="font-semibold text-slate-900 dark:text-white mb-3">Données</h4>
-          <button id="clearHistoryBtn" class="w-full px-4 py-2 rounded-lg bg-red-600 hover:bg-red-700 text-white transition text-sm font-medium" onclick="clearAllHistory()">Supprimer tout l'historique</button>
+          <button id="clearHistoryBtn" class="w-full px-4 py-2 rounded-lg bg-[#E10600] hover:bg-[#B30400] text-white transition text-sm font-medium" onclick="clearAllHistory()">Supprimer tout l'historique</button>
         </div>
       </div>
     </div>

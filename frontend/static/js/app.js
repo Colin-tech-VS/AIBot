@@ -356,15 +356,19 @@ async function sendMessage(event) {
  */
 function displayMessage(text, role = "user", opts = {save: true}) {
   const messageDiv = document.createElement("div");
-  messageDiv.className = `flex ${role === "user" ? "justify-end" : "justify-start"}`;
+  messageDiv.className = `flex ${role === "user" ? "justify-end" : "justify-start"} mb-2`;
 
   const bubble = document.createElement("div");
   const baseClass = `max-w-xs lg:max-w-md xl:max-w-lg px-4 py-2 rounded-lg text-sm`;
-  const roleClass = role === "user" 
-    ? "bg-red-900 text-white rounded-br-none" 
-    : "bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white rounded-bl-none";
   
-  bubble.className = `${baseClass} ${roleClass}`;
+  if (role === "user") {
+    bubble.className = `${baseClass} text-white rounded-br-none user-message-bubble`;
+    const isDarkMode = document.documentElement.classList.contains("dark");
+    bubble.style.backgroundColor = isDarkMode ? "#7b1b1e" : "#E10600";
+  } else {
+    const roleClass = "bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white rounded-bl-none";
+    bubble.className = `${baseClass} ${roleClass}`;
+  }
   
   let htmlContent = text
     .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" class="underline font-semibold hover:opacity-80">$1</a>')
@@ -746,6 +750,12 @@ function handleLogout() {
 function toggleDarkMode() {
   const isDarkMode = document.documentElement.classList.toggle("dark");
   localStorage.setItem("darkMode", isDarkMode);
+  
+  // Mettre à jour la couleur de tous les messages utilisateurs existants
+  const userBubbles = document.querySelectorAll('.user-message-bubble');
+  userBubbles.forEach(bubble => {
+    bubble.style.backgroundColor = isDarkMode ? "#7b1b1e" : "#E10600";
+  });
 }
 
 /**
