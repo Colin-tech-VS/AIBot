@@ -13,6 +13,7 @@ from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
 from typing import List, Literal
 import os
+import sys
 from pathlib import Path
 
 from backend.f1_bot import answer_f1_question
@@ -52,27 +53,27 @@ OLLAMA_PATH = None
 for path in OLLAMA_PATHS:
     if path == "ollama":
         OLLAMA_PATH = "ollama"
-        print(f"✓ Ollama: utilisant PATH variable")
+        print(f"[OK] Ollama: utilisant PATH variable")
         break
     elif isinstance(path, Path) and path.exists():
         OLLAMA_PATH = str(path)
-        print(f"✓ Ollama trouvé : {OLLAMA_PATH}")
+        print(f"[OK] Ollama trouve : {OLLAMA_PATH}")
         break
 
 if OLLAMA_PATH is None:
-    print("⚠️  ATTENTION: Ollama.exe non trouvé aux chemins connus")
-    print("   Chemins vérifiés :")
+    print("[WARN] Ollama.exe non trouve aux chemins connus")
+    print("   Chemins verifies :")
     for p in OLLAMA_PATHS[:-1]:
         print(f"   - {p}")
     print("   Veuillez ajouter le chemin correct dans OLLAMA_PATHS")
-    OLLAMA_PATH = OLLAMA_PATHS[0]  # Utiliser le chemin par défaut de toute façon
+    OLLAMA_PATH = OLLAMA_PATHS[0]  # Utiliser le chemin par defaut de toute facon
 
 # Montage des fichiers statiques
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 app.mount("/image", StaticFiles(directory=IMAGE_DIR), name="image")
 templates = Jinja2Templates(directory=TEMPLATES_DIR)
 
-# ⚠️ URL API Ollama (Windows par défaut)
+# URL API Ollama (Windows par defaut)
 OLLAMA_URL = "http://127.0.0.1:11434/api/generate"
 OLLAMA_MODEL = "llama3.2:3b"
 
@@ -239,6 +240,72 @@ async def health_check():
     }
 
 # -----------------------------------------------------------------------------
+# Knowledge Base Management
+# -----------------------------------------------------------------------------
+
+@app.post("/api/kb/add-folder")
+async def add_folder_to_kb(request: Request):
+    """Ajouter un dossier a la Knowledge Base avec conversion automatique vers ChromaDB"""
+    try:
+        data = await request.json()
+        folder_path = data.get("folder_path", "")
+
+        if not folder_path:
+            return JSONResponse({"success": False, "error": "Aucun chemin de dossier fourni"}, status_code=400)
+
+        folder = Path(folder_path)
+        if not folder.exists():
+            return JSONResponse({"success": False, "error": "Le dossier n'existe pas"}, status_code=400)
+
+        if not folder.is_dir():
+            return JSONResponse({"success": False, "error": "Le chemin doit etre un dossier"}, status_code=400)
+
+        # Importer le processeur
+        sys.path.insert(0, str(BASE_DIR / "scripts"))
+        from import_folder_to_kb import process_folder_to_kb
+
+        result = process_folder_to_kb(str(folder))
+
+        if result["status"] == "success":
+            return JSONResponse({
+                "success": True,
+                "message": f"{result['count']} documents ajoutes avec succes",
+                "count": result["count"],
+                "total_in_db": result.get("total_in_db", 0)
+            })
+        else:
+            return JSONResponse({
+                "success": False,
+                "error": result.get("message", "Erreur inconnue")
+            }, status_code=500)
+
+    except Exception as e:
+        return JSONResponse({"success": False, "error": str(e)}, status_code=500)
+
+
+@app.get("/api/kb/stats")
+async def get_kb_stats():
+    """Obtenir les statistiques de la Knowledge Base"""
+    try:
+        kb = get_knowledge_base()
+
+        # Statistiques par categorie
+        categories = {}
+        for doc in kb.docs.values():
+            categories[doc.category] = categories.get(doc.category, 0) + 1
+
+        return JSONResponse({
+            "success": True,
+            "total_documents": len(kb.docs),
+            "chromadb_active": kb.use_chromadb,
+            "chromadb_count": kb.collection.count() if kb.collection else 0,
+            "categories": categories
+        })
+    except Exception as e:
+        return JSONResponse({"success": False, "error": str(e)}, status_code=500)
+
+
+# -----------------------------------------------------------------------------
 # MAIN
 # -----------------------------------------------------------------------------
 
@@ -246,9 +313,9 @@ if __name__ == "__main__":
     import uvicorn
 
     print("=" * 60)
-    print("🤖 Chatbot Ollama Local - FASTAPI (OPTIMISÉ)")
-    print(f"🚀 http://localhost:8000")
-    print(f"🧠 Modèle : {OLLAMA_MODEL}")
+    print("Chatbot Ollama Local - FASTAPI (OPTIMISE)")
+    print(f"URL: http://localhost:8000")
+    print(f"Modele : {OLLAMA_MODEL}")
     print("=" * 60)
 
     # Disable automatic reload by default to avoid infinite restart loops

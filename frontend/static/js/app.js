@@ -773,3 +773,132 @@ function initUserInfo() {
     updateUserInfo(username);
   }
 }
+
+/**
+ * Affiche une notification toast
+ */
+function showToast(message, isSuccess = true) {
+  const toast = document.getElementById("toast");
+  const toastMessage = document.getElementById("toastMessage");
+  const toastDiv = toast.querySelector("div");
+
+  toastMessage.textContent = message;
+
+  // Changer la couleur selon succès ou erreur
+  if (isSuccess) {
+    toastDiv.className = "bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg flex items-center gap-3";
+  } else {
+    toastDiv.className = "bg-red-600 text-white px-6 py-3 rounded-lg shadow-lg flex items-center gap-3";
+  }
+
+  // Afficher le toast
+  toast.classList.remove("translate-x-full");
+
+  // Masquer après 3 secondes
+  setTimeout(() => {
+    toast.classList.add("translate-x-full");
+  }, 3000);
+}
+
+/**
+ * Gère le drag over
+ */
+function handleDragOver(event) {
+  event.preventDefault();
+  event.stopPropagation();
+  const dropZone = document.getElementById("kbDropZone");
+  dropZone.classList.add("border-blue-500", "dark:border-blue-400", "bg-blue-50", "dark:bg-blue-900/20");
+}
+
+/**
+ * Gère le drag leave
+ */
+function handleDragLeave(event) {
+  event.preventDefault();
+  event.stopPropagation();
+  const dropZone = document.getElementById("kbDropZone");
+  dropZone.classList.remove("border-blue-500", "dark:border-blue-400", "bg-blue-50", "dark:bg-blue-900/20");
+}
+
+/**
+ * Gère le drop de fichiers/dossiers
+ */
+async function handleDrop(event) {
+  event.preventDefault();
+  event.stopPropagation();
+
+  const dropZone = document.getElementById("kbDropZone");
+  dropZone.classList.remove("border-blue-500", "dark:border-blue-400", "bg-blue-50", "dark:bg-blue-900/20");
+
+  const items = event.dataTransfer.items;
+  if (!items || items.length === 0) return;
+
+  // Récupérer le premier dossier déposé
+  for (let i = 0; i < items.length; i++) {
+    const item = items[i].webkitGetAsEntry();
+    if (item && item.isDirectory) {
+      await processDroppedFolder(item.fullPath);
+      return;
+    }
+  }
+
+  showToast("Veuillez déposer un dossier", false);
+}
+
+/**
+ * Gère la sélection de dossier via input
+ */
+async function handleFolderSelect(event) {
+  const files = event.target.files;
+  if (!files || files.length === 0) return;
+
+  // Le navigateur ne donne pas le chemin absolu pour des raisons de sécurité
+  // On demande à l'utilisateur d'entrer le chemin complet
+  const folderPath = prompt("Entrez le chemin complet du dossier:");
+  if (!folderPath) return;
+
+  await processDroppedFolder(folderPath);
+}
+
+/**
+ * Traite un dossier déposé
+ */
+async function processDroppedFolder(folderPath) {
+  const dropZone = document.getElementById("kbDropZone");
+  const originalHTML = dropZone.innerHTML;
+
+  // Afficher un spinner
+  dropZone.innerHTML = `
+    <div class="flex flex-col items-center gap-3">
+      <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+      <p class="text-sm text-slate-700 dark:text-slate-300">Importation en cours...</p>
+    </div>
+  `;
+
+  try {
+    const response = await fetch("/api/kb/add-folder", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ folder_path: folderPath })
+    });
+
+    const data = await response.json();
+
+    if (data.success) {
+      showToast(`Ajouté sur ChromaDB (${data.count} documents)`, true);
+    } else {
+      showToast(data.error || "Erreur lors de l'importation", false);
+    }
+  } catch (error) {
+    showToast("Erreur lors de l'importation", false);
+  } finally {
+    dropZone.innerHTML = originalHTML;
+  }
+}
+
+// Initialisation au chargement de la page
+document.addEventListener("DOMContentLoaded", () => {
+  initDarkMode();
+  initUserInfo();
+  loadConversations();
+});

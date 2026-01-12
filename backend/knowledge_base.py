@@ -14,7 +14,6 @@ import csv
 # Essayer importer chromadb, sinon utiliser recherche simple
 try:
     import chromadb
-    from chromadb.config import Settings
     CHROMADB_AVAILABLE = True
 except ImportError:
     CHROMADB_AVAILABLE = False
@@ -61,36 +60,36 @@ class KnowledgeBase:
     def _init_chromadb(self):
         """Initialize ChromaDB for embeddings"""
         try:
-            settings = Settings(
-                chroma_db_impl="duckdb",
-                persist_directory=str(KB_DIR / "chroma"),
-                anonymized_telemetry=False,
+            # Configuration moderne ChromaDB 1.4.0+
+            self.client = chromadb.PersistentClient(
+                path=str(KB_DIR / "chroma")
             )
-            self.client = chromadb.Client(settings)
             self.collection = self.client.get_or_create_collection(
                 name="f1_knowledge",
                 metadata={"hnsw:space": "cosine"}
             )
-            print("[INFO] ChromaDB initialized for knowledge base")
+            doc_count = self.collection.count()
+            print(f"[INFO] ChromaDB initialized: {doc_count} documents in collection")
         except Exception as e:
             print(f"[WARN] ChromaDB init failed: {e}. Using simple search.")
             self.use_chromadb = False
     
     
-    def add_document(self, doc: KnowledgeDoc):
+    def add_document(self, doc: KnowledgeDoc, skip_chromadb: bool = False):
         """Ajouter un document à la knowledge base"""
         self.docs[doc.doc_id] = doc
-        
-        if self.use_chromadb and self.collection:
+
+        # Ne pas ajouter à ChromaDB si skip_chromadb=True (car déjà persisté)
+        if not skip_chromadb and self.use_chromadb and self.collection:
             try:
-                self.collection.add(
+                # Utiliser upsert pour éviter les erreurs de doublons
+                self.collection.upsert(
                     ids=[doc.doc_id],
                     documents=[doc.content],
                     metadatas=[{"title": doc.title, "category": doc.category}]
                 )
-                print(f"[INFO] Document ajouté à ChromaDB: {doc.title}")
             except Exception as e:
-                print(f"[WARN] ChromaDB add failed: {e}")
+                print(f"[WARN] ChromaDB upsert failed for {doc.title}: {e}")
     
     def search(self, query: str, top_k: int = 3) -> List[str]:
         """Rechercher des documents pertinents"""
@@ -162,6 +161,31 @@ class KnowledgeBase:
         """
         if not kb_dir.exists():
             return
+
+        # Si ChromaDB est actif et contient déjà des documents, charger depuis ChromaDB
+        if self.use_chromadb and self.collection and self.collection.count() > 0:
+            print(f"[INFO] Chargement depuis ChromaDB ({self.collection.count()} documents)")
+            try:
+                # Récupérer tous les documents de ChromaDB
+                results = self.collection.get(
+                    include=["documents", "metadatas"]
+                )
+                if results and results["ids"]:
+                    for i, doc_id in enumerate(results["ids"]):
+                        content = results["documents"][i]
+                        metadata = results["metadatas"][i]
+                        title = metadata.get("title", doc_id)
+                        category = metadata.get("category", "custom")
+                        doc = KnowledgeDoc(doc_id, title, content, category)
+                        # Ajouter au dict local SANS re-ajouter à ChromaDB
+                        self.add_document(doc, skip_chromadb=True)
+                    print(f"[INFO] {len(results['ids'])} documents chargés depuis ChromaDB")
+                    return
+            except Exception as e:
+                print(f"[WARN] Erreur chargement depuis ChromaDB: {e}")
+                print("[INFO] Chargement depuis fichiers CSV...")
+
+        # Sinon, charger depuis les fichiers CSV/MD
         # 1) Fichiers Markdown
         for md_file in kb_dir.glob("*.md"):
             try:
@@ -173,8 +197,9 @@ class KnowledgeBase:
                 print(f"[INFO] Fichier markdown chargé: {md_file.name}")
             except Exception as e:
                 print(f"[WARN] Erreur lecture {md_file.name}: {e}")
-        
+
         # 2) Fichiers CSV (schéma simple)
+        total_csv_docs = 0
         for csv_file in kb_dir.glob("*.csv"):
             try:
                 with csv_file.open("r", encoding="utf-8", newline="") as f:
@@ -182,7 +207,6 @@ class KnowledgeBase:
                     fieldnames = [h.strip() for h in (reader.fieldnames or [])]
                     required = {"id", "title", "content"}
                     if not fieldnames or not required.issubset(set(fieldnames)):
-                        print(f"[WARN] Schéma CSV invalide dans {csv_file.name}. Colonnes requises: id,title,content[,category]")
                         continue
                     count = 0
                     for row in reader:
@@ -194,9 +218,12 @@ class KnowledgeBase:
                             continue
                         self.add_document(KnowledgeDoc(doc_id, title, content, category))
                         count += 1
-                    print(f"[INFO] Fichier CSV chargé: {csv_file.name} ({count} documents)")
+                    total_csv_docs += count
             except Exception as e:
                 print(f"[WARN] Échec chargement CSV {csv_file.name}: {e}")
+
+        if total_csv_docs > 0:
+            print(f"[INFO] Total: {total_csv_docs} documents chargés depuis fichiers CSV")
     
     def export_json(self, output_file: Path):
         """Exporter knowledge base en JSON"""

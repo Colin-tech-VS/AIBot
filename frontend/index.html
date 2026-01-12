@@ -61,6 +61,16 @@
     </style>
   </head>
   <body class="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 h-screen overflow-hidden">
+    <!-- Toast notification -->
+    <div id="toast" class="fixed top-4 right-4 z-50 transform translate-x-full transition-transform duration-300">
+      <div class="bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg flex items-center gap-3">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+        </svg>
+        <span id="toastMessage">Ajouté sur ChromaDB</span>
+      </div>
+    </div>
+
     <div class="flex h-full">
       <!-- Navbar collapsible -->
       <nav id="mainNavbar" class="bg-red-900 dark:bg-slate-800 border-r border-red-950 dark:border-slate-700 flex flex-col py-4 shadow-sm overflow-hidden fixed lg:relative left-0 top-0 h-full z-40 -translate-x-full lg:translate-x-0">
@@ -182,6 +192,40 @@
         <div>
           <h4 class="font-semibold text-slate-900 dark:text-white mb-3">Données</h4>
           <button id="clearHistoryBtn" class="w-full px-4 py-2 rounded-lg bg-red-600 hover:bg-red-700 text-white transition text-sm font-medium" onclick="clearAllHistory()">Supprimer tout l'historique</button>
+        </div>
+
+        <!-- Section Knowledge Base -->
+        <div>
+          <h4 class="font-semibold text-slate-900 dark:text-white mb-3">Knowledge Base</h4>
+
+          <!-- Zone de drag & drop -->
+          <div
+            id="kbDropZone"
+            class="border-2 border-dashed border-slate-300 dark:border-slate-600 rounded-lg p-8 text-center cursor-pointer hover:border-blue-500 dark:hover:border-blue-400 transition"
+            ondragover="handleDragOver(event)"
+            ondrop="handleDrop(event)"
+            ondragleave="handleDragLeave(event)"
+            onclick="document.getElementById('kbFileInput').click()"
+          >
+            <svg class="w-12 h-12 mx-auto mb-3 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path>
+            </svg>
+            <p class="text-sm text-slate-700 dark:text-slate-300 mb-1">
+              Glissez un dossier ici
+            </p>
+            <p class="text-xs text-slate-500 dark:text-slate-400">
+              ou cliquez pour sélectionner
+            </p>
+          </div>
+          <input
+            type="file"
+            id="kbFileInput"
+            webkitdirectory
+            directory
+            multiple
+            class="hidden"
+            onchange="handleFolderSelect(event)"
+          />
         </div>
       </div>
     </div>
