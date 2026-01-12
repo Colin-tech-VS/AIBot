@@ -15,11 +15,11 @@ import math
 
 # Essayer importer chromadb, sinon utiliser recherche simple
 try:
-    import chromadb
-    CHROMADB_AVAILABLE = True
+    # import chromadb  # DÉSACTIVÉ TEMPORAIREMENT
+    CHROMADB_AVAILABLE = False
 except ImportError:
     CHROMADB_AVAILABLE = False
-    print("[INFO] ChromaDB non disponible. Utilisant recherche simple.")
+    print("[INFO] ChromaDB désactivé. Utilisant recherche simple.")
 
 
 # -----------------------------------

@@ -34,8 +34,8 @@ OLLAMA_PATHS = [
     # Fallback (cherche dans PATH)
     "ollama",
 ]
-OLLAMA_MODEL = "llama3.2:3b"  # Llama 3.2 3B pour performances optimales
-OLLAMA_TIMEOUT = 300  # secondes
+OLLAMA_MODEL = "nemotron-3-nano"  # Nemotron 3 Nano pour inférence ultra-rapide
+OLLAMA_TIMEOUT = 60  # secondes (modèle léger = réponse rapide)
 
 # Mode RAG strict : pas de scraping web général
 # Mettre à True pour forcer le RAG (KB + sources structurées) et éviter le scraping

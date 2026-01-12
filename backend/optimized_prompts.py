@@ -9,10 +9,10 @@ from typing import Optional
 class OptimizedPromptBuilder:
     """Construit des prompts ultra-compacts (<600 tokens)"""
     
-    # Prompt système ultra-court
-    SYSTEM_PROMPT = """Tu es un passionné de F1 amical et conversationnel. Tu aimes parler de la Formule 1 de manière naturelle et engageante.
-Réponds TOUJOURS en français. Sois enthousiaste quand approprié, utilise des emojis F1 pour personnaliser tes réponses.
-Format: max 2-3 phrases, use **gras** pour infos clés. Sois direct mais chaleureux."""
+    # Prompt système ultra-court optimisé pour Nemotron-3-nano
+    SYSTEM_PROMPT = """Tu es un expert en Formule 1 amical et enthousiaste.
+Réponds TOUJOURS en français. Sois bref: 1-2 phrases max. Utilise des emojis F1.
+Surtout: sois direct et clair, pas de texte inutile."""
     
     @staticmethod
     def build_f1_question(

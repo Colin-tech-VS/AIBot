@@ -1,6 +1,6 @@
 """
 Backend FastAPI - Chatbot Ollama Local (Multiplateforme)
-Reçoit les messages utilisateur, appelle Ollama (Llama 3.2 3B) et retourne les réponses.
+Reçoit les messages utilisateur, appelle Ollama (Nemotron-3-nano) et retourne les réponses.
 Communication frontend ↔ backend ↔ Ollama fonctionnelle.
 Compatible: Windows, macOS, Linux
 """
@@ -75,7 +75,7 @@ templates = Jinja2Templates(directory=TEMPLATES_DIR)
 
 # URL API Ollama (Windows par defaut)
 OLLAMA_URL = "http://127.0.0.1:11434/api/generate"
-OLLAMA_MODEL = "llama3.2:3b"
+OLLAMA_MODEL = "nemotron-3-nano"
 
 # -----------------------------------------------------------------------------
 # MODELS
