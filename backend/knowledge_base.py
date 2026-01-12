@@ -10,6 +10,8 @@ from pathlib import Path
 from typing import Dict, List, Optional
 import os
 import csv
+from collections import Counter
+import math
 
 # Essayer importer chromadb, sinon utiliser recherche simple
 try:
@@ -60,13 +62,17 @@ class KnowledgeBase:
     def _init_chromadb(self):
         """Initialize ChromaDB for embeddings"""
         try:
-            # Configuration moderne ChromaDB 1.4.0+
+            # Configuration moderne ChromaDB 1.4.0+ avec optimisations
             self.client = chromadb.PersistentClient(
                 path=str(KB_DIR / "chroma")
             )
             self.collection = self.client.get_or_create_collection(
                 name="f1_knowledge",
-                metadata={"hnsw:space": "cosine"}
+                metadata={
+                    "hnsw:space": "cosine",
+                    "hnsw:search_ef": 100,  # Augmenter précision recherche
+                    "hnsw:M": 16            # Connexions par noeud HNSW
+                }
             )
             doc_count = self.collection.count()
             print(f"[INFO] ChromaDB initialized: {doc_count} documents in collection")
@@ -104,11 +110,45 @@ class KnowledgeBase:
             except Exception as e:
                 print(f"[WARN] ChromaDB search failed: {e}")
         
-        # Fallback : recherche simple (keyword matching)
+        # Fallback : TF-IDF en priorité, puis simple si échec
+        try:
+            results = self._tfidf_search(query, top_k)
+            if results:
+                return results
+        except Exception as e:
+            print(f"[WARN] TF-IDF search failed: {e}")
+        
         return self._simple_search(query, top_k)
     
+    def _tfidf_search(self, query: str, top_k: int = 3) -> List[str]:
+        """Recherche TF-IDF améliorée pour meilleur ranking"""
+        query_tokens = set(query.lower().split())
+        
+        # Calculer IDF pour chaque terme de la query
+        doc_freq = Counter()
+        for doc in self.docs.values():
+            tokens = set(doc.content.lower().split())
+            for token in query_tokens:
+                if token in tokens:
+                    doc_freq[token] += 1
+        
+        total_docs = len(self.docs) or 1
+        idf = {term: math.log(total_docs / (freq + 1)) for term, freq in doc_freq.items()}
+        
+        # Scorer chaque document avec TF-IDF
+        scores = []
+        for doc_id, doc in self.docs.items():
+            content_lower = (doc.title + " " + doc.content).lower()
+            tf = Counter(content_lower.split())
+            score = sum(tf.get(term, 0) * idf.get(term, 0) for term in query_tokens)
+            if score > 0:
+                scores.append((score, doc.content))
+        
+        scores.sort(reverse=True, key=lambda x: x[0])
+        return [content for _, content in scores[:top_k]]
+    
     def _simple_search(self, query: str, top_k: int = 3) -> List[str]:
-        """Recherche simple par mots-clés - améliorée pour chercher en profondeur
+        """Recherche simple par mots-clés - fallback si TF-IDF échoue
         
         Avec seuil minimum de pertinence pour éviter les faux positifs
         """
@@ -180,6 +220,8 @@ class KnowledgeBase:
                         # Ajouter au dict local SANS re-ajouter à ChromaDB
                         self.add_document(doc, skip_chromadb=True)
                     print(f"[INFO] {len(results['ids'])} documents chargés depuis ChromaDB")
+                    # Même si ChromaDB est présent, on peut ajouter les liens frais du crawler local
+                    self._load_f1_urls(kb_dir)
                     return
             except Exception as e:
                 print(f"[WARN] Erreur chargement depuis ChromaDB: {e}")
@@ -224,6 +266,25 @@ class KnowledgeBase:
 
         if total_csv_docs > 0:
             print(f"[INFO] Total: {total_csv_docs} documents chargés depuis fichiers CSV")
+
+        # 3) Liens F1 générés par le crawler (toujours chargés)
+        self._load_f1_urls(kb_dir)
+
+    def _load_f1_urls(self, kb_dir: Path):
+        """Charge f1_urls.txt (crawler) dans la KB et Chroma si dispo"""
+        f1_urls_file = kb_dir / "f1_urls.txt"
+        if not f1_urls_file.exists():
+            return
+
+        try:
+            urls = [line.strip() for line in f1_urls_file.read_text(encoding="utf-8").splitlines() if line.strip()]
+            if urls:
+                content = "\n".join(sorted(set(urls)))
+                doc = KnowledgeDoc("f1_urls", "Liens F1 (crawler)", content, "links")
+                self.add_document(doc)
+                print(f"[INFO] Liens F1 chargés depuis f1_urls.txt ({len(urls)} urls)")
+        except Exception as e:
+            print(f"[WARN] Erreur lecture f1_urls.txt: {e}")
     
     def export_json(self, output_file: Path):
         """Exporter knowledge base en JSON"""

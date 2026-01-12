@@ -138,7 +138,7 @@ function renameConversation(id) {
   renderNavbarHistory();
 }
 
-function addMessageToCurrentConversation(role, content) {
+function addMessageToCurrentConversation(role, content, sources = []) {
   if (!currentConversationId) {
     createConversation();
   }
@@ -155,7 +155,7 @@ function addMessageToCurrentConversation(role, content) {
     }
   }
   
-  conv.messages.push({role, content, ts: Date.now()});
+  conv.messages.push({role, content, ts: Date.now(), sources});
   saveConversations();
   renderConversationList();
 }
@@ -190,7 +190,7 @@ function loadConversationIntoChat(id) {
   chatContainer.classList.add("active-chat");
   
   conv.messages.forEach(m => {
-    displayMessage(m.content, m.role, {save:false});
+    displayMessage(m.content, m.role, {save:false, sources: m.sources || []});
   });
 }
 
@@ -334,7 +334,8 @@ async function sendMessage(event) {
 
     removeMessage(loaderId);
 
-    displayMessage(data.bot_response, "bot");
+    const sources = Array.isArray(data.sources) ? data.sources : [];
+    displayMessage(data.bot_response, "bot", {sources});
   } catch (error) {
     removeMessage(loaderId);
 
@@ -354,9 +355,18 @@ async function sendMessage(event) {
  * Affiche un message dans la zone de chat
  * Support du markdown et emojis (liens cliquables)
  */
-function displayMessage(text, role = "user", opts = {save: true}) {
+function formatMarkdown(text) {
+  if (!text) return "";
+  return text
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" class="underline font-semibold hover:opacity-80">$1</a>')
+    .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+    .replace(/\*(.+?)\*/g, "<em>$1</em>")
+    .replace(/\n/g, "<br>");
+}
+
+function displayMessage(text, role = "user", opts = {save: true, sources: []}) {
   const messageDiv = document.createElement("div");
-  messageDiv.className = `flex ${role === "user" ? "justify-end" : "justify-start"}`;
+  messageDiv.className = `flex flex-col ${role === "user" ? "items-end" : "items-start"}`;
 
   const bubble = document.createElement("div");
   const baseClass = `max-w-xs lg:max-w-md xl:max-w-lg px-4 py-2 rounded-lg text-sm`;
@@ -366,20 +376,62 @@ function displayMessage(text, role = "user", opts = {save: true}) {
   
   bubble.className = `${baseClass} ${roleClass}`;
   
-  let htmlContent = text
-    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" class="underline font-semibold hover:opacity-80">$1</a>')
-    .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
-    .replace(/\*(.+?)\*/g, "<em>$1</em>")
-    .replace(/\n/g, "<br>");
-  
-  bubble.innerHTML = htmlContent;
+  bubble.innerHTML = formatMarkdown(text);
 
   messageDiv.appendChild(bubble);
+
+  // Badge des sources recherchées (uniquement pour les réponses bot)
+  const sources = opts.sources || [];
+  if (role === "bot" && sources.length > 0) {
+    const badgeWrapper = document.createElement("div");
+    badgeWrapper.className = "flex flex-wrap items-center gap-2 mt-2 text-xs text-slate-600 dark:text-slate-300 max-w-xs lg:max-w-md xl:max-w-lg";
+
+    const label = document.createElement("span");
+    label.className = "inline-flex items-center gap-1 px-2 py-1 rounded-full bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-slate-100 font-medium";
+    label.innerHTML = "<span>🔎</span><span>Sources recherchées</span>";
+    badgeWrapper.appendChild(label);
+
+    sources.forEach(src => {
+      const pill = document.createElement("span");
+      pill.className = "inline-flex items-center gap-1 px-2 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-100 border border-slate-200 dark:border-slate-700 max-w-xs overflow-hidden";
+      
+      // Détecter si c'est une URL et la rendre cliquable avec texte tronqué
+      const urlRegex = /(https?:\/\/[^\s]+)/g;
+      if (urlRegex.test(src)) {
+        const url = src.match(urlRegex)[0];
+        let displayText = url;
+        
+        // Tronquer si trop long (garder domaine + ... + fin)
+        if (url.length > 50) {
+          const urlObj = new URL(url);
+          const domain = urlObj.hostname.replace('www.', '');
+          const path = urlObj.pathname + urlObj.search;
+          if (path.length > 20) {
+            displayText = domain + path.substring(0, 15) + '...' + path.substring(path.length - 10);
+          } else {
+            displayText = domain + path;
+          }
+        }
+        
+        pill.innerHTML = `<a href="${url}" target="_blank" rel="noopener noreferrer" class="underline hover:opacity-80 truncate" title="${url}">${displayText}</a>`;
+      } else {
+        // Pour les sources non-URL, tronquer simplement le texte
+        const maxLen = 60;
+        const displayText = src.length > maxLen ? src.substring(0, maxLen) + '...' : src;
+        pill.innerHTML = `<span class="truncate" title="${src}">${formatMarkdown(displayText)}</span>`;
+      }
+      
+      badgeWrapper.appendChild(pill);
+    });
+
+    messageDiv.appendChild(badgeWrapper);
+  }
+
   chatBox.appendChild(messageDiv);
 
   chatBox.scrollTop = chatBox.scrollHeight;
 
-  if (opts.save !== false) addMessageToCurrentConversation(role, text);
+  if (opts.save !== false) addMessageToCurrentConversation(role, text, sources);
 
   return messageDiv;
 }

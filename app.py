@@ -92,6 +92,7 @@ class ChatResponse(BaseModel):
     user_message: str
     bot_response: str
     history: List[HistoryItem]
+    sources: List[str] = []
 
 # -----------------------------------------------------------------------------
 # HISTORIQUE
@@ -140,7 +141,7 @@ async def chat(chat_msg: ChatMessage):
     try:
         # Appeler le pipeline F1 (news + stats + Ollama) avec historique
         # rag_only=None : utilise la config globale RAG_ONLY; pour forcer, passer True/False
-        bot_response = answer_f1_question(user_message, history=chat_history, rag_only=None)
+        bot_response, sources = answer_f1_question(user_message, history=chat_history, rag_only=None)
     except Exception as exc:
         return JSONResponse(status_code=500, content={"detail": f"Erreur backend: {exc}"})
 
@@ -153,7 +154,8 @@ async def chat(chat_msg: ChatMessage):
     return ChatResponse(
         user_message=user_message,
         bot_response=bot_response,
-        history=chat_history
+        history=chat_history,
+        sources=sources
     )
 
 @app.get("/history")

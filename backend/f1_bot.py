@@ -41,7 +41,7 @@ OLLAMA_TIMEOUT = 300  # secondes
 # Mettre à True pour forcer le RAG (KB + sources structurées) et éviter le scraping
 RAG_ONLY = False
 
-# Cache Ergast (5 min TTL)
+# Cache Ergast (5 min TTL - données fraîches)
 _ergast_cache: Dict = {}
 _ergast_cache_time = 0
 ERGAST_CACHE_TTL = 300  # 5 minutes
@@ -51,10 +51,19 @@ _news_cache: List[NewsItem] = []
 _news_cache_time = 0
 NEWS_CACHE_TTL = 600  # 10 minutes
 
-# Cache recherche web générale (15 min TTL)
+# Cache recherche web générale (30 min TTL - plus long)
 _web_search_cache: Dict[str, List[NewsItem]] = {}
 _web_search_cache_time: Dict[str, float] = {}
-WEB_SEARCH_CACHE_TTL = 900  # 15 minutes
+WEB_SEARCH_CACHE_TTL = 1800  # 30 minutes
+
+# Cache contenu f1_urls (1h TTL - contenu stable)
+_f1_urls_cache: Dict[str, Tuple[str, float]] = {}  # {url: (content, timestamp)}
+F1_URLS_CACHE_TTL = 3600  # 1 heure
+
+# Circuit breaker pour sources défaillantes
+_failed_sources: Dict[str, Tuple[int, float]] = {}  # {source_name: (failure_count, last_attempt)}
+CIRCUIT_BREAKER_THRESHOLD = 3  # Nombre d'échecs avant circuit breaker
+CIRCUIT_BREAKER_COOLDOWN = 300  # 5 min cooldown
 
 
 def resolve_ollama_path() -> str:
@@ -223,6 +232,76 @@ def fetch_url(url: str, timeout: int = 8) -> str:
     resp = requests.get(url, headers=HEADERS, timeout=timeout)
     resp.raise_for_status()
     return resp.text
+
+
+def fetch_f1_urls_content(limit: int = 5, timeout: int = 8, question: str = "") -> Tuple[str, List[str]]:
+    """Lit knowledge_base/f1_urls.txt, récupère le contenu des URLs les plus pertinentes et retourne texte + sources.
+
+    Si une question est fournie, filtre les URLs par pertinence (mots-clés dans l'URL).
+    On borne à `limit` pour éviter des appels réseau excessifs.
+    """
+    urls_file = Path(__file__).parent.parent / "knowledge_base" / "f1_urls.txt"
+    if not urls_file.exists():
+        return "", []
+
+    try:
+        raw_urls = [u.strip() for u in urls_file.read_text(encoding="utf-8").splitlines() if u.strip()]
+        uniq_urls = []
+        seen = set()
+        for u in raw_urls:
+            if u not in seen:
+                uniq_urls.append(u)
+                seen.add(u)
+        
+        # Filtrer par pertinence si question fournie
+        if question:
+            scored_urls = []
+            q_lower = question.lower()
+            q_tokens = [t for t in q_lower.split() if len(t) > 3]  # Mots significatifs
+            
+            for url in uniq_urls:
+                url_lower = url.lower()
+                score = sum(1 for token in q_tokens if token in url_lower)
+                scored_urls.append((score, url))
+            
+            # Trier par score décroissant et prendre les meilleures
+            scored_urls.sort(key=lambda x: x[0], reverse=True)
+            urls = [url for score, url in scored_urls[:limit * 2]][:limit]  # Prendre top URLs pertinentes
+            
+            if not urls:  # Si aucun match, prendre les premières
+                urls = uniq_urls[:limit]
+        else:
+            urls = uniq_urls[:limit]
+    except Exception as e:
+        print(f"[WARN] Lecture f1_urls.txt échouée: {e}")
+        return "", []
+
+    contents = []
+    sources = []
+    for url in urls:
+        # Vérifier cache d'abord
+        if url in _f1_urls_cache:
+            cached_content, cached_time = _f1_urls_cache[url]
+            if time.time() - cached_time < F1_URLS_CACHE_TTL:
+                print(f"[INFO] Cache hit pour {url}")
+                contents.append(f"🌐 {url}\n{cached_content}")
+                sources.append(url)
+                continue
+        
+        try:
+            html = fetch_url(url, timeout=timeout)
+            text = extract_main_text(html, max_chars=1200)
+            if text:
+                # Mettre en cache
+                _f1_urls_cache[url] = (text, time.time())
+                contents.append(f"🌐 {url}\n{text}")
+                sources.append(url)
+        except Exception as e:
+            print(f"[WARN] Échec fetch f1_url {url}: {e}")
+            continue
+
+    combined = "\n\n".join(contents)
+    return combined, sources
 
 
 def extract_main_text(html: str, max_chars: int = 1500) -> str:
@@ -650,31 +729,73 @@ def _clamp(text: str, max_len: int) -> str:
     return text[:max_len] + "\n[… tronqué …]"
 
 
-def build_prompt(news_summary: str, ergast_block: str, user_question: str, history_text: str = "") -> str:
+def humanize_kb_answer(kb_content: str, user_question: str) -> str:
+    """
+    Reformule une réponse brute de KB de manière conversationnelle et naturelle.
+    
+    Exemple:
+    Input: "Circuit: Circuit de l'Albert Park, Situe a Grand Prix d'Australie, Courses: 1996-2019,2022-2025"
+    Output: "🏎️ Ah, l'Albert Park ! C'est le circuit emblématique du Grand Prix d'Australie. Il a accueilli..."
+    """
+    if not kb_content or len(kb_content) < 20:
+        return kb_content
+    
+    # Prompt pour humaniser la réponse KB
+    humanize_prompt = f"""Tu es un passionné de F1 conversationnel. 
+Reformule cette info brute de manière naturelle et engageante, comme tu le ferais avec un ami.
+Sois enthousiaste, utilise des emojis F1 si approprié.
+Réponds EN FRANÇAIS. Garder 2-3 phrases max.
+
+INFO BRUTE:
+{kb_content}
+
+QUESTION UTILISATEUR:
+{user_question}
+
+Reformule maintenant de manière naturelle et conversationnelle:
+"""
+    
+    try:
+        humanized = call_ollama(humanize_prompt)
+        # Vérifier que la réponse est valide
+        if humanized and not humanized.lower().startswith("[erreur"):
+            return humanized
+    except Exception as e:
+        print(f"[WARN] Humanization failed: {e}")
+    
+    # Fallback: retourner la réponse brute si humanization échoue
+    return kb_content
+
+
+def build_prompt(news_summary: str, ergast_block: str, user_question: str, history_text: str = "", links_block: str = "") -> str:
     # Borner les blocs pour éviter un prompt trop volumineux
     news_summary = _clamp(news_summary, 1200)
     ergast_block = _clamp(ergast_block, 600)
     history_text = _clamp(history_text, 600)
+    links_block = _clamp(links_block, 1200)
     
-    prompt = f"""Tu es un assistant expert. Réponds EN FRANÇAIS de manière DIRECTE et CONCISE.
+    sources_combined = "\n\n".join(
+        [block for block in [news_summary, links_block, ergast_block] if block]
+    ) or "(aucune source)"
 
-INSTRUCTIONS :
-1. Répondre directement à la question - pas d'infos inutiles
-2. Utiliser les sources fournies si pertinent
-3. Si pas assez d'infos: dire "Je n'ai pas trouvé de réponse"
-4. Toujours en FRANÇAIS!
+    prompt = f"""Tu es un assistant expert SPÉCIALISÉ en Formule 1. Réponds EN FRANÇAIS de manière DIRECTE et CONCISE.
+
+REGLES STRICTES :
+1. UNIQUEMENT des questions sur la Formule 1 (pilotes, courses, championnats, circuits, écuries)
+2. Répondre directement à la question - pas d'infos inutiles
+3. Utiliser les sources fournies en priorité
+4. Si pas assez d'infos F1: dire "Je n'ai pas trouvé de réponse pour cette question F1"
+5. Toujours en FRANÇAIS avec emojis F1 (🏎️, 🏁, 🏆)
 
 CONTEXTE CONVERSATION (si utile) :
 {history_text if history_text else "(aucun contexte)"}
 
-SOURCES :
-{news_summary if news_summary else "(aucune actualité)"}
-
-{ergast_block if ergast_block else ""}
+SOURCES F1 :
+{sources_combined}
 
 QUESTION : {user_question}
 
-Réponds maintenant (direct et concis):
+Réponds maintenant (direct, concis, focus F1):
 """
     prompt = textwrap.dedent(prompt).strip()
     return _clamp(prompt, 3000)
@@ -743,14 +864,54 @@ def _translate_to_french(text: str) -> str:
 
 
 def _is_f1_question(q: str) -> bool:
+    """
+    Détecte si la question est liée à la Formule 1.
+    Logique hybride : liste blanche F1 + liste noire hors-F1 + heuristiques.
+    """
     ql = q.lower()
-    keywords = [
-        "f1", "formula 1", "formule 1", "grand prix", "gp",
-        "verstappen", "hamilton", "leclerc", "alonso", "perez",
-        "mercedes", "ferrari", "red bull", "mclaren", "aston martin",
-        "circuit", "piste", "champion", "victoire", "course", "pilot"
+    
+    # Liste blanche : mots-clés explicitement F1 (garantie de match)
+    f1_whitelist = [
+        "f1", "formula 1", "formule 1", "formule1", "grand prix", "gp",
+        "verstappen", "hamilton", "leclerc", "alonso", "perez", "norris", "piastri", "sainz", "russell",
+        "hadjar", "lawson", "colapinto", "bearman", "antonelli",  # Nouveaux pilotes/réserves
+        "mercedes", "ferrari", "red bull", "redbull", "mclaren", "aston martin", "alpine", "williams", 
+        "haas", "sauber", "kick", "racing bulls", "rb",
+        "circuit", "piste", "champion", "victoire", "course", "pilote", "écurie", "monoplace",
+        "pole position", "drs", "kers", "turbo", "moteur", "châssis", "ailerons", "pneumatiques",
+        "pirelli", "soft", "medium", "hard", "intermédiaire", "pluie", "qualification", "sprint",
+        "podium", "points", "classement", "standing", "tour", "dépassement", "safety car",
+        "monaco", "monza", "silverstone", "spa", "suzuka", "imola", "bahrain", "singapour",
+        "fia", "réglementation", "parc fermé", "pit stop", "changement pneu"
     ]
-    return any(k in ql for k in keywords)
+    
+    # Liste noire : sujets clairement hors F1 (exclusion automatique)
+    non_f1_blacklist = [
+        "météo", "temps", "recette", "cuisine", "football", "basket", "tennis", "rugby",
+        "politique", "élection", "gouvernement", "président", "ministre",
+        "cinéma", "film", "acteur", "série", "musique", "chanson", "album",
+        "restaurant", "hôtel", "voyage", "tourisme", "vacances",
+        "santé", "médecin", "maladie", "médicament", "hôpital",
+        "finance", "bourse", "action", "crypto", "bitcoin", "investissement",
+        "programming", "python", "javascript", "code", "développement", "math", "histoire"
+    ]
+    
+    # 1. Vérifier la liste noire en premier (exclusion rapide)
+    if any(k in ql for k in non_f1_blacklist):
+        return False
+    
+    # 2. Vérifier la liste blanche (match explicite)
+    if any(k in ql for k in f1_whitelist):
+        return True
+    
+    # 3. Heuristique "qui est X" : probablement F1 si on demande une personne
+    if ("qui est" in ql or "c'est qui" in ql or "qui était" in ql) and len(ql) < 50:
+        # Questions courtes "Qui est X?" → probablement pilote/personnel F1
+        return True
+    
+    # 4. Fallback strict : si aucun mot-clé F1 explicite, rejeter
+    #    (changement de logique : pas d'acceptation par défaut)
+    return False
 
 
 def _is_circuit_question(question: str) -> bool:
@@ -804,34 +965,39 @@ def _format_history(history) -> str:
     return "\n".join(lines)
 
 
-def answer_f1_question(user_question: str, history=None, rag_only: Optional[bool] = None) -> str:
+def answer_f1_question(user_question: str, history=None, rag_only: Optional[bool] = None) -> Tuple[str, List[str]]:
     """
-    Pipeline optimisé avec logique adaptée au type de question :
+    Pipeline optimisé avec focus strict sur la Formule 1.
     
-    QUESTIONS F1:
-    1. Chercher actualités + stats Ergast F1
-    2. Si pas de réponse, chercher dans KB
-    3. Si toujours rien, dire "Je n'ai pas trouvé"
-    
-    QUESTIONS GÉNÉRALES:
-    1. Chercher dans Knowledge Base
-    2. Si KB vide, chercher via web search
-    3. Si toujours rien, dire "Je n'ai pas trouvé"
+    Si la question n'est pas liée à la F1, redirige poliment l'utilisateur.
     """
     try:
         # Nettoyer la question
         user_question = user_question.strip()
         if not user_question:
-            return "Veuillez poser une question."
+            return "Veuillez poser une question.", []
         
         print(f"[INFO] Question reçue: {user_question}")
         
         # Déterminer le type de question et formatter l'historique
         rag_mode = RAG_ONLY if rag_only is None else rag_only
+        sources_used: List[str] = []
         is_f1 = _is_f1_question(user_question)
         is_circuit = _is_circuit_question(user_question)
         history_text = _format_history(history)
         print(f"[INFO] Question F1? {is_f1}, Circuit? {is_circuit}, RAG_ONLY? {rag_mode}")
+        
+        # ═══════════════════════════════════════════════════════════════
+        # FILTRE : Si question non-F1, rediriger poliment
+        # ═══════════════════════════════════════════════════════════════
+        if not is_f1 and not is_circuit:
+            print("[INFO] ⚠️ Question hors-sujet F1 détectée")
+            return (
+                "🏎️ Je suis spécialisé dans la **Formule 1** ! "
+                "Posez-moi des questions sur les pilotes, les courses, les championnats, "
+                "les circuits ou l'actualité F1. 🏁",
+                []
+            )
         
         # ═══════════════════════════════════════════════════════════════
         # CAS 0 : QUESTIONS SUR CIRCUITS - Chercher dans CSV
@@ -844,9 +1010,11 @@ def answer_f1_question(user_question: str, history=None, rag_only: Optional[bool
             if 'plus long' in q_lower or 'longest' in q_lower:
                 circuit = find_longest_circuit()
                 if circuit:
+                    sources_used.append("circuits.csv")
                     return (
                         f"🏎️ Le circuit le plus long en F1 est **{circuit['nom']}** "
-                        f"({circuit['lieu']}) avec **{circuit['longueur']}**. {circuit['info']}"
+                        f"({circuit['lieu']}) avec **{circuit['longueur']}**. {circuit['info']}",
+                        sources_used
                     )
                 # Si pour une raison quelconque non trouvé, on continue vers recherche générale F1
 
@@ -877,7 +1045,8 @@ def answer_f1_question(user_question: str, history=None, rag_only: Optional[bool
                     details.append(annees)
 
                 detail_text = " — ".join(details) if details else ""
-                return f"🏎️ {name} {detail_text}"
+                sources_used.append("circuits.csv")
+                return f"🏎️ {name} {detail_text}", sources_used
         
         # ═══════════════════════════════════════════════════════════════
         # CAS 1 : QUESTIONS F1 - Chercher actualités + Ergast en priorité
@@ -891,11 +1060,13 @@ def answer_f1_question(user_question: str, history=None, rag_only: Optional[bool
                 results, standings = _get_ergast_data()
                 last_res = get_last_position_result(results)
                 if last_res:
-                    return f"🏎️ Dernier classé du dernier GP : {last_res}"
+                    sources_used.append("Ergast API")
+                    return f"🏎️ Dernier classé du dernier GP : {last_res}", sources_used
                 # sinon on continue avec le flux normal
 
             # RAG strict: pas de scraping news si activé
             news_items = [] if rag_mode else get_news_summaries(limit=2)
+            link_block, link_sources = fetch_f1_urls_content(limit=3, timeout=8, question=user_question)  # Réduit de 5 à 3 pour vitesse
             results, standings = _get_ergast_data()
             
             has_news = news_items and any(len(item.content) > 30 for item in news_items)
@@ -912,9 +1083,16 @@ def answer_f1_question(user_question: str, history=None, rag_only: Optional[bool
                     else ""
                 )
                 ergast_block = format_ergast_data(results, standings) if has_ergast else ""
+
+                if has_news:
+                    sources_used.extend([item.source for item in news_items])
+                if link_sources:
+                    sources_used.extend(link_sources)
+                if has_ergast:
+                    sources_used.append("Ergast API")
                 
                 # Build prompt et appeler Ollama
-                prompt = build_prompt(news_summary, ergast_block, user_question, history_text)
+                prompt = build_prompt(news_summary, ergast_block, user_question, history_text, link_block)
                 response = call_ollama(prompt)
                 
                 try:
@@ -926,76 +1104,23 @@ def answer_f1_question(user_question: str, history=None, rag_only: Optional[bool
                 # Vérifier si Ollama a un vrai résultat
                 low = response.lower()
                 if not (low.startswith("[erreur") or "ollama a dépassé le timeout" in low or "ollama introuvable" in low):
-                    return f"🏎️ {response}"
+                    return f"🏎️ {response}", sources_used
             
             # Fallback F1: chercher dans KB si actualités insuffisantes
             print("[INFO] Actualités insuffisantes, cherche dans KB")
             kb = get_knowledge_base()
             kb_results = kb.search(user_question, top_k=1)
             if kb_results and _is_kb_result_relevant(user_question, kb_results[0]):
-                return f"📚 {_clamp(kb_results[0], 600)}"
+                humanized = humanize_kb_answer(kb_results[0], user_question)
+                sources_used.append("Knowledge Base (locale)")
+                return f"📚 {humanized}", sources_used
             
             print("[INFO] ❌ Aucune réponse F1 trouvée")
-            return "Je n'ai pas trouvé de réponse à cette question."
-        
-        # ═══════════════════════════════════════════════════════════════
-        # CAS 2 : QUESTIONS GÉNÉRALES - Chercher KB en priorité
-        # ═══════════════════════════════════════════════════════════════
-        else:
-            print("[INFO] Recherche générale (KB d'abord)")
-            kb = get_knowledge_base()
-            kb_results = kb.search(user_question, top_k=2)
-            
-            # Vérifier que le résultat KB est vraiment pertinent
-            if kb_results and _is_kb_result_relevant(user_question, kb_results[0]):
-                kb_answer = _clamp(kb_results[0], 600)
-                print("[INFO] ✅ Réponse trouvée dans Knowledge Base")
-                return f"📚 {kb_answer}"
-            
-            print("[INFO] KB vide ou non pertinent")
-
-            # RAG strict: pas de web search. On répond honnêtement.
-            if rag_mode:
-                return "Je n'ai pas cette information dans ma base de connaissances."
-
-            # Fallback: web search générale + Ollama (désactivé si RAG_ONLY)
-            web_results = web_search_general(user_question, limit=3)
-            
-            if web_results and web_results[0].content != "La recherche n'a retourné aucun résultat pertinent.":
-                web_summary = "\n\n".join([f"🌐 {item.source}\n{item.content}" for item in web_results])
-                prompt = build_prompt(web_summary, "", user_question, history_text)
-                response = call_ollama(prompt)
-                try:
-                    if _is_probably_english(response):
-                        response = _translate_to_french(response)
-                except Exception as _:
-                    pass
-                return f"🌍 {response}"
-            
-            # FALLBACK FINAL: Répondre comme un humain avec Ollama
-            print("[INFO] Pas de web results, réponse générale Ollama")
-            fallback_prompt = f"""Tu es un assistant utile et amical. Réponds naturellement EN FRANÇAIS à cette question simple.
-Sois direct, honnête et utile. Pas de formatage excessif.
-
-Question: {user_question}
-
-Réponds maintenant:"""
-            fallback_response = call_ollama(fallback_prompt)
-            try:
-                if _is_probably_english(fallback_response):
-                    fallback_response = _translate_to_french(fallback_response)
-            except Exception as _:
-                pass
-            
-            if not (fallback_response.lower().startswith("[erreur") or "timeout" in fallback_response.lower()):
-                return fallback_response
-            
-            # Si Ollama échoue, au moins dire qu'on essaie
-            return "Je ne suis pas sûr, mais je peux essayer de vous aider si vous me donnez plus de détails."
+            return "Je n'ai pas trouvé de réponse à cette question F1.", sources_used
         
     except Exception as exc:
         print(f"[ERROR] answer_f1_question: {exc}")
-        return "Je n'ai pas pu répondre à cette question. Désolé!"
+        return "Je n'ai pas pu répondre à cette question. Désolé!", []
 
 
 if __name__ == "__main__":
