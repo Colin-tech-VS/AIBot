@@ -4,19 +4,40 @@
  * Gestion des messages et affichage en temps réel
  */
 
+/**
+ * Supprime toutes les conversations de l'historique
+ */
+function clearAllHistory() {
+  if (confirm('Êtes-vous sûr de vouloir supprimer tout l\'historique ? Cette action est irréversible.')) {
+    conversations = [];
+    currentConversationId = null;
+    saveConversations();
+    renderConversationList();
+    renderNavbarHistory();
+    chatBox.innerHTML = '';
+    const chatContainer = document.getElementById('chatContainer');
+    chatContainer.classList.remove('active-chat');
+    chatBox.classList.add('hidden');
+    alert('Historique supprimé avec succès');
+  }
+}
+
 // Références au DOM
 const chatBox = document.getElementById("chatBox");
 const messageInput = document.getElementById("messageInput");
 const chatForm = document.getElementById("chatForm");
 const sendBtn = document.getElementById("sendBtn");
+const mainNavbar = document.getElementById("mainNavbar");
+const navOverlay = document.getElementById("navOverlay");
+const historyPanel = document.getElementById("historyPanel");
+const historyOverlay = document.getElementById("historyOverlay");
+const historyContent = document.getElementById("historyContent");
 
 // État
 let isWaiting = false;
-
-// References to history UI (initialized on DOMContentLoaded)
-let historyPanel = null;
-let historyOverlay = null;
-let historyContent = null;
+let isNavbarOpen = false;
+let isHistoryOpen = false;
+let isNavbarCollapsed = false;
 
 // Conversations store (frontend only, ChatGPT-like)
 let conversations = [];
@@ -49,9 +70,19 @@ function loadConversationsFromStorage() {
 function createConversation(fromHistory) {
   console.log('[createConversation] START', {count: conversations.length});
   
+  // Si pas d'historique fourni et qu'une conversation vide existe déjà, la charger
+  if (!fromHistory && conversations.length > 0) {
+    const existingEmpty = conversations.find(c => isConversationEmpty(c));
+    if (existingEmpty) {
+      console.log('[createConversation] Conversation vide existante trouvée, chargement:', {id: existingEmpty.id});
+      loadConversationIntoChat(existingEmpty.id);
+      return;
+    }
+  }
+  
   const conv = {
     id: uid(),
-    title: fromHistory && fromHistory.title ? fromHistory.title : `Conversation ${conversations.length + 1}`,
+    title: fromHistory && fromHistory.title ? fromHistory.title : 'Nouvelle conversation',
     messages: fromHistory && fromHistory.messages ? fromHistory.messages : []
   };
   
@@ -62,15 +93,23 @@ function createConversation(fromHistory) {
   
   saveConversations();
   renderConversationList();
+  renderNavbarHistory();
   loadConversationIntoChat(conv.id);
   
   console.log('[createConversation] DONE');
 }
 
-function deleteConversation(id) {
+function isConversationEmpty(conv) {
+  return !conv || !conv.messages || conv.messages.length === 0;
+}
+
+function deleteConversation(id, silent = false) {
   const idx = conversations.findIndex(c=>c.id===id);
   if (idx===-1) return;
-  if (!confirm('Supprimer cette conversation ?')) return;
+  
+  // Demander confirmation uniquement si ce n'est pas une suppression silencieuse
+  if (!silent && !confirm('Supprimer cette conversation ?')) return;
+  
   conversations.splice(idx,1);
   if (currentConversationId===id) {
     if (conversations.length>0) currentConversationId = conversations[0].id;
@@ -78,8 +117,14 @@ function deleteConversation(id) {
   }
   saveConversations();
   renderConversationList();
+  renderNavbarHistory();
   if (currentConversationId) loadConversationIntoChat(currentConversationId);
   else chatBox.innerHTML = `<div class="message-info"><p class="muted">Aucune conversation. Créez-en une.</p></div>`;
+}
+
+function deleteEmptyConversations() {
+  const emptyIds = conversations.filter(conv => isConversationEmpty(conv)).map(conv => conv.id);
+  emptyIds.forEach(id => deleteConversation(id, true));
 }
 
 function renameConversation(id) {
@@ -90,6 +135,7 @@ function renameConversation(id) {
   conv.title = newTitle;
   saveConversations();
   renderConversationList();
+  renderNavbarHistory();
 }
 
 function addMessageToCurrentConversation(role, content) {
@@ -101,10 +147,11 @@ function addMessageToCurrentConversation(role, content) {
   
   // Si c'est le premier message utilisateur et que la conversation a un titre par défaut, la renommer
   if (role === 'user' && (!conv.messages || conv.messages.length === 0)) {
-    const isDefaultTitle = conv.title.startsWith('Conversation ');
+    const isDefaultTitle = conv.title === 'Nouvelle conversation';
     if (isDefaultTitle) {
       conv.title = content.slice(0, 50);
       setConversationTitle(conv.title);
+      renderNavbarHistory();
     }
   }
   
@@ -114,15 +161,34 @@ function addMessageToCurrentConversation(role, content) {
 }
 
 function loadConversationIntoChat(id) {
+  // Avant de changer, supprimer les conversations vides (sauf celle qu'on va charger)
+  const previousConvId = currentConversationId;
+  if (previousConvId && previousConvId !== id) {
+    const previousConv = conversations.find(c => c.id === previousConvId);
+    if (previousConv && isConversationEmpty(previousConv)) {
+      deleteConversation(previousConvId, true);
+    }
+  }
+  
   const conv = conversations.find(c=>c.id===id);
   if (!conv) return;
   currentConversationId = id;
   chatBox.innerHTML = '';
   setConversationTitle(conv.title);
-  if (!conv.messages || conv.messages.length===0) {
-    chatBox.innerHTML = `<div class="message-info"><p class="muted">Conversation vide. Envoyez un message pour commencer.</p></div>`;
+  
+  // Gérer le layout basé sur si la conversation a des messages
+  const chatContainer = document.getElementById("chatContainer");
+  if (!conv.messages || conv.messages.length === 0) {
+    chatBox.classList.add("hidden");
+    chatContainer.classList.remove("active-chat");
+    chatBox.innerHTML = '';
     return;
   }
+  
+  // Si la conversation a des messages, activer le layout actif
+  chatBox.classList.remove("hidden");
+  chatContainer.classList.add("active-chat");
+  
   conv.messages.forEach(m => {
     displayMessage(m.content, m.role, {save:false});
   });
@@ -141,36 +207,33 @@ function renderConversationList() {
   if (!historyContent) return;
   historyContent.innerHTML = '';
   if (!conversations || conversations.length===0) {
-    historyContent.innerHTML = `<p class="muted">Aucune conversation.</p>`;
+    historyContent.innerHTML = `<p class="text-sm text-slate-500 dark:text-slate-400">Aucune conversation.</p>`;
     return;
   }
   conversations.forEach(conv => {
     const item = document.createElement('div');
-    item.className = 'conversation-list-item';
+    item.className = 'p-3 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer transition flex justify-between items-center group';
     item.title = conv.title;
 
-    const left = document.createElement('div');
-    left.style.display = 'flex';
-    left.style.flexDirection = 'column';
-    left.style.gap = '2px';
-
-    const title = document.createElement('div');
-    title.className = 'title';
-    title.textContent = conv.title;
-
-    left.appendChild(title);
+    const titleDiv = document.createElement('div');
+    titleDiv.className = 'flex-1 min-w-0';
+    const titleEl = document.createElement('p');
+    titleEl.className = 'text-sm font-medium text-slate-900 dark:text-white truncate';
+    titleEl.textContent = conv.title;
+    titleDiv.appendChild(titleEl);
 
     const actions = document.createElement('div');
-    actions.className = 'conversation-actions';
+    actions.className = 'flex gap-1 opacity-0 group-hover:opacity-100 transition';
 
     const delBtn = document.createElement('button');
-    delBtn.innerText = '🗑️';
+    delBtn.className = 'p-1 rounded hover:bg-red-100 dark:hover:bg-red-900 text-red-900 dark:text-red-400 transition';
     delBtn.title = 'Supprimer';
+    delBtn.innerHTML = '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>';
     delBtn.onclick = (e) => { e.stopPropagation(); deleteConversation(conv.id); };
 
     actions.appendChild(delBtn);
 
-    item.appendChild(left);
+    item.appendChild(titleDiv);
     item.appendChild(actions);
 
     item.onclick = () => {
@@ -182,6 +245,52 @@ function renderConversationList() {
   });
 }
 
+// Remplir l'historique dans la navbar
+function renderNavbarHistory() {
+  const navbarHistoryList = document.getElementById('navbarHistoryList');
+  if (!navbarHistoryList) return;
+  
+  navbarHistoryList.innerHTML = '';
+  if (!conversations || conversations.length === 0) {
+    navbarHistoryList.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">Aucune conversation</p>`;
+    return;
+  }
+  
+  conversations.forEach(conv => {
+    const item = document.createElement('button');
+    item.className = 'flex items-center gap-2 w-full p-2 rounded hover:bg-red-800 dark:hover:bg-red-900 transition text-left text-white text-sm group';
+    item.title = conv.title;
+    
+    const icon = document.createElement('svg');
+    icon.className = 'w-4 h-4 flex-shrink-0';
+    icon.setAttribute('fill', 'none');
+    icon.setAttribute('stroke', 'currentColor');
+    icon.setAttribute('viewBox', '0 0 24 24');
+    icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>';
+    
+    const textSpan = document.createElement('span');
+    textSpan.className = 'flex-1 truncate whitespace-nowrap overflow-hidden';
+    textSpan.textContent = conv.title;
+    
+    item.appendChild(icon);
+    item.appendChild(textSpan);
+    
+    // Bouton supprimer au hover
+    const delBtn = document.createElement('button');
+    delBtn.className = 'p-1 rounded hover:bg-red-700 text-white opacity-0 group-hover:opacity-100 transition flex-shrink-0';
+    delBtn.title = 'Supprimer';
+    delBtn.innerHTML = '<svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>';
+    delBtn.onclick = (e) => { e.stopPropagation(); deleteConversation(conv.id); };
+    item.appendChild(delBtn);
+    
+    item.onclick = () => {
+      loadConversationIntoChat(conv.id);
+    };
+    
+    navbarHistoryList.appendChild(item);
+  });
+}
+
 /**
  * Envoie un message au backend FastAPI
  */
@@ -190,6 +299,14 @@ async function sendMessage(event) {
 
   const message = messageInput.value.trim();
   if (!message || isWaiting) return;
+
+  // Activer le layout actif au premier message
+  const chatContainer = document.getElementById("chatContainer");
+  if (!chatContainer.classList.contains("active-chat")) {
+    chatContainer.classList.add("active-chat");
+    const chatBox = document.getElementById("chatBox");
+    chatBox.classList.remove("hidden");
+  }
 
   displayMessage(message, "user");
 
@@ -239,13 +356,18 @@ async function sendMessage(event) {
  */
 function displayMessage(text, role = "user", opts = {save: true}) {
   const messageDiv = document.createElement("div");
-  messageDiv.className = `message ${role}`;
+  messageDiv.className = `flex ${role === "user" ? "justify-end" : "justify-start"}`;
 
   const bubble = document.createElement("div");
-  bubble.className = "message-bubble";
+  const baseClass = `max-w-xs lg:max-w-md xl:max-w-lg px-4 py-2 rounded-lg text-sm`;
+  const roleClass = role === "user" 
+    ? "bg-red-900 text-white rounded-br-none" 
+    : "bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white rounded-bl-none";
+  
+  bubble.className = `${baseClass} ${roleClass}`;
   
   let htmlContent = text
-    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" style="color: #3b82f6; text-decoration: underline; font-weight: 600;">$1</a>')
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" class="underline font-semibold hover:opacity-80">$1</a>')
     .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
     .replace(/\*(.+?)\*/g, "<em>$1</em>")
     .replace(/\n/g, "<br>");
@@ -267,11 +389,17 @@ function displayMessage(text, role = "user", opts = {save: true}) {
  */
 function displayLoader() {
   const loadingDiv = document.createElement("div");
-  loadingDiv.className = "message bot";
+  loadingDiv.className = "flex justify-start";
 
   const bubble = document.createElement("div");
-  bubble.className = "message-bubble loading";
-  bubble.innerHTML = "<span>🏎️</span><span>🏁</span><span>⚡</span>";
+  bubble.className = "px-4 py-2 rounded-lg bg-slate-100 dark:bg-slate-800 rounded-bl-none";
+  bubble.innerHTML = `
+    <div class="flex gap-1">
+      <span class="inline-block animate-bounce">🏎️</span>
+      <span class="inline-block animate-bounce" style="animation-delay: 0.1s">🏁</span>
+      <span class="inline-block animate-bounce" style="animation-delay: 0.2s">⚡</span>
+    </div>
+  `;
 
   loadingDiv.appendChild(bubble);
   chatBox.appendChild(loadingDiv);
@@ -370,6 +498,10 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   loadConversationsFromStorage();
+  
+  // Nettoyer les conversations vides au démarrage
+  deleteEmptyConversations();
+  
   if (!conversations || conversations.length === 0) {
     (async () => {
       try {
@@ -390,6 +522,7 @@ document.addEventListener("DOMContentLoaded", () => {
     })();
   } else {
     renderConversationList();
+    renderNavbarHistory();
     if (conversations.length>0) loadConversationIntoChat(conversations[0].id);
   }
   messageInput.focus();
@@ -429,27 +562,74 @@ document.addEventListener("DOMContentLoaded", () => {
   // Initialiser le dark mode et les infos utilisateur
   initDarkMode();
   initUserInfo();
+  
+  // Initialiser l'état de collapse de la navbar
+  const savedNavbarCollapsed = localStorage.getItem('navbarCollapsed') === 'true';
+  if (savedNavbarCollapsed && window.innerWidth >= 1024) {
+    mainNavbar.classList.add("collapsed");
+    isNavbarCollapsed = true;
+  }
 });
 
 chatForm.addEventListener("submit", sendMessage);
 
-/** * Bascule l'ouverture/fermeture du panneau d'historique
- */
-function toggleHistoryPanel() {
-  if (!historyPanel) return;
-  const isOpen = historyPanel.getAttribute("aria-hidden") === "false";
-  if (isOpen) {
-    closeHistoryPanel();
+// Fonctions de gestion de la navbar collapsible
+function toggleNavbar() {
+  // Sur mobile : open/close
+  // Sur desktop : collapse/expand
+  if (window.innerWidth < 1024) {
+    // Mobile
+    isNavbarOpen = !isNavbarOpen;
+    if (isNavbarOpen) {
+      mainNavbar.classList.remove("-translate-x-full");
+      navOverlay.classList.remove("hidden");
+    } else {
+      mainNavbar.classList.add("-translate-x-full");
+      navOverlay.classList.add("hidden");
+    }
   } else {
-    openHistoryPanel();
+    // Desktop
+    toggleNavbarCollapsed();
   }
 }
 
-/** * Ouvre le panneau d'historique (affiche la liste des conversations)
+function toggleNavbarCollapsed() {
+  isNavbarCollapsed = !isNavbarCollapsed;
+  localStorage.setItem('navbarCollapsed', isNavbarCollapsed);
+  
+  if (isNavbarCollapsed) {
+    mainNavbar.classList.add("collapsed");
+  } else {
+    mainNavbar.classList.remove("collapsed");
+  }
+}
+
+function closeNavbar() {
+  if (isNavbarOpen) {
+    isNavbarOpen = false;
+    mainNavbar.classList.add("-translate-x-full");
+    navOverlay.classList.add("hidden");
+  }
+}
+
+function toggleHistoryPanel() {
+  isHistoryOpen = !isHistoryOpen;
+  if (isHistoryOpen) {
+    openHistoryPanel();
+  } else {
+    closeHistoryPanel();
+  }
+}
+
+/**
+ * Ouvre le panneau d'historique (affiche la liste des conversations)
  */
 async function openHistoryPanel() {
   if (!historyPanel) return;
+  historyPanel.classList.remove("hidden");
+  historyPanel.classList.remove("translate-x-full");
   historyPanel.setAttribute("aria-hidden", "false");
+  historyOverlay.classList.remove("hidden");
   renderConversationList();
 }
 
@@ -458,7 +638,10 @@ async function openHistoryPanel() {
  */
 function closeHistoryPanel() {
   if (!historyPanel) return;
+  isHistoryOpen = false;
+  historyPanel.classList.add("translate-x-full");
   historyPanel.setAttribute("aria-hidden", "true");
+  historyOverlay.classList.add("hidden");
 }
 
 /**
@@ -504,7 +687,8 @@ function openUserProfile() {
   const userProfilePanel = document.getElementById("userProfilePanel");
   const userProfileOverlay = document.getElementById("userProfileOverlay");
   if (!userProfilePanel) return;
-  userProfileOverlay.hidden = false;
+  userProfileOverlay.classList.remove("hidden");
+  userProfilePanel.classList.remove("translate-x-full");
   userProfilePanel.setAttribute("aria-hidden", "false");
 }
 
@@ -515,8 +699,9 @@ function closeUserProfile() {
   const userProfilePanel = document.getElementById("userProfilePanel");
   const userProfileOverlay = document.getElementById("userProfileOverlay");
   if (!userProfilePanel) return;
+  userProfilePanel.classList.add("translate-x-full");
+  userProfileOverlay.classList.add("hidden");
   userProfilePanel.setAttribute("aria-hidden", "true");
-  userProfileOverlay.hidden = true;
 }
 
 /**
@@ -537,8 +722,8 @@ function updateUserInfo(username) {
   const userInfo = document.getElementById("userInfo");
   if (!userInfo) return;
   userInfo.innerHTML = `
-    <p>Connecté en tant que <strong>${username}</strong></p>
-    <button class="profile-btn" onclick="handleLogout()">Se déconnecter</button>
+    <p class="text-sm">Connecté en tant que <strong>${username}</strong></p>
+    <button class="w-full px-4 py-2 rounded-lg bg-red-900 hover:bg-red-800 text-white transition text-sm font-medium" onclick="handleLogout()">Se déconnecter</button>
   `;
 }
 
@@ -550,62 +735,32 @@ function handleLogout() {
   const userInfo = document.getElementById("userInfo");
   if (!userInfo) return;
   userInfo.innerHTML = `
-    <p class="muted">Non connecté</p>
-    <button class="profile-btn" onclick="handleLogin()">Se connecter</button>
+    <p class="text-sm text-slate-500 dark:text-slate-400">Non connecté</p>
+    <button class="w-full px-4 py-2 rounded-lg bg-red-900 hover:bg-red-800 text-white transition text-sm font-medium mt-2" onclick="handleLogin()">Se connecter</button>
   `;
 }
 
 /**
- * Active/désactive le dark mode
+ * Active/désactive le dark mode avec Tailwind
  */
 function toggleDarkMode() {
-  const isDarkMode = document.body.classList.toggle("dark-mode");
+  const isDarkMode = document.documentElement.classList.toggle("dark");
   localStorage.setItem("darkMode", isDarkMode);
-  updateDarkModeVariables(isDarkMode);
-}
-
-/**
- * Met à jour les variables CSS pour le dark mode
- */
-function updateDarkModeVariables(isDarkMode) {
-  const root = document.documentElement;
-  if (isDarkMode) {
-    // Couleurs F1 - Dark Mode
-    root.style.setProperty("--bg", "#0f0f0f");           // Noir très foncé
-    root.style.setProperty("--bg-alt", "#1a1a1a");       // Gris très foncé
-    root.style.setProperty("--fg", "#f5f5f5");           // Blanc cassé
-    root.style.setProperty("--fg-light", "#b0b0b0");     // Gris clair
-    root.style.setProperty("--border", "#333333");       // Gris foncé
-    root.style.setProperty("--primary", "#ff1801");      // Rouge F1
-    root.style.setProperty("--primary-dark", "#cc1400"); // Rouge F1 foncé
-    root.style.setProperty("--msg-user", "#ff1801");     // Messages user en rouge F1
-    root.style.setProperty("--msg-bot", "#1f1f1f");      // Messages bot en gris très foncé
-  } else {
-    // Light mode - beige original
-    root.style.setProperty("--bg", "#fffbf7");
-    root.style.setProperty("--bg-alt", "#f5ede4");
-    root.style.setProperty("--fg", "#3e3e3e");
-    root.style.setProperty("--fg-light", "#8b8b8b");
-    root.style.setProperty("--border", "#e8dcd0");
-    root.style.setProperty("--primary", "#d4a574");
-    root.style.setProperty("--primary-dark", "#c19a6b");
-    root.style.setProperty("--msg-user", "#e8dcc8");
-    root.style.setProperty("--msg-bot", "#faf7f2");
-  }
 }
 
 /**
  * Initialise le dark mode au chargement
  */
 function initDarkMode() {
-  const darkModeToggle = document.getElementById("darkModeToggle");
   const isDarkMode = localStorage.getItem("darkMode") === "true";
+  const darkModeToggle = document.getElementById("darkModeToggle");
+  if (isDarkMode) {
+    document.documentElement.classList.add("dark");
+  } else {
+    document.documentElement.classList.remove("dark");
+  }
   if (darkModeToggle) {
     darkModeToggle.checked = isDarkMode;
-  }
-  if (isDarkMode) {
-    document.body.classList.add("dark-mode");
-    updateDarkModeVariables(true);
   }
 }
 

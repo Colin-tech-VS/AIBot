@@ -4,96 +4,184 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{{ title or 'Chatbot Ollama' }}</title>
-    <link rel="stylesheet" href="{{ url_for('static', path='css/style.css') }}" />
+    <link rel="icon" type="image/png" href="/image/favicon.png?v={{ range(100000) | random }}">
+    <!-- Tailwind CSS avec config sombre automatique -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class'
+      }
+    </script>
+    <style>
+      #mainNavbar {
+        transition: width 0.3s ease;
+      }
+      
+      #mainNavbar.collapsed {
+        width: 80px;
+      }
+      
+      #mainNavbar:not(.collapsed) {
+        width: 320px;
+      }
+      
+      [data-navbar-text] {
+        transition: opacity 0.3s ease;
+      }
+      
+      #mainNavbar.collapsed [data-navbar-text] {
+        display: none;
+      }
+
+      /* États du layout chat */
+      #chatContainer.active-chat #chatBox {
+        display: flex;
+        flex-direction: column;
+      }
+
+      #chatContainer.active-chat #inputContainer {
+        height: auto;
+        padding: 1rem 1.5rem;
+      }
+
+      #chatContainer.active-chat #inputContainer h1 {
+        display: none;
+      }
+
+      #chatContainer.active-chat #inputContainer > div {
+        width: 100%;
+        max-width: 100%;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        #chatContainer.active-chat #inputContainer {
+          border-top-color: #1e293b;
+        }
+      }
+    </style>
   </head>
-  <body>
-    <div class="container">
-      <!-- Header -->
-      <header class="header">
-        <div class="header-top">
-          <h1>🏎️ <strong>F1 AI Chatbot</strong> 🏁</h1>
-          <div class="header-icons">
-            <button id="newConvNavBtn" class="nav-icon-btn" aria-label="Nouvelle conversation" onclick="createConversation()">➕</button>
-            <button id="historyToggleBtn" class="nav-icon-btn" aria-label="Historique" onclick="toggleHistoryPanel()">☰</button>
-            <button id="userProfileBtn" class="nav-icon-btn user-profile-btn" aria-label="Profil utilisateur" onclick="openUserProfile()">👤</button>
+  <body class="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 h-screen overflow-hidden">
+    <div class="flex h-full">
+      <!-- Navbar collapsible -->
+      <nav id="mainNavbar" class="bg-red-900 dark:bg-slate-800 border-r border-red-950 dark:border-slate-700 flex flex-col py-4 shadow-sm overflow-hidden fixed lg:relative left-0 top-0 h-full z-40 -translate-x-full lg:translate-x-0">
+        <!-- Header avec emoji F1 et titre -->
+        <div class="px-6 py-4 flex items-center gap-3 border-b border-red-800 dark:border-slate-700">
+          <button class="text-2xl hover:opacity-80 transition" onclick="toggleNavbar()" title="Ouvrir/Fermer menu">🏎️</button>
+          <span class="text-white font-semibold whitespace-nowrap overflow-hidden" data-navbar-text>AIBot F1</span>
+          <button id="navToggleBtn" class="p-2 rounded-lg hover:bg-red-800 dark:hover:bg-slate-700 transition text-white lg:hidden ml-auto" onclick="closeNavbar()">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+          </button>
+        </div>
+
+        <!-- Boutons de navigation -->
+        <div class="flex flex-col gap-2 px-4 py-4 border-b border-red-800 dark:border-slate-700">
+          <button id="newConvNavBtn" class="flex items-center gap-3 p-3 rounded-lg hover:bg-red-800 dark:hover:bg-slate-700 transition text-white text-left" onclick="createConversation()" data-navbar-button>
+            <svg class="w-6 h-6 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+            <span data-navbar-text class="whitespace-nowrap overflow-hidden">Nouvelle discussion</span>
+          </button>
+        </div>
+
+        <!-- Section Historique -->
+        <div class="flex flex-col flex-1 overflow-hidden px-4 py-4">
+          <h3 class="text-xs font-semibold text-red-200 uppercase tracking-wider mb-3" data-navbar-text>Historique</h3>
+          <div id="navbarHistoryList" class="flex-1 overflow-y-auto space-y-1">
+            <p class="text-xs text-slate-400 text-center py-4">Aucune conversation</p>
           </div>
         </div>
-      </header>
+
+        <!-- Bouton paramètres en bas -->
+        <div class="px-4 py-6 border-t border-red-800 dark:border-slate-700">
+          <button id="userProfileBtn" class="flex items-center gap-3 p-3 rounded-lg hover:bg-red-800 dark:hover:bg-slate-700 transition text-white w-full text-left" onclick="openUserProfile()" data-navbar-button>
+            <svg class="w-6 h-6 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+            <span data-navbar-text class="whitespace-nowrap overflow-hidden">Paramètres</span>
+          </button>
+        </div>
+      </nav>
+
+      <!-- Overlay pour mobile -->
+      <div id="navOverlay" class="fixed inset-0 bg-black/50 hidden z-30 lg:hidden" onclick="closeNavbar()"></div>
+
+      <!-- Overlay pour l'historique -->
+      <div id="historyOverlay" class="fixed inset-0 bg-black/50 hidden z-34" onclick="closeHistoryPanel()"></div>
 
       <!-- Zone de chat et historique -->
-      <div class="main-content">
-        <!-- Zone de chat -->
-        <div class="chat-container">
-          <div id="chatBox" class="chat-box">
-            <!-- Les messages s'ajoutent ici dynamiquement -->
-            <div class="message-info">
-              <p><strong>✅ Connecté à Ollama</strong> (LLaMA2 | Mistral fallback)</p>
-              <p>🏎️ Posez une question F1 pour commencer...</p>
-            </div>
-          </div>
+      <div id="chatContainer" class="flex-1 flex flex-col overflow-hidden relative">
 
-          <!-- Zone de saisie -->
-          <div class="input-area">
-            <form id="chatForm" onsubmit="sendMessage(event)">
-              <div class="input-wrapper">
-                <input
-                  type="text"
-                  id="messageInput"
-                  placeholder="🏁 Ex: Qui a gagné le dernier GP? 🏆"
-                  required
-                  autocomplete="off"
-                />
-                <button type="submit" class="send-icon-btn" id="sendBtn" aria-label="Envoyer">
-                  ➤
-                </button>
-              </div>
+        <!-- Messages -->
+        <div id="chatBox" class="hidden overflow-y-auto p-6 space-y-4 flex-1">
+        </div>
+
+        <!-- Zone de saisie - Nouveau design -->
+        <div id="inputContainer" class="flex flex-col items-center justify-center h-full px-4 py-8 bg-gradient-to-b from-white dark:from-slate-900 to-slate-50 dark:to-slate-800 transition-all duration-300">
+          <h1 class="text-slate-900 dark:text-white text-3xl font-light text-center mb-12">
+            Comment puis-je vous aider ?
+          </h1>
+          
+          <div class="w-full max-w-2xl">
+            <form id="chatForm" onsubmit="sendMessage(event)" class="bg-red-900 dark:bg-slate-700 rounded-full shadow-2xl flex items-center px-6 py-4 border border-red-800 dark:border-slate-600">
+              <input
+                type="text"
+                id="messageInput"
+                placeholder="Poser une question"
+                required
+                autocomplete="off"
+                class="flex-1 bg-transparent text-white placeholder-red-200 dark:placeholder-red-300 outline-none text-base focus:outline-none"
+              />
+              
+              <button type="submit" id="sendBtn" class="ml-3 p-2 rounded-full bg-white hover:bg-slate-200 dark:bg-white dark:hover:bg-slate-200 text-slate-900 transition disabled:opacity-50" aria-label="Envoyer">
+                <svg class="w-5 h-5 rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
+              </button>
             </form>
           </div>
         </div>
+      </div>
 
-        <!-- Panneau d'historique -->
-        <aside id="historyPanel" class="history-panel-sidebar" aria-hidden="true">
-          <div class="history-header">
-            <h3>Conversations</h3>
-            <div style="display:flex;gap:0.5rem;align-items:center;">
-              <button id="newConversationBtn" class="history-header-btn" aria-label="Nouvelle conversation">➕</button>
-              <button id="closeHistoryBtn" class="history-header-btn" aria-label="Fermer" onclick="closeHistoryPanel()">✖</button>
+        <!-- Panneau d'historique (coulissant par la droite) -->
+        <aside id="historyPanel" class="fixed right-0 top-0 w-64 h-full border-l border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 flex flex-col shadow-lg hidden z-35 transition-transform duration-300 transform translate-x-full" aria-hidden="true">
+          <div class="px-4 py-4 border-b border-slate-200 dark:border-slate-700 flex justify-between items-center bg-slate-50 dark:bg-slate-700">
+            <h3 class="font-semibold text-slate-900 dark:text-white">Historique</h3>
+            <div class="relative group">
+              <button id="closeHistoryBtn" class="p-1 rounded hover:bg-slate-200 dark:hover:bg-slate-700 transition" onclick="closeHistoryPanel()">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+              </button>
+              <div class="absolute left-10 top-1/2 -translate-y-1/2 bg-slate-900 dark:bg-slate-700 text-white text-xs px-2 py-1 rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition pointer-events-none">Fermer</div>
             </div>
           </div>
-          <div id="historyContent" class="history-content">
-            <!-- La liste des conversations sera remplie ici -->
-            <p class="muted">Chargement...</p>
+          <div id="historyContent" class="flex-1 overflow-y-auto p-3 space-y-2">
+            <p class="text-sm text-slate-500 dark:text-slate-400">Chargement...</p>
           </div>
         </aside>
       </div>
+    </div>
 
+    <!-- Overlay profil -->
+    <div id="userProfileOverlay" class="fixed inset-0 bg-black/50 hidden z-40" onclick="closeUserProfile()"></div>
+    
     <!-- Panneau profil utilisateur -->
-    <div id="userProfileOverlay" class="profile-overlay" onclick="closeUserProfile()" hidden></div>
-    <div id="userProfilePanel" class="user-profile-panel" aria-hidden="true">
-      <div class="profile-header">
-        <h3>Profil</h3>
-        <button class="profile-close-btn" aria-label="Fermer" onclick="closeUserProfile()">✖</button>
+    <div id="userProfilePanel" class="fixed top-0 right-0 w-96 h-full bg-white dark:bg-slate-800 shadow-xl flex flex-col z-50 transform translate-x-full transition-transform" aria-hidden="true">
+      <div class="px-6 py-4 border-b border-slate-200 dark:border-slate-700 flex justify-between items-center bg-slate-50 dark:bg-slate-700">
+        <h3 class="font-semibold text-slate-900 dark:text-white">Profil</h3>
+        <div class="relative group">
+          <button class="p-1 rounded hover:bg-slate-200 dark:hover:bg-slate-700 transition" onclick="closeUserProfile()">
+            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+          </button>
+          <div class="absolute right-8 top-1/2 -translate-y-1/2 bg-slate-900 dark:bg-slate-700 text-white text-xs px-2 py-1 rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition pointer-events-none">Fermer</div>
+        </div>
       </div>
-      <div class="profile-content">
-        <!-- Section utilisateur -->
-        <div class="profile-section">
-          <h4>Compte</h4>
-          <div id="userInfo" class="user-info">
-            <p class="muted">Non connecté</p>
-            <button id="loginBtn" class="profile-btn" onclick="handleLogin()">Se connecter</button>
-          </div>
+      <div class="flex-1 overflow-y-auto p-6 space-y-6">
+        <!-- Section apparence -->
+        <div>
+          <h4 class="font-semibold text-slate-900 dark:text-white mb-3">Apparence</h4>
+          <label class="flex items-center gap-3 cursor-pointer">
+            <input type="checkbox" id="darkModeToggle" class="w-4 h-4 rounded cursor-pointer" onchange="toggleDarkMode()">
+            <span class="text-sm text-slate-700 dark:text-slate-300">Mode sombre</span>
+          </label>
         </div>
 
-        <!-- Section apparence -->
-        <div class="profile-section">
-          <h4>Apparence</h4>
-          <div class="theme-toggle">
-            <label for="darkModeToggle" class="toggle-label">
-              <input type="checkbox" id="darkModeToggle" class="toggle-input" onchange="toggleDarkMode()">
-              <span class="toggle-switch"></span>
-              <span class="toggle-text">Mode sombre</span>
-            </label>
-          </div>
+        <!-- Section données -->
+        <div>
+          <h4 class="font-semibold text-slate-900 dark:text-white mb-3">Données</h4>
+          <button id="clearHistoryBtn" class="w-full px-4 py-2 rounded-lg bg-red-600 hover:bg-red-700 text-white transition text-sm font-medium" onclick="clearAllHistory()">Supprimer tout l'historique</button>
         </div>
       </div>
     </div>
