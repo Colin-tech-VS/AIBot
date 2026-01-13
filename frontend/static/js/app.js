@@ -516,29 +516,11 @@ document.addEventListener("DOMContentLoaded", () => {
   // Nettoyer les conversations vides au démarrage
   deleteEmptyConversations();
   
-  if (!conversations || conversations.length === 0) {
-    (async () => {
-      try {
-        const res = await fetch('/history');
-        if (res.ok) {
-          const data = await res.json();
-          const msgs = data.history || [];
-          const messages = msgs.map(m => ({role: m.role, content: m.content, ts: Date.now()}));
-          if (messages.length>0) createConversation({title: 'Session serveur', messages});
-          else createConversation();
-        } else {
-          createConversation();
-        }
-      } catch (e) {
-        console.error('Impossible de récupérer /history pour initialiser', e);
-        createConversation();
-      }
-    })();
-  } else {
-    renderConversationList();
-    renderNavbarHistory();
-    if (conversations.length>0) loadConversationIntoChat(conversations[0].id);
-  }
+  // Always create a new conversation on page load
+  createConversation();
+  renderConversationList();
+  renderNavbarHistory();
+  
   messageInput.focus();
 
   messageInput.addEventListener("keydown", (e) => {
