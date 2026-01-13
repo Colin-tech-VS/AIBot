@@ -37,15 +37,20 @@
       #mainNavbar.navbar-collapsed .navbar-section-title {
         display: none;
       }
+
+      /* Cacher la section historique quand la navbar est fermée */
+      #mainNavbar.navbar-collapsed > div:nth-child(3) {
+        display: none;
+      }
       
-      #mainNavbar.navbar-collapsed .px-4,
-      #mainNavbar.navbar-collapsed .px-3 {
+      /* Changer le padding uniquement pour la section historique (div centrale) */
+      #mainNavbar.navbar-collapsed > div:nth-child(3) .px-3 {
         padding-left: 0.5rem;
         padding-right: 0.5rem;
       }
       
       #mainNavbar.navbar-collapsed button {
-        justify-content: center;
+        justify-content: flex-start;
       }
       
       [data-navbar-text] {
@@ -77,29 +82,44 @@
       }
 
       /* Navbar FERMÉE */
-      /* F1 centré, icône remplace F1 au hover */
+      /* F1 et icône restent à gauche, sans mouvement */
       #mainNavbar.navbar-collapsed > div:first-child {
-        justify-content: center;
-        position: relative;
-      }
-
-      #mainNavbar.navbar-collapsed .navbar-logo {
-        opacity: 1;
+        justify-content: flex-start;
         position: relative;
       }
 
       #mainNavbar.navbar-collapsed .navbar-toggle-icon {
         position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
+        left: 0.5rem;
+        transform: none;
       }
 
-      #mainNavbar.navbar-collapsed:hover .navbar-logo {
+      #mainNavbar.navbar-collapsed .navbar-toggle-icon:hover {
+        opacity: 1;
+      }
+
+      #mainNavbar.navbar-collapsed > div:first-child:has(.navbar-toggle-icon:hover) .navbar-logo {
         opacity: 0;
       }
 
-      #mainNavbar.navbar-collapsed:hover .navbar-toggle-icon {
-        opacity: 1;
+      /* Fixation des éléments de la navbar */
+      #mainNavbar > div:first-child {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+      }
+
+      #mainNavbar > div:nth-child(2) {
+        position: sticky;
+        top: 4.5rem;
+        z-index: 10;
+      }
+
+      #mainNavbar > div:last-child {
+        position: sticky;
+        bottom: 0;
+        z-index: 10;
+        margin-top: auto;
       }
 
       /* États du layout chat */
@@ -120,6 +140,68 @@
       #chatContainer.active-chat #inputContainer > div {
         width: 100%;
         max-width: 100%;
+      }
+
+      .input-racing {
+        width: 100%;
+        background: linear-gradient(135deg, rgba(225,6,0,0.2), rgba(139,0,0,0.2));
+        border: 2px solid #e10600;
+        border-radius: 50px;
+        padding: 18px 60px 18px 25px;
+        color: white;
+        font-size: 1em;
+        outline: none;
+        transition: all 0.3s;
+      }
+
+      .input-racing:hover {
+        background: linear-gradient(135deg, rgba(225,6,0,0.3), rgba(139,0,0,0.3));
+        border-color: #ff1e1e;
+        box-shadow: 0 0 20px rgba(225,6,0,0.3);
+      }
+
+      .input-racing:focus {
+        background: linear-gradient(135deg, rgba(225,6,0,0.25), rgba(139,0,0,0.25));
+        border-color: #ff3333;
+        box-shadow: 0 0 25px rgba(225,6,0,0.4);
+      }
+
+      .input-racing::placeholder {
+        color: rgba(255,255,255,0.6);
+      }
+
+      /* Navbar F1 Racing Style */
+      .sidebar-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 30px;
+        padding-bottom: 20px;
+        border-bottom: 2px solid rgba(225,6,0,0.3);
+      }
+
+      #mainNavbar.navbar-collapsed .sidebar-header {
+        margin-bottom: 0;
+        padding-bottom: 0;
+        border-bottom: none;
+      }
+
+      .f1-logo-nav {
+        font-size: 1.8em;
+        flex-shrink: 0;
+      }
+
+      .brand-name {
+        font-size: 1.1em;
+        font-weight: 600;
+        background: linear-gradient(135deg, #e10600, #ff6b00);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      #mainNavbar.navbar-collapsed .brand-name {
+        display: none;
       }
 
       @media (prefers-color-scheme: dark) {
@@ -143,8 +225,8 @@
     <div class="flex h-full">
       <!-- Navbar collapsible -->
       <nav id="mainNavbar" class="bg-[#d0c0c0] dark:bg-[#1f1f2f] flex flex-col py-3 shadow-lg overflow-hidden fixed left-0 top-0 h-full z-50">
-        <!-- Header avec emoji F1 et icone de controle -->
-        <div class="px-4 py-3 flex items-center justify-between bg-[#d0c0c0] dark:bg-[#1f1f2f] relative">
+        <!-- Header avec toggle icon -->
+        <div class="px-4 py-3 flex items-center justify-between bg-[#d0c0c0] dark:bg-[#1f1f2f] relative border-b-2 border-transparent" style="border-image: linear-gradient(90deg, rgba(225,6,0,0.3), rgba(139,0,0,0.3)) 1;">
           <!-- F1 logo - à gauche en ouvert, centré en fermé -->
           <button class="navbar-logo text-2xl hover:scale-110 transition-transform duration-200" title="Logo">🏎️</button>
           
@@ -155,7 +237,7 @@
         </div>
 
         <!-- Boutons de navigation -->
-        <div class="flex flex-col gap-2 px-3 py-4 border-b border-[#c8afa0] dark:border-[#4a4d55]">
+        <div class="flex flex-col gap-2 px-3 py-2 border-b border-[#c8afa0] dark:border-[#4a4d55]">
           <button id="newConvNavBtn" class="flex items-center gap-2 p-2 rounded-lg hover:bg-[#c8afa0] dark:hover:bg-[#4a4d55] transition-all duration-200 active:scale-95 text-[#0d0737] dark:text-white text-left text-sm font-medium" onclick="createConversation()">
             <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
             <span class="whitespace-nowrap overflow-hidden" data-navbar-text>Nouvelle discussion</span>
@@ -199,22 +281,25 @@
 
         <!-- Zone de saisie - Nouveau design -->
         <div id="inputContainer" class="flex flex-col items-center justify-center h-full px-4 py-8 bg-gradient-to-b from-[#e8d3d3] dark:from-[#04031a] to-[#dcc9c9] dark:to-[#1f1f2f] transition-all duration-300">
-          <h1 class="text-slate-900 dark:text-white text-3xl font-light text-center mb-12">
-            Comment puis-je vous aider ?
+          <h1 class="text-slate-900 dark:text-white text-4xl font-bold text-center mb-3">
+            🏁 Bienvenue au Pit Stop 🏁
           </h1>
+          <p class="text-slate-700 dark:text-slate-300 text-lg text-center mb-12">
+            Votre assistant expert en <span style="background: linear-gradient(135deg, #e10600, #ff6b00); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Formule 1</span> 🏎️
+          </p>
           
           <div class="w-full max-w-2xl">
-            <form id="chatForm" onsubmit="sendMessage(event)" class="bg-[#0d0737] dark:bg-[#9b473e] rounded-full shadow-2xl flex items-center px-6 py-4 border border-[#0d0737] dark:border-[#9b473e]">
+            <form id="chatForm" onsubmit="sendMessage(event)" class="flex items-center relative">
               <input
                 type="text"
                 id="messageInput"
                 placeholder="Poser une question"
                 required
                 autocomplete="off"
-                class="flex-1 bg-[#0d0737] dark:bg-[#9b473e] text-white placeholder-slate-200 dark:placeholder-white outline-none text-base focus:outline-none"
+                class="input-racing"
               />
               
-              <button type="submit" id="sendBtn" class="ml-3 p-2 rounded-full bg-white hover:bg-slate-200 dark:bg-white dark:hover:bg-slate-200 text-slate-900 transition disabled:opacity-50" aria-label="Envoyer">
+              <button type="submit" id="sendBtn" class="absolute right-3 p-2 rounded-full bg-white hover:bg-slate-200 text-slate-900 transition disabled:opacity-50" aria-label="Envoyer">
                 <svg class="w-5 h-5 rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
               </button>
             </form>

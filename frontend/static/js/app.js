@@ -228,7 +228,7 @@ function renderConversationList() {
     const titleDiv = document.createElement('div');
     titleDiv.className = 'flex-1 min-w-0';
     const titleEl = document.createElement('p');
-    titleEl.className = 'text-sm font-medium text-slate-900 dark:text-white truncate';
+    titleEl.className = 'text-xs font-medium text-slate-900 dark:text-white truncate';
     titleEl.textContent = conv.title;
     titleDiv.appendChild(titleEl);
 
@@ -268,7 +268,7 @@ function renderNavbarHistory() {
   
   conversations.forEach(conv => {
     const item = document.createElement('button');
-    item.className = 'flex items-center gap-2 w-full p-2 rounded hover:bg-[#c8afa0] dark:hover:bg-[#4a4d55] transition text-left text-[#0d0737] dark:text-white text-sm group';
+    item.className = 'flex items-center gap-2 w-full p-2 rounded hover:bg-[#c8afa0] dark:hover:bg-[#4a4d55] transition text-left text-[#0d0737] dark:text-white text-xs group';
     item.title = conv.title;
     
     const icon = document.createElement('svg');
