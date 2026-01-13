@@ -57,7 +57,7 @@ class F1DataHandler:
     
     @staticmethod
     def get_next_race() -> str:
-        """Prochain GP - ultra-rapide sans Ergast (FIA)"""
+        """Prochain GP - ultra-rapide via endpoint Aurupteur (ne pas scraper FIA)"""
         cache = get_cache()
         cache_key = "next_race"
         
@@ -66,36 +66,20 @@ class F1DataHandler:
             return f"🏁 (depuis cache)\n\n{cached}"
         
         try:
-            # Scraper FIA calendrier 2025
-            url = "https://www.fia.com/events/fia-formula-one-world-championship/season-2025/2025-fia-formula-one-world-championship"
-            html = _fetch_url(url, timeout=5)  # Timeout réduit 8s→5s
-            if not html:
-                raise RuntimeError("source FIA indisponible")
-
-            soup = BeautifulSoup(html, "html.parser")
-            events = soup.find_all("div", class_=lambda x: x and "event" in x.lower())
-            # Prendre le premier événement listé comme prochain GP (approximation)
-            if not events:
-                raise RuntimeError("Aucun événement FIA détecté")
-
-            text = events[0].get_text(" ", strip=True)
-            # Essayer de formater: extraire nom et date heuristiquement
-            name = text.split(" - ")[0] if " - " in text else text[:80]
-            # Date heuristique: chercher motif JJ mois AAAA
-            date = "TBD"
-            try:
-                import re
-                m = re.search(r"(\d{1,2}\s+[A-Za-zéûôîàè]+\s+20\d{2})", text)
-                if m:
-                    date = m.group(1)
-            except Exception:
-                pass
-
-            result = f"🏁 **Prochain Grand Prix**\n\n{name}\n📅 {date}\n🔗 Source FIA"
-            cache.set(cache_key, result, CACHE_TTL.get("ergast_race", 600))
-            return result
+            # Utiliser le endpoint /next_race_countdown qui scrape Aurupteur efficacement
+            import httpx
+            response = httpx.get("http://localhost:8001/next_race_countdown", timeout=3)
+            if response.status_code == 200:
+                data = response.json()
+                if data.get("countdown") and data.get("race_name"):
+                    result = f"🏁 **Prochain Grand Prix**\n\n{data['race_name']}\n⏱️ {data['countdown']}\n📅 {data.get('date', 'N/A')}\n🔗 Source: {data.get('source', 'Aurupteur')}"
+                    cache.set(cache_key, result, CACHE_TTL.get("ergast_race", 600))
+                    return result
+            
+            # Fallback si endpoint ne répond pas
+            raise RuntimeError("endpoint /next_race_countdown indisponible")
         except Exception as e:
-            return f"⚠️ Impossible de récupérer le prochain GP (FIA): {e}"
+            return f"⏰ Prochain GP: Australie - 8 mars 2026 (données Aurupteur indisponibles: {str(e)[:50]})"
     
     @staticmethod
     def get_rules() -> str:
