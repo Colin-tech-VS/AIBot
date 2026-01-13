@@ -1,5 +1,5 @@
 /**
- * Chatbot Ollama Local - Frontend Client
+ * Chatbot F1 - Frontend Client (Version simplifiée sans authentification)
  * Communication avec le backend FastAPI
  * Gestion des messages et affichage en temps réel
  */
@@ -9,29 +9,15 @@ const chatBox = document.getElementById("chatBox");
 const messageInput = document.getElementById("messageInput");
 const chatForm = document.getElementById("chatForm");
 const sendBtn = document.getElementById("sendBtn");
+const mainNavbar = document.getElementById("mainNavbar");
+const navOverlay = document.getElementById("navOverlay");
 
 // État
 let isWaiting = false;
-let currentUser = null;
-let isLoginMode = true;
+let isNavbarOpen = false;
+let isNavbarCollapsed = false;
 
-// Références au DOM (Auth)
-const authModal = document.getElementById("authModal");
-const authForm = document.getElementById("authForm");
-const authModalTitle = document.getElementById("authModalTitle");
-const authSubmitBtn = document.getElementById("authSubmitBtn");
-const emailGroup = document.getElementById("emailGroup");
-const authUsernameInput = document.getElementById("authUsername");
-const authEmailInput = document.getElementById("authEmail");
-const authPasswordInput = document.getElementById("authPassword");
-const userInfo = document.getElementById("userInfo");
-
-// References to history UI (initialized on DOMContentLoaded)
-let historyPanel = null;
-let historyOverlay = null;
-let historyContent = null;
-
-// Conversations store (frontend only, ChatGPT-like)
+// Conversations store (localStorage uniquement)
 let conversations = [];
 let currentConversationId = null;
 
@@ -39,62 +25,26 @@ function uid() {
   return Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
 }
 
-async function syncConversationsWithServer() {
-  if (!currentUser) return;
-  
-  try {
-    const response = await fetch("/auth/sync_conversations", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${localStorage.getItem("token")}`
-      },
-      body: JSON.stringify(conversations)
-    });
-    
-    if (!response.ok) console.error("Échec de la synchronisation");
-  } catch (e) {
-    console.error("Erreur sync:", e);
-  }
-}
-
-async function loadConversationsFromServer() {
-  if (!currentUser) return;
-  
-  // On commence par charger ce qu'on a localement pour cet utilisateur spécifique
-  loadConversationsFromStorage();
-  renderConversationList();
-  if (conversations.length > 0) loadConversationIntoChat(conversations[0].id);
-
-  try {
-    const response = await fetch("/auth/conversations", {
-      headers: {
-        "Authorization": `Bearer ${localStorage.getItem("token")}`
-      }
-    });
-    
-    if (response.ok) {
-      const serverConvs = await response.json();
-      if (serverConvs.length > 0) {
-        conversations = serverConvs;
-        saveConversations();
-        renderConversationList();
-        if (conversations.length > 0) loadConversationIntoChat(conversations[0].id);
-      } else if (conversations.length === 0) {
-        // Si rien sur le serveur ET rien localement, créer une conv par défaut
-        createConversation();
-      }
-    }
-  } catch (e) {
-    console.error("Erreur chargement serveur:", e);
+/**
+ * Supprime toutes les conversations de l'historique
+ */
+function clearAllHistory() {
+  if (confirm('Êtes-vous sûr de vouloir supprimer tout l\'historique ? Cette action est irréversible.')) {
+    conversations = [];
+    currentConversationId = null;
+    saveConversations();
+    renderNavbarHistory();
+    chatBox.innerHTML = '';
+    const chatContainer = document.getElementById('chatContainer');
+    chatContainer.classList.remove('active-chat');
+    chatBox.classList.add('hidden');
+    showNotification('Historique supprimé avec succès', 'success');
   }
 }
 
 function saveConversations() {
   try {
-    const storageKey = currentUser ? `conversations_${currentUser}` : 'conversations_guest';
-    localStorage.setItem(storageKey, JSON.stringify(conversations));
-    if (currentUser) syncConversationsWithServer(); // Sync à chaque sauvegarde si connecté
+    localStorage.setItem('conversations', JSON.stringify(conversations));
   } catch (e) {
     console.error('Impossible de sauvegarder les conversations', e);
   }
@@ -102,8 +52,7 @@ function saveConversations() {
 
 function loadConversationsFromStorage() {
   try {
-    const storageKey = currentUser ? `conversations_${currentUser}` : 'conversations_guest';
-    const raw = localStorage.getItem(storageKey);
+    const raw = localStorage.getItem('conversations');
     if (raw) {
       conversations = JSON.parse(raw);
     } else {
@@ -118,9 +67,19 @@ function loadConversationsFromStorage() {
 function createConversation(fromHistory) {
   console.log('[createConversation] START', {count: conversations.length});
   
+  // Si pas d'historique fourni et qu'une conversation vide existe déjà, la charger
+  if (!fromHistory && conversations.length > 0) {
+    const existingEmpty = conversations.find(c => isConversationEmpty(c));
+    if (existingEmpty) {
+      console.log('[createConversation] Conversation vide existante trouvée, chargement:', {id: existingEmpty.id});
+      loadConversationIntoChat(existingEmpty.id);
+      return;
+    }
+  }
+  
   const conv = {
     id: uid(),
-    title: fromHistory && fromHistory.title ? fromHistory.title : `Conversation ${conversations.length + 1}`,
+    title: fromHistory && fromHistory.title ? fromHistory.title : 'Nouvelle conversation',
     messages: fromHistory && fromHistory.messages ? fromHistory.messages : []
   };
   
@@ -130,35 +89,37 @@ function createConversation(fromHistory) {
   console.log('[createConversation] Created:', {id: conv.id, title: conv.title});
   
   saveConversations();
-  renderConversationList();
+  renderNavbarHistory();
   loadConversationIntoChat(conv.id);
   
   console.log('[createConversation] DONE');
 }
 
-function deleteConversation(id) {
+function isConversationEmpty(conv) {
+  return !conv || !conv.messages || conv.messages.length === 0;
+}
+
+function deleteConversation(id, silent = false) {
   const idx = conversations.findIndex(c=>c.id===id);
   if (idx===-1) return;
-  if (!confirm('Supprimer cette conversation ?')) return;
+  
+  // Demander confirmation uniquement si ce n'est pas une suppression silencieuse
+  if (!silent && !confirm('Supprimer cette conversation ?')) return;
+  
   conversations.splice(idx,1);
   if (currentConversationId===id) {
     if (conversations.length>0) currentConversationId = conversations[0].id;
     else currentConversationId = null;
   }
   saveConversations();
-  renderConversationList();
+  renderNavbarHistory();
   if (currentConversationId) loadConversationIntoChat(currentConversationId);
   else chatBox.innerHTML = `<div class="message-info"><p class="muted">Aucune conversation. Créez-en une.</p></div>`;
 }
 
-function renameConversation(id) {
-  const conv = conversations.find(c=>c.id===id);
-  if (!conv) return;
-  const newTitle = prompt('Nouveau titre', conv.title);
-  if (!newTitle) return;
-  conv.title = newTitle;
-  saveConversations();
-  renderConversationList();
+function deleteEmptyConversations() {
+  const emptyIds = conversations.filter(conv => isConversationEmpty(conv)).map(conv => conv.id);
+  emptyIds.forEach(id => deleteConversation(id, true));
 }
 
 function addMessageToCurrentConversation(role, content) {
@@ -170,84 +131,93 @@ function addMessageToCurrentConversation(role, content) {
   
   // Si c'est le premier message utilisateur et que la conversation a un titre par défaut, la renommer
   if (role === 'user' && (!conv.messages || conv.messages.length === 0)) {
-    const isDefaultTitle = conv.title.startsWith('Conversation ');
+    const isDefaultTitle = conv.title === 'Nouvelle conversation';
     if (isDefaultTitle) {
       conv.title = content.slice(0, 50);
-      setConversationTitle(conv.title);
+      renderNavbarHistory();
     }
   }
   
   conv.messages.push({role, content, ts: Date.now()});
   saveConversations();
-  renderConversationList();
 }
 
 function loadConversationIntoChat(id) {
+  // Avant de changer, supprimer les conversations vides (sauf celle qu'on va charger)
+  const previousConvId = currentConversationId;
+  if (previousConvId && previousConvId !== id) {
+    const previousConv = conversations.find(c => c.id === previousConvId);
+    if (previousConv && isConversationEmpty(previousConv)) {
+      deleteConversation(previousConvId, true);
+    }
+  }
+  
   const conv = conversations.find(c=>c.id===id);
   if (!conv) return;
   currentConversationId = id;
   chatBox.innerHTML = '';
-  setConversationTitle(conv.title);
-  if (!conv.messages || conv.messages.length===0) {
-    chatBox.innerHTML = `<div class="message-info"><p class="muted">Conversation vide. Envoyez un message pour commencer.</p></div>`;
+  
+  // Gérer le layout basé sur si la conversation a des messages
+  const chatContainer = document.getElementById("chatContainer");
+  if (!conv.messages || conv.messages.length === 0) {
+    chatBox.classList.add("hidden");
+    chatContainer.classList.remove("active-chat");
+    chatBox.innerHTML = '';
     return;
   }
+  
+  // Si la conversation a des messages, activer le layout actif
+  chatBox.classList.remove("hidden");
+  chatContainer.classList.add("active-chat");
+  
   conv.messages.forEach(m => {
     displayMessage(m.content, m.role, {save:false});
   });
 }
 
-function setConversationTitle(title) {
-  try {
-    const el = document.getElementById('convTitleText');
-    if (el) el.textContent = title || 'Aucune conversation active';
-  } catch (e) {
-    console.error('Impossible de mettre à jour le titre de conversation', e);
-  }
-}
-
-function renderConversationList() {
-  if (!historyContent) return;
-  historyContent.innerHTML = '';
-  if (!conversations || conversations.length===0) {
-    historyContent.innerHTML = `<p class="muted">Aucune conversation.</p>`;
+// Remplir l'historique dans la navbar
+function renderNavbarHistory() {
+  const navbarHistoryList = document.getElementById('navbarHistoryList');
+  if (!navbarHistoryList) return;
+  
+  navbarHistoryList.innerHTML = '';
+  if (!conversations || conversations.length === 0) {
+    navbarHistoryList.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">Aucune conversation</p>`;
     return;
   }
+  
   conversations.forEach(conv => {
-    const item = document.createElement('div');
-    item.className = 'conversation-list-item';
+    const item = document.createElement('button');
+    item.className = 'flex items-center gap-2 w-full p-2 rounded hover:bg-red-800 dark:hover:bg-red-900 transition text-left text-white text-sm group';
     item.title = conv.title;
-
-    const left = document.createElement('div');
-    left.style.display = 'flex';
-    left.style.flexDirection = 'column';
-    left.style.gap = '2px';
-
-    const title = document.createElement('div');
-    title.className = 'title';
-    title.textContent = conv.title;
-
-    left.appendChild(title);
-
-    const actions = document.createElement('div');
-    actions.className = 'conversation-actions';
-
+    
+    const icon = document.createElement('svg');
+    icon.className = 'w-4 h-4 flex-shrink-0';
+    icon.setAttribute('fill', 'none');
+    icon.setAttribute('stroke', 'currentColor');
+    icon.setAttribute('viewBox', '0 0 24 24');
+    icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>';
+    
+    const textSpan = document.createElement('span');
+    textSpan.className = 'flex-1 truncate whitespace-nowrap overflow-hidden';
+    textSpan.textContent = conv.title;
+    
+    item.appendChild(icon);
+    item.appendChild(textSpan);
+    
+    // Bouton supprimer au hover
     const delBtn = document.createElement('button');
-    delBtn.innerText = '🗑️';
+    delBtn.className = 'p-1 rounded hover:bg-red-700 text-white opacity-0 group-hover:opacity-100 transition flex-shrink-0';
     delBtn.title = 'Supprimer';
+    delBtn.innerHTML = '<svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>';
     delBtn.onclick = (e) => { e.stopPropagation(); deleteConversation(conv.id); };
-
-    actions.appendChild(delBtn);
-
-    item.appendChild(left);
-    item.appendChild(actions);
-
+    item.appendChild(delBtn);
+    
     item.onclick = () => {
       loadConversationIntoChat(conv.id);
-      closeHistoryPanel();
     };
-
-    historyContent.appendChild(item);
+    
+    navbarHistoryList.appendChild(item);
   });
 }
 
@@ -259,6 +229,14 @@ async function sendMessage(event) {
 
   const message = messageInput.value.trim();
   if (!message || isWaiting) return;
+
+  // Activer le layout actif au premier message
+  const chatContainer = document.getElementById("chatContainer");
+  if (!chatContainer.classList.contains("active-chat")) {
+    chatContainer.classList.add("active-chat");
+    const chatBox = document.getElementById("chatBox");
+    chatBox.classList.remove("hidden");
+  }
 
   displayMessage(message, "user");
 
@@ -311,13 +289,18 @@ async function sendMessage(event) {
  */
 function displayMessage(text, role = "user", opts = {save: true}) {
   const messageDiv = document.createElement("div");
-  messageDiv.className = `message ${role}`;
+  messageDiv.className = `flex ${role === "user" ? "justify-end" : "justify-start"}`;
 
   const bubble = document.createElement("div");
-  bubble.className = "message-bubble";
+  const baseClass = `max-w-xs lg:max-w-md xl:max-w-lg px-4 py-2 rounded-lg text-sm`;
+  const roleClass = role === "user" 
+    ? "bg-red-900 text-white rounded-br-none" 
+    : "bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white rounded-bl-none";
+  
+  bubble.className = `${baseClass} ${roleClass}`;
   
   let htmlContent = text
-    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" style="color: #3b82f6; text-decoration: underline; font-weight: 600;">$1</a>')
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" class="underline font-semibold hover:opacity-80">$1</a>')
     .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
     .replace(/\*(.+?)\*/g, "<em>$1</em>")
     .replace(/\n/g, "<br>");
@@ -339,11 +322,19 @@ function displayMessage(text, role = "user", opts = {save: true}) {
  */
 function displayLoader() {
   const loadingDiv = document.createElement("div");
-  loadingDiv.className = "message bot";
+  loadingDiv.className = "flex justify-start";
 
   const bubble = document.createElement("div");
-  bubble.className = "message-bubble loading";
-  bubble.innerHTML = "<span>🏎️</span><span>🏁</span><span>⚡</span>";
+  bubble.className = "px-4 py-2 rounded-lg bg-slate-100 dark:bg-slate-800 rounded-bl-none";
+  bubble.innerHTML = `
+    <div class="flex gap-2 items-center">
+      <div class="f1-light" style="animation-delay: 0s"></div>
+      <div class="f1-light" style="animation-delay: 0.4s"></div>
+      <div class="f1-light" style="animation-delay: 0.8s"></div>
+      <div class="f1-light" style="animation-delay: 1.2s"></div>
+      <div class="f1-light" style="animation-delay: 1.6s"></div>
+    </div>
+  `;
 
   loadingDiv.appendChild(bubble);
   chatBox.appendChild(loadingDiv);
@@ -363,88 +354,23 @@ function removeMessage(messageElement) {
 }
 
 /**
- * Efface la conversation courante et réinitialise l'UI
- * FIX: Utilise une vraie variable pour le confirm() au lieu de !confirm()
- */
-function clearChat() {
-  console.log('[clearChat] Demande de confirmation...');
-  
-  const userConfirmed = confirm("Êtes-vous sûr de vouloir effacer cette conversation ?");
-  console.log('[clearChat] Utilisateur a confirmé ?', userConfirmed);
-  
-  if (!userConfirmed) {
-    console.log('[clearChat] ❌ ANNULÉ PAR UTILISATEUR - RIEN NE SERA SUPPRIMÉ');
-    return; // RETOUR IMMÉDIAT si l'utilisateur clique Cancel
-  }
-
-  console.log('[clearChat] ✅ Utilisateur a confirmé, suppression en cours...');
-  doDeleteConversation(); // Appel asynchrone mais non bloquant
-}
-
-function doDeleteConversation() {
-  // Utiliser un IIFE async pour ne pas bloquer clearChat()
-  (async () => {
-    try {
-      const response = await fetch("/clear_history", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error("Erreur lors de l'effacement");
-      }
-
-      console.log('[doDeleteConversation] Backend a confirmé la suppression');
-
-      // Supprimer la conversation courante du localStorage
-      if (currentConversationId) {
-        const idx = conversations.findIndex(c => c.id === currentConversationId);
-        if (idx !== -1) {
-          conversations.splice(idx, 1);
-          console.log('[doDeleteConversation] Conversation supprimée de localStorage');
-          
-          if (conversations.length > 0) {
-            currentConversationId = conversations[0].id;
-            loadConversationIntoChat(currentConversationId);
-          } else {
-            currentConversationId = null;
-            chatBox.innerHTML = `<div class="message-info"><p class="muted">Aucune conversation. Créez-en une.</p></div>`;
-            setConversationTitle('Aucune conversation active');
-          }
-          
-          saveConversations();
-          renderConversationList();
-        }
-      }
-
-      messageInput.focus();
-      console.log('[doDeleteConversation] ✅ DONE');
-    } catch (error) {
-      alert(`Erreur: ${error.message}`);
-      console.error("[doDeleteConversation] Erreur:", error);
-    }
-  })();
-}
-
-/**
  * Initialisation au chargement de la page
  */
 document.addEventListener("DOMContentLoaded", () => {
-  try {
-    historyPanel = document.getElementById("historyPanel");
-    historyContent = document.getElementById("historyContent");
-
-    console.log('Frontend: history UI initialized', {historyPanel: !!historyPanel, historyContent: !!historyContent});
-  } catch (e) {
-    console.error('Erreur initialisation UI:', e);
-  }
-
-  // Initialiser le dark mode et les infos utilisateur (qui chargera les conversations)
-  initDarkMode();
-  initUserInfo();
+  loadConversationsFromStorage();
   
+  // Nettoyer les conversations vides au démarrage
+  deleteEmptyConversations();
+  
+  // Initialiser le dark mode
+  initDarkMode();
+  
+  if (!conversations || conversations.length === 0) {
+    createConversation();
+  } else {
+    renderNavbarHistory();
+    if (conversations.length>0) loadConversationIntoChat(conversations[0].id);
+  }
   messageInput.focus();
 
   messageInput.addEventListener("keydown", (e) => {
@@ -454,99 +380,64 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
   
-  const closeBtn = document.getElementById("closeHistoryBtn");
-  const newConvBtn = document.getElementById("newConversationBtn");
-  
-  if (closeBtn) {
-    closeBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      closeHistoryPanel();
-    });
-  }
-  
-  if (newConvBtn) {
-    newConvBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      createConversation();
-      closeHistoryPanel();
-    });
+  // Initialiser l'état de collapse de la navbar
+  const savedNavbarCollapsed = localStorage.getItem('navbarCollapsed') === 'true';
+  if (savedNavbarCollapsed && window.innerWidth >= 1024) {
+    mainNavbar.classList.add("collapsed");
+    isNavbarCollapsed = true;
   }
 });
 
 chatForm.addEventListener("submit", sendMessage);
 
-/** * Bascule l'ouverture/fermeture du panneau d'historique
- */
-function toggleHistoryPanel() {
-  if (!historyPanel) return;
-  const isOpen = historyPanel.getAttribute("aria-hidden") === "false";
-  if (isOpen) {
-    closeHistoryPanel();
+// Fonctions de gestion de la navbar collapsible
+function toggleNavbar() {
+  // Sur mobile : open/close
+  // Sur desktop : collapse/expand
+  if (window.innerWidth < 1024) {
+    // Mobile
+    isNavbarOpen = !isNavbarOpen;
+    if (isNavbarOpen) {
+      mainNavbar.classList.remove("-translate-x-full");
+      navOverlay.classList.remove("hidden");
+    } else {
+      mainNavbar.classList.add("-translate-x-full");
+      navOverlay.classList.add("hidden");
+    }
   } else {
-    openHistoryPanel();
+    // Desktop
+    toggleNavbarCollapsed();
   }
 }
 
-/** * Ouvre le panneau d'historique (affiche la liste des conversations)
- */
-async function openHistoryPanel() {
-  if (!historyPanel) return;
-  historyPanel.setAttribute("aria-hidden", "false");
-  renderConversationList();
-}
-
-/**
- * Ferme le panneau d'historique
- */
-function closeHistoryPanel() {
-  if (!historyPanel) return;
-  historyPanel.setAttribute("aria-hidden", "true");
-}
-
-/**
- * Remplit le panneau avec les items d'historique (legacy function, not used currently)
- */
-function renderHistoryItems(items) {
-  if (!historyContent) return;
-  if (!items || items.length === 0) {
-    historyContent.innerHTML = `<p class="muted">Aucun historique trouvé.</p>`;
-    return;
+function toggleNavbarCollapsed() {
+  isNavbarCollapsed = !isNavbarCollapsed;
+  localStorage.setItem('navbarCollapsed', isNavbarCollapsed);
+  
+  if (isNavbarCollapsed) {
+    mainNavbar.classList.add("collapsed");
+  } else {
+    mainNavbar.classList.remove("collapsed");
   }
+}
 
-  historyContent.innerHTML = '';
-  items.forEach((it, idx) => {
-    const el = document.createElement('div');
-    el.className = 'history-item';
-
-    const meta = document.createElement('div');
-    meta.className = 'meta';
-    meta.textContent = `${idx + 1} • ${it.role === 'user' ? 'Utilisateur' : 'Assistant'}`;
-
-    const content = document.createElement('div');
-    content.className = 'content';
-    let html = it.content
-      .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" style="color: #3b82f6; text-decoration: underline; font-weight: 600;">$1</a>')
-      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-      .replace(/\*(.+?)\*/g, '<em>$1</em>')
-      .replace(/\n/g, '<br>');
-
-    content.innerHTML = html;
-
-    el.appendChild(meta);
-    el.appendChild(content);
-
-    historyContent.appendChild(el);
-  });
+function closeNavbar() {
+  if (isNavbarOpen) {
+    isNavbarOpen = false;
+    mainNavbar.classList.add("-translate-x-full");
+    navOverlay.classList.add("hidden");
+  }
 }
 
 /**
- * Ouvre le panneau profil utilisateur
+ * Ouvre le panneau profil utilisateur (paramètres)
  */
 function openUserProfile() {
   const userProfilePanel = document.getElementById("userProfilePanel");
   const userProfileOverlay = document.getElementById("userProfileOverlay");
   if (!userProfilePanel) return;
-  userProfileOverlay.hidden = false;
+  userProfileOverlay.classList.remove("hidden");
+  userProfilePanel.classList.remove("translate-x-full");
   userProfilePanel.setAttribute("aria-hidden", "false");
 }
 
@@ -557,102 +448,9 @@ function closeUserProfile() {
   const userProfilePanel = document.getElementById("userProfilePanel");
   const userProfileOverlay = document.getElementById("userProfileOverlay");
   if (!userProfilePanel) return;
+  userProfilePanel.classList.add("translate-x-full");
+  userProfileOverlay.classList.add("hidden");
   userProfilePanel.setAttribute("aria-hidden", "true");
-  userProfileOverlay.hidden = true;
-}
-
-/**
- * Gestion de l'authentification réelle
- */
-function openAuthModal(mode = 'login') {
-  if (authModal) {
-    // Ajuster le mode avant d'ouvrir
-    if (mode === 'register' && isLoginMode) {
-      toggleAuthMode();
-    } else if (mode === 'login' && !isLoginMode) {
-      toggleAuthMode();
-    }
-    authModal.hidden = false;
-  }
-  closeUserProfile();
-}
-
-function closeAuthModal() {
-  if (authModal) {
-    authModal.hidden = true;
-  }
-  if (authForm) authForm.reset();
-}
-
-function toggleAuthMode(e) {
-  if (e) e.preventDefault();
-  isLoginMode = !isLoginMode;
-  
-  authModalTitle.innerText = isLoginMode ? "Connexion" : "Inscription";
-  authSubmitBtn.innerText = isLoginMode ? "Se connecter" : "S'inscrire";
-  emailGroup.hidden = isLoginMode;
-  document.getElementById("authSwitchText").innerText = isLoginMode ? "Pas encore de compte ?" : "Déjà un compte ?";
-  document.getElementById("authSwitchLink").innerText = isLoginMode ? "S'inscrire" : "Se connecter";
-}
-
-async function handleAuthSubmit(e) {
-  e.preventDefault();
-  
-  const username = authUsernameInput.value;
-  const password = authPasswordInput.value;
-  const email = authEmailInput.value;
-  
-  const endpoint = isLoginMode ? "/auth/login" : "/auth/register";
-  const payload = isLoginMode ? { username, password } : { username, email, password };
-  
-  try {
-    const response = await fetch(endpoint, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload)
-    });
-    
-    const data = await response.json();
-    
-    if (!response.ok) {
-      throw new Error(data.detail || "Erreur d'authentification");
-    }
-    
-    if (isLoginMode) {
-      currentUser = data.username;
-      localStorage.setItem("token", data.access_token);
-      localStorage.setItem("username", data.username);
-      updateUserUI(); // On n'attend pas forcément ici car c'est de l'UI secondaire
-      closeAuthModal();
-      loadConversationsFromServer();
-      showNotification(`Bienvenue ${currentUser} !`, 'success');
-    } else {
-      showNotification("Compte créé avec succès !", 'success');
-      // Une fois inscrit, on tente la connexion automatique
-      isLoginMode = true;
-      // On ferme la modal après inscription pour éviter qu'elle reste si handleAuthSubmit est rappelé
-      // Mais handleAuthSubmit(e) va la rouvrir ou la garder car isLoginMode est true maintenant
-      // On va plutôt simuler le clic de connexion ou appeler directement la logique
-      handleAuthSubmit(e);
-    }
-  } catch (error) {
-    showNotification(error.message, 'error');
-  }
-}
-
-function handleLogout() {
-  localStorage.removeItem("token");
-  localStorage.removeItem("username");
-  currentUser = null;
-  
-  // Vider l'état des conversations
-  conversations = [];
-  currentConversationId = null;
-  chatBox.innerHTML = '<div class="message-info"><p class="muted">Déconnecté. Veuillez vous connecter pour voir vos conversations.</p></div>';
-  setConversationTitle("Non connecté");
-  
-  updateUserUI();
-  showNotification("Vous avez été déconnecté", 'info');
 }
 
 /**
@@ -686,192 +484,33 @@ function showNotification(message, type = 'info') {
   }, 3000);
 }
 
-async function updateUserUI() {
-  const userInfo = document.getElementById("userInfo");
-  const securitySection = document.getElementById("securitySection");
-  const extraActionsSection = document.getElementById("extraActionsSection");
-  if (!userInfo) return;
-  
-  if (currentUser) {
-    userInfo.innerHTML = `<p class="muted">Chargement de vos données...</p>`;
-    if (securitySection) securitySection.hidden = false;
-    if (extraActionsSection) extraActionsSection.hidden = false;
-
-    try {
-      const response = await fetch("/auth/me", {
-        headers: { "Authorization": `Bearer ${localStorage.getItem("token")}` }
-      });
-      if (response.ok) {
-        const data = await response.json();
-        const dateStr = new Date(data.created_at).toLocaleDateString('fr-FR', {
-          year: 'numeric', month: 'long', day: 'numeric'
-        });
-
-        userInfo.innerHTML = `
-          <div style="background: var(--bg-alt); padding: 1rem; border-radius: 8px; border: 1px solid var(--border); font-size: 0.9rem;">
-            <p style="margin-bottom: 5px;">👤 <strong>Nom:</strong> ${data.username}</p>
-            <p style="margin-bottom: 5px;">📧 <strong>Email:</strong> ${data.email}</p>
-            <p style="margin-bottom: 10px; font-size: 0.8rem; color: var(--fg-light);">📅 Membre depuis: ${dateStr}</p>
-            <div style="border-top: 1px solid var(--border); padding-top: 10px; margin-top: 5px;">
-              <p style="font-size: 0.75rem; color: var(--fg-light); margin-bottom: 10px;"><em>Conformément au RGPD, vous disposez d'un droit d'accès et de rectification de vos données.</em></p>
-              <button class="profile-btn logout-btn" onclick="handleLogout()" style="background:#ff4444; width: 100%;">Se déconnecter</button>
-            </div>
-          </div>
-        `;
-      } else {
-        userInfo.innerHTML = `<p>Connecté en tant que <strong>${currentUser}</strong></p>
-        <button class="profile-btn logout-btn" onclick="handleLogout()" style="background:#ff4444; margin-top:10px;">Se déconnecter</button>`;
-      }
-    } catch (e) {
-      console.error("Erreur recup user data:", e);
-      userInfo.innerHTML = `<p>Connecté en tant que <strong>${currentUser}</strong></p>
-      <button class="profile-btn logout-btn" onclick="handleLogout()" style="background:#ff4444; margin-top:10px;">Se déconnecter</button>`;
-    }
-  } else {
-    if (securitySection) securitySection.hidden = true;
-    if (extraActionsSection) extraActionsSection.hidden = true;
-    userInfo.innerHTML = `
-      <p class="muted">Non connecté</p>
-      <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 10px;">
-        <button id="loginBtn" class="profile-btn" onclick="openAuthModal('login')">Se connecter</button>
-        <button id="registerBtn" class="profile-btn" onclick="openAuthModal('register')" style="background: var(--bg-alt); color: var(--fg); border: 1px solid var(--border);">S'inscrire</button>
-      </div>
-    `;
-  }
-}
-
-async function handleChangePassword(e) {
-  e.preventDefault();
-  const old_password = document.getElementById("oldPassword").value;
-  const new_password = document.getElementById("newPassword").value;
-
-  try {
-    const response = await fetch("/auth/change-password", {
-      method: "POST",
-      headers: { 
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${localStorage.getItem("token")}`
-      },
-      body: JSON.stringify({ old_password, new_password })
-    });
-
-    const data = await response.json();
-    if (response.ok) {
-      showNotification("Mot de passe modifié avec succès !", "success");
-      e.target.reset();
-    } else {
-      throw new Error(data.detail || "Erreur lors du changement de mot de passe");
-    }
-  } catch (error) {
-    showNotification(error.message, "error");
-  }
-}
-
 /**
- * Supprime le compte utilisateur après confirmation
- */
-async function handleDeleteAccount() {
-  const confirmed = confirm("⚠️ ÊTES-VOUS SÛR ? Cette action est irréversible et supprimera TOUTES vos conversations.");
-  if (!confirmed) return;
-
-  const doubleConfirmed = confirm("Dernière confirmation : Supprimer définitivement votre compte ?");
-  if (!doubleConfirmed) return;
-
-  try {
-    const response = await fetch("/auth/delete-account", {
-      method: "DELETE",
-      headers: { 
-        "Authorization": `Bearer ${localStorage.getItem("token")}`
-      }
-    });
-
-    if (response.ok) {
-      showNotification("Compte supprimé avec succès", "info");
-      handleLogout(); // Déconnexion et nettoyage local
-      closeUserProfile();
-    } else {
-      const data = await response.json();
-      throw new Error(data.detail || "Erreur lors de la suppression du compte");
-    }
-  } catch (error) {
-    showNotification(error.message, "error");
-  }
-}
-
-/**
- * Initialise les informations utilisateur au chargement
- */
-function initUserInfo() {
-  const savedUser = localStorage.getItem("username");
-  const savedToken = localStorage.getItem("token");
-  if (savedUser && savedToken) {
-    currentUser = savedUser;
-    loadConversationsFromServer();
-  } else {
-    currentUser = null;
-    loadConversationsFromStorage();
-    if (conversations.length === 0) {
-      createConversation();
-    } else {
-      renderConversationList();
-      loadConversationIntoChat(conversations[0].id);
-    }
-  }
-  updateUserUI();
-}
-
-/**
- * Active/désactive le dark mode
+ * Active/désactive le dark mode avec Tailwind
  */
 function toggleDarkMode() {
-  const isDarkMode = document.body.classList.toggle("dark-mode");
+  const isDarkMode = document.documentElement.classList.toggle("dark");
   localStorage.setItem("darkMode", isDarkMode);
-  updateDarkModeVariables(isDarkMode);
-}
-
-/**
- * Met à jour les variables CSS pour le dark mode
- */
-function updateDarkModeVariables(isDarkMode) {
-  const root = document.documentElement;
-  if (isDarkMode) {
-    // Couleurs F1 - Dark Mode
-    root.style.setProperty("--bg", "#0f0f0f");           // Noir très foncé
-    root.style.setProperty("--bg-alt", "#1a1a1a");       // Gris très foncé
-    root.style.setProperty("--fg", "#f5f5f5");           // Blanc cassé
-    root.style.setProperty("--fg-light", "#b0b0b0");     // Gris clair
-    root.style.setProperty("--border", "#333333");       // Gris foncé
-    root.style.setProperty("--primary", "#ff1801");      // Rouge F1
-    root.style.setProperty("--primary-dark", "#cc1400"); // Rouge F1 foncé
-    root.style.setProperty("--msg-user", "#ff1801");     // Messages user en rouge F1
-    root.style.setProperty("--msg-bot", "#1f1f1f");      // Messages bot en gris très foncé
-  } else {
-    // Light mode - beige original
-    root.style.setProperty("--bg", "#fffbf7");
-    root.style.setProperty("--bg-alt", "#f5ede4");
-    root.style.setProperty("--fg", "#3e3e3e");
-    root.style.setProperty("--fg-light", "#8b8b8b");
-    root.style.setProperty("--border", "#e8dcd0");
-    root.style.setProperty("--primary", "#d4a574");
-    root.style.setProperty("--primary-dark", "#c19a6b");
-    root.style.setProperty("--msg-user", "#e8dcc8");
-    root.style.setProperty("--msg-bot", "#faf7f2");
-  }
 }
 
 /**
  * Initialise le dark mode au chargement
  */
 function initDarkMode() {
-  const darkModeToggle = document.getElementById("darkModeToggle");
   const isDarkMode = localStorage.getItem("darkMode") === "true";
+  const darkModeToggle = document.getElementById("darkModeToggle");
+  if (isDarkMode) {
+    document.documentElement.classList.add("dark");
+  } else {
+    document.documentElement.classList.remove("dark");
+  }
   if (darkModeToggle) {
     darkModeToggle.checked = isDarkMode;
   }
-  if (isDarkMode) {
-    document.body.classList.add("dark-mode");
-    updateDarkModeVariables(true);
-  }
 }
 
-
+/**
+ * Affiche une notification toast (legacy function - compatibility)
+ */
+function showToast(message, isSuccess = true) {
+  showNotification(message, isSuccess ? 'success' : 'error');
+}

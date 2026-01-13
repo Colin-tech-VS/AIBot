@@ -3,15 +3,36 @@ Handlers rapides pour F1 sans LLM
 Répondent en <100ms pour les questions simples
 """
 
-from typing import Dict, Any
+from typing import Dict, Any, Optional
 import requests
+from bs4 import BeautifulSoup
 from backend.optimized_cache import get_cache, CACHE_TTL
+from backend.standings_utils import get_standf1_standings_summary
+
+
+# En-têtes HTTP simples pour scraping
+HEADERS = {
+    "User-Agent": (
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+        "AppleWebKit/537.36 (KHTML, like Gecko) "
+        "Chrome/120.0.0.0 Safari/537.36"
+    )
+}
+
+
+def _fetch_url(url: str, timeout: int = 8) -> str:
+    """Récupère HTML en gérant les erreurs silencieusement."""
+    try:
+        resp = requests.get(url, headers=HEADERS, timeout=timeout)
+        resp.raise_for_status()
+        return resp.text
+    except Exception:
+        return ""
 
 
 class F1DataHandler:
     """Handlers pour données F1 rapides"""
-    
-    ERGAST_BASE = "http://ergast.com/api/f1"
+    # Ergast retiré: n'utiliser que des sources publiques (FIA/StandF1)
     
     @staticmethod
     def get_standings() -> str:
@@ -25,32 +46,18 @@ class F1DataHandler:
             return f"📊 (depuis cache)\n\n{cached}"
         
         try:
-            # Récupérer standings actuels
-            url = f"{F1DataHandler.ERGAST_BASE}/current/driverStandings.json?limit=10"
-            resp = requests.get(url, timeout=3)
-            data = resp.json()
-            
-            standings = data.get("MRData", {}).get("StandingsTable", {}).get("Standings", [{}])[0]
-            drivers = standings.get("DriverStandings", [])
-            
-            # Format ultra-compact
-            lines = ["🏎️ **Classement Pilotes 2025** :\n"]
-            for i, driver in enumerate(drivers[:5], 1):
-                driver_info = driver.get("Driver", {})
-                name = f"{driver_info.get('givenName')} {driver_info.get('familyName')}"
-                points = driver.get("points")
-                lines.append(f"{i}. **{name}** - {points} pts")
-            
-            result = "\n".join(lines)
-            cache.set(cache_key, result, CACHE_TTL["ergast_standings"])
-            return result
-        
+            summary = get_standf1_standings_summary(top_n=10)
+            if summary:
+                result = "🏎️ **Classement Pilotes (top 10)** :\n\n" + summary
+                cache.set(cache_key, result, CACHE_TTL.get("news_articles", 600))
+                return result
+            return "⚠️ Classements indisponibles pour le moment (StandF1)."
         except Exception as e:
-            return f"⚠️ Impossible de récupérer les classements: {e}"
+            return f"⚠️ Impossible de récupérer les classements (StandF1): {e}"
     
     @staticmethod
     def get_next_race() -> str:
-        """Prochain GP - ultra-rapide"""
+        """Prochain GP - ultra-rapide sans Ergast (FIA)"""
         cache = get_cache()
         cache_key = "next_race"
         
@@ -59,23 +66,36 @@ class F1DataHandler:
             return f"🏁 (depuis cache)\n\n{cached}"
         
         try:
-            url = f"{F1DataHandler.ERGAST_BASE}/current.json"
-            resp = requests.get(url, timeout=3)
-            data = resp.json()
-            
-            races = data.get("MRData", {}).get("RaceTable", {}).get("Races", [])
-            next_race = next((r for r in races if "Results" not in r), races[-1])
-            
-            name = next_race.get("name", "GP")
-            date = next_race.get("date", "TBD")
-            circuit = next_race.get("Circuit", {}).get("circuitName", "Unknown")
-            
-            result = f"🏁 **Prochain Grand Prix**\n\n{name}\n📍 {circuit}\n📅 {date}"
-            cache.set(cache_key, result, CACHE_TTL["ergast_race"])
+            # Scraper FIA calendrier 2025
+            url = "https://www.fia.com/events/fia-formula-one-world-championship/season-2025/2025-fia-formula-one-world-championship"
+            html = _fetch_url(url, timeout=8)
+            if not html:
+                raise RuntimeError("source FIA indisponible")
+
+            soup = BeautifulSoup(html, "html.parser")
+            events = soup.find_all("div", class_=lambda x: x and "event" in x.lower())
+            # Prendre le premier événement listé comme prochain GP (approximation)
+            if not events:
+                raise RuntimeError("Aucun événement FIA détecté")
+
+            text = events[0].get_text(" ", strip=True)
+            # Essayer de formater: extraire nom et date heuristiquement
+            name = text.split(" - ")[0] if " - " in text else text[:80]
+            # Date heuristique: chercher motif JJ mois AAAA
+            date = "TBD"
+            try:
+                import re
+                m = re.search(r"(\d{1,2}\s+[A-Za-zéûôîàè]+\s+20\d{2})", text)
+                if m:
+                    date = m.group(1)
+            except Exception:
+                pass
+
+            result = f"🏁 **Prochain Grand Prix**\n\n{name}\n📅 {date}\n🔗 Source FIA"
+            cache.set(cache_key, result, CACHE_TTL.get("ergast_race", 600))
             return result
-        
         except Exception as e:
-            return f"⚠️ Impossible de récupérer le prochain GP: {e}"
+            return f"⚠️ Impossible de récupérer le prochain GP (FIA): {e}"
     
     @staticmethod
     def get_rules() -> str:
@@ -110,33 +130,8 @@ def handle_standings_drivers() -> str:
 
 def handle_standings_teams() -> str:
     """Handler: Classement teams"""
-    cache = get_cache()
-    cache_key = "standings_teams"
-    
-    cached = cache.get(cache_key)
-    if cached:
-        return f"📊 (depuis cache)\n\n{cached}"
-    
-    try:
-        url = f"http://ergast.com/api/f1/current/constructorStandings.json?limit=10"
-        resp = requests.get(url, timeout=3)
-        data = resp.json()
-        
-        standings = data.get("MRData", {}).get("StandingsTable", {}).get("Standings", [{}])[0]
-        constructors = standings.get("ConstructorStandings", [])
-        
-        lines = ["🏭 **Classement Constructeurs 2025** :\n"]
-        for i, constructor in enumerate(constructors[:5], 1):
-            name = constructor.get("Constructor", {}).get("name", "Unknown")
-            points = constructor.get("points")
-            lines.append(f"{i}. **{name}** - {points} pts")
-        
-        result = "\n".join(lines)
-        cache.set(cache_key, result, CACHE_TTL["ergast_standings"])
-        return result
-    
-    except Exception as e:
-        return f"⚠️ Erreur: {e}"
+    # Indisponible sans source fiable stable après retrait Ergast
+    return "🏭 **Classement Constructeurs** : Indisponible temporairement (source Ergast retirée)."
 
 
 def handle_next_race() -> str:
@@ -159,24 +154,23 @@ def handle_calendar() -> str:
         return cached
     
     try:
-        url = "http://ergast.com/api/f1/current.json"
-        resp = requests.get(url, timeout=3)
-        data = resp.json()
-        
-        races = data.get("MRData", {}).get("RaceTable", {}).get("Races", [])
-        
-        lines = ["📅 **Calendrier F1 2025** :\n"]
-        for race in races[:3]:
-            name = race.get("name", "GP")
-            date = race.get("date", "TBD")
-            lines.append(f"• {name} ({date})")
-        
-        result = "\n".join(lines) + "\n\n... (voir Ergast pour calendrier complet)"
-        cache.set(cache_key, result, CACHE_TTL["ergast_race"])
+        # Scraper FIA pour un extrait (3 premiers événements)
+        url = "https://www.fia.com/events/fia-formula-one-world-championship/season-2025/2025-fia-formula-one-world-championship"
+        html = _fetch_url(url, timeout=8)
+        if not html:
+            raise RuntimeError("source FIA indisponible")
+        soup = BeautifulSoup(html, "html.parser")
+        events = soup.find_all("div", class_=lambda x: x and "event" in x.lower())[:3]
+        lines = ["📅 **Calendrier F1 (extrait)** :\n"]
+        for ev in events:
+            text = ev.get_text(" ", strip=True)
+            lines.append(f"• {text[:120]}")
+        result = "\n".join(lines) + "\n\n🔗 Source: FIA"
+        cache = get_cache()
+        cache.set(cache_key, result, CACHE_TTL.get("ergast_race", 600))
         return result
-    
     except Exception as e:
-        return f"⚠️ Erreur: {e}"
+        return f"⚠️ Erreur (FIA): {e}"
 
 
 # Mappage intent -> handler

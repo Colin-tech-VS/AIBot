@@ -6,7 +6,7 @@ Compatible: Windows, macOS, Linux
 """
 
 import requests
-from fastapi import FastAPI, Request, BackgroundTasks, Depends
+from fastapi import FastAPI, Request, BackgroundTasks
 from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
@@ -16,18 +16,17 @@ import os
 from pathlib import Path
 import subprocess
 import threading
+import sys
+import socket
 
 from backend.f1_bot import answer_f1_question, perform_background_learning
 from backend.knowledge_base import get_knowledge_base, reload_knowledge_base, KnowledgeDoc
 from backend.optimized_prompts import ConversationMemory
-from backend.auth.routes import router as auth_router, get_current_user
-from backend.auth.database import init_db
+from backend.input_validator import sanitize_user_input
 
-# Initialisation de la base de données au démarrage
-init_db()
-
-# Nouveaux routers (architecture améliorée)
-# from app_new.routers import chat_router, session_router, prompt_router
+# Import logger structuré
+from backend.logger import get_logger
+logger = get_logger(__name__)
 
 # Configuration
 app = FastAPI(title="Chatbot Ollama Local (Multiplateforme)")
@@ -106,29 +105,17 @@ class ChatResponse(BaseModel):
 # HISTORIQUE & MÉMOIRE CONVERSATIONNELLE
 # -----------------------------------------------------------------------------
 
-# Dictionnaire des historiques par user_id puis conversation_id
-# sessions_history[user_id][conv_id] = list of messages
-sessions_history: Dict[int, Dict[str, List[HistoryItem]]] = {}
+# Dictionnaire des historiques par conversation_id (sans authentification)
+sessions_history: Dict[str, List[HistoryItem]] = {}
 MAX_HISTORY = 6  # 3 derniers échanges max
 
-def get_history_for_session(user_id: int, conv_id: str) -> List[HistoryItem]:
-    if user_id not in sessions_history:
-        sessions_history[user_id] = {}
-    if conv_id not in sessions_history[user_id]:
-        sessions_history[user_id][conv_id] = []
-    return sessions_history[user_id][conv_id]
+def get_history_for_session(conv_id: str) -> List[HistoryItem]:
+    if conv_id not in sessions_history:
+        sessions_history[conv_id] = []
+    return sessions_history[conv_id]
 
 # Mémoire conversationnelle persistante
 conversation_memory = ConversationMemory(max_history=10, memory_file="conversation_memory.json")
-
-# -----------------------------------------------------------------------------
-# ENREGISTREMENT DES NOUVEAUX ROUTERS (ARCHITECTURE AMÉLIORÉE)
-# -----------------------------------------------------------------------------
-# Ces routers ajoutent des fonctionnalités sans casser l'ancien système
-app.include_router(auth_router)
-# app.include_router(chat_router.router)      # /api/chat/v2 - Chat avec sessions
-# app.include_router(session_router.router)   # /session/* - Gestion sessions
-# app.include_router(prompt_router.router)    # /prompt/* - Debug prompts
 
 # -----------------------------------------------------------------------------
 # OLLAMA API CALL
@@ -158,20 +145,24 @@ def call_ollama(prompt: str) -> str:
 async def index(request: Request):
     return templates.TemplateResponse(
         "index.html",
-        {"request": request, "title": "Chatbot Ollama Local"}
+        {"request": request, "title": "Chatbot F1"}
     )
 
 @app.post("/chat", response_model=ChatResponse)
-async def chat(chat_msg: ChatMessage, background_tasks: BackgroundTasks, current_user = Depends(get_current_user)):
+async def chat(chat_msg: ChatMessage, background_tasks: BackgroundTasks):
     user_message = chat_msg.message.strip()
     conv_id = chat_msg.conversation_id
     
     if not user_message:
         return JSONResponse(status_code=400, content={"detail": "Message vide"})
 
-    # Récupérer l'ID utilisateur (0 si non connecté)
-    user_id = current_user.get("user_id") if current_user else 0
-    username = current_user.get("username") if current_user else None
+    # 🔒 SANITIZATION - Protection contre injection prompts (Niveau 1)
+    try:
+        user_message, is_safe = sanitize_user_input(user_message)
+        logger.info(f"Input sanitized: safe={is_safe}, length={len(user_message)}")
+    except ValueError as e:
+        logger.warning(f"Input blocked: {e}")
+        return JSONResponse(status_code=400, content={"detail": str(e)})
 
     # GESTION DES COMMANDES SPÉCIALES
     if user_message.startswith("/learn"):
@@ -182,15 +173,15 @@ async def chat(chat_msg: ChatMessage, background_tasks: BackgroundTasks, current
         return ChatResponse(
             user_message=user_message,
             bot_response=bot_response,
-            history=get_history_for_session(user_id, conv_id)
+            history=get_history_for_session(conv_id)
         )
 
-    # Récupérer l'historique spécifique à cet utilisateur et cette session
-    current_history = get_history_for_session(user_id, conv_id)
+    # Récupérer l'historique spécifique à cette session
+    current_history = get_history_for_session(conv_id)
 
     try:
         # Appeler le pipeline F1 (news + stats + Ollama) avec historique
-        bot_response = answer_f1_question(user_message, history=current_history, rag_only=None, username=username)
+        bot_response = answer_f1_question(user_message, history=current_history, rag_only=None, username=None)
     except Exception as exc:
         return JSONResponse(status_code=500, content={"detail": f"Erreur backend: {exc}"})
 
@@ -198,9 +189,7 @@ async def chat(chat_msg: ChatMessage, background_tasks: BackgroundTasks, current
     current_history.append(HistoryItem(role="user", content=user_message))
     current_history.append(HistoryItem(role="assistant", content=bot_response))
     if len(current_history) > MAX_HISTORY:
-        if user_id not in sessions_history:
-            sessions_history[user_id] = {}
-        sessions_history[user_id][conv_id] = current_history[-MAX_HISTORY:]
+        sessions_history[conv_id] = current_history[-MAX_HISTORY:]
 
     # Mémoire persistante (fichier JSON global pour apprentissage)
     conversation_memory.add_to_memory(user_message, bot_response)
@@ -215,17 +204,15 @@ async def chat(chat_msg: ChatMessage, background_tasks: BackgroundTasks, current
     )
 
 @app.get("/history")
-async def get_history(conversation_id: str = "default", current_user = Depends(get_current_user)):
-    user_id = current_user.get("user_id") if current_user else 0
-    return {"history": get_history_for_session(user_id, conversation_id)}
+async def get_history(conversation_id: str = "default"):
+    return {"history": get_history_for_session(conversation_id)}
 
 @app.post("/clear_history")
-async def clear_history(conversation_id: str = "default", current_user = Depends(get_current_user)):
-    user_id = current_user.get("user_id") if current_user else 0
-    if user_id in sessions_history and conversation_id in sessions_history[user_id]:
-        sessions_history[user_id][conversation_id].clear()
+async def clear_history(conversation_id: str = "default"):
+    if conversation_id in sessions_history:
+        sessions_history[conversation_id].clear()
     
-    return {"message": f"Historique '{conversation_id}' effacé pour l'utilisateur {user_id}", "history": []}
+    return {"message": f"Historique '{conversation_id}' effacé", "history": []}
 
 # -----------------------------------------------------------------------------
 # Knowledge Base Endpoints
@@ -300,7 +287,7 @@ async def health_check():
     kb = get_knowledge_base()
     return {
         "status": "ok",
-        "backend": "FastAPI + Ollama (Windows) + Knowledge Base",
+        "backend": "FastAPI + Ollama + Knowledge Base",
         "ollama_available": ollama_ok,
         "model": OLLAMA_MODEL,
         "knowledge_base": {"available": True, "documents_count": len(kb.docs)}
@@ -318,25 +305,55 @@ if __name__ == "__main__":
     import uvicorn
 
     print("=" * 60)
-    print("Chatbot Ollama Local - FASTAPI (OPTIMISE)")
-    print(f"URL: http://localhost:8001")
+    print("Chatbot F1 - FASTAPI")
+    # Paramètres serveur via variables d'environnement
+    HOST = os.environ.get("HOST", "127.0.0.1")
+    PORT = int(os.environ.get("PORT", "8001"))
+    print(f"URL: http://{HOST}:{PORT}")
     print(f"Modele : {OLLAMA_MODEL}")
     print("=" * 60)
 
     # Disable automatic reload by default to avoid infinite restart loops
-    # (useful when files are synced by OneDrive/Cloud and trigger reloads).
-    # To enable reload during development set environment variable DEV_RELOAD=1
     dev_reload = os.environ.get("DEV_RELOAD", "0").lower() in ("1", "true", "yes")
     print(f"Reload enabled: {dev_reload}")
-    uvicorn.run("app:app", host="127.0.0.1", port=8001, reload=dev_reload)
+
+    # Vérifier que le port est disponible, sinon fallback sur 8002
+    def _port_available(host: str, port: int) -> bool:
+        try:
+            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+            s.bind((host, port))
+            s.close()
+            return True
+        except OSError:
+            return False
+
+    if not _port_available(HOST, PORT):
+        alt = 8002 if PORT != 8002 else 8003
+        logger.warning(f"Port {PORT} indisponible. Bascule sur {alt}.")
+        PORT = alt
 
     def launch_auto_train():
         """Lancer le script auto_train.py dans un thread séparé."""
+        AUTO_TRAIN_ENABLED = os.environ.get("AUTO_TRAIN", "0").lower() in ("1", "true", "yes")
+        script_path = BASE_DIR / "backend" / "auto_train.py"
+        if not AUTO_TRAIN_ENABLED:
+            logger.info("auto_train désactivé (AUTO_TRAIN=0).")
+            return
+        if not script_path.exists():
+            logger.warning(f"auto_train.py introuvable: {script_path}")
+            return
+
         def run_script():
-            subprocess.run(["python", "backend/auto_train.py"], check=True)
+            try:
+                subprocess.run([sys.executable, str(script_path)], check=False)
+            except Exception as e:
+                logger.warning(f"auto_train erreur: {e}")
 
         thread = threading.Thread(target=run_script, daemon=True)
         thread.start()
 
-    # Lancer auto_train.py au démarrage du serveur
+    # Lancer auto_train.py au démarrage si activé et présent
     launch_auto_train()
+
+    uvicorn.run("app:app", host=HOST, port=PORT, reload=dev_reload)
