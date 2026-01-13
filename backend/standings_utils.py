@@ -1,7 +1,7 @@
 from typing import Optional, List
 from bs4 import BeautifulSoup
 from backend.optimized_cache import get_cache, CACHE_TTL
-import requests
+import httpx
 
 HEADERS = {
     "User-Agent": (
@@ -12,9 +12,9 @@ HEADERS = {
 }
 
 
-def _fetch_url(url: str, timeout: int = 8) -> str:
+def _fetch_url(url: str, timeout: int = 4) -> str:  # Timeout réduit 8s→4s
     try:
-        resp = requests.get(url, headers=HEADERS, timeout=timeout)
+        resp = httpx.get(url, headers=HEADERS, timeout=timeout, follow_redirects=True)
         resp.raise_for_status()
         return resp.text
     except Exception:
@@ -33,7 +33,7 @@ def get_standf1_standings_summary(top_n: int = 10) -> Optional[str]:
         return cached
 
     try:
-        html = _fetch_url("https://www.standf1.com/", timeout=8)
+        html = _fetch_url("https://www.standf1.com/", timeout=4)  # Timeout réduit 8s→4s
         if not html:
             return None
         soup = BeautifulSoup(html, "html.parser")
@@ -116,7 +116,7 @@ def get_standf1_constructors_summary(top_n: int = 10) -> Optional[str]:
         return cached
 
     try:
-        html = _fetch_url("https://www.standf1.com/", timeout=8)
+        html = _fetch_url("https://www.standf1.com/", timeout=4)  # Timeout réduit 8s→4s
         if not html:
             return None
         soup = BeautifulSoup(html, "html.parser")

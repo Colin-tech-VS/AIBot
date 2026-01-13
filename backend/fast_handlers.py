@@ -4,7 +4,7 @@ Répondent en <100ms pour les questions simples
 """
 
 from typing import Dict, Any, Optional
-import requests
+import httpx
 from bs4 import BeautifulSoup
 from backend.optimized_cache import get_cache, CACHE_TTL
 from backend.standings_utils import get_standf1_standings_summary
@@ -20,10 +20,10 @@ HEADERS = {
 }
 
 
-def _fetch_url(url: str, timeout: int = 8) -> str:
+def _fetch_url(url: str, timeout: int = 4) -> str:  # Timeout réduit 8s→4s
     """Récupère HTML en gérant les erreurs silencieusement."""
     try:
-        resp = requests.get(url, headers=HEADERS, timeout=timeout)
+        resp = httpx.get(url, headers=HEADERS, timeout=timeout, follow_redirects=True)
         resp.raise_for_status()
         return resp.text
     except Exception:
@@ -68,7 +68,7 @@ class F1DataHandler:
         try:
             # Scraper FIA calendrier 2025
             url = "https://www.fia.com/events/fia-formula-one-world-championship/season-2025/2025-fia-formula-one-world-championship"
-            html = _fetch_url(url, timeout=8)
+            html = _fetch_url(url, timeout=5)  # Timeout réduit 8s→5s
             if not html:
                 raise RuntimeError("source FIA indisponible")
 
@@ -156,7 +156,7 @@ def handle_calendar() -> str:
     try:
         # Scraper FIA pour un extrait (3 premiers événements)
         url = "https://www.fia.com/events/fia-formula-one-world-championship/season-2025/2025-fia-formula-one-world-championship"
-        html = _fetch_url(url, timeout=8)
+        html = _fetch_url(url, timeout=5)  # Timeout réduit 8s→5s
         if not html:
             raise RuntimeError("source FIA indisponible")
         soup = BeautifulSoup(html, "html.parser")

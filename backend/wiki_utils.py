@@ -1,5 +1,5 @@
 from typing import Optional
-import requests
+import httpx
 
 HEADERS = {
     "User-Agent": (
@@ -51,7 +51,7 @@ def fetch_wiki_extract_by_title(title: str, sentences: int = 4) -> Optional[str]
             "exlimit": 1,
             "titles": title,
         }
-        resp = requests.get(WIKI_API_BASE, params=params, headers=HEADERS, timeout=8)
+        resp = httpx.get(WIKI_API_BASE, params=params, headers=HEADERS, timeout=5, follow_redirects=True)  # Timeout réduit 8s→5s
         resp.raise_for_status()
         data = resp.json()
         pages = data.get("query", {}).get("pages", {})

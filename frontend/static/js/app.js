@@ -7,8 +7,7 @@
 // Références au DOM
 const chatBox = document.getElementById("chatBox");
 const messageInput = document.getElementById("messageInput");
-const chatForm = document.getElementById("chatForm");
-const sendBtn = document.getElementById("sendBtn");
+const messageForm = document.getElementById("messageForm");
 const mainNavbar = document.getElementById("mainNavbar");
 const navOverlay = document.getElementById("navOverlay");
 
@@ -267,7 +266,8 @@ async function sendMessage(event) {
 
     removeMessage(loaderId);
 
-    displayMessage(data.bot_response, "bot");
+    // Afficher avec effet typing
+    displayMessage(data.bot_response, "bot", {save: true, typing: true, sources: data.sources || []});
   } catch (error) {
     removeMessage(loaderId);
 
@@ -284,37 +284,95 @@ async function sendMessage(event) {
 }
 
 /**
- * Affiche un message dans la zone de chat
- * Support du markdown et emojis (liens cliquables)
+ * Formate le texte en markdown simple (gras, italique, liens)
  */
-function displayMessage(text, role = "user", opts = {save: true}) {
-  const messageDiv = document.createElement("div");
-  messageDiv.className = `flex ${role === "user" ? "justify-end" : "justify-start"}`;
-
-  const bubble = document.createElement("div");
-  const baseClass = `max-w-xs lg:max-w-md xl:max-w-lg px-4 py-2 rounded-lg text-sm`;
-  const roleClass = role === "user" 
-    ? "bg-red-900 text-white rounded-br-none" 
-    : "bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white rounded-bl-none";
-  
-  bubble.className = `${baseClass} ${roleClass}`;
-  
-  let htmlContent = text
+function formatMarkdown(text) {
+  return text
     .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" class="underline font-semibold hover:opacity-80">$1</a>')
     .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
     .replace(/\*(.+?)\*/g, "<em>$1</em>")
     .replace(/\n/g, "<br>");
-  
-  bubble.innerHTML = htmlContent;
+}
 
-  messageDiv.appendChild(bubble);
-  chatBox.appendChild(messageDiv);
+/**
+ * Affiche un message dans la zone de chat avec effet typing pour le bot
+ * Support du markdown et emojis (liens cliquables)
+ */
+function displayMessage(text, role = "user", opts = {save: true, typing: false, sources: []}) {
+  const messageDiv = document.createElement("div");
+  messageDiv.className = `flex ${role === "user" ? "justify-end" : "justify-start"} flex-col`;
 
-  chatBox.scrollTop = chatBox.scrollHeight;
+  const bubble = document.createElement("div");
+  bubble.className = `message-bubble ${role === "user" ? "user-message" : "bot-message"}`;
 
-  if (opts.save !== false) addMessageToCurrentConversation(role, text);
+  // Si c'est un message bot avec effet typing activé
+  if (role === "bot" && opts.typing && text.length > 0) {
+    bubble.innerHTML = "";
+    messageDiv.appendChild(bubble);
 
-  return messageDiv;
+    // Ajouter sources si présentes
+    if (opts.sources && opts.sources.length > 0) {
+      const sourcesDiv = createSourcesDisplay(opts.sources);
+      messageDiv.appendChild(sourcesDiv);
+    }
+
+    chatBox.appendChild(messageDiv);
+
+    // Effet typing progressif
+    let currentIndex = 0;
+    const typingSpeed = 15; // ms par caractère (ajustable)
+
+    const typeNextChar = () => {
+      if (currentIndex < text.length) {
+        currentIndex++;
+        const partialText = text.substring(0, currentIndex);
+        bubble.innerHTML = formatMarkdown(partialText);
+        chatBox.scrollTop = chatBox.scrollHeight;
+
+        setTimeout(typeNextChar, typingSpeed);
+      } else {
+        // Animation terminée, enregistrer dans l'historique si nécessaire
+        if (opts.save) {
+          addMessageToCurrentConversation(role, text);
+        }
+      }
+    };
+
+    typeNextChar();
+  } else {
+    // Affichage normal sans typing
+    bubble.innerHTML = formatMarkdown(text);
+    messageDiv.appendChild(bubble);
+
+    // Ajouter sources si présentes
+    if (role === "bot" && opts.sources && opts.sources.length > 0) {
+      const sourcesDiv = createSourcesDisplay(opts.sources);
+      messageDiv.appendChild(sourcesDiv);
+    }
+
+    chatBox.appendChild(messageDiv);
+    chatBox.scrollTop = chatBox.scrollHeight;
+
+    if (opts.save) {
+      addMessageToCurrentConversation(role, text);
+    }
+  }
+}
+
+/**
+ * Crée un élément d'affichage des sources
+ */
+function createSourcesDisplay(sources) {
+  const sourcesDiv = document.createElement("div");
+  sourcesDiv.className = "mt-2 text-xs text-gray-400 italic";
+  sourcesDiv.style.maxWidth = "85%";
+
+  const sourcesList = sources.map((source) => {
+    return `<span class="inline-block mr-2 mb-1 px-2 py-1 bg-red-950/20 border border-red-900/30 rounded text-gray-300">📌 ${source}</span>`;
+  }).join("");
+
+  sourcesDiv.innerHTML = `<div class="flex flex-wrap gap-1">${sourcesList}</div>`;
+  return sourcesDiv;
 }
 
 /**
@@ -325,14 +383,13 @@ function displayLoader() {
   loadingDiv.className = "flex justify-start";
 
   const bubble = document.createElement("div");
-  bubble.className = "px-4 py-2 rounded-lg bg-slate-100 dark:bg-slate-800 rounded-bl-none";
   bubble.innerHTML = `
-    <div class="flex gap-2 items-center">
-      <div class="f1-light" style="animation-delay: 0s"></div>
-      <div class="f1-light" style="animation-delay: 0.4s"></div>
-      <div class="f1-light" style="animation-delay: 0.8s"></div>
-      <div class="f1-light" style="animation-delay: 1.2s"></div>
-      <div class="f1-light" style="animation-delay: 1.6s"></div>
+    <div class="typing-indicator">
+      <div class="typing-dot"></div>
+      <div class="typing-dot"></div>
+      <div class="typing-dot"></div>
+      <div class="typing-dot"></div>
+      <div class="typing-dot"></div>
     </div>
   `;
 
@@ -365,6 +422,9 @@ document.addEventListener("DOMContentLoaded", () => {
   // Initialiser le dark mode
   initDarkMode();
   
+  // Charger le compte à rebours du prochain GP
+  fetchNextRaceCountdown();
+  
   if (!conversations || conversations.length === 0) {
     createConversation();
   } else {
@@ -388,7 +448,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-chatForm.addEventListener("submit", sendMessage);
+messageForm.addEventListener("submit", sendMessage);
 
 // Fonctions de gestion de la navbar collapsible
 function toggleNavbar() {
@@ -514,3 +574,150 @@ function initDarkMode() {
 function showToast(message, isSuccess = true) {
   showNotification(message, isSuccess ? 'success' : 'error');
 }
+
+/**
+ * Récupère et affiche le compte à rebours du prochain GP
+ */
+async function fetchNextRaceCountdown() {
+  try {
+    const response = await fetch('/next_race_countdown');
+    const data = await response.json();
+
+    const countdownText = document.getElementById('countdownText');
+    const raceNameText = document.getElementById('raceNameText');
+
+    if (data && data.countdown && data.countdown.trim()) {
+      countdownText.textContent = data.countdown;
+      countdownText.classList.remove('text-gray-400');
+      countdownText.classList.add('text-gray-300');
+
+      // Nom de la course + circuit si disponible
+      let raceInfo = '';
+      if (data.race_name) {
+        raceInfo = `📍 ${data.race_name}`;
+        if (data.circuit) {
+          raceInfo += ` - ${data.circuit}`;
+        }
+      }
+
+      // Ajouter la source en petit en dessous
+      if (data.source) {
+        raceInfo += `\n<span class="text-xs text-gray-500">Source: ${data.source}</span>`;
+      }
+
+      raceNameText.innerHTML = raceInfo;
+    } else {
+      // Fallback si aucune donnée
+      countdownText.textContent = 'Prochainement...';
+      raceNameText.innerHTML = '';
+    }
+  } catch (error) {
+    console.error('Erreur récupération countdown:', error);
+    const countdownText = document.getElementById('countdownText');
+    const raceNameText = document.getElementById('raceNameText');
+    if (countdownText) {
+      countdownText.textContent = 'Informations bientôt disponibles';
+      raceNameText.innerHTML = '';
+    }
+  }
+}
+
+// Rafraîchir le compte à rebours toutes les 5 minutes
+setInterval(fetchNextRaceCountdown, 5 * 60 * 1000);
+
+/**
+ * Animation de particules F1 en arrière-plan
+ */
+function initF1Particles() {
+  const canvas = document.createElement('canvas');
+  canvas.style.position = 'fixed';
+  canvas.style.top = '0';
+  canvas.style.left = '0';
+  canvas.style.width = '100%';
+  canvas.style.height = '100%';
+  canvas.style.pointerEvents = 'none';
+  canvas.style.zIndex = '0';
+  canvas.style.opacity = '0.4';
+  document.body.insertBefore(canvas, document.body.firstChild);
+
+  const ctx = canvas.getContext('2d');
+  let particles = [];
+  let animationId;
+
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+
+  class Particle {
+    constructor() {
+      this.reset();
+    }
+
+    reset() {
+      this.x = Math.random() * canvas.width;
+      this.y = Math.random() * canvas.height;
+      this.vx = -2 - Math.random() * 3; // Vitesse horizontale (vers la gauche)
+      this.vy = (Math.random() - 0.5) * 0.5; // Légère dérive verticale
+      this.size = Math.random() * 2 + 1;
+      this.opacity = Math.random() * 0.5 + 0.2;
+      this.life = 1;
+    }
+
+    update() {
+      this.x += this.vx;
+      this.y += this.vy;
+      this.life -= 0.005;
+
+      // Réinitialiser si hors écran ou vie écoulée
+      if (this.x < -50 || this.life <= 0) {
+        this.x = canvas.width + 50;
+        this.y = Math.random() * canvas.height;
+        this.life = 1;
+      }
+    }
+
+    draw() {
+      ctx.fillStyle = `rgba(220, 38, 38, ${this.opacity * this.life})`;
+      ctx.fillRect(this.x, this.y, this.size * 15, this.size);
+    }
+  }
+
+  function init() {
+    resizeCanvas();
+    particles = [];
+    for (let i = 0; i < 30; i++) {
+      particles.push(new Particle());
+    }
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    particles.forEach(particle => {
+      particle.update();
+      particle.draw();
+    });
+
+    animationId = requestAnimationFrame(animate);
+  }
+
+  window.addEventListener('resize', resizeCanvas);
+
+  init();
+  animate();
+
+  // Cleanup function
+  return () => {
+    cancelAnimationFrame(animationId);
+    window.removeEventListener('resize', resizeCanvas);
+    canvas.remove();
+  };
+}
+
+// Initialiser les particules F1 au chargement
+document.addEventListener('DOMContentLoaded', () => {
+  setTimeout(() => {
+    initF1Particles();
+  }, 500);
+});

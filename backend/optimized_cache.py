@@ -119,10 +119,12 @@ def get_cache() -> OptimizedCache:
     return _cache_instance
 
 
-# TTL constants (en secondes)
+# TTL constants (en secondes) - OPTIMISÉ: cache plus long pour réduire requêtes
 CACHE_TTL = {
-    "news_articles": 600,          # 10 min (actualités)
-    "web_search": 900,             # 15 min (recherche web)
-    "kb_search": 1200,             # 20 min (KB)
-    "standings": 1800,             # 30 min (standings StandF1.com)
+    "news_articles": 1800,         # 30 min (actualités) - augmenté de 10→30min
+    "web_search": 2400,            # 40 min (recherche web) - augmenté de 15→40min
+    "kb_search": 3600,             # 60 min (KB) - augmenté de 20→60min
+    "standings": 3600,             # 60 min (standings StandF1.com) - augmenté de 30→60min
+    "ergast_race": 1800,           # 30 min (race info)
+    "ergast_standings": 1800,      # 30 min (classements)
 }

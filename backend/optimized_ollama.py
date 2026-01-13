@@ -14,15 +14,15 @@ from dataclasses import dataclass
 
 @dataclass
 class OllamaConfig:
-    """Configuration optimisée pour Ollama"""
+    """Configuration optimisée pour Ollama - ULTRA RAPIDE"""
     model: str = "llama3.2:3b"
-    temperature: float = 0.2          # Ultra-basse pour cohérence
-    top_p: float = 0.9                # Nucleus sampling
-    num_ctx: int = 1024               # Context window minimal
-    num_predict: int = 256            # Max tokens de sortie (environt 200-300 chars)
-    top_k: int = 20                   # Beam search
+    temperature: float = 0.15         # ENCORE PLUS BAS pour cohérence/vitesse (0.2→0.15)
+    top_p: float = 0.85               # Réduit 0.9→0.85 pour plus de focus
+    num_ctx: int = 512                # Context DRASTIQUE 1024→512 pour vitesse
+    num_predict: int = 150            # DRASTIQUE 256→150 tokens pour <2s
+    top_k: int = 10                   # Réduit 20→10 pour plus de focus
     repeat_penalty: float = 1.1       # Éviter les répétitions
-    timeout: int = 30                 # 30s max pour réponse
+    timeout: int = 15                 # DRASTIQUE 30s→15s max pour réponse
 
 
 OLLAMA_PATHS = [

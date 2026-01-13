@@ -13,6 +13,10 @@ import csv
 import pickle
 import numpy as np
 
+# Import logger AVANT les try/except pour éviter erreur
+from backend.logger import get_logger
+logger = get_logger(__name__)
+
 # Imports obligatoires FAISS + sentence-transformers + LangChain
 try:
     import faiss
@@ -25,11 +29,6 @@ except ImportError as e:
     logger.error("Installez: pip install faiss-cpu sentence-transformers numpy langchain-text-splitters")
     raise
 
-# Import logger
-from backend.logger import get_logger
-logger = get_logger(__name__)
-
-
 # Configuration
 KB_DIR = Path(__file__).parent.parent / "knowledge_base"
 KB_DIR.mkdir(exist_ok=True)
@@ -41,9 +40,9 @@ FAISS_METADATA_PATH = KB_DIR / "faiss_metadata.pkl"
 # Modèle embeddings 
 EMBEDDING_MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
 
-# Text splitting 
-CHUNK_SIZE = 1000  # caractères par chunk
-CHUNK_OVERLAP = 200  # overlap pour continuité contexte
+# Text splitting - OPTIMISÉ: chunks plus petits pour FAISS plus rapide
+CHUNK_SIZE = 600  # Réduit de 1000→600 pour embeddings plus ciblés
+CHUNK_OVERLAP = 100  # Réduit de 200→100 pour moins de duplication
 
 # Verbosité des logs KB
 KB_LOG_VERBOSE = os.getenv("KB_LOG_VERBOSE", "0").lower() in {"1", "true", "yes", "on"}

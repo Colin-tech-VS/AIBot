@@ -1,34 +1,288 @@
-/* Style minimal - Tailwind CSS gère la plupart des styles */
+/* ═════════════════════════════════════════════════════════════════════════
+   STYLE CSS - F1 CHATBOT PROFESSIONNEL
+   ═════════════════════════════════════════════════════════════════════════ */
 
-/* Feux rouges F1 pour le loader */
-.f1-light {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background-color: #1e293b; /* Gris foncé éteint */
-  border: 2px solid #334155;
-  animation: f1-start 2.4s infinite;
+/* ─────────────────────────────────────────────────────────────────────────
+   BACKGROUND ANIMÉ F1 - Lignes de vitesse + Damier
+   ───────────────────────────────────────────────────────────────────────── */
+
+@keyframes speedLines {
+    0% {
+        transform: translateX(0) translateY(0);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.15;
+    }
+    90% {
+        opacity: 0.15;
+    }
+    100% {
+        transform: translateX(-100vw) translateY(10vh);
+        opacity: 0;
+    }
 }
 
-@keyframes f1-start {
-  0% {
-    background-color: #1e293b; /* Éteint */
-    box-shadow: none;
-  }
-  20% {
-    background-color: #dc2626; /* Rouge allumé */
-    box-shadow: 0 0 8px #dc2626, 0 0 12px #dc2626;
-  }
-  83% {
-    background-color: #dc2626; /* Reste allumé */
-    box-shadow: 0 0 8px #dc2626, 0 0 12px #dc2626;
-  }
-  85% {
-    background-color: #1e293b; /* Tous s'éteignent en même temps (départ!) */
-    box-shadow: none;
-  }
-  100% {
-    background-color: #1e293b;
-    box-shadow: none;
-  }
+@keyframes checkerMove {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 100px 100px;
+    }
+}
+
+@keyframes redPulse {
+    0%, 100% {
+        opacity: 0.3;
+    }
+    50% {
+        opacity: 0.6;
+    }
+}
+
+body::before {
+    animation: checkerMove 20s linear infinite;
+}
+
+/* Lignes de vitesse animées */
+body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 200%;
+    height: 100%;
+    background: repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 50px,
+        rgba(220, 38, 38, 0.03) 50px,
+        rgba(220, 38, 38, 0.03) 52px
+    );
+    pointer-events: none;
+    z-index: 0;
+    animation: speedLines 3s linear infinite;
+}
+
+/* Effet de glow rouge animé dans les coins */
+.content-wrapper::before {
+    content: '';
+    position: fixed;
+    top: -50%;
+    right: -50%;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(220, 38, 38, 0.15) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+    animation: redPulse 4s ease-in-out infinite;
+}
+
+.content-wrapper::after {
+    content: '';
+    position: fixed;
+    bottom: -50%;
+    left: -50%;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(220, 38, 38, 0.1) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+    animation: redPulse 5s ease-in-out infinite reverse;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   ANIMATIONS CHARGEMENT - FEUX F1
+   ───────────────────────────────────────────────────────────────────────── */
+
+.typing-indicator {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    padding: 20px 24px;
+    background: linear-gradient(135deg, rgba(15, 15, 15, 0.98), rgba(30, 30, 30, 0.98));
+    border-radius: 12px;
+    border: 2px solid rgba(220, 38, 38, 0.5);
+    box-shadow: 
+        0 0 40px rgba(220, 38, 38, 0.4),
+        inset 0 2px 8px rgba(0, 0, 0, 0.6);
+    position: relative;
+    width: fit-content;
+}
+
+/* Ligne LED cockpit */
+.typing-indicator::before {
+    content: '';
+    position: absolute;
+    top: -3px;
+    left: 15%;
+    right: 15%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent 0%, rgba(220, 38, 38, 0.7) 50%, transparent 100%);
+    border-radius: 1px;
+}
+
+.typing-dot {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background-color: #0f0f0f;
+    border: 3px solid #1a1a1a;
+    box-shadow: 
+        inset 0 3px 6px rgba(0, 0, 0, 0.95),
+        inset 0 -2px 4px rgba(60, 60, 60, 0.2),
+        0 0 12px rgba(0, 0, 0, 0.7),
+        0 2px 4px rgba(0, 0, 0, 0.6);
+    animation: f1-race-lights 2.5s infinite;
+}
+
+/* Délais cascadés pour effet démarrage */
+.typing-dot:nth-child(1) { animation-delay: 0s; }
+.typing-dot:nth-child(2) { animation-delay: 0.3s; }
+.typing-dot:nth-child(3) { animation-delay: 0.6s; }
+.typing-dot:nth-child(4) { animation-delay: 0.9s; }
+.typing-dot:nth-child(5) { animation-delay: 1.2s; }
+
+@keyframes f1-race-lights {
+    0%, 80%, 100% {
+        background-color: #0f0f0f;
+        border-color: #1a1a1a;
+        box-shadow: 
+            inset 0 3px 6px rgba(0, 0, 0, 0.95),
+            inset 0 -2px 4px rgba(60, 60, 60, 0.2),
+            0 0 12px rgba(0, 0, 0, 0.7),
+            0 2px 4px rgba(0, 0, 0, 0.6);
+    }
+    
+    15% {
+        background-color: #b91c1c;
+        border-color: #dc2626;
+    }
+    
+    20%, 70% {
+        background-color: #dc2626;
+        border-color: #ef4444;
+        box-shadow: 
+            0 0 25px rgba(220, 38, 38, 1),
+            0 0 50px rgba(220, 38, 38, 0.8),
+            0 0 75px rgba(220, 38, 38, 0.4),
+            inset 0 2px 12px rgba(255, 150, 150, 0.9),
+            inset 0 -2px 8px rgba(150, 20, 20, 0.6);
+    }
+    
+    78% {
+        background-color: #b91c1c;
+        border-color: #dc2626;
+        box-shadow: 
+            0 0 20px rgba(220, 38, 38, 0.7),
+            0 0 40px rgba(220, 38, 38, 0.3),
+            inset 0 2px 8px rgba(255, 100, 100, 0.4);
+    }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   BULLES MESSAGES
+   ───────────────────────────────────────────────────────────────────────── */
+
+.message-bubble {
+    padding: 16px 20px;
+    border-radius: 12px;
+    max-width: 85%;
+    word-wrap: break-word;
+    line-height: 1.5;
+    animation: slideUp 0.3s ease-out;
+}
+
+.user-message {
+    background: linear-gradient(135deg, rgba(220, 38, 38, 0.2), rgba(239, 68, 68, 0.15));
+    border: 1px solid rgba(220, 38, 38, 0.4);
+    color: #fff;
+    margin-left: auto;
+    margin-right: 0;
+}
+
+.bot-message {
+    background: linear-gradient(135deg, rgba(30, 30, 30, 0.8), rgba(45, 45, 45, 0.8));
+    border: 1px solid rgba(100, 100, 100, 0.3);
+    color: #e5e7eb;
+    margin-right: auto;
+    margin-left: 0;
+}
+
+.bot-message a {
+    color: #dc2626;
+    text-decoration: underline;
+    transition: color 0.2s;
+}
+
+.bot-message a:hover {
+    color: #ef4444;
+}
+
+.bot-message code {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    color: #fca5a5;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   SCROLLBAR CUSTOM
+   ───────────────────────────────────────────────────────────────────────── */
+
+#chatBox::-webkit-scrollbar {
+    width: 8px;
+}
+
+#chatBox::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+#chatBox::-webkit-scrollbar-thumb {
+    background: rgba(220, 38, 38, 0.4);
+    border-radius: 4px;
+    transition: background 0.2s;
+}
+
+#chatBox::-webkit-scrollbar-thumb:hover {
+    background: rgba(220, 38, 38, 0.6);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   INPUT FOCUS EFFECT
+   ───────────────────────────────────────────────────────────────────────── */
+
+#messageInput:focus {
+    background-color: rgba(80, 80, 80, 0.3);
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   TRANSITIONS & ANIMATIONS
+   ───────────────────────────────────────────────────────────────────────── */
+
+button {
+    transition: all 0.2s ease;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   RESPONSIVE
+   ───────────────────────────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+    .message-bubble {
+        max-width: 95%;
+    }
 }
