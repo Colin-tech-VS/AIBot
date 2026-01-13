@@ -587,43 +587,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
 chatForm.addEventListener("submit", sendMessage);
 
-// Fonctions de gestion de la navbar collapsible
+// Fonctions de gestion de la navbar
 function toggleNavbar() {
-  // Sur mobile : open/close
-  // Sur desktop : collapse/expand
-  if (window.innerWidth < 1024) {
-    // Mobile
-    isNavbarOpen = !isNavbarOpen;
-    if (isNavbarOpen) {
-      mainNavbar.classList.remove("-translate-x-full");
-      navOverlay.classList.remove("hidden");
-    } else {
-      mainNavbar.classList.add("-translate-x-full");
-      navOverlay.classList.add("hidden");
-    }
-  } else {
-    // Desktop
-    toggleNavbarCollapsed();
-  }
-}
-
-function toggleNavbarCollapsed() {
-  isNavbarCollapsed = !isNavbarCollapsed;
-  localStorage.setItem('navbarCollapsed', isNavbarCollapsed);
-  
-  if (isNavbarCollapsed) {
-    mainNavbar.classList.add("collapsed");
-  } else {
-    mainNavbar.classList.remove("collapsed");
-  }
+  mainNavbar.classList.toggle("navbar-collapsed");
 }
 
 function closeNavbar() {
-  if (isNavbarOpen) {
-    isNavbarOpen = false;
-    mainNavbar.classList.add("-translate-x-full");
-    navOverlay.classList.add("hidden");
-  }
+  mainNavbar.classList.add("navbar-collapsed");
 }
 
 function toggleHistoryPanel() {
@@ -798,3 +768,21 @@ function initUserInfo() {
     updateUserInfo(username);
   }
 }
+
+/**
+ * Initialise la navbar
+ */
+function initNavbar() {
+  // Navbar visible par défaut (non collapsed)
+  mainNavbar.classList.remove("navbar-collapsed");
+}
+
+// Initialisation
+document.addEventListener("DOMContentLoaded", () => {
+  initNavbar();
+  initDarkMode();
+  initUserInfo();
+  loadConversations();
+  renderConversationList();
+  renderNavbarHistory();
+});
