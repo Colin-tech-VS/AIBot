@@ -267,97 +267,126 @@ async def get_memory_summary():
 
 @app.get("/next_race_countdown")
 async def get_next_race_countdown():
-    """Récupère le compte à rebours du prochain GP depuis plusieurs sources (Aurupteur, Ergast API)"""
+    """Récupère le compte à rebours du prochain GP depuis Aurupteur (Ergast est hors service)"""
     from datetime import datetime, timezone
     import json
+    import asyncio
 
-    # Essayer d'abord l'API Ergast (source fiable officielle)
+    # Aurupteur (source principale - Ergast n'est plus disponible)
     try:
-        response = httpx.get("https://ergast.com/api/f1/current/next.json", timeout=3)
-        if response.status_code == 200:
-            data = response.json()
-            if "MRData" in data and "RaceTable" in data["MRData"] and "Races" in data["MRData"]["RaceTable"]:
-                races = data["MRData"]["RaceTable"]["Races"]
-                if races and len(races) > 0:
-                    next_race = races[0]
-                    race_name = next_race.get("raceName", "")
-                    race_date = next_race.get("date", "")
-                    race_time = next_race.get("time", "00:00:00Z")
-                    circuit_name = next_race.get("Circuit", {}).get("circuitName", "")
-
-                    # Calculer le temps restant
-                    if race_date:
-                        race_datetime_str = f"{race_date}T{race_time}"
-                        race_datetime = datetime.fromisoformat(race_datetime_str.replace("Z", "+00:00"))
-                        now = datetime.now(timezone.utc)
-                        time_diff = race_datetime - now
-
-                        days = time_diff.days
-                        hours = time_diff.seconds // 3600
-                        minutes = (time_diff.seconds % 3600) // 60
-
-                        # Formater le compte à rebours
-                        if days > 0:
-                            countdown_text = f"Dans {days} jour{'s' if days > 1 else ''}, {hours}h{minutes:02d}min"
-                        elif hours > 0:
-                            countdown_text = f"Dans {hours}h{minutes:02d}min"
-                        else:
-                            countdown_text = f"Dans {minutes} minute{'s' if minutes > 1 else ''}"
-
-                        return {
-                            "countdown": countdown_text,
-                            "race_name": race_name,
-                            "circuit": circuit_name,
-                            "date": race_date,
-                            "source": "Ergast API (officiel)"
-                        }
-    except Exception as e:
-        logger.warning(f"Ergast API indisponible: {e}")
-
-    # Fallback: Aurupteur (scraping)
-    try:
-        html = fetch_url("https://aurupteur.com/", timeout=3)
+        # Wrapper asyncio avec timeout pour éviter blocage
+        try:
+            html = await asyncio.wait_for(asyncio.to_thread(fetch_url, "https://aurupteur.com/", 3), timeout=4.0)
+        except asyncio.TimeoutError:
+            logger.warning("⏱️ Timeout Aurupteur URL fetch - retour None")
+            html = None
         if not html:
             return {"countdown": None, "race_name": None, "source": None}
 
         soup = BeautifulSoup(html, "html.parser")
 
-        # Chercher le compte à rebours (plusieurs stratégies)
-        countdown_text = None
+        # Extraire la date du JavaScript (dans le countdown)
+        race_datetime = None
         race_name = None
+        circuit_name = None
 
-        # Stratégie 1: Chercher des éléments avec "countdown" ou "prochain"
-        countdown_divs = soup.find_all(["div", "span", "p"], class_=lambda x: x and ("countdown" in x.lower() or "prochain" in x.lower() if x else False))
-        if countdown_divs:
-            for div in countdown_divs:
-                text = div.get_text(strip=True)
-                if any(word in text.lower() for word in ["prochain", "grand prix", "gp", "jour", "heure"]):
-                    countdown_text = text
-                    break
+        # Chercher la date dans le script JavaScript ou directement dans le HTML
+        # Stratégie 1: Chercher le pattern de date directement (robuste aux variations de quotes)
+        date_match = re.search(r'(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})', html)
+        if date_match:
+            date_str = date_match.group(1)
+            try:
+                # Parse la date (format: "2026-03-08 05:00:00")
+                race_datetime = datetime.strptime(date_str, "%Y-%m-%d %H:%M:%S")
+                race_datetime = race_datetime.replace(tzinfo=timezone.utc)
+                logger.info(f"✅ Date du prochain GP trouvée: {race_datetime}")
+            except Exception as e:
+                logger.warning(f"Erreur parsing date: {e}")
+        
+        # Stratégie 2: Fallback - chercher dans les scripts
+        if not race_datetime:
+            scripts = soup.find_all('script')
+            for script in scripts:
+                if script.string and 'home-nextgp-card' in script.string:
+                    # Essayer plusieurs patterns de regex pour extraire la date
+                    patterns = [
+                        r'new Date\("([^"]+)"\)',           # Double quotes
+                        r"new Date\('([^']+)'\)",           # Single quotes
+                        r'new Date\(\'([^\']+)\'\)',        # Escaped quotes
+                        r'(\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2})',  # Direct pattern
+                    ]
+                    for pattern in patterns:
+                        date_match = re.search(pattern, script.string)
+                        if date_match:
+                            date_str = date_match.group(1)
+                            try:
+                                race_datetime = datetime.strptime(date_str, "%Y-%m-%d %H:%M:%S")
+                                race_datetime = race_datetime.replace(tzinfo=timezone.utc)
+                                logger.info(f"✅ Date trouvée dans script (pattern: {pattern}): {race_datetime}")
+                                break
+                            except Exception as e:
+                                logger.warning(f"Erreur parsing avec pattern {pattern}: {e}")
+                    if race_datetime:
+                        break
 
-        # Stratégie 2: Chercher dans le texte principal
-        if not countdown_text:
-            main_content = soup.find("main") or soup.find("body")
-            if main_content:
-                text = main_content.get_text()
-                # Regex pour trouver "X jours Y heures" ou "Prochain GP"
-                match = re.search(r'(Prochain.*?Grand Prix.*?:\s*.*?(?:\d+\s*jours?.*?\d+\s*heures?)|(\d+\s*jours?\s*\d+\s*heures?))', text, re.IGNORECASE)
-                if match:
-                    countdown_text = match.group(0)
+        # Chercher le nom de la course dans la card
+        nextgp_card = soup.find("div", class_="home-nextgp-card")
+        if nextgp_card:
+            # Chercher le lien avec le nom du GP
+            race_link = nextgp_card.find("a", href=lambda x: x and "calendrier-details" in x)
+            if race_link:
+                race_name = race_link.get_text(strip=True)
+                logger.info(f"Nom de course trouvé: {race_name}")
 
-        # Chercher le nom de la course
-        if countdown_text:
-            race_match = re.search(r'Grand Prix\s+(?:de\s+)?([A-Za-zÀ-ÿ\s]+)', countdown_text, re.IGNORECASE)
-            if race_match:
-                race_name = race_match.group(1).strip()
+            # Chercher aussi dans les h2/h3
+            if not race_name:
+                title_tags = nextgp_card.find_all(["h2", "h3"])
+                for tag in title_tags:
+                    text = tag.get_text(strip=True)
+                    if "grand prix" in text.lower() or len(text) < 50:
+                        # Extraire juste le nom du pays/lieu
+                        if "Prochain" in text:
+                            continue
+                        race_name = text
+                        break
 
-        return {
-            "countdown": countdown_text,
-            "race_name": race_name,
-            "source": "Aurupteur.com"
-        }
+        # Calculer le compte à rebours si date trouvée
+        if race_datetime:
+            now = datetime.now(timezone.utc)
+            time_diff = race_datetime - now
+
+            days = time_diff.days
+            hours = time_diff.seconds // 3600
+            minutes = (time_diff.seconds % 3600) // 60
+
+            # Formater le compte à rebours
+            if days > 0:
+                countdown_text = f"Dans {days} jour{'s' if days > 1 else ''}, {hours}h{minutes:02d}min"
+            elif hours > 0:
+                countdown_text = f"Dans {hours}h{minutes:02d}min"
+            else:
+                countdown_text = f"Dans {minutes} minute{'s' if minutes > 1 else ''}"
+
+            # Formater le nom de la course
+            if race_name:
+                # Nettoyer le nom (enlever (1/24) etc.)
+                race_name = re.sub(r'\([^)]+\)', '', race_name).strip()
+                if not race_name.startswith("GP") and not "Grand Prix" in race_name:
+                    race_name = f"GP de {race_name}"
+
+            return {
+                "countdown": countdown_text,
+                "race_name": race_name or "Prochain Grand Prix",
+                "circuit": circuit_name,
+                "date": race_datetime.strftime("%Y-%m-%d"),
+                "source": "Aurupteur.com"
+            }
+        else:
+            logger.warning("Impossible d'extraire la date du prochain GP")
+            return {"countdown": None, "race_name": None, "source": None}
+
     except Exception as e:
-        logger.warning(f"Erreur récupération countdown: {e}")
+        logger.warning(f"Erreur récupération countdown Aurupteur: {e}")
         return {"countdown": None, "race_name": None, "source": None}
 
 
@@ -444,9 +473,12 @@ if __name__ == "__main__":
         """Pré-charge les données fréquentes en cache pour accélérer les premières requêtes."""
         try:
             logger.info("🚀 Pré-chargement du cache...")
-            # 1. Pré-charger knowledge base
-            kb = get_knowledge_base()
-            logger.info(f"✅ KB chargée: {len(kb.docs)} documents")
+            # 1. Pré-charger knowledge base (désactiver FAISS - problème réseau)
+            try:
+                kb = get_knowledge_base(use_faiss=False)
+                logger.info(f"✅ KB chargée: {len(kb.docs)} documents")
+            except Exception as kb_error:
+                logger.warning(f"⚠️ KB erreur: {kb_error}")
 
             # 2. Pré-charger classements (en background)
             def load_standings():
@@ -457,22 +489,25 @@ if __name__ == "__main__":
                 except Exception as e:
                     logger.warning(f"⚠️ Classements non disponibles: {e}")
 
-            # 3. Pré-charger actualités (en background)
+            # 3. Pré-charger actualités (en background) - DÉSACTIVÉ pour éviter blocage
             def load_news():
                 try:
-                    get_news_summaries(limit=1)
-                    logger.info("✅ Actualités pré-chargées")
+                    # TEMPORAIREMENT DÉSACTIVÉ - cause problèmes de scraping
+                    # get_news_summaries(limit=1)
+                    # logger.info("✅ Actualités pré-chargées")
+                    pass
                 except Exception as e:
                     logger.warning(f"⚠️ Actualités non disponibles: {e}")
 
             # Lancer en threads séparés pour ne pas bloquer le démarrage
-            threading.Thread(target=load_standings, daemon=True).start()
-            threading.Thread(target=load_news, daemon=True).start()
+            # threading.Thread(target=load_standings, daemon=True).start()
+            # threading.Thread(target=load_news, daemon=True).start()  # Désactivé
 
             logger.info("🎯 Cache pré-chargé avec succès")
         except Exception as e:
             logger.warning(f"⚠️ Erreur pré-chargement cache: {e}")
 
-    preload_cache()
+    # DÉSACTIVER preload_cache pour éviter blocage du démarrage
+    # threading.Thread(target=preload_cache, daemon=True).start()
 
     uvicorn.run("app:app", host=HOST, port=PORT, reload=dev_reload)
