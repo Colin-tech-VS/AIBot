@@ -121,9 +121,8 @@ def get_cache() -> OptimizedCache:
 
 # TTL constants (en secondes)
 CACHE_TTL = {
-    "ergast_standings": 1800,      # 30 min (standings changent rarement)
-    "ergast_race": 3600,           # 1h (race schedule)
     "news_articles": 600,          # 10 min (actualités)
     "web_search": 900,             # 15 min (recherche web)
     "kb_search": 1200,             # 20 min (KB)
+    "standings": 1800,             # 30 min (standings StandF1.com)
 }

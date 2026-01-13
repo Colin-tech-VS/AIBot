@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+chatbot/
+node_modules/
+.git/
+temp_frontend/
+output_image.png
+users.db
+*.db

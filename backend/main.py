@@ -22,7 +22,7 @@ app = FastAPI(title="Chatbot Ollama Local (Windows)")
 
 # Déterminer les chemins relatifs au répertoire du projet
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-TEMPLATES_DIR = os.path.join(BASE_DIR, "frontend", "templates")
+TEMPLATES_DIR = os.path.join(BASE_DIR, "frontend")  # index.html est directement dans frontend/
 STATIC_DIR = os.path.join(BASE_DIR, "frontend", "static")
 
 # ⚠️ CONFIGURATION OLLAMA WINDOWS

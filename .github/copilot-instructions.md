@@ -83,7 +83,7 @@
 ## Conventions projet (à respecter par un agent) ⚠️
 - **Langue**: toujours **FRANÇAIS** pour les réponses utilisateur (le prompt l’exige). Si sortie en anglais, pipeline tente une traduction via _LLM_.
 - **Priorité**: la **Knowledge Base** prime — si un doc répond, l’utiliser et le citer (`📚 …`).
-- **Format**: réponses concises, factuelles, avec **gras** pour infos clés, emojis F1 (🏎️, 🏁, 🏆), et citations de source avec lien Markdown `[texte](url)`.
+- **Format**: réponses concises, factuelles, avec **gras** pour infos clés, emojis F1 (🏎️, 🏁, 🏆), et citations de source avec lien Markdown `[texte](https://exemple.com)`.
 - **Ne pas inventer**: si incertain, indiquer explicitement `"Je n'ai pas confirmé"`.
 - **Prompts**: modifier les règles globales en éditant `build_prompt` dans `backend/f1_bot.py` (ex: étendre contraintes, ajouter exemples).
 

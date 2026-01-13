@@ -1,5 +1,5 @@
 /**
- * Chatbot Ollama Local - Frontend Client
+ * Chatbot F1 - Frontend Client (Version simplifiée sans authentification)
  * Communication avec le backend FastAPI
  * Gestion des messages et affichage en temps réel
  */
@@ -9,21 +9,37 @@ const chatBox = document.getElementById("chatBox");
 const messageInput = document.getElementById("messageInput");
 const chatForm = document.getElementById("chatForm");
 const sendBtn = document.getElementById("sendBtn");
+const mainNavbar = document.getElementById("mainNavbar");
+const navOverlay = document.getElementById("navOverlay");
 
 // État
 let isWaiting = false;
+let isNavbarOpen = false;
+let isNavbarCollapsed = false;
 
-// References to history UI (initialized on DOMContentLoaded)
-let historyPanel = null;
-let historyOverlay = null;
-let historyContent = null;
-
-// Conversations store (frontend only, ChatGPT-like)
+// Conversations store (localStorage uniquement)
 let conversations = [];
 let currentConversationId = null;
 
 function uid() {
   return Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+}
+
+/**
+ * Supprime toutes les conversations de l'historique
+ */
+function clearAllHistory() {
+  if (confirm('Êtes-vous sûr de vouloir supprimer tout l\'historique ? Cette action est irréversible.')) {
+    conversations = [];
+    currentConversationId = null;
+    saveConversations();
+    renderNavbarHistory();
+    chatBox.innerHTML = '';
+    const chatContainer = document.getElementById('chatContainer');
+    chatContainer.classList.remove('active-chat');
+    chatBox.classList.add('hidden');
+    showNotification('Historique supprimé avec succès', 'success');
+  }
 }
 
 function saveConversations() {
@@ -39,6 +55,8 @@ function loadConversationsFromStorage() {
     const raw = localStorage.getItem('conversations');
     if (raw) {
       conversations = JSON.parse(raw);
+    } else {
+      conversations = [];
     }
   } catch (e) {
     console.error('Erreur lecture conversations', e);
@@ -49,9 +67,19 @@ function loadConversationsFromStorage() {
 function createConversation(fromHistory) {
   console.log('[createConversation] START', {count: conversations.length});
   
+  // Si pas d'historique fourni et qu'une conversation vide existe déjà, la charger
+  if (!fromHistory && conversations.length > 0) {
+    const existingEmpty = conversations.find(c => isConversationEmpty(c));
+    if (existingEmpty) {
+      console.log('[createConversation] Conversation vide existante trouvée, chargement:', {id: existingEmpty.id});
+      loadConversationIntoChat(existingEmpty.id);
+      return;
+    }
+  }
+  
   const conv = {
     id: uid(),
-    title: fromHistory && fromHistory.title ? fromHistory.title : `Conversation ${conversations.length + 1}`,
+    title: fromHistory && fromHistory.title ? fromHistory.title : 'Nouvelle conversation',
     messages: fromHistory && fromHistory.messages ? fromHistory.messages : []
   };
   
@@ -61,35 +89,37 @@ function createConversation(fromHistory) {
   console.log('[createConversation] Created:', {id: conv.id, title: conv.title});
   
   saveConversations();
-  renderConversationList();
+  renderNavbarHistory();
   loadConversationIntoChat(conv.id);
   
   console.log('[createConversation] DONE');
 }
 
-function deleteConversation(id) {
+function isConversationEmpty(conv) {
+  return !conv || !conv.messages || conv.messages.length === 0;
+}
+
+function deleteConversation(id, silent = false) {
   const idx = conversations.findIndex(c=>c.id===id);
   if (idx===-1) return;
-  if (!confirm('Supprimer cette conversation ?')) return;
+  
+  // Demander confirmation uniquement si ce n'est pas une suppression silencieuse
+  if (!silent && !confirm('Supprimer cette conversation ?')) return;
+  
   conversations.splice(idx,1);
   if (currentConversationId===id) {
     if (conversations.length>0) currentConversationId = conversations[0].id;
     else currentConversationId = null;
   }
   saveConversations();
-  renderConversationList();
+  renderNavbarHistory();
   if (currentConversationId) loadConversationIntoChat(currentConversationId);
   else chatBox.innerHTML = `<div class="message-info"><p class="muted">Aucune conversation. Créez-en une.</p></div>`;
 }
 
-function renameConversation(id) {
-  const conv = conversations.find(c=>c.id===id);
-  if (!conv) return;
-  const newTitle = prompt('Nouveau titre', conv.title);
-  if (!newTitle) return;
-  conv.title = newTitle;
-  saveConversations();
-  renderConversationList();
+function deleteEmptyConversations() {
+  const emptyIds = conversations.filter(conv => isConversationEmpty(conv)).map(conv => conv.id);
+  emptyIds.forEach(id => deleteConversation(id, true));
 }
 
 function addMessageToCurrentConversation(role, content) {
@@ -98,89 +128,96 @@ function addMessageToCurrentConversation(role, content) {
   }
   const conv = conversations.find(c=>c.id===currentConversationId);
   if (!conv) return;
+  
+  // Si c'est le premier message utilisateur et que la conversation a un titre par défaut, la renommer
+  if (role === 'user' && (!conv.messages || conv.messages.length === 0)) {
+    const isDefaultTitle = conv.title === 'Nouvelle conversation';
+    if (isDefaultTitle) {
+      conv.title = content.slice(0, 50);
+      renderNavbarHistory();
+    }
+  }
+  
   conv.messages.push({role, content, ts: Date.now()});
   saveConversations();
-  renderConversationList();
 }
 
 function loadConversationIntoChat(id) {
+  // Avant de changer, supprimer les conversations vides (sauf celle qu'on va charger)
+  const previousConvId = currentConversationId;
+  if (previousConvId && previousConvId !== id) {
+    const previousConv = conversations.find(c => c.id === previousConvId);
+    if (previousConv && isConversationEmpty(previousConv)) {
+      deleteConversation(previousConvId, true);
+    }
+  }
+  
   const conv = conversations.find(c=>c.id===id);
   if (!conv) return;
   currentConversationId = id;
   chatBox.innerHTML = '';
-  setConversationTitle(conv.title);
-  if (!conv.messages || conv.messages.length===0) {
-    chatBox.innerHTML = `<div class="message-info"><p class="muted">Conversation vide. Envoyez un message pour commencer.</p></div>`;
+  
+  // Gérer le layout basé sur si la conversation a des messages
+  const chatContainer = document.getElementById("chatContainer");
+  if (!conv.messages || conv.messages.length === 0) {
+    chatBox.classList.add("hidden");
+    chatContainer.classList.remove("active-chat");
+    chatBox.innerHTML = '';
     return;
   }
+  
+  // Si la conversation a des messages, activer le layout actif
+  chatBox.classList.remove("hidden");
+  chatContainer.classList.add("active-chat");
+  
   conv.messages.forEach(m => {
     displayMessage(m.content, m.role, {save:false});
   });
 }
 
-function setConversationTitle(title) {
-  try {
-    const el = document.getElementById('convTitleText');
-    if (el) el.textContent = title || 'Aucune conversation active';
-  } catch (e) {
-    console.error('Impossible de mettre à jour le titre de conversation', e);
-  }
-}
-
-function renderConversationList() {
-  if (!historyContent) return;
-  historyContent.innerHTML = '';
-  if (!conversations || conversations.length===0) {
-    historyContent.innerHTML = `<p class="muted">Aucune conversation.</p>`;
+// Remplir l'historique dans la navbar
+function renderNavbarHistory() {
+  const navbarHistoryList = document.getElementById('navbarHistoryList');
+  if (!navbarHistoryList) return;
+  
+  navbarHistoryList.innerHTML = '';
+  if (!conversations || conversations.length === 0) {
+    navbarHistoryList.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">Aucune conversation</p>`;
     return;
   }
+  
   conversations.forEach(conv => {
-    const item = document.createElement('div');
-    item.className = 'conversation-list-item';
+    const item = document.createElement('button');
+    item.className = 'flex items-center gap-2 w-full p-2 rounded hover:bg-red-800 dark:hover:bg-red-900 transition text-left text-white text-sm group';
     item.title = conv.title;
-
-    const left = document.createElement('div');
-    left.style.display = 'flex';
-    left.style.flexDirection = 'column';
-    left.style.gap = '2px';
-
-    const title = document.createElement('div');
-    title.className = 'title';
-    title.textContent = conv.title;
-
-    const preview = document.createElement('div');
-    preview.className = 'muted';
-    const last = conv.messages[conv.messages.length-1];
-    preview.textContent = last ? (last.role==='user' ? last.content.slice(0,50) : last.content.slice(0,50)) : 'Vide';
-
-    left.appendChild(title);
-    left.appendChild(preview);
-
-    const actions = document.createElement('div');
-    actions.className = 'conversation-actions';
-
+    
+    const icon = document.createElement('svg');
+    icon.className = 'w-4 h-4 flex-shrink-0';
+    icon.setAttribute('fill', 'none');
+    icon.setAttribute('stroke', 'currentColor');
+    icon.setAttribute('viewBox', '0 0 24 24');
+    icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>';
+    
+    const textSpan = document.createElement('span');
+    textSpan.className = 'flex-1 truncate whitespace-nowrap overflow-hidden';
+    textSpan.textContent = conv.title;
+    
+    item.appendChild(icon);
+    item.appendChild(textSpan);
+    
+    // Bouton supprimer au hover
     const delBtn = document.createElement('button');
-    delBtn.innerText = '🗑️';
+    delBtn.className = 'p-1 rounded hover:bg-red-700 text-white opacity-0 group-hover:opacity-100 transition flex-shrink-0';
     delBtn.title = 'Supprimer';
+    delBtn.innerHTML = '<svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>';
     delBtn.onclick = (e) => { e.stopPropagation(); deleteConversation(conv.id); };
-
-    const renameBtn = document.createElement('button');
-    renameBtn.innerText = '✏️';
-    renameBtn.title = 'Renommer';
-    renameBtn.onclick = (e) => { e.stopPropagation(); renameConversation(conv.id); };
-
-    actions.appendChild(renameBtn);
-    actions.appendChild(delBtn);
-
-    item.appendChild(left);
-    item.appendChild(actions);
-
+    item.appendChild(delBtn);
+    
     item.onclick = () => {
       loadConversationIntoChat(conv.id);
-      closeHistoryPanel();
     };
-
-    historyContent.appendChild(item);
+    
+    navbarHistoryList.appendChild(item);
   });
 }
 
@@ -192,6 +229,14 @@ async function sendMessage(event) {
 
   const message = messageInput.value.trim();
   if (!message || isWaiting) return;
+
+  // Activer le layout actif au premier message
+  const chatContainer = document.getElementById("chatContainer");
+  if (!chatContainer.classList.contains("active-chat")) {
+    chatContainer.classList.add("active-chat");
+    const chatBox = document.getElementById("chatBox");
+    chatBox.classList.remove("hidden");
+  }
 
   displayMessage(message, "user");
 
@@ -207,7 +252,10 @@ async function sendMessage(event) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ message: message }),
+      body: JSON.stringify({ 
+        message: message,
+        conversation_id: currentConversationId || "default"
+      }),
     });
 
     if (!response.ok) {
@@ -241,13 +289,18 @@ async function sendMessage(event) {
  */
 function displayMessage(text, role = "user", opts = {save: true}) {
   const messageDiv = document.createElement("div");
-  messageDiv.className = `message ${role}`;
+  messageDiv.className = `flex ${role === "user" ? "justify-end" : "justify-start"}`;
 
   const bubble = document.createElement("div");
-  bubble.className = "message-bubble";
+  const baseClass = `max-w-xs lg:max-w-md xl:max-w-lg px-4 py-2 rounded-lg text-sm`;
+  const roleClass = role === "user" 
+    ? "bg-red-900 text-white rounded-br-none" 
+    : "bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white rounded-bl-none";
+  
+  bubble.className = `${baseClass} ${roleClass}`;
   
   let htmlContent = text
-    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" style="color: #3b82f6; text-decoration: underline; font-weight: 600;">$1</a>')
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" class="underline font-semibold hover:opacity-80">$1</a>')
     .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
     .replace(/\*(.+?)\*/g, "<em>$1</em>")
     .replace(/\n/g, "<br>");
@@ -269,11 +322,19 @@ function displayMessage(text, role = "user", opts = {save: true}) {
  */
 function displayLoader() {
   const loadingDiv = document.createElement("div");
-  loadingDiv.className = "message bot";
+  loadingDiv.className = "flex justify-start";
 
   const bubble = document.createElement("div");
-  bubble.className = "message-bubble loading";
-  bubble.innerHTML = "<span>🏎️</span><span>🏁</span><span>⚡</span>";
+  bubble.className = "px-4 py-2 rounded-lg bg-slate-100 dark:bg-slate-800 rounded-bl-none";
+  bubble.innerHTML = `
+    <div class="flex gap-2 items-center">
+      <div class="f1-light" style="animation-delay: 0s"></div>
+      <div class="f1-light" style="animation-delay: 0.4s"></div>
+      <div class="f1-light" style="animation-delay: 0.8s"></div>
+      <div class="f1-light" style="animation-delay: 1.2s"></div>
+      <div class="f1-light" style="animation-delay: 1.6s"></div>
+    </div>
+  `;
 
   loadingDiv.appendChild(bubble);
   chatBox.appendChild(loadingDiv);
@@ -293,106 +354,21 @@ function removeMessage(messageElement) {
 }
 
 /**
- * Efface la conversation courante et réinitialise l'UI
- * FIX: Utilise une vraie variable pour le confirm() au lieu de !confirm()
- */
-function clearChat() {
-  console.log('[clearChat] Demande de confirmation...');
-  
-  const userConfirmed = confirm("Êtes-vous sûr de vouloir effacer cette conversation ?");
-  console.log('[clearChat] Utilisateur a confirmé ?', userConfirmed);
-  
-  if (!userConfirmed) {
-    console.log('[clearChat] ❌ ANNULÉ PAR UTILISATEUR - RIEN NE SERA SUPPRIMÉ');
-    return; // RETOUR IMMÉDIAT si l'utilisateur clique Cancel
-  }
-
-  console.log('[clearChat] ✅ Utilisateur a confirmé, suppression en cours...');
-  doDeleteConversation(); // Appel asynchrone mais non bloquant
-}
-
-function doDeleteConversation() {
-  // Utiliser un IIFE async pour ne pas bloquer clearChat()
-  (async () => {
-    try {
-      const response = await fetch("/clear_history", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error("Erreur lors de l'effacement");
-      }
-
-      console.log('[doDeleteConversation] Backend a confirmé la suppression');
-
-      // Supprimer la conversation courante du localStorage
-      if (currentConversationId) {
-        const idx = conversations.findIndex(c => c.id === currentConversationId);
-        if (idx !== -1) {
-          conversations.splice(idx, 1);
-          console.log('[doDeleteConversation] Conversation supprimée de localStorage');
-          
-          if (conversations.length > 0) {
-            currentConversationId = conversations[0].id;
-            loadConversationIntoChat(currentConversationId);
-          } else {
-            currentConversationId = null;
-            chatBox.innerHTML = `<div class="message-info"><p class="muted">Aucune conversation. Créez-en une.</p></div>`;
-            setConversationTitle('Aucune conversation active');
-          }
-          
-          saveConversations();
-          renderConversationList();
-        }
-      }
-
-      messageInput.focus();
-      console.log('[doDeleteConversation] ✅ DONE');
-    } catch (error) {
-      alert(`Erreur: ${error.message}`);
-      console.error("[doDeleteConversation] Erreur:", error);
-    }
-  })();
-}
-
-/**
  * Initialisation au chargement de la page
  */
 document.addEventListener("DOMContentLoaded", () => {
-  try {
-    historyPanel = document.getElementById("historyPanel");
-    historyOverlay = document.getElementById("historyOverlay");
-    historyContent = document.getElementById("historyContent");
-
-    console.log('Frontend: history UI initialized', {historyPanel: !!historyPanel, historyOverlay: !!historyOverlay, historyContent: !!historyContent});
-  } catch (e) {
-    console.error('Erreur initialisation UI:', e);
-  }
-
   loadConversationsFromStorage();
+  
+  // Nettoyer les conversations vides au démarrage
+  deleteEmptyConversations();
+  
+  // Initialiser le dark mode
+  initDarkMode();
+  
   if (!conversations || conversations.length === 0) {
-    (async () => {
-      try {
-        const res = await fetch('/history');
-        if (res.ok) {
-          const data = await res.json();
-          const msgs = data.history || [];
-          const messages = msgs.map(m => ({role: m.role, content: m.content, ts: Date.now()}));
-          if (messages.length>0) createConversation({title: 'Session serveur', messages});
-          else createConversation();
-        } else {
-          createConversation();
-        }
-      } catch (e) {
-        console.error('Impossible de récupérer /history pour initialiser', e);
-        createConversation();
-      }
-    })();
+    createConversation();
   } else {
-    renderConversationList();
+    renderNavbarHistory();
     if (conversations.length>0) loadConversationIntoChat(conversations[0].id);
   }
   messageInput.focus();
@@ -404,106 +380,137 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
   
-  const openBtn = document.getElementById("openHistoryBtn");
-  const closeBtn = document.getElementById("closeHistoryBtn");
-  const newConvBtn = document.getElementById("newConversationBtn");
-  const quickNewBtn = document.getElementById("quickNewConversationBtn");
-  
-  console.log('[DOMContentLoaded] Binding buttons:', {
-    openBtn: !!openBtn,
-    closeBtn: !!closeBtn,
-    newConvBtn: !!newConvBtn,
-    quickNewBtn: !!quickNewBtn
-  });
-  
-  if (openBtn) {
-    openBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      console.log('[openBtn] clicked');
-      openHistoryPanel();
-    });
-  }
-  
-  if (closeBtn) {
-    closeBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      console.log('[closeBtn] clicked');
-      closeHistoryPanel();
-    });
-  }
-  
-  if (newConvBtn) {
-    newConvBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      console.log('[newConvBtn in panel] clicked');
-      createConversation();
-      closeHistoryPanel();
-    });
-  }
-  
-  if (quickNewBtn) {
-    quickNewBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      console.log('[quickNewBtn] clicked');
-      createConversation();
-    });
+  // Initialiser l'état de collapse de la navbar
+  const savedNavbarCollapsed = localStorage.getItem('navbarCollapsed') === 'true';
+  if (savedNavbarCollapsed && window.innerWidth >= 1024) {
+    mainNavbar.classList.add("collapsed");
+    isNavbarCollapsed = true;
   }
 });
 
 chatForm.addEventListener("submit", sendMessage);
 
-/**
- * Ouvre le panneau d'historique (affiche la liste des conversations)
- */
-async function openHistoryPanel() {
-  if (!historyPanel || !historyContent || !historyOverlay) return;
-  historyOverlay.hidden = false;
-  historyPanel.setAttribute("aria-hidden", "false");
+// Fonctions de gestion de la navbar collapsible
+function toggleNavbar() {
+  // Sur mobile : open/close
+  // Sur desktop : collapse/expand
+  if (window.innerWidth < 1024) {
+    // Mobile
+    isNavbarOpen = !isNavbarOpen;
+    if (isNavbarOpen) {
+      mainNavbar.classList.remove("-translate-x-full");
+      navOverlay.classList.remove("hidden");
+    } else {
+      mainNavbar.classList.add("-translate-x-full");
+      navOverlay.classList.add("hidden");
+    }
+  } else {
+    // Desktop
+    toggleNavbarCollapsed();
+  }
+}
 
-  renderConversationList();
+function toggleNavbarCollapsed() {
+  isNavbarCollapsed = !isNavbarCollapsed;
+  localStorage.setItem('navbarCollapsed', isNavbarCollapsed);
+  
+  if (isNavbarCollapsed) {
+    mainNavbar.classList.add("collapsed");
+  } else {
+    mainNavbar.classList.remove("collapsed");
+  }
+}
+
+function closeNavbar() {
+  if (isNavbarOpen) {
+    isNavbarOpen = false;
+    mainNavbar.classList.add("-translate-x-full");
+    navOverlay.classList.add("hidden");
+  }
 }
 
 /**
- * Ferme le panneau d'historique
+ * Ouvre le panneau profil utilisateur (paramètres)
  */
-function closeHistoryPanel() {
-  if (!historyPanel || !historyOverlay) return;
-  historyPanel.setAttribute("aria-hidden", "true");
-  historyOverlay.hidden = true;
+function openUserProfile() {
+  const userProfilePanel = document.getElementById("userProfilePanel");
+  const userProfileOverlay = document.getElementById("userProfileOverlay");
+  if (!userProfilePanel) return;
+  userProfileOverlay.classList.remove("hidden");
+  userProfilePanel.classList.remove("translate-x-full");
+  userProfilePanel.setAttribute("aria-hidden", "false");
 }
 
 /**
- * Remplit le panneau avec les items d'historique (legacy function, not used currently)
+ * Ferme le panneau profil utilisateur
  */
-function renderHistoryItems(items) {
-  if (!historyContent) return;
-  if (!items || items.length === 0) {
-    historyContent.innerHTML = `<p class="muted">Aucun historique trouvé.</p>`;
-    return;
+function closeUserProfile() {
+  const userProfilePanel = document.getElementById("userProfilePanel");
+  const userProfileOverlay = document.getElementById("userProfileOverlay");
+  if (!userProfilePanel) return;
+  userProfilePanel.classList.add("translate-x-full");
+  userProfileOverlay.classList.add("hidden");
+  userProfilePanel.setAttribute("aria-hidden", "true");
+}
+
+/**
+ * Affiche une notification toast
+ */
+function showNotification(message, type = 'info') {
+  let container = document.querySelector('.toast-container');
+  if (!container) {
+    container = document.createElement('div');
+    container.className = 'toast-container';
+    document.body.appendChild(container);
   }
 
-  historyContent.innerHTML = '';
-  items.forEach((it, idx) => {
-    const el = document.createElement('div');
-    el.className = 'history-item';
+  const toast = document.createElement('div');
+  toast.className = `toast ${type}`;
+  
+  let icon = 'ℹ️';
+  if (type === 'success') icon = '✅';
+  if (type === 'error') icon = '❌';
 
-    const meta = document.createElement('div');
-    meta.className = 'meta';
-    meta.textContent = `${idx + 1} • ${it.role === 'user' ? 'Utilisateur' : 'Assistant'}`;
+  toast.innerHTML = `<span>${icon}</span><span>${message}</span>`;
+  container.appendChild(toast);
 
-    const content = document.createElement('div');
-    content.className = 'content';
-    let html = it.content
-      .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" style="color: #3b82f6; text-decoration: underline; font-weight: 600;">$1</a>')
-      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-      .replace(/\*(.+?)\*/g, '<em>$1</em>')
-      .replace(/\n/g, '<br>');
+  // Auto-remove after 3 seconds
+  setTimeout(() => {
+    toast.classList.add('fade-out');
+    setTimeout(() => {
+      toast.remove();
+      if (container.childNodes.length === 0) container.remove();
+    }, 300);
+  }, 3000);
+}
 
-    content.innerHTML = html;
+/**
+ * Active/désactive le dark mode avec Tailwind
+ */
+function toggleDarkMode() {
+  const isDarkMode = document.documentElement.classList.toggle("dark");
+  localStorage.setItem("darkMode", isDarkMode);
+}
 
-    el.appendChild(meta);
-    el.appendChild(content);
+/**
+ * Initialise le dark mode au chargement
+ */
+function initDarkMode() {
+  const isDarkMode = localStorage.getItem("darkMode") === "true";
+  const darkModeToggle = document.getElementById("darkModeToggle");
+  if (isDarkMode) {
+    document.documentElement.classList.add("dark");
+  } else {
+    document.documentElement.classList.remove("dark");
+  }
+  if (darkModeToggle) {
+    darkModeToggle.checked = isDarkMode;
+  }
+}
 
-    historyContent.appendChild(el);
-  });
+/**
+ * Affiche une notification toast (legacy function - compatibility)
+ */
+function showToast(message, isSuccess = true) {
+  showNotification(message, isSuccess ? 'success' : 'error');
 }

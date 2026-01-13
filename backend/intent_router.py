@@ -27,11 +27,11 @@ class IntentRouter:
             
             # Classements (pas besoin LLM)
             "standings_drivers": (
-                r"\b(classement|champion|leader|leading|position|points|standings|drivers)\b.*\b(pilote|driver|championship)\b",
+                r"\b(classement|champion|leader|leading|position|points|standings)\b.*\b(pilote|pilotes|driver|drivers|championship)\b",
                 False, 10
             ),
             "standings_teams": (
-                r"\b(classement|classement constructeurs|team standings|teams|constructor)\b",
+                r"\b(classement constructeurs|team standings|teams|team|constructor|constructeur|constructeurs)\b",
                 False, 10
             ),
             
