@@ -265,21 +265,112 @@ async def get_memory_summary():
     return long_term_memory.get_learning_summary()
 
 
+# Shared function for next race countdown (used by both endpoint and fast handler)
+def get_next_race_data() -> dict:
+    """Récupère les données du prochain GP depuis Aurupteur (partagé par endpoint et fast handler)"""
+    from datetime import datetime, timezone
+    
+    try:
+        html = fetch_url("https://aurupteur.com/", timeout=3)
+        if not html:
+            return {"countdown": None, "race_name": None, "source": None}
+
+        soup = BeautifulSoup(html, "html.parser")
+
+        # Extraire la date du JavaScript (dans le countdown)
+        race_datetime = None
+        race_name = None
+
+        # Chercher la date avec regex pattern robuste
+        date_match = re.search(r'(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})', html)
+        if date_match:
+            date_str = date_match.group(1)
+            try:
+                race_datetime = datetime.strptime(date_str, "%Y-%m-%d %H:%M:%S")
+                race_datetime = race_datetime.replace(tzinfo=timezone.utc)
+                logger.info(f"✅ Date du prochain GP trouvée: {race_datetime}")
+            except Exception as e:
+                logger.warning(f"Erreur parsing date: {e}")
+        
+        # Fallback: chercher dans les scripts
+        if not race_datetime:
+            scripts = soup.find_all('script')
+            for script in scripts:
+                if script.string and 'home-nextgp-card' in script.string:
+                    patterns = [
+                        r'new Date\("([^"]+)"\)',
+                        r"new Date\('([^']+)'\)",
+                        r'new Date\(\'([^\']+)\'\)',
+                        r'(\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2})',
+                    ]
+                    for pattern in patterns:
+                        date_match = re.search(pattern, script.string)
+                        if date_match:
+                            date_str = date_match.group(1)
+                            try:
+                                race_datetime = datetime.strptime(date_str, "%Y-%m-%d %H:%M:%S")
+                                race_datetime = race_datetime.replace(tzinfo=timezone.utc)
+                                logger.info(f"✅ Date trouvée dans script: {race_datetime}")
+                                break
+                            except Exception as e:
+                                logger.warning(f"Erreur parsing: {e}")
+                    if race_datetime:
+                        break
+
+        # Chercher le nom de la course
+        nextgp_card = soup.find("div", class_="home-nextgp-card")
+        if nextgp_card:
+            race_link = nextgp_card.find("a", href=lambda x: x and "calendrier-details" in x)
+            if race_link:
+                race_name = race_link.get_text(strip=True)
+                logger.info(f"Nom de course trouvé: {race_name}")
+
+        # Calculer le compte à rebours si date trouvée
+        if race_datetime:
+            now = datetime.now(timezone.utc)
+            time_diff = race_datetime - now
+
+            days = time_diff.days
+            hours = time_diff.seconds // 3600
+            minutes = (time_diff.seconds % 3600) // 60
+
+            # Formater le compte à rebours
+            if days > 0:
+                countdown_text = f"Dans {days} jour{'s' if days > 1 else ''}, {hours}h{minutes:02d}min"
+            elif hours > 0:
+                countdown_text = f"Dans {hours}h{minutes:02d}min"
+            else:
+                countdown_text = f"Dans {minutes} minute{'s' if minutes > 1 else ''}"
+
+            # Formater le nom de la course
+            if race_name:
+                race_name = re.sub(r'\([^)]+\)', '', race_name).strip()
+                if not race_name.startswith("GP") and not "Grand Prix" in race_name:
+                    race_name = f"GP de {race_name}"
+
+            return {
+                "countdown": countdown_text,
+                "race_name": race_name or "Prochain Grand Prix",
+                "date": race_datetime.strftime("%Y-%m-%d"),
+                "source": "Aurupteur.com"
+            }
+        else:
+            logger.warning("Impossible d'extraire la date du prochain GP")
+            return {"countdown": None, "race_name": None, "source": None}
+
+    except Exception as e:
+        logger.warning(f"Erreur récupération countdown Aurupteur: {e}")
+        return {"countdown": None, "race_name": None, "source": None}
+
+
 @app.get("/next_race_countdown")
 async def get_next_race_countdown():
-    """Récupère le compte à rebours du prochain GP depuis Aurupteur (Ergast est hors service)"""
-    from datetime import datetime, timezone
-    import json
-    import asyncio
+    """Récupère le compte à rebours du prochain GP depuis Aurupteur"""
+    return get_next_race_data()
 
-    # Aurupteur (source principale - Ergast n'est plus disponible)
-    try:
-        # Wrapper asyncio avec timeout pour éviter blocage
-        try:
-            html = await asyncio.wait_for(asyncio.to_thread(fetch_url, "https://aurupteur.com/", 3), timeout=4.0)
-        except asyncio.TimeoutError:
-            logger.warning("⏱️ Timeout Aurupteur URL fetch - retour None")
-            html = None
+
+# Routes anciennes (conservées pour compatibilité)
+@app.get("/next_race_countdown_old")
         if not html:
             return {"countdown": None, "race_name": None, "source": None}
 

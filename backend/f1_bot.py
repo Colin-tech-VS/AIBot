@@ -1298,50 +1298,13 @@ def _answer_f1_question_internal(user_question: str, history=None, rag_only: Opt
             logger.info("Relance courte avec historique F1 — persistance sur F1")
             is_f1 = True
 
-        # QUESTIONS SUR CIRCUITS - Chercher dans CSV (prioritaire pour circuits)
+        # QUESTIONS SUR CIRCUITS - Traiter comme F1 pour réponses naturelles + recherche web
         if is_circuit:
-            logger.info("Recherche circuit CSV")
-            q_lower = user_question.lower()
-
-            # Cas spécial: "circuit le plus long"
-            if 'plus long' in q_lower or 'longest' in q_lower:
-                circuit = find_longest_circuit()
-                if circuit:
-                    sources.append("Base de données circuits CSV")
-                    return (
-                        f"🏎️ Le circuit le plus long en F1 est **{circuit['nom']}** "
-                        f"({circuit['lieu']}) avec **{circuit['longueur']}**. {circuit['info']}"
-                    ), sources
-
-            # Recherche générale de circuit
-            query = (
-                user_question
-                .replace('circuit', '')
-                .replace('piste', '')
-                .replace('long', '')
-                .strip()
-            )
-            circuit = search_circuit(query)
-            if circuit and circuit['nom']:
-                name = circuit.get('nom') or "Ce circuit"
-                lieu = circuit.get('lieu') or ""
-                courses = circuit.get('courses') or ""
-                annees = circuit.get('années') or ""
-                nb_gp = circuit.get('nb_gp') or ""
-
-                details = []
-                if lieu:
-                    details.append(f"à {lieu}")
-                if nb_gp:
-                    details.append(f"{nb_gp} Grands Prix")
-                if courses:
-                    details.append(courses)
-                if annees:
-                    details.append(annees)
-
-                detail_text = " — ".join(details) if details else ""
-                sources.append("Base de données circuits CSV")
-                return f"🏎️ {name} {detail_text}", sources
+            logger.info("Question circuit détectée - traitement via pipeline F1 complet")
+            # Ne pas retourner directement, continuer vers le pipeline F1 pour :
+            # 1. Avoir une réponse naturelle via le LLM
+            # 2. Pouvoir chercher sur le web si info manquante (ex: nombre de virages)
+            is_f1 = True  # Forcer le traitement F1 complet
 
         # QUESTIONS F1 - COLLECTE DE CONTEXTE ET CASCADE
         if is_f1:
@@ -1444,52 +1407,140 @@ def _answer_f1_question_internal(user_question: str, history=None, rag_only: Opt
                 else:
                     logger.info("Impossible de récupérer les standings via StandF1")
 
-            # ÉTAPE 4: Appel LLM avec PRIORITÉ KB + Memory (PAS de Web Search sauf échec)
-            # Construire prompt avec KB + Memory en PRIORITÉ
+            # ÉTAPE 4: Détection si KB est vide ou insuffisante → Web Search immédiat
+            # Critères plus larges : chercher sur le web si KB < 100 chars OU si question très spécifique
+            kb_insufficient = not kb_content or len(kb_content.strip()) < 100
+
+            # Détection de questions spécifiques qui nécessitent recherche web (même si KB existe)
+            specific_keywords = [
+                "virage", "virages", "courbe", "courbes", "turn", "turns",
+                "longueur", "kilomètre", "km", "mètre", "length",
+                "record", "lap time", "temps au tour", "pole",
+                "nombre de", "combien de", "how many",
+                "détail", "précis", "exact", "spécifique"
+            ]
+            is_specific_question = any(kw in q_lower for kw in specific_keywords)
+
+            # Si KB insuffisante OU question spécifique → chercher sur le web
+            wiki_data = None
+            f1_sites_data = None
+
+            if kb_insufficient or is_specific_question:
+                reason = "KB insuffisante" if kb_insufficient else "Question spécifique détectée"
+                logger.info(f"⚠️ {reason}, tentative Web Search immédiate (Wikipedia + sites F1)...")
+
+                # 1. Chercher sur les sites F1 spécialisés (prioritaire pour infos récentes)
+                try:
+                    f1_results = search_f1_sites(user_question)
+                    if f1_results:
+                        f1_sites_data = " | ".join(f1_results)
+                        sources.append("Sites F1 spécialisés (ActuF1, StandF1, L'Équipe, Aurupteur)")
+                        logger.info(f"✅ Sites F1: {len(f1_results)} résultats trouvés")
+                except Exception as e:
+                    logger.warning(f"Recherche sites F1 échouée: {e}")
+
+                # 2. Chercher Wikipedia en parallèle
+                wiki_content = []
+                try:
+                    search_queries = [f"F1 {user_question}", user_question]
+                    for search_q in search_queries[:2]:  # Essayer 2 requêtes
+                        wiki_params = {"list": "search", "srsearch": search_q, "srlimit": 3}  # 3 résultats
+                        data = fetch_wikimedia_api("query", params=wiki_params)
+                        if data and "query" in data and "search" in data["query"]:
+                            for r in data["query"]["search"][:3]:  # Max 3 résultats
+                                wiki_content.append(f"{r['title']}: {r['snippet'][:200]}")
+                            if wiki_content:  # Si on a des résultats, arrêter
+                                break
+                    if wiki_content:
+                        wiki_data = " | ".join(wiki_content[:3])  # Max 3 snippets
+                        sources.append("Recherche web (Wikipedia)")
+                        logger.info(f"✅ Web Search Wikipedia: {len(wiki_content)} résultats trouvés")
+                except Exception as e:
+                    logger.warning(f"Web Search Wikipedia échoué: {e}")
+                    wiki_data = None
+
+            # ÉTAPE 5: Appel LLM avec KB + Web Search si disponible
+            # Combiner toutes les sources : season_csv, sites F1, wikipedia
+            final_news_summary = None
+            sources_to_combine = []
+
+            if season_csv_summary:
+                sources_to_combine.append(season_csv_summary)
+            if f1_sites_data:
+                sources_to_combine.append(f1_sites_data)
+            if wiki_data:
+                sources_to_combine.append(wiki_data)
+
+            if sources_to_combine:
+                final_news_summary = "\n\n".join(sources_to_combine)
+
             prompt = OptimizedPromptBuilder.build_f1_question(
                 question=user_question,
                 kb_content=kb_content,
                 standings=ergast_summary,
-                news_summary=season_csv_summary,
+                news_summary=final_news_summary,
                 conversation_history=history_text,
-                long_term_context=memory_context  # Memory context en priorité
+                long_term_context=memory_context
             )
-            
+
             response = call_ollama(prompt)
-            
-            # ÉTAPE 5: Web Search UNIQUEMENT si échec total (DERNIER RECOURS)
-            # Critères d'échec: réponse vide, trop courte, ou incertaine
-            if not response or "désolé" in response.lower() or "pas d'info" in response.lower() or "je n'ai pas" in response.lower() or len(response) < 30:
-                logger.info("⚠️ LLM incertain avec KB+Memory, tentative Web Search (dernier recours)...")
-                
-                # Chercher Wikipedia (timeout TRÈS réduit pour respecter <2s)
+
+            # ÉTAPE 6: Si réponse toujours insuffisante ET pas encore de web search, réessayer
+            if (not response or "désolé" in response.lower() or "pas d'info" in response.lower() or "je n'ai pas" in response.lower() or len(response) < 30) and not wiki_data and not f1_sites_data:
+                logger.info("⚠️ LLM incertain, tentative Web Search complète (dernier recours)...")
+
+                # 1. Chercher sur les sites F1 spécialisés
+                try:
+                    f1_results = search_f1_sites(user_question)
+                    if f1_results:
+                        f1_sites_data = " | ".join(f1_results)
+                        sources.append("Sites F1 spécialisés (ActuF1, StandF1, L'Équipe, Aurupteur)")
+                        logger.info(f"✅ Sites F1 (dernier recours): {len(f1_results)} résultats trouvés")
+                except Exception as e:
+                    logger.warning(f"Recherche sites F1 échouée: {e}")
+
+                # 2. Chercher Wikipedia
                 wiki_content = []
                 try:
-                    search_queries = [f"F1 {user_question}"]
-                    for search_q in search_queries[:1]:  # Limité à 1 seule requête
-                        wiki_params = {"list": "search", "srsearch": search_q, "srlimit": 2}  # Réduit à 2 résultats
+                    search_queries = [f"F1 {user_question}", user_question]
+                    for search_q in search_queries[:2]:
+                        wiki_params = {"list": "search", "srsearch": search_q, "srlimit": 3}
                         data = fetch_wikimedia_api("query", params=wiki_params)
                         if data and "query" in data and "search" in data["query"]:
-                            for r in data["query"]["search"][:2]:  # Max 2 résultats
-                                wiki_content.append(f"{r['title']}: {r['snippet'][:150]}")
-                    wiki_data = " | ".join(wiki_content[:2])  # Max 2 snippets
+                            for r in data["query"]["search"][:3]:
+                                wiki_content.append(f"{r['title']}: {r['snippet'][:200]}")
+                            if wiki_content:
+                                break
+                    if wiki_content:
+                        wiki_data = " | ".join(wiki_content[:3])
+                        sources.append("Recherche web (Wikipedia)")
+                        logger.info(f"✅ Web Search Wikipedia (dernier recours)")
                 except Exception as e:
                     logger.warning(f"Web Search échoué: {e}")
                     wiki_data = None
 
-                # Nouveau prompt avec Web Search SEULEMENT si wiki_data existe
-                if wiki_data:
+                # Nouveau prompt avec Web Search + Sites F1
+                if wiki_data or f1_sites_data:
+                    sources_to_combine = []
+                    if season_csv_summary:
+                        sources_to_combine.append(season_csv_summary)
+                    if f1_sites_data:
+                        sources_to_combine.append(f1_sites_data)
+                    if wiki_data:
+                        sources_to_combine.append(wiki_data)
+
+                    final_news_summary = "\n\n".join(sources_to_combine) if sources_to_combine else None
+
                     prompt = OptimizedPromptBuilder.build_f1_question(
                         question=user_question,
                         kb_content=kb_content,
                         standings=ergast_summary,
-                        news_summary=wiki_data,
+                        news_summary=final_news_summary,
                         conversation_history=history_text,
                         long_term_context=memory_context
                     )
                     response = call_ollama(prompt)
-                    sources.append("Recherche web (Wikipedia)")
-                    logger.info(f"✅ Web Search utilisé en dernier recours")
+                    logger.info(f"✅ Web Search complet utilisé en dernier recours")
 
             if response and not response.startswith("[ERREUR"):
                 return response, sources
@@ -1617,6 +1668,71 @@ def fetch_jolpica_data(endpoint: str, params: Optional[Dict] = None) -> Dict:
     except httpx.RequestError as e:
         logger.warning(f"Jolpica API request failed: {e}")
         return {}
+
+
+def search_f1_sites(query: str) -> List[str]:
+    """Recherche une requête sur tous les sites F1 disponibles (scraping ciblé)."""
+    results = []
+
+    # Liste des sites F1 à interroger
+    search_targets = [
+        ("ActuF1", "https://www.actuf1.com/", 2),
+        ("StandF1", "https://www.standf1.com/", 2),
+        ("L'Équipe F1", "https://www.lequipe.fr/Formule-1/", 2),
+        ("Aurupteur", "https://aurupteur.com/", 2),
+    ]
+
+    def search_site(site_name: str, url: str, timeout: int):
+        try:
+            html = fetch_url(url, timeout=timeout)
+            if not html:
+                return None
+
+            soup = BeautifulSoup(html, "html.parser")
+
+            # Stratégie 1: Chercher dans le texte complet (case-insensitive)
+            page_text = soup.get_text().lower()
+            query_lower = query.lower()
+
+            # Si le terme est trouvé dans la page
+            if query_lower in page_text:
+                # Extraire un contexte autour du terme
+                paragraphs = soup.find_all(['p', 'div', 'article'])
+                for para in paragraphs:
+                    para_text = para.get_text(strip=True)
+                    if query_lower in para_text.lower() and len(para_text) > 50:
+                        # Trouver la phrase contenant le terme
+                        sentences = para_text.split('.')
+                        for sentence in sentences:
+                            if query_lower in sentence.lower() and len(sentence.strip()) > 20:
+                                result = f"{site_name}: {sentence.strip()[:300]}"
+                                return result
+
+                # Fallback: extraire le texte principal
+                main_text = extract_main_text(html, 400)
+                if main_text and query_lower in main_text.lower():
+                    return f"{site_name}: {main_text[:300]}"
+
+            return None
+        except Exception as e:
+            logger.warning(f"Recherche sur {site_name} échouée: {e}")
+            return None
+
+    # Exécuter en parallèle
+    with ThreadPoolExecutor(max_workers=4) as executor:
+        futures = {
+            executor.submit(search_site, name, url, timeout): name
+            for name, url, timeout in search_targets
+        }
+
+        for future in as_completed(futures):
+            result = future.result()
+            if result:
+                results.append(result)
+                if len(results) >= 3:  # Limiter à 3 résultats max
+                    break
+
+    return results
 
 
 def fetch_wikimedia_api(endpoint: str, params: Optional[Dict] = None) -> Dict:

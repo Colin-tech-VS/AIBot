@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ollama list:*)",
+      "Bash(ollama pull:*)",
+      "Bash(python app.py:*)",
+      "Bash(tee:*)",
+      "Bash(git checkout:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git stash push:*)",
+      "Bash(git merge:*)",
+      "Bash(del /F logsf1_bot.log)",
+      "Bash(git cherry-pick:*)",
+      "Bash(git push:*)",
+      "Bash(python -c \"\nimport requests\nfrom bs4 import BeautifulSoup\nimport re\n\nhtml = requests.get\\(''https://aurupteur.com/'', timeout=5\\).text\nsoup = BeautifulSoup\\(html, ''html.parser''\\)\n\n# Chercher le div countdown-status\ncountdown_div = soup.find\\(''div'', id=''countdown-status''\\)\nif countdown_div:\n    print\\(''Countdown div found:''\\)\n    print\\(countdown_div.get_text\\(strip=True\\)[:500]\\)\nelse:\n    print\\(''No countdown-status div found''\\)\n\n# Chercher aussi les éléments avec ''Prochain GP''\nprochain_gp = soup.find_all\\(text=re.compile\\(r''Prochain.*GP'', re.IGNORECASE\\)\\)\nprint\\(''\\\\n\\\\nProchain GP mentions:''\\)\nfor item in prochain_gp[:3]:\n    print\\(item.strip\\(\\)[:200]\\)\n\")",
+      "Bash(python -c:*)"
+    ]
+  }
+}

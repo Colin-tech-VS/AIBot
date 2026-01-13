@@ -79,5 +79,11 @@
     "type": "llm_extracted",
     "content": "{\"facts\": [\"Fernando Alonso a remporté deux titres mondiaux en Formule 1 (2005 et 2006)\"], \"preferences\": {\"langue\": \"fr\", \"format\": \"gras\"}}",
     "timestamp": "2026-01-13T01:23:41.318785"
+  },
+  {
+    "type": "correction",
+    "user_input": "c'est qui hadjar ?",
+    "context": "Je n'ai aucune information sur une personne nommée Hadjar. Il y a peut-être un faux-pas dans le nom ",
+    "timestamp": "2026-01-13T16:52:34.677555"
   }
 ]
