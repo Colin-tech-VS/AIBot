@@ -21,7 +21,7 @@ def migrate_print_to_logger(file_path: str) -> tuple[int, list[str]]:
     """
     path = Path(file_path)
     if not path.exists():
-        return 0, [f"❌ Fichier non trouvé: {file_path}"]
+        return 0, [f" Fichier non trouvé: {file_path}"]
     
     # Lire contenu
     with open(path, 'r', encoding='utf-8') as f:
@@ -55,7 +55,7 @@ def migrate_print_to_logger(file_path: str) -> tuple[int, list[str]]:
             content_new = re.sub(pattern, replacement, content)
             new_count = len(re.findall(pattern, content))
             if content_new != content:
-                changes.append(f"  ✅ {new_count}x print([{level}]) → logger.{level.lower()}()")
+                changes.append(f"   {new_count}x print([{level}]) → logger.{level.lower()}()")
                 count += new_count
                 content = content_new
     
@@ -63,23 +63,23 @@ def migrate_print_to_logger(file_path: str) -> tuple[int, list[str]]:
     if content != original_content:
         with open(path, 'w', encoding='utf-8') as f:
             f.write(content)
-        changes.insert(0, f"✅ Fichier modifié: {path.name}")
+        changes.insert(0, f" Fichier modifié: {path.name}")
     else:
-        changes.append(f"⚠️ Aucun changement nécessaire")
+        changes.append(f" Aucun changement nécessaire")
     
     return count, changes
 
 
 def main():
     print("=" * 70)
-    print("🔧 MIGRATION print() → logger.*()".center(70))
+    print(" MIGRATION print() → logger.*()".center(70))
     print("=" * 70)
     print()
     
     total_replacements = 0
     
     for file_path in FILES_TO_MIGRATE:
-        print(f"\n📝 Traitement: {Path(file_path).name}")
+        print(f"\n Traitement: {Path(file_path).name}")
         print("-" * 70)
         
         count, changes = migrate_print_to_logger(file_path)
@@ -89,12 +89,12 @@ def main():
             print(change)
     
     print("\n" + "=" * 70)
-    print(f"✅ MIGRATION TERMINÉE".center(70))
+    print(f" MIGRATION TERMINÉE".center(70))
     print("=" * 70)
-    print(f"\n📊 Total remplacements: {total_replacements}")
+    print(f"\n Total remplacements: {total_replacements}")
     
     if total_replacements > 0:
-        print("\n⚠️ IMPORTANT:")
+        print("\n IMPORTANT:")
         print("  • Vérifiez que les imports logger sont présents dans chaque fichier")
         print("  • backend/f1_bot.py: from backend.logger import get_logger")
         print("  • backend/knowledge_base.py: from backend.logger import get_logger")

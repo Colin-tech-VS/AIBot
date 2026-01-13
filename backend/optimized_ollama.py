@@ -19,7 +19,7 @@ class OllamaConfig:
     temperature: float = 0.2          # Ultra-basse pour cohérence
     top_p: float = 0.9                # Nucleus sampling
     num_ctx: int = 1024               # Context window minimal
-    num_predict: int = 256            # Max tokens de sortie (~200-300 chars)
+    num_predict: int = 256            # Max tokens de sortie (environt 200-300 chars)
     top_k: int = 20                   # Beam search
     repeat_penalty: float = 1.1       # Éviter les répétitions
     timeout: int = 30                 # 30s max pour réponse

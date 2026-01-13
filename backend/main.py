@@ -25,7 +25,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TEMPLATES_DIR = os.path.join(BASE_DIR, "frontend")  # index.html est directement dans frontend/
 STATIC_DIR = os.path.join(BASE_DIR, "frontend", "static")
 
-# ⚠️ CONFIGURATION OLLAMA WINDOWS
+# CONFIGURATION OLLAMA WINDOWS
 # Ajouter ici le chemin complet vers ollama.exe sur votre machine
 OLLAMA_PATHS = [
     r"C:\Users\cococ\AppData\Local\Programs\Ollama\ollama.exe",  # Chemin par défaut Windows
@@ -46,7 +46,7 @@ for path in OLLAMA_PATHS:
         break
 
 if OLLAMA_PATH is None:
-    print("⚠️  ATTENTION: Ollama.exe non trouvé aux chemins connus")
+    print("ATTENTION: Ollama.exe non trouvé aux chemins connus")
     print("   Chemins vérifiés :")
     for p in OLLAMA_PATHS[:-1]:
         print(f"   - {p}")
@@ -105,7 +105,7 @@ def call_ollama(prompt: str) -> str:
         if process.returncode == 0:
             # Retourner la sortie standard (réponse du modèle)
             response = process.stdout.strip()
-            return response if response else "⚠️ Ollama a retourné une réponse vide"
+            return response if response else " Ollama a retourné une réponse vide"
         else:
             # En cas d'erreur, retourner le message d'erreur
             error_msg = process.stderr.strip() or "Erreur Ollama inconnue"
@@ -233,15 +233,15 @@ if __name__ == "__main__":
     import uvicorn
     
     print("=" * 70)
-    print("🤖 Chatbot Ollama Local - Backend FastAPI (WINDOWS)")
+    print("Chatbot Ollama Local - Backend FastAPI (WINDOWS)")
     print("=" * 70)
-    print(f"📁 Templates: {TEMPLATES_DIR}")
-    print(f"📁 Static: {STATIC_DIR}")
-    print(f"🔧 Ollama Path: {OLLAMA_PATH}")
-    print(f"🚀 Lancement sur http://127.0.0.1:8000")
-    print(f"✅ À partir d'ici: http://localhost:8000")
+    print(f"Templates: {TEMPLATES_DIR}")
+    print(f"Static: {STATIC_DIR}")
+    print(f"Ollama Path: {OLLAMA_PATH}")
+    print(f"Lancement sur http://127.0.0.1:8000")
+    print(f"À partir d'ici: http://localhost:8000")
     print("=" * 70)
-    print("\n⚠️  PRÉALABLE: Ollama doit être en cours d'exécution")
+    print("\nPRÉALABLE: Ollama doit être en cours d'exécution")
     print("   Ouvrez un terminal et lancez: ollama serve")
     print("=" * 70 + "\n")
     

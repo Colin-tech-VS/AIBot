@@ -30,9 +30,7 @@ from backend.logger import get_logger
 logger = get_logger(__name__)
 
 
-# -----------------------------------
 # Configuration
-# -----------------------------------
 KB_DIR = Path(__file__).parent.parent / "knowledge_base"
 KB_DIR.mkdir(exist_ok=True)
 
@@ -40,20 +38,19 @@ KB_DIR.mkdir(exist_ok=True)
 FAISS_INDEX_PATH = KB_DIR / "faiss_index.bin"
 FAISS_METADATA_PATH = KB_DIR / "faiss_metadata.pkl"
 
-# Modèle embeddings (multilingue, rapide, 80MB)
+# Modèle embeddings 
 EMBEDDING_MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
 
-# Text splitting (chunks pour meilleure granularité)
+# Text splitting 
 CHUNK_SIZE = 1000  # caractères par chunk
 CHUNK_OVERLAP = 200  # overlap pour continuité contexte
 
-# Verbosité des logs KB (0 par défaut). Activer avec KB_LOG_VERBOSE=1
+# Verbosité des logs KB
 KB_LOG_VERBOSE = os.getenv("KB_LOG_VERBOSE", "0").lower() in {"1", "true", "yes", "on"}
 
 
-# -----------------------------------
+
 # Modèles
-# -----------------------------------
 class KnowledgeDoc(dict):
     """Document de connaissances"""
     def __init__(self, doc_id: str, title: str, content: str, category: str = "general"):
@@ -64,9 +61,8 @@ class KnowledgeDoc(dict):
         self.category = category  # f1-rules, teams, drivers, history, etc.
 
 
-# -----------------------------------
+
 # Text Splitting Helper (LangChain RecursiveCharacterTextSplitter)
-# -----------------------------------
 # Initialiser le splitter LangChain (hiérarchie intelligente)
 _text_splitter = RecursiveCharacterTextSplitter(
     chunk_size=CHUNK_SIZE,
@@ -108,16 +104,14 @@ def split_text_into_chunks(text: str, chunk_size: int = CHUNK_SIZE, overlap: int
     return _text_splitter.split_text(text)
 
 
-# -----------------------------------
-# Knowledge Base (FAISS + sentence-transformers)
-# -----------------------------------
+# Knowledge Base (FAISS (vector database) + sentence-transformers)
 class KnowledgeBase:
     def __init__(self, use_faiss: bool = True):
         self.use_faiss = use_faiss and FAISS_AVAILABLE
         self.docs: Dict[str, KnowledgeDoc] = {}  # doc_id -> doc original
         
         # FAISS components
-        self.index: Optional[faiss.IndexFlatIP] = None  # Inner Product (cosine with normalized vectors)
+        self.index: Optional[faiss.IndexFlatIP] = None  
         self.embedder: Optional[SentenceTransformer] = None
         self.chunks: List[str] = []  # Chunks de texte (dans l'ordre de l'index)
         self.chunk_metadata: List[Dict] = []  # Metadata par chunk (doc_id, title, etc.)
@@ -134,7 +128,7 @@ class KnowledgeBase:
             self.embedder = SentenceTransformer(EMBEDDING_MODEL_NAME)
             embedding_dim = self.embedder.get_sentence_embedding_dimension()
             
-            # Index FAISS (Inner Product pour cosine similarity avec vecteurs normalisés)
+            # Index FAISS 
             self.index = faiss.IndexFlatIP(embedding_dim)
             
             # Charger index persisté si existe
@@ -157,11 +151,8 @@ class KnowledgeBase:
                 self.chunks = data['chunks']
                 self.chunk_metadata = data['metadata']
             
-            # ═══════════════════════════════════════════════════════════
             # VALIDATION DE L'INDEX (détection corruption)
-            # ═══════════════════════════════════════════════════════════
-            
-            # Vérif 1: Dimension correcte pour all-MiniLM-L6-v2 ?
+            # Dimension correcte pour all-MiniLM-L6-v2 ?
             expected_dim = 384
             if self.index.d != expected_dim:
                 raise ValueError(
@@ -169,26 +160,24 @@ class KnowledgeBase:
                     f"Modèle embeddings différent détecté."
                 )
             
-            # Vérif 2: Cohérence nombre vecteurs / chunks ?
+            # Cohérence nombre vecteurs / chunks ?
             if self.index.ntotal != len(self.chunks):
                 raise ValueError(
                     f"❌ Mismatch vecteurs/chunks: {self.index.ntotal} vecteurs != {len(self.chunks)} chunks. "
                     f"Index désynchronisé."
                 )
             
-            # Vérif 3: Metadata valide ?
+            # Metadata valide ?
             if not self.chunk_metadata or len(self.chunk_metadata) != len(self.chunks):
                 raise ValueError(
                     f"❌ Metadata corrompue: {len(self.chunk_metadata)} metadata != {len(self.chunks)} chunks."
                 )
             
-            # Vérif 4: Chunks non vides ?
+            # Chunks non vides ?
             if not self.chunks or all(not c.strip() for c in self.chunks[:10]):
                 raise ValueError("❌ Chunks vides détectés. Index corrompu.")
             
-            # ═══════════════════════════════════════════════════════════
             # RECONSTRUCTION DOCS
-            # ═══════════════════════════════════════════════════════════
             seen_docs = set()
             for meta in self.chunk_metadata:
                 doc_id = meta.get('doc_id')
@@ -335,7 +324,7 @@ class KnowledgeBase:
             # Score 1: Nombre exact de mots trovés (exact match)
             exact_score = sum(1 for word in query_words if word in full_text)
             
-            # Score 2: Correspondance partielle (si "yves" dans le doc, matchera "yves d'epitech")
+            # Score 2: Correspondance partielle
             partial_score = 0
             for word in query_words:
                 if len(word) > 2:  # Ignorer les petits mots
@@ -464,9 +453,8 @@ class KnowledgeBase:
         logger.info(f"Knowledge base exportée: {output_file}")
 
 
-# -----------------------------------
+
 # Instance globale
-# -----------------------------------
 _kb_instance: Optional[KnowledgeBase] = None
 
 

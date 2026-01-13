@@ -9,9 +9,7 @@ from logging.handlers import RotatingFileHandler
 from pathlib import Path
 
 
-# -----------------------------------
 # Configuration
-# -----------------------------------
 LOG_DIR = Path(__file__).parent.parent / "logs"
 LOG_DIR.mkdir(exist_ok=True)
 
@@ -21,16 +19,12 @@ MAX_LOG_SIZE = 10 * 1024 * 1024  # 10 MB
 BACKUP_COUNT = 5  # Garde 5 fichiers de backup
 
 
-# -----------------------------------
 # Format structuré
-# -----------------------------------
 LOG_FORMAT = "[%(asctime)s] [%(levelname)s] [%(name)s:%(lineno)d] %(message)s"
 DATE_FORMAT = "%Y-%m-%d %H:%M:%S"
 
 
-# -----------------------------------
 # Logger factory
-# -----------------------------------
 def get_logger(name: str = "f1_bot") -> logging.Logger:
     """Retourne logger configuré avec handlers console + fichier rotatif
     
@@ -81,15 +75,11 @@ def get_logger(name: str = "f1_bot") -> logging.Logger:
     return logger
 
 
-# -----------------------------------
 # Logger par défaut (usage direct)
-# -----------------------------------
 logger = get_logger("f1_bot")
 
 
-# -----------------------------------
 # Helpers pour migration print() → logger
-# -----------------------------------
 def log_info(msg: str):
     """Alias pour migration rapide: log_info() au lieu de print('[INFO] ...')"""
     logger.info(msg)

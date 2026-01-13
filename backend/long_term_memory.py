@@ -153,7 +153,7 @@ class LongTermMemory:
         self.user_preferences["last_updated"] = datetime.now().isoformat()
         self._save_json(self.user_preferences_file, self.user_preferences)
         
-        print(f"[IA APPREND] ❤️ PRÉFÉRENCE DÉTECTÉE : {pref_type} -> '{message}'")
+        print(f"[IA APPREND]  PRÉFÉRENCE DÉTECTÉE : {pref_type} -> '{message}'")
         print(f"   -> Méthode : Détection de mots-clés de préférence")
         print(f"   -> Durée : Permanent (Jusqu'à modification par l'utilisateur)")
 
@@ -166,7 +166,7 @@ class LongTermMemory:
         }
         self._save_json(self.custom_knowledge_file, self.custom_knowledge)
         
-        print(f"[IA APPREND] 📚 NOUVELLE CONNAISSANCE : '{message}'")
+        print(f"[IA APPREND]  NOUVELLE CONNAISSANCE : '{message}'")
         print(f"   -> Méthode : Extraction d'information déclarative")
         print(f"   -> Durée : Permanent (Base de connaissances personnalisée)")
 
@@ -180,7 +180,7 @@ class LongTermMemory:
         self.learned_facts = self.learned_facts[-200:] # Plus de place pour les faits LLM
         self._save_json(self.learned_facts_file, self.learned_facts)
         
-        print(f"[IA APPREND] 🤖 ANALYSE LLM : Fait extrait : '{fact_text}'")
+        print(f"[IA APPREND]  ANALYSE LLM : Fait extrait : '{fact_text}'")
         print(f"   -> Méthode : Intelligence Artificielle (Extraction sémantique)")
         print(f"   -> Durée : Long terme")
 
@@ -192,7 +192,7 @@ class LongTermMemory:
         self._save_json(self.user_preferences_file, self.user_preferences)
         
         for k, v in prefs.items():
-            print(f"[IA APPREND] ⚙️ RÉGLAGE UTILISATEUR (via LLM) : {k} = '{v}'")
+            print(f"[IA APPREND]  RÉGLAGE UTILISATEUR (via LLM) : {k} = '{v}'")
         print(f"   -> Méthode : Synthèse intelligente des préférences")
         print(f"   -> Durée : Permanent")
 

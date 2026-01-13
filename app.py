@@ -80,14 +80,11 @@ if OLLAMA_PATH is None:
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 templates = Jinja2Templates(directory=TEMPLATES_DIR)
 
-# ⚠️ URL API Ollama (Windows par défaut)
+# URL API Ollama (Windows par défaut)
 OLLAMA_URL = "http://127.0.0.1:11434/api/generate"
 OLLAMA_MODEL = "llama3.2:3b"
 
-# -----------------------------------------------------------------------------
 # MODELS
-# -----------------------------------------------------------------------------
-
 class HistoryItem(BaseModel):
     role: Literal["user", "assistant"]
     content: str
@@ -101,10 +98,7 @@ class ChatResponse(BaseModel):
     bot_response: str
     history: List[HistoryItem]
 
-# -----------------------------------------------------------------------------
 # HISTORIQUE & MÉMOIRE CONVERSATIONNELLE
-# -----------------------------------------------------------------------------
-
 # Dictionnaire des historiques par conversation_id (sans authentification)
 sessions_history: Dict[str, List[HistoryItem]] = {}
 MAX_HISTORY = 6  # 3 derniers échanges max
@@ -117,10 +111,8 @@ def get_history_for_session(conv_id: str) -> List[HistoryItem]:
 # Mémoire conversationnelle persistante
 conversation_memory = ConversationMemory(max_history=10, memory_file="conversation_memory.json")
 
-# -----------------------------------------------------------------------------
-# OLLAMA API CALL
-# -----------------------------------------------------------------------------
 
+# OLLAMA API CALL
 def call_ollama(prompt: str) -> str:
     payload = {
         "model": OLLAMA_MODEL,
@@ -137,10 +129,7 @@ def call_ollama(prompt: str) -> str:
     except Exception as e:
         return f"[ERREUR Ollama] {e}"
 
-# -----------------------------------------------------------------------------
 # ROUTES
-# -----------------------------------------------------------------------------
-
 @app.get("/", response_class=HTMLResponse)
 async def index(request: Request):
     return templates.TemplateResponse(
@@ -156,7 +145,7 @@ async def chat(chat_msg: ChatMessage, background_tasks: BackgroundTasks):
     if not user_message:
         return JSONResponse(status_code=400, content={"detail": "Message vide"})
 
-    # 🔒 SANITIZATION - Protection contre injection prompts (Niveau 1)
+    # SANITIZATION - Protection contre injection prompts (Niveau 1)
     try:
         user_message, is_safe = sanitize_user_input(user_message)
         logger.info(f"Input sanitized: safe={is_safe}, length={len(user_message)}")
@@ -214,10 +203,7 @@ async def clear_history(conversation_id: str = "default"):
     
     return {"message": f"Historique '{conversation_id}' effacé", "history": []}
 
-# -----------------------------------------------------------------------------
 # Knowledge Base Endpoints
-# -----------------------------------------------------------------------------
-
 @app.get("/kb/docs")
 async def get_kb_documents():
     kb = get_knowledge_base()
@@ -272,10 +258,8 @@ async def get_memory_summary():
     from backend.long_term_memory import long_term_memory
     return long_term_memory.get_learning_summary()
 
-# -----------------------------------------------------------------------------
-# Health check
-# -----------------------------------------------------------------------------
 
+# Health check
 @app.get("/health")
 async def health_check():
     try:
@@ -297,10 +281,7 @@ async def health_check():
 async def chrome_devtools_silence():
     return {}
 
-# -----------------------------------------------------------------------------
 # MAIN
-# -----------------------------------------------------------------------------
-
 if __name__ == "__main__":
     import uvicorn
 

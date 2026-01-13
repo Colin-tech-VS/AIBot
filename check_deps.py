@@ -57,7 +57,7 @@ def check_installed():
         import pkg_resources
         installed = {pkg.key: pkg.version for pkg in pkg_resources.working_set}
     except:
-        print("⚠️ Impossible d'importer pkg_resources\n")
+        print(" Impossible d'importer pkg_resources\n")
         return {}
     
     print("=" * 80)
@@ -75,22 +75,22 @@ def check_installed():
         usage = USAGE_MAP.get(dep, ["Inconnu"])
         
         if version:
-            status = f"✅ {version:15}"
+            status = f" {version:15}"
             prod_installed += 1
-            active = "🟢 ACTIF" if any("app.py" in u or "backend/" in u for u in usage) else "⚪ INACTIF"
+            active = " ACTIF" if any("app.py" in u or "backend/" in u for u in usage) else "⚪ INACTIF"
         else:
-            status = "❌ NON INSTALLÉ"
+            status = " NON INSTALLÉ"
             prod_missing += 1
-            active = "🔴 MANQUANT"
+            active = " MANQUANT"
         
         print(f"{dep:30} {status:20} {active}")
         if version:
             for u in usage[:2]:  # Limiter à 2 exemples
                 print(f"{'':30}    → {u}")
     
-    print(f"\n📊 Production: {prod_installed}/{len(DEPS_PROD)} installées")
+    print(f"\n Production: {prod_installed}/{len(DEPS_PROD)} installées")
     
-    print("\n🔨 DÉPENDANCES DÉVELOPPEMENT (requirements-dev.txt)")
+    print("\n DÉPENDANCES DÉVELOPPEMENT (requirements-dev.txt)")
     print("-" * 80)
     
     dev_installed = 0
@@ -101,23 +101,23 @@ def check_installed():
         usage = USAGE_MAP.get(dep, ["Inconnu"])
         
         if version:
-            status = f"✅ {version:15}"
+            status = f" {version:15}"
             dev_installed += 1
-            active = "🟢 ACTIF" if "scripts/" in str(usage) else "⚪ OPTIONNEL"
+            active = " ACTIF" if "scripts/" in str(usage) else " OPTIONNEL"
         else:
-            status = "❌ NON INSTALLÉ"
+            status = " NON INSTALLÉ"
             dev_missing += 1
-            active = "⚪ OPTIONNEL"
+            active = " OPTIONNEL"
         
         print(f"{dep:30} {status:20} {active}")
         if version:
             for u in usage[:2]:
                 print(f"{'':30}    → {u}")
     
-    print(f"\n📊 Développement: {dev_installed}/{len(DEPS_DEV)} installées")
+    print(f"\n Développement: {dev_installed}/{len(DEPS_DEV)} installées")
     
     # Vérifier les dépendances cachées
-    print("\n🔍 DÉPENDANCES SECONDAIRES IMPORTANTES")
+    print("\n DÉPENDANCES SECONDAIRES IMPORTANTES")
     print("-" * 80)
     
     secondary = {
@@ -130,36 +130,36 @@ def check_installed():
     for dep, desc in secondary.items():
         version = installed.get(dep.lower())
         if version:
-            print(f"{dep:30} ✅ {version:15} → {desc}")
+            print(f"{dep:30}  {version:15} → {desc}")
         else:
             # sqlite3 est built-in
             if dep == "sqlite3":
                 try:
                     import sqlite3
-                    print(f"{dep:30} ✅ built-in       → {desc}")
+                    print(f"{dep:30}  built-in       → {desc}")
                 except:
-                    print(f"{dep:30} ❌ NON INSTALLÉ  → {desc}")
+                    print(f"{dep:30}  NON INSTALLÉ  → {desc}")
             else:
-                print(f"{dep:30} ❌ NON INSTALLÉ  → {desc}")
+                print(f"{dep:30}  NON INSTALLÉ  → {desc}")
     
     # Résumé final
     print("\n" + "=" * 80)
-    print("📋 RÉSUMÉ")
+    print(" RÉSUMÉ")
     print("=" * 80)
     
     total_critical = len(DEPS_PROD)
     critical_ok = prod_installed
     
     if prod_missing == 0:
-        print("✅ Toutes les dépendances critiques sont installées")
+        print(" Toutes les dépendances critiques sont installées")
     else:
-        print(f"⚠️ {prod_missing} dépendance(s) critique(s) manquante(s)")
+        print(f" {prod_missing} dépendance(s) critique(s) manquante(s)")
     
-    print(f"🔧 Production: {critical_ok}/{total_critical} ({critical_ok*100//total_critical}%)")
-    print(f"🔨 Développement: {dev_installed}/{len(DEPS_DEV)} ({dev_installed*100//len(DEPS_DEV) if dev_installed else 0}%)")
+    print(f" Production: {critical_ok}/{total_critical} ({critical_ok*100//total_critical}%)")
+    print(f" Développement: {dev_installed}/{len(DEPS_DEV)} ({dev_installed*100//len(DEPS_DEV) if dev_installed else 0}%)")
     
     # Recommandations
-    print("\n💡 RECOMMANDATIONS")
+    print("\n RECOMMANDATIONS")
     print("-" * 80)
     
     if prod_missing > 0:
@@ -185,7 +185,7 @@ def check_installed():
     
     heavy_total = sum(1 for v in heavy.values() if v)
     if heavy_total > 0:
-        print(f"\n⚠️ Dépendances lourdes détectées ({heavy_total}/3):")
+        print(f"\n Dépendances lourdes détectées ({heavy_total}/3):")
         for name, ver in heavy.items():
             if ver:
                 print(f"   - {name} {ver}")
