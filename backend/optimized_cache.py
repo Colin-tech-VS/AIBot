@@ -138,4 +138,6 @@ CACHE_TTL = {
     "standings": 3600,             # 60 min (standings StandF1.com) - augmenté de 30→60min
     "ergast_race": 1800,           # 30 min (race info)
     "ergast_standings": 1800,      # 30 min (classements)
+    "widget_standings": 604800,    # 7 jours (604800 sec) - widgets Top 3 Drivers
+    "widget_race": 604800,         # 7 jours (604800 sec) - widget Prochain GP
 }

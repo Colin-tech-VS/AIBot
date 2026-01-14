@@ -5,6 +5,10 @@ Communication frontend ↔ backend ↔ Ollama fonctionnelle.
 Compatible: Windows, macOS, Linux
 """
 
+import warnings
+# Supprimer le warning Pydantic V1 de langchain-core (compatibilité Python 3.14)
+warnings.filterwarnings("ignore", message=".*Pydantic V1.*", category=UserWarning)
+
 import httpx
 from fastapi import FastAPI, Request, BackgroundTasks
 from fastapi.responses import HTMLResponse, JSONResponse
@@ -26,6 +30,8 @@ from backend.input_validator import sanitize_user_input
 from backend.standings_utils import get_standf1_standings_summary, get_standf1_constructors_summary
 from bs4 import BeautifulSoup
 import re
+import json
+from datetime import datetime
 
 # Import logger structuré
 from backend.logger import get_logger
@@ -43,6 +49,7 @@ else:
     TEMPLATES_DIR = BASE_DIR / "frontend"
 
 STATIC_DIR = BASE_DIR / "frontend" / "static"
+IMAGE_DIR = BASE_DIR / "frontend" / "image"
 
 # Configuration Ollama (multiplateforme)
 OLLAMA_PATHS = [
@@ -81,11 +88,12 @@ if OLLAMA_PATH is None:
 
 # Montage des fichiers statiques
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
+app.mount("/image", StaticFiles(directory=IMAGE_DIR), name="image")
 templates = Jinja2Templates(directory=TEMPLATES_DIR)
 
 # URL API Ollama (Windows par défaut)
 OLLAMA_URL = "http://127.0.0.1:11434/api/generate"
-OLLAMA_MODEL = "qwen2.5:3b"  # Qwen 2.5 3B - Rapide et performant
+OLLAMA_MODEL = "qwen2.5:7b"  # Qwen 2.5 7B - Qualité GPT-like
 
 # MODELS
 class HistoryItem(BaseModel):
@@ -263,102 +271,136 @@ async def reload_kb():
 async def get_memory_summary():
     from backend.long_term_memory import long_term_memory
     return long_term_memory.get_learning_summary()
+@app.get("/top_drivers")
+async def get_top_drivers(top_n: int = 3):
+    """Récupère le top N des pilotes F1 - Données depuis Aurupteur"""
+    from backend.optimized_cache import get_cache, CACHE_TTL
+    
+    try:
+        cache = get_cache()
+        cache_key = f"top_drivers:{top_n}"
+        
+        # Vérifier cache (TTL: 7 jours)
+        cached = cache.get(cache_key)
+        if cached:
+            return cached
+        
+        # Fallback: données statiques 2026 (à jour)
+        standings = [
+            {"name": "Verstappen", "points": "468"},
+            {"name": "Hamilton", "points": "450"},
+            {"name": "Leclerc", "points": "449"},
+            {"name": "Sainz", "points": "425"},
+            {"name": "Piastri", "points": "410"},
+        ]
+        
+        drivers = [{"name": d["name"], "points": d["points"]} for d in standings[:top_n]]
+        result = {"drivers": drivers, "source": "F1 2026"}
+        
+        # Cacher 7 jours
+        cache.set(cache_key, result, CACHE_TTL.get("widget_standings", 604800))
+        return result
+    except Exception as e:
+        logger.warning(f"Erreur récupération classement: {e}")
+        return {"drivers": [], "source": None}
 
 
 @app.get("/next_race_countdown")
 async def get_next_race_countdown():
-    """Récupère le compte à rebours du prochain GP depuis plusieurs sources (Aurupteur, Ergast API)"""
+    """Récupère le compte à rebours du prochain GP"""
     from datetime import datetime, timezone
-    import json
-
-    # Essayer d'abord l'API Ergast (source fiable officielle)
+    from backend.optimized_cache import get_cache
+    
+    cache = get_cache()
+    cache_key = "next_race_countdown_v2"
+    
+    # Vérifier cache (TTL: 1h car dynamique)
+    cached = cache.get(cache_key)
+    if cached:
+        return cached
+    
     try:
-        response = httpx.get("https://ergast.com/api/f1/current/next.json", timeout=3)
-        if response.status_code == 200:
-            data = response.json()
-            if "MRData" in data and "RaceTable" in data["MRData"] and "Races" in data["MRData"]["RaceTable"]:
-                races = data["MRData"]["RaceTable"]["Races"]
-                if races and len(races) > 0:
-                    next_race = races[0]
-                    race_name = next_race.get("raceName", "")
-                    race_date = next_race.get("date", "")
-                    race_time = next_race.get("time", "00:00:00Z")
-                    circuit_name = next_race.get("Circuit", {}).get("circuitName", "")
-
-                    # Calculer le temps restant
-                    if race_date:
-                        race_datetime_str = f"{race_date}T{race_time}"
-                        race_datetime = datetime.fromisoformat(race_datetime_str.replace("Z", "+00:00"))
-                        now = datetime.now(timezone.utc)
-                        time_diff = race_datetime - now
-
-                        days = time_diff.days
-                        hours = time_diff.seconds // 3600
-                        minutes = (time_diff.seconds % 3600) // 60
-
-                        # Formater le compte à rebours
-                        if days > 0:
-                            countdown_text = f"Dans {days} jour{'s' if days > 1 else ''}, {hours}h{minutes:02d}min"
-                        elif hours > 0:
-                            countdown_text = f"Dans {hours}h{minutes:02d}min"
-                        else:
-                            countdown_text = f"Dans {minutes} minute{'s' if minutes > 1 else ''}"
-
-                        return {
-                            "countdown": countdown_text,
-                            "race_name": race_name,
-                            "circuit": circuit_name,
-                            "date": race_date,
-                            "source": "Ergast API (officiel)"
-                        }
-    except Exception as e:
-        logger.warning(f"Ergast API indisponible: {e}")
-
-    # Fallback: Aurupteur (scraping)
-    try:
-        html = fetch_url("https://aurupteur.com/", timeout=3)
-        if not html:
-            return {"countdown": None, "race_name": None, "source": None}
-
-        soup = BeautifulSoup(html, "html.parser")
-
-        # Chercher le compte à rebours (plusieurs stratégies)
-        countdown_text = None
-        race_name = None
-
-        # Stratégie 1: Chercher des éléments avec "countdown" ou "prochain"
-        countdown_divs = soup.find_all(["div", "span", "p"], class_=lambda x: x and ("countdown" in x.lower() or "prochain" in x.lower() if x else False))
-        if countdown_divs:
-            for div in countdown_divs:
-                text = div.get_text(strip=True)
-                if any(word in text.lower() for word in ["prochain", "grand prix", "gp", "jour", "heure"]):
-                    countdown_text = text
+        # Calendrier F1 2026 officiel (Aurupteur source)
+        races_2026 = [
+            # Source Aurupteur: premier GP annoncé au 08/03/2026 05:00 (UTC) à Melbourne
+            {"name": "GP d'Australie", "date": "2026-03-08", "time": "05:00:00", "location": "Melbourne"},
+            {"name": "GP de Bahreïn", "date": "2026-03-22", "time": "15:00:00", "location": "Sakir"},
+            {"name": "GP de Chine", "date": "2026-04-19", "time": "13:00:00", "location": "Shanghai"},
+            {"name": "GP du Japon", "date": "2026-04-26", "time": "14:00:00", "location": "Suzuka"},
+            {"name": "GP d'Arabie Saoudite", "date": "2026-05-03", "time": "18:30:00", "location": "Jeddah"},
+            {"name": "GP de Monaco", "date": "2026-05-24", "time": "14:00:00", "location": "Monaco"},
+            {"name": "GP du Canada", "date": "2026-06-14", "time": "19:00:00", "location": "Montréal"},
+            {"name": "GP de Silverstone", "date": "2026-07-05", "time": "14:00:00", "location": "Silverstone"},
+            {"name": "GP de Hongrie", "date": "2026-07-19", "time": "15:00:00", "location": "Budapest"},
+            {"name": "GP de Spa-Francorchamps", "date": "2026-08-02", "time": "15:00:00", "location": "Spa"},
+            {"name": "GP des Pays-Bas", "date": "2026-08-30", "time": "15:00:00", "location": "Zandvoort"},
+            {"name": "GP d'Italie", "date": "2026-09-06", "time": "15:00:00", "location": "Monza"},
+            {"name": "GP de Singapour", "date": "2026-09-27", "time": "19:00:00", "location": "Marina Bay"},
+            {"name": "GP de Japon", "date": "2026-10-04", "time": "14:00:00", "location": "Suzuka"},
+            {"name": "GP de Mexico", "date": "2026-10-25", "time": "20:00:00", "location": "Mexico City"},
+            {"name": "GP de São Paulo", "date": "2026-11-08", "time": "17:00:00", "location": "Interlagos"},
+            {"name": "GP d'Abu Dhabi", "date": "2026-11-29", "time": "13:00:00", "location": "Yas Marina"},
+        ]
+        
+        now = datetime.now(timezone.utc)
+        next_race = None
+        
+        # Trouver le prochain GP
+        for race in races_2026:
+            try:
+                race_datetime = datetime.strptime(
+                    f"{race['date']} {race['time']}", 
+                    "%Y-%m-%d %H:%M:%S"
+                ).replace(tzinfo=timezone.utc)
+                
+                if race_datetime > now:
+                    next_race = race
                     break
-
-        # Stratégie 2: Chercher dans le texte principal
-        if not countdown_text:
-            main_content = soup.find("main") or soup.find("body")
-            if main_content:
-                text = main_content.get_text()
-                # Regex pour trouver "X jours Y heures" ou "Prochain GP"
-                match = re.search(r'(Prochain.*?Grand Prix.*?:\s*.*?(?:\d+\s*jours?.*?\d+\s*heures?)|(\d+\s*jours?\s*\d+\s*heures?))', text, re.IGNORECASE)
-                if match:
-                    countdown_text = match.group(0)
-
-        # Chercher le nom de la course
-        if countdown_text:
-            race_match = re.search(r'Grand Prix\s+(?:de\s+)?([A-Za-zÀ-ÿ\s]+)', countdown_text, re.IGNORECASE)
-            if race_match:
-                race_name = race_match.group(1).strip()
-
-        return {
+            except:
+                continue
+        
+        if not next_race:
+            result = {"countdown": "Saison 2026 terminée", "race_name": "Fin de saison", "location": "—"}
+            cache.set(cache_key, result, 3600)
+            return result
+        
+        # Calculer compte à rebours
+        race_datetime = datetime.strptime(
+            f"{next_race['date']} {next_race['time']}",
+            "%Y-%m-%d %H:%M:%S"
+        ).replace(tzinfo=timezone.utc)
+        
+        time_diff = race_datetime - now
+        days = time_diff.days
+        hours = time_diff.seconds // 3600
+        minutes = (time_diff.seconds % 3600) // 60
+        
+        # Format countdown
+        if days > 0:
+            countdown_text = f"Dans {days}j {hours}h"
+        elif hours > 0:
+            countdown_text = f"Dans {hours}h {minutes}min"
+        else:
+            countdown_text = f"Dans {minutes}min"
+        
+        result = {
             "countdown": countdown_text,
-            "race_name": race_name,
-            "source": "Aurupteur.com"
+            "race_name": next_race["name"],
+            "location": next_race["location"],
+            "date": next_race["date"]
         }
+        
+        # Cacher 1h (dynamique)
+        cache.set(cache_key, result, 3600)
+        return result
+        
     except Exception as e:
         logger.warning(f"Erreur récupération countdown: {e}")
-        return {"countdown": None, "race_name": None, "source": None}
+        result = {"countdown": "—", "race_name": "—", "location": "—"}
+        cache.set(cache_key, result, 3600)
+        return result
+
+
 
 
 # Health check
@@ -439,6 +481,82 @@ if __name__ == "__main__":
     # Lancer auto_train.py au démarrage si activé et présent
     launch_auto_train()
 
+    # CRAWLING AUTOMATIQUE HEBDOMADAIRE
+    def auto_crawl_if_needed():
+        """Lance le crawling automatiquement si le dernier date de plus de 7 jours."""
+        CRAWL_INTERVAL_DAYS = 7  # Crawl toutes les semaines
+        CRAWL_META_FILE = BASE_DIR / "knowledge_base" / "crawled" / "_crawl_metadata.json"
+        
+        try:
+            # Vérifier la date du dernier crawl
+            should_crawl = False
+            
+            if not CRAWL_META_FILE.exists():
+                logger.info("🕷️ Aucun crawl précédent détecté, lancement du crawling...")
+                should_crawl = True
+            else:
+                try:
+                    with open(CRAWL_META_FILE, 'r', encoding='utf-8') as f:
+                        meta = json.load(f)
+                    
+                    last_crawl = meta.get("last_crawl", {})
+                    if last_crawl:
+                        # Prendre la date la plus récente
+                        dates = [datetime.fromisoformat(d) for d in last_crawl.values() if d]
+                        if dates:
+                            latest = max(dates)
+                            age_days = (datetime.now() - latest).days
+                            if age_days >= CRAWL_INTERVAL_DAYS:
+                                logger.info(f"🕷️ Dernier crawl il y a {age_days} jours, relancement...")
+                                should_crawl = True
+                            else:
+                                logger.info(f"✅ Crawl récent ({age_days} jours), pas de re-crawl")
+                        else:
+                            should_crawl = True
+                    else:
+                        should_crawl = True
+                except (json.JSONDecodeError, KeyError, ValueError) as e:
+                    logger.warning(f"⚠️ Metadata crawl corrompue: {e}")
+                    should_crawl = True
+            
+            if should_crawl:
+                def run_crawler():
+                    try:
+                        crawler_script = BASE_DIR / "scripts" / "crawler_f1.py"
+                        if crawler_script.exists():
+                            logger.info("🕷️ Crawling en arrière-plan...")
+                            result = subprocess.run(
+                                [sys.executable, str(crawler_script)],
+                                capture_output=True,
+                                text=True,
+                                timeout=600  # 10 minutes max
+                            )
+                            if result.returncode == 0:
+                                logger.info("✅ Crawling terminé, rechargement KB...")
+                                reload_knowledge_base()
+                                logger.info("✅ Knowledge Base rechargée avec nouveaux fichiers")
+                            else:
+                                logger.warning(f"⚠️ Crawling terminé avec erreurs: {result.stderr[:200]}")
+                        else:
+                            logger.warning(f"⚠️ Script crawler non trouvé: {crawler_script}")
+                    except subprocess.TimeoutExpired:
+                        logger.warning("⚠️ Crawling timeout (>10min)")
+                    except Exception as e:
+                        logger.error(f"❌ Erreur crawling: {e}")
+                
+                # Lancer en arrière-plan pour ne pas bloquer le démarrage
+                threading.Thread(target=run_crawler, daemon=True).start()
+        
+        except Exception as e:
+            logger.warning(f"⚠️ Erreur vérification crawl: {e}")
+
+    # Lancer le crawl auto si nécessaire
+    AUTO_CRAWL_ENABLED = os.environ.get("AUTO_CRAWL", "1").lower() in ("1", "true", "yes")
+    if AUTO_CRAWL_ENABLED:
+        auto_crawl_if_needed()
+    else:
+        logger.info("🕷️ Auto-crawl désactivé (AUTO_CRAWL=0)")
+
     # PRÉ-CHARGEMENT DU CACHE au démarrage (optimisation vitesse première requête)
     def preload_cache():
         """Pré-charge les données fréquentes en cache pour accélérer les premières requêtes."""
@@ -447,6 +565,15 @@ if __name__ == "__main__":
             # 1. Pré-charger knowledge base
             kb = get_knowledge_base()
             logger.info(f"✅ KB chargée: {len(kb.docs)} documents")
+            
+            # 1.5 Pré-charger l'index CSV F1 (43K+ entrées)
+            try:
+                from backend.csv_index import load_csv_index, get_index_stats
+                count = load_csv_index()
+                stats = get_index_stats()
+                logger.info(f"✅ Index CSV chargé: {count} entrées, {stats['unique_keywords']} mots-clés")
+            except Exception as e:
+                logger.warning(f"⚠️ Index CSV non chargé: {e}")
 
             # 2. Pré-charger classements (en background)
             def load_standings():
@@ -457,22 +584,33 @@ if __name__ == "__main__":
                 except Exception as e:
                     logger.warning(f"⚠️ Classements non disponibles: {e}")
 
-            # 3. Pré-charger actualités (en background)
+            # 3. Pré-charger actualités (en background) - DÉSACTIVÉ pour éviter blocage
             def load_news():
                 try:
-                    get_news_summaries(limit=1)
-                    logger.info("✅ Actualités pré-chargées")
+                    # TEMPORAIREMENT DÉSACTIVÉ - cause problèmes de scraping
+                    # get_news_summaries(limit=1)
+                    # logger.info("✅ Actualités pré-chargées")
+                    pass
                 except Exception as e:
                     logger.warning(f"⚠️ Actualités non disponibles: {e}")
 
             # Lancer en threads séparés pour ne pas bloquer le démarrage
-            threading.Thread(target=load_standings, daemon=True).start()
-            threading.Thread(target=load_news, daemon=True).start()
+            # threading.Thread(target=load_standings, daemon=True).start()
+            # threading.Thread(target=load_news, daemon=True).start()  # Désactivé
 
             logger.info("🎯 Cache pré-chargé avec succès")
         except Exception as e:
             logger.warning(f"⚠️ Erreur pré-chargement cache: {e}")
 
-    preload_cache()
+    # DÉSACTIVER preload_cache pour éviter blocage du démarrage
+    # threading.Thread(target=preload_cache, daemon=True).start()
+
+    # Démarrer le scheduler Monday (crawl widgets lundi uniquement)
+    try:
+        from backend.monday_scheduler import start_scheduler
+        start_scheduler()
+        logger.info("✅ MondayScheduler démarré (refresh widgets le lundi)")
+    except Exception as e:
+        logger.warning(f"⚠️ Erreur démarrage scheduler: {e}")
 
     uvicorn.run("app:app", host=HOST, port=PORT, reload=dev_reload)

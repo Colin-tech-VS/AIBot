@@ -1,28 +1,8 @@
 /**
- * Chatbot F1 - Frontend Client (Version simplifiée sans authentification)
+ * Chatbot Ollama Local - Frontend Client
  * Communication avec le backend FastAPI
  * Gestion des messages et affichage en temps réel
  */
-
-// Références au DOM
-const chatBox = document.getElementById("chatBox");
-const messageInput = document.getElementById("messageInput");
-const messageForm = document.getElementById("messageForm");
-const mainNavbar = document.getElementById("mainNavbar");
-const navOverlay = document.getElementById("navOverlay");
-
-// État
-let isWaiting = false;
-let isNavbarOpen = false;
-let isNavbarCollapsed = false;
-
-// Conversations store (localStorage uniquement)
-let conversations = [];
-let currentConversationId = null;
-
-function uid() {
-  return Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
-}
 
 /**
  * Supprime toutes les conversations de l'historique
@@ -32,13 +12,49 @@ function clearAllHistory() {
     conversations = [];
     currentConversationId = null;
     saveConversations();
+    renderConversationList();
     renderNavbarHistory();
     chatBox.innerHTML = '';
     const chatContainer = document.getElementById('chatContainer');
     chatContainer.classList.remove('active-chat');
     chatBox.classList.add('hidden');
-    showNotification('Historique supprimé avec succès', 'success');
+    alert('Historique supprimé avec succès');
   }
+}
+
+/**
+ * Toggle la visibilité de la liste d'historique
+ */
+function toggleHistoryList() {
+  const historyList = document.getElementById('navbarHistoryList');
+  if (historyList) {
+    historyList.classList.toggle('hidden');
+  }
+}
+
+// Références au DOM
+const chatBox = document.getElementById("chatBox");
+const messageInput = document.getElementById("messageInput");
+const chatForm = document.getElementById("chatForm");
+const sendBtn = document.getElementById("sendBtn");
+const mainNavbar = document.getElementById("mainNavbar");
+const navOverlay = document.getElementById("navOverlay");
+const historyPanel = document.getElementById("historyPanel");
+const historyOverlay = document.getElementById("historyOverlay");
+const historyContent = document.getElementById("historyContent");
+
+// État
+let isWaiting = false;
+let isNavbarOpen = false;
+let isHistoryOpen = false;
+let isNavbarCollapsed = false;
+
+// Conversations store (frontend only, ChatGPT-like)
+let conversations = [];
+let currentConversationId = null;
+
+function uid() {
+  return Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
 }
 
 function saveConversations() {
@@ -54,8 +70,6 @@ function loadConversationsFromStorage() {
     const raw = localStorage.getItem('conversations');
     if (raw) {
       conversations = JSON.parse(raw);
-    } else {
-      conversations = [];
     }
   } catch (e) {
     console.error('Erreur lecture conversations', e);
@@ -88,6 +102,7 @@ function createConversation(fromHistory) {
   console.log('[createConversation] Created:', {id: conv.id, title: conv.title});
   
   saveConversations();
+  renderConversationList();
   renderNavbarHistory();
   loadConversationIntoChat(conv.id);
   
@@ -111,6 +126,7 @@ function deleteConversation(id, silent = false) {
     else currentConversationId = null;
   }
   saveConversations();
+  renderConversationList();
   renderNavbarHistory();
   if (currentConversationId) loadConversationIntoChat(currentConversationId);
   else chatBox.innerHTML = `<div class="message-info"><p class="muted">Aucune conversation. Créez-en une.</p></div>`;
@@ -119,6 +135,17 @@ function deleteConversation(id, silent = false) {
 function deleteEmptyConversations() {
   const emptyIds = conversations.filter(conv => isConversationEmpty(conv)).map(conv => conv.id);
   emptyIds.forEach(id => deleteConversation(id, true));
+}
+
+function renameConversation(id) {
+  const conv = conversations.find(c=>c.id===id);
+  if (!conv) return;
+  const newTitle = prompt('Nouveau titre', conv.title);
+  if (!newTitle) return;
+  conv.title = newTitle;
+  saveConversations();
+  renderConversationList();
+  renderNavbarHistory();
 }
 
 function addMessageToCurrentConversation(role, content) {
@@ -133,12 +160,14 @@ function addMessageToCurrentConversation(role, content) {
     const isDefaultTitle = conv.title === 'Nouvelle conversation';
     if (isDefaultTitle) {
       conv.title = content.slice(0, 50);
+      setConversationTitle(conv.title);
       renderNavbarHistory();
     }
   }
   
   conv.messages.push({role, content, ts: Date.now()});
   saveConversations();
+  renderConversationList();
 }
 
 function loadConversationIntoChat(id) {
@@ -155,6 +184,7 @@ function loadConversationIntoChat(id) {
   if (!conv) return;
   currentConversationId = id;
   chatBox.innerHTML = '';
+  setConversationTitle(conv.title);
   
   // Gérer le layout basé sur si la conversation a des messages
   const chatContainer = document.getElementById("chatContainer");
@@ -174,6 +204,57 @@ function loadConversationIntoChat(id) {
   });
 }
 
+function setConversationTitle(title) {
+  try {
+    const el = document.getElementById('convTitleText');
+    if (el) el.textContent = title || 'Aucune conversation active';
+  } catch (e) {
+    console.error('Impossible de mettre à jour le titre de conversation', e);
+  }
+}
+
+function renderConversationList() {
+  if (!historyContent) return;
+  historyContent.innerHTML = '';
+  if (!conversations || conversations.length===0) {
+    historyContent.innerHTML = `<p class="text-sm text-[#8A97A8] dark:text-[#6F8197]">Aucune conversation.</p>`;
+    return;
+  }
+  conversations.forEach(conv => {
+    const item = document.createElement('div');
+    item.className = 'p-3 rounded-lg hover:bg-[#FCE8E7] dark:hover:bg-[#1B2F46] cursor-pointer transition flex justify-between items-center group';
+    item.title = conv.title;
+
+    const titleDiv = document.createElement('div');
+    titleDiv.className = 'flex-1 min-w-0';
+    const titleEl = document.createElement('p');
+    titleEl.className = 'text-xs font-medium text-[#0B1C2D] dark:text-[#E6ECF2] truncate';
+    titleEl.textContent = conv.title;
+    titleDiv.appendChild(titleEl);
+
+    const actions = document.createElement('div');
+    actions.className = 'flex gap-1 opacity-0 group-hover:opacity-100 transition';
+
+    const delBtn = document.createElement('button');
+    delBtn.className = 'p-1 rounded hover:bg-[#FCE8E7] dark:hover:bg-[#FF3B30]/20 text-[#E10600] dark:text-[#FF3B30] transition';
+    delBtn.title = 'Supprimer';
+    delBtn.innerHTML = '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>';
+    delBtn.onclick = (e) => { e.stopPropagation(); deleteConversation(conv.id); };
+
+    actions.appendChild(delBtn);
+
+    item.appendChild(titleDiv);
+    item.appendChild(actions);
+
+    item.onclick = () => {
+      loadConversationIntoChat(conv.id);
+      closeHistoryPanel();
+    };
+
+    historyContent.appendChild(item);
+  });
+}
+
 // Remplir l'historique dans la navbar
 function renderNavbarHistory() {
   const navbarHistoryList = document.getElementById('navbarHistoryList');
@@ -181,13 +262,13 @@ function renderNavbarHistory() {
   
   navbarHistoryList.innerHTML = '';
   if (!conversations || conversations.length === 0) {
-    navbarHistoryList.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">Aucune conversation</p>`;
+    navbarHistoryList.innerHTML = `<p class="text-xs text-[#0d0737]/50 dark:text-white/50 text-center py-4">Aucune conversation</p>`;
     return;
   }
   
   conversations.forEach(conv => {
     const item = document.createElement('button');
-    item.className = 'flex items-center gap-2 w-full p-2 rounded hover:bg-red-800 dark:hover:bg-red-900 transition text-left text-white text-sm group';
+    item.className = 'flex items-center gap-2 w-full p-2 rounded hover:bg-[#FCE8E7] dark:hover:bg-[#1B2F46] transition text-left text-[#0B1C2D] dark:text-[#E6ECF2] text-xs group';
     item.title = conv.title;
     
     const icon = document.createElement('svg');
@@ -206,7 +287,7 @@ function renderNavbarHistory() {
     
     // Bouton supprimer au hover
     const delBtn = document.createElement('button');
-    delBtn.className = 'p-1 rounded hover:bg-red-700 text-white opacity-0 group-hover:opacity-100 transition flex-shrink-0';
+    delBtn.className = 'p-1 rounded hover:bg-[#FCE8E7] dark:hover:bg-[#FF3B30]/20 text-[#E10600] dark:text-[#FF3B30] opacity-0 group-hover:opacity-100 transition flex-shrink-0';
     delBtn.title = 'Supprimer';
     delBtn.innerHTML = '<svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>';
     delBtn.onclick = (e) => { e.stopPropagation(); deleteConversation(conv.id); };
@@ -251,10 +332,7 @@ async function sendMessage(event) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ 
-        message: message,
-        conversation_id: currentConversationId || "default"
-      }),
+      body: JSON.stringify({ message: message }),
     });
 
     if (!response.ok) {
@@ -266,8 +344,7 @@ async function sendMessage(event) {
 
     removeMessage(loaderId);
 
-    // Afficher avec effet typing
-    displayMessage(data.bot_response, "bot", {save: true, typing: true, sources: data.sources || []});
+    displayBotMessageWithTyping(data.bot_response);
   } catch (error) {
     removeMessage(loaderId);
 
@@ -284,7 +361,8 @@ async function sendMessage(event) {
 }
 
 /**
- * Formate le texte en markdown simple (gras, italique, liens)
+ * Affiche un message dans la zone de chat
+ * Support du markdown et emojis (liens cliquables)
  */
 function formatMarkdown(text) {
   return text
@@ -294,85 +372,66 @@ function formatMarkdown(text) {
     .replace(/\n/g, "<br>");
 }
 
-/**
- * Affiche un message dans la zone de chat avec effet typing pour le bot
- * Support du markdown et emojis (liens cliquables)
- */
-function displayMessage(text, role = "user", opts = {save: true, typing: false, sources: []}) {
+function displayMessage(text, role = "user", opts = {save: true}) {
   const messageDiv = document.createElement("div");
-  messageDiv.className = `flex ${role === "user" ? "justify-end" : "justify-start"} flex-col`;
+  messageDiv.className = `flex ${role === "user" ? "justify-end" : "justify-start"} mb-2`;
 
   const bubble = document.createElement("div");
-  bubble.className = `message-bubble ${role === "user" ? "user-message" : "bot-message"}`;
-
-  // Si c'est un message bot avec effet typing activé
-  if (role === "bot" && opts.typing && text.length > 0) {
-    bubble.innerHTML = "";
-    messageDiv.appendChild(bubble);
-
-    // Ajouter sources si présentes
-    if (opts.sources && opts.sources.length > 0) {
-      const sourcesDiv = createSourcesDisplay(opts.sources);
-      messageDiv.appendChild(sourcesDiv);
-    }
-
-    chatBox.appendChild(messageDiv);
-
-    // Effet typing progressif
-    let currentIndex = 0;
-    const typingSpeed = 15; // ms par caractère (ajustable)
-
-    const typeNextChar = () => {
-      if (currentIndex < text.length) {
-        currentIndex++;
-        const partialText = text.substring(0, currentIndex);
-        bubble.innerHTML = formatMarkdown(partialText);
-        chatBox.scrollTop = chatBox.scrollHeight;
-
-        setTimeout(typeNextChar, typingSpeed);
-      } else {
-        // Animation terminée, enregistrer dans l'historique si nécessaire
-        if (opts.save) {
-          addMessageToCurrentConversation(role, text);
-        }
-      }
-    };
-
-    typeNextChar();
+  const baseClass = `max-w-xs lg:max-w-md xl:max-w-lg px-4 py-2 rounded-lg text-sm`;
+  
+  if (role === "user") {
+    bubble.className = `${baseClass} text-white rounded-br-none user-message-bubble`;
+    const isDarkMode = document.documentElement.classList.contains("dark");
+    bubble.style.backgroundColor = isDarkMode ? "#9b473e" : "#0d0737";
   } else {
-    // Affichage normal sans typing
-    bubble.innerHTML = formatMarkdown(text);
-    messageDiv.appendChild(bubble);
-
-    // Ajouter sources si présentes
-    if (role === "bot" && opts.sources && opts.sources.length > 0) {
-      const sourcesDiv = createSourcesDisplay(opts.sources);
-      messageDiv.appendChild(sourcesDiv);
-    }
-
-    chatBox.appendChild(messageDiv);
-    chatBox.scrollTop = chatBox.scrollHeight;
-
-    if (opts.save) {
-      addMessageToCurrentConversation(role, text);
-    }
+    const roleClass = "bg-[#EEF1F5] dark:bg-[#13263B] text-[#0B1C2D] dark:text-[#E6ECF2] rounded-bl-none";
+    bubble.className = `${baseClass} ${roleClass}`;
   }
+  
+  bubble.innerHTML = formatMarkdown(text);
+
+  messageDiv.appendChild(bubble);
+  chatBox.appendChild(messageDiv);
+
+  chatBox.scrollTop = chatBox.scrollHeight;
+
+  if (opts.save !== false) addMessageToCurrentConversation(role, text);
+
+  return messageDiv;
 }
 
 /**
- * Crée un élément d'affichage des sources
+ * Affiche un message bot avec effet "machine à écrire"
  */
-function createSourcesDisplay(sources) {
-  const sourcesDiv = document.createElement("div");
-  sourcesDiv.className = "mt-2 text-xs text-gray-400 italic";
-  sourcesDiv.style.maxWidth = "85%";
+function displayBotMessageWithTyping(text, opts = {save: true}) {
+  const messageDiv = document.createElement("div");
+  messageDiv.className = "flex justify-start mb-2";
 
-  const sourcesList = sources.map((source) => {
-    return `<span class="inline-block mr-2 mb-1 px-2 py-1 bg-red-950/20 border border-red-900/30 rounded text-gray-300">📌 ${source}</span>`;
-  }).join("");
+  const bubble = document.createElement("div");
+  const baseClass = `max-w-xs lg:max-w-md xl:max-w-lg px-4 py-2 rounded-lg text-sm`;
+  const roleClass = "bg-[#EEF1F5] dark:bg-[#13263B] text-[#0B1C2D] dark:text-[#E6ECF2] rounded-bl-none";
+  bubble.className = `${baseClass} ${roleClass}`;
+  bubble.textContent = "";
 
-  sourcesDiv.innerHTML = `<div class="flex flex-wrap gap-1">${sourcesList}</div>`;
-  return sourcesDiv;
+  messageDiv.appendChild(bubble);
+  chatBox.appendChild(messageDiv);
+  chatBox.scrollTop = chatBox.scrollHeight;
+
+  let idx = 0;
+  const total = text.length;
+  const typingInterval = setInterval(() => {
+    if (idx >= total) {
+      clearInterval(typingInterval);
+      bubble.innerHTML = formatMarkdown(text);
+      if (opts.save !== false) addMessageToCurrentConversation("bot", text);
+      return;
+    }
+    bubble.textContent += text[idx];
+    idx += 1;
+    chatBox.scrollTop = chatBox.scrollHeight;
+  }, 12);
+
+  return messageDiv;
 }
 
 /**
@@ -383,21 +442,25 @@ function displayLoader() {
   loadingDiv.className = "flex justify-start";
 
   const bubble = document.createElement("div");
-  bubble.innerHTML = `
-    <div class="typing-indicator">
-      <div class="typing-dot"></div>
-      <div class="typing-dot"></div>
-      <div class="typing-dot"></div>
-      <div class="typing-dot"></div>
-      <div class="typing-dot"></div>
-    </div>
-  `;
+  bubble.className = "px-4 py-2 rounded-lg bg-[#EEF1F5] dark:bg-[#13263B] rounded-bl-none";
+  const dots = document.createElement("span");
+  dots.textContent = "●";
+  dots.style.display = "inline-block";
+  bubble.appendChild(dots);
 
   loadingDiv.appendChild(bubble);
   chatBox.appendChild(loadingDiv);
 
   chatBox.scrollTop = chatBox.scrollHeight;
 
+  const frames = ["●  ", "●● ", "●●●", " ●●", "  ●", "   "];
+  let idx = 0;
+  const timer = setInterval(() => {
+    dots.textContent = frames[idx % frames.length];
+    idx += 1;
+  }, 220);
+
+  loadingDiv._loaderTimer = timer;
   return loadingDiv;
 }
 
@@ -406,31 +469,135 @@ function displayLoader() {
  */
 function removeMessage(messageElement) {
   if (messageElement && messageElement.parentNode) {
+    if (messageElement._loaderTimer) {
+      clearInterval(messageElement._loaderTimer);
+    }
     messageElement.remove();
   }
 }
 
 /**
+ * Efface la conversation courante et réinitialise l'UI
+ * FIX: Utilise une vraie variable pour le confirm() au lieu de !confirm()
+ */
+function clearChat() {
+  console.log('[clearChat] Demande de confirmation...');
+  
+  const userConfirmed = confirm("Êtes-vous sûr de vouloir effacer cette conversation ?");
+  console.log('[clearChat] Utilisateur a confirmé ?', userConfirmed);
+  
+  if (!userConfirmed) {
+    console.log('[clearChat] ❌ ANNULÉ PAR UTILISATEUR - RIEN NE SERA SUPPRIMÉ');
+    return; // RETOUR IMMÉDIAT si l'utilisateur clique Cancel
+  }
+
+  console.log('[clearChat] ✅ Utilisateur a confirmé, suppression en cours...');
+  doDeleteConversation(); // Appel asynchrone mais non bloquant
+}
+
+function doDeleteConversation() {
+  // Utiliser un IIFE async pour ne pas bloquer clearChat()
+  (async () => {
+    try {
+      const response = await fetch("/clear_history", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Erreur lors de l'effacement");
+      }
+
+      console.log('[doDeleteConversation] Backend a confirmé la suppression');
+
+      // Supprimer la conversation courante du localStorage
+      if (currentConversationId) {
+        const idx = conversations.findIndex(c => c.id === currentConversationId);
+        if (idx !== -1) {
+          conversations.splice(idx, 1);
+          console.log('[doDeleteConversation] Conversation supprimée de localStorage');
+          
+          if (conversations.length > 0) {
+            currentConversationId = conversations[0].id;
+            loadConversationIntoChat(currentConversationId);
+          } else {
+            currentConversationId = null;
+            chatBox.innerHTML = `<div class="message-info"><p class="muted">Aucune conversation. Créez-en une.</p></div>`;
+            setConversationTitle('Aucune conversation active');
+          }
+          
+          saveConversations();
+          renderConversationList();
+        }
+      }
+
+      messageInput.focus();
+      console.log('[doDeleteConversation] ✅ DONE');
+    } catch (error) {
+      alert(`Erreur: ${error.message}`);
+      console.error("[doDeleteConversation] Erreur:", error);
+    }
+  })();
+}
+
+/**
  * Initialisation au chargement de la page
  */
+
+async function fetchNextRaceCountdown() {
+  const countdownEl = document.getElementById("widget-countdown");
+  const nameEl = document.getElementById("widget-gp-name");
+  if (!countdownEl || !nameEl) return;
+  try {
+    const res = await fetch("/next_race_countdown");
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    const data = await res.json();
+    countdownEl.textContent = data.countdown || "—";
+    const name = data.race_name ? `${data.race_name} — ${data.location}` : "—";
+    nameEl.textContent = name;
+  } catch (err) {
+    console.error("[widget] next race", err);
+    countdownEl.textContent = "—";
+    nameEl.textContent = "—";
+  }
+}
+
+async function fetchTop3Drivers() {
+  const container = document.getElementById("widget-top-drivers");
+  if (!container) return;
+  try {
+    const res = await fetch("/top_drivers");
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    const data = await res.json();
+    const drivers = (data.drivers || []).slice(0, 3);
+    if (!drivers.length) throw new Error("No drivers");
+    container.innerHTML = drivers
+      .map((d, idx) => `<div class="flex items-center gap-2"><span class="text-[11px] font-semibold text-[#6B7280] dark:text-[#AAB1BA]">${idx+1}.</span><span class="text-xs text-[#2a3441] dark:text-[#ddd] font-medium">${d.name}</span><span class="text-[11px] text-[#6B7280] dark:text-[#AAB1BA]">${d.points} pts</span></div>`)
+      .join("");
+  } catch (err) {
+    console.error("[widget] top drivers", err);
+    container.innerHTML = `<div class="text-[#6c757d] dark:text-[#777]">—</div>`;
+  }
+}
 document.addEventListener("DOMContentLoaded", () => {
+  try {
+    console.log('Frontend: history UI initialized', {historyPanel: !!historyPanel, historyContent: !!historyContent});
+  } catch (e) {
+    console.error('Erreur initialisation UI:', e);
+  }
+
   loadConversationsFromStorage();
   
   // Nettoyer les conversations vides au démarrage
   deleteEmptyConversations();
   
-  // Initialiser le dark mode
-  initDarkMode();
+  // Always create a new conversation on page load
+  createConversation();
+  renderConversationList();
+  renderNavbarHistory();
   
-  // Charger le compte à rebours du prochain GP
-  fetchNextRaceCountdown();
-  
-  if (!conversations || conversations.length === 0) {
-    createConversation();
-  } else {
-    renderNavbarHistory();
-    if (conversations.length>0) loadConversationIntoChat(conversations[0].id);
-  }
   messageInput.focus();
 
   messageInput.addEventListener("keydown", (e) => {
@@ -440,57 +607,186 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
   
+  const closeBtn = document.getElementById("closeHistoryBtn");
+  const newConvBtn = document.getElementById("newConversationBtn");
+  
+  console.log('[DOMContentLoaded] Binding buttons:', {
+    closeBtn: !!closeBtn,
+    newConvBtn: !!newConvBtn
+  });
+  
+  if (closeBtn) {
+    closeBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      console.log('[closeBtn] clicked');
+      closeHistoryPanel();
+    });
+  }
+  
+  if (newConvBtn) {
+    newConvBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      console.log('[newConvBtn in panel] clicked');
+      createConversation();
+      closeHistoryPanel();
+    });
+  }
+
+  // Initialiser le dark mode et les infos utilisateur
+  initDarkMode();
+  initUserInfo();
+  
   // Initialiser l'état de collapse de la navbar
   const savedNavbarCollapsed = localStorage.getItem('navbarCollapsed') === 'true';
   if (savedNavbarCollapsed && window.innerWidth >= 1024) {
     mainNavbar.classList.add("collapsed");
     isNavbarCollapsed = true;
   }
+  
+    // Widgets
+    fetchNextRaceCountdown();
+    fetchTop3Drivers();
+  
+  /**
+   * Charger les données du widget Prochain GP
+   */
+  async function fetchNextRaceCountdown() {
+    try {
+      const response = await fetch('/next_race_countdown');
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      const data = await response.json();
+      
+      // Mettre à jour les éléments du widget
+      const countdownEl = document.getElementById('widget-countdown');
+      const gpNameEl = document.getElementById('widget-gp-name');
+      
+      if (countdownEl) {
+        countdownEl.textContent = data.countdown || '—';
+      }
+      if (gpNameEl) {
+        gpNameEl.innerHTML = `<strong>${data.race_name || '—'}</strong><br><small>${data.location || '—'}</small>`;
+      }
+      
+      console.log('[fetchNextRaceCountdown] Widgets updated:', {countdown: data.countdown, race: data.race_name});
+    } catch (error) {
+      console.error('[fetchNextRaceCountdown] Error:', error);
+      const countdownEl = document.getElementById('widget-countdown');
+      if (countdownEl) countdownEl.textContent = 'Erreur ⚠️';
+    }
+  }
+
+  /**
+   * Charger les données du widget Top 3 Drivers
+   */
+  async function fetchTop3Drivers() {
+    try {
+      const response = await fetch('/top_drivers?top_n=3');
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      const data = await response.json();
+      
+      const driversEl = document.getElementById('widget-top-drivers');
+      if (driversEl && data.drivers && data.drivers.length > 0) {
+        driversEl.innerHTML = data.drivers.map((driver, idx) => {
+          const medal = ['🥇', '🥈', '🥉'][idx] || '•';
+          return `<div class="flex items-center justify-between gap-1">
+            <span>${medal} ${driver.name}</span>
+            <strong>${driver.points}pts</strong>
+          </div>`;
+        }).join('');
+      } else {
+        driversEl.innerHTML = '<div class="text-[#6c757d] dark:text-[#777]">—</div>';
+      }
+      
+      console.log('[fetchTop3Drivers] Widget updated:', {count: data.drivers?.length || 0});
+    } catch (error) {
+      console.error('[fetchTop3Drivers] Error:', error);
+      const driversEl = document.getElementById('widget-top-drivers');
+      if (driversEl) driversEl.innerHTML = '<div class="text-red-500">Erreur ⚠️</div>';
+    }
+  }
 });
 
-messageForm.addEventListener("submit", sendMessage);
+chatForm.addEventListener("submit", sendMessage);
 
-// Fonctions de gestion de la navbar collapsible
+// Fonctions de gestion de la navbar
 function toggleNavbar() {
-  // Sur mobile : open/close
-  // Sur desktop : collapse/expand
-  if (window.innerWidth < 1024) {
-    // Mobile
-    isNavbarOpen = !isNavbarOpen;
-    if (isNavbarOpen) {
-      mainNavbar.classList.remove("-translate-x-full");
-      navOverlay.classList.remove("hidden");
-    } else {
-      mainNavbar.classList.add("-translate-x-full");
-      navOverlay.classList.add("hidden");
-    }
-  } else {
-    // Desktop
-    toggleNavbarCollapsed();
-  }
-}
-
-function toggleNavbarCollapsed() {
-  isNavbarCollapsed = !isNavbarCollapsed;
-  localStorage.setItem('navbarCollapsed', isNavbarCollapsed);
-  
-  if (isNavbarCollapsed) {
-    mainNavbar.classList.add("collapsed");
-  } else {
-    mainNavbar.classList.remove("collapsed");
-  }
+  mainNavbar.classList.toggle("navbar-collapsed");
 }
 
 function closeNavbar() {
-  if (isNavbarOpen) {
-    isNavbarOpen = false;
-    mainNavbar.classList.add("-translate-x-full");
-    navOverlay.classList.add("hidden");
+  mainNavbar.classList.add("navbar-collapsed");
+}
+
+function toggleHistoryPanel() {
+  isHistoryOpen = !isHistoryOpen;
+  if (isHistoryOpen) {
+    openHistoryPanel();
+  } else {
+    closeHistoryPanel();
   }
 }
 
 /**
- * Ouvre le panneau profil utilisateur (paramètres)
+ * Ouvre le panneau d'historique (affiche la liste des conversations)
+ */
+async function openHistoryPanel() {
+  if (!historyPanel) return;
+  historyPanel.classList.remove("hidden");
+  historyPanel.classList.remove("translate-x-full");
+  historyPanel.setAttribute("aria-hidden", "false");
+  historyOverlay.classList.remove("hidden");
+  renderConversationList();
+}
+
+/**
+ * Ferme le panneau d'historique
+ */
+function closeHistoryPanel() {
+  if (!historyPanel) return;
+  isHistoryOpen = false;
+  historyPanel.classList.add("translate-x-full");
+  historyPanel.setAttribute("aria-hidden", "true");
+  historyOverlay.classList.add("hidden");
+}
+
+/**
+ * Remplit le panneau avec les items d'historique (legacy function, not used currently)
+ */
+function renderHistoryItems(items) {
+  if (!historyContent) return;
+  if (!items || items.length === 0) {
+    historyContent.innerHTML = `<p class="muted">Aucun historique trouvé.</p>`;
+    return;
+  }
+
+  historyContent.innerHTML = '';
+  items.forEach((it, idx) => {
+    const el = document.createElement('div');
+    el.className = 'history-item';
+
+    const meta = document.createElement('div');
+    meta.className = 'meta';
+    meta.textContent = `${idx + 1} • ${it.role === 'user' ? 'Utilisateur' : 'Assistant'}`;
+
+    const content = document.createElement('div');
+    content.className = 'content';
+    let html = it.content
+      .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" style="color: #3b82f6; text-decoration: underline; font-weight: 600;">$1</a>')
+      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\*(.+?)\*/g, '<em>$1</em>')
+      .replace(/\n/g, '<br>');
+
+    content.innerHTML = html;
+
+    el.appendChild(meta);
+    el.appendChild(content);
+
+    historyContent.appendChild(el);
+  });
+}
+
+/**
+ * Ouvre le panneau profil utilisateur
  */
 function openUserProfile() {
   const userProfilePanel = document.getElementById("userProfilePanel");
@@ -514,34 +810,39 @@ function closeUserProfile() {
 }
 
 /**
- * Affiche une notification toast
+ * Gère la connexion utilisateur
  */
-function showNotification(message, type = 'info') {
-  let container = document.querySelector('.toast-container');
-  if (!container) {
-    container = document.createElement('div');
-    container.className = 'toast-container';
-    document.body.appendChild(container);
+function handleLogin() {
+  const username = prompt("Entrez votre nom d'utilisateur :");
+  if (username && username.trim()) {
+    localStorage.setItem("username", username.trim());
+    updateUserInfo(username.trim());
   }
+}
 
-  const toast = document.createElement('div');
-  toast.className = `toast ${type}`;
-  
-  let icon = 'ℹ️';
-  if (type === 'success') icon = '✅';
-  if (type === 'error') icon = '❌';
+/**
+ * Met à jour l'affichage des infos utilisateur
+ */
+function updateUserInfo(username) {
+  const userInfo = document.getElementById("userInfo");
+  if (!userInfo) return;
+  userInfo.innerHTML = `
+    <p class="text-sm">Connecté en tant que <strong>${username}</strong></p>
+    <button class="w-full px-4 py-2 rounded-lg bg-[#E10600] hover:bg-[#FF3B30] text-white transition text-sm font-medium" onclick="handleLogout()">Se déconnecter</button>
+  `;
+}
 
-  toast.innerHTML = `<span>${icon}</span><span>${message}</span>`;
-  container.appendChild(toast);
-
-  // Auto-remove after 3 seconds
-  setTimeout(() => {
-    toast.classList.add('fade-out');
-    setTimeout(() => {
-      toast.remove();
-      if (container.childNodes.length === 0) container.remove();
-    }, 300);
-  }, 3000);
+/**
+ * Gère la déconnexion utilisateur
+ */
+function handleLogout() {
+  localStorage.removeItem("username");
+  const userInfo = document.getElementById("userInfo");
+  if (!userInfo) return;
+  userInfo.innerHTML = `
+    <p class="text-sm text-[#8A97A8] dark:text-[#6F8197]">Non connecté</p>
+    <button class="w-full px-4 py-2 rounded-lg bg-[#E10600] hover:bg-[#FF3B30] text-white transition text-sm font-medium mt-2" onclick="handleLogin()">Se connecter</button>
+  `;
 }
 
 /**
@@ -550,14 +851,25 @@ function showNotification(message, type = 'info') {
 function toggleDarkMode() {
   const isDarkMode = document.documentElement.classList.toggle("dark");
   localStorage.setItem("darkMode", isDarkMode);
+  
+  // Mettre à jour la couleur de tous les messages utilisateurs existants
+  const userBubbles = document.querySelectorAll('.user-message-bubble');
+  userBubbles.forEach(bubble => {
+    bubble.style.backgroundColor = isDarkMode ? "#9b473e" : "#0d0737";
+  });
 }
 
 /**
  * Initialise le dark mode au chargement
  */
 function initDarkMode() {
-  const isDarkMode = localStorage.getItem("darkMode") === "true";
+  const savedDarkMode = localStorage.getItem("darkMode");
+  const isDarkMode = savedDarkMode !== null ? savedDarkMode === "true" : true; // Dark mode activé par défaut
   const darkModeToggle = document.getElementById("darkModeToggle");
+  
+  // Toujours sauvegarder l'état pour synchroniser le localStorage
+  localStorage.setItem("darkMode", isDarkMode);
+  
   if (isDarkMode) {
     document.documentElement.classList.add("dark");
   } else {
@@ -569,155 +881,30 @@ function initDarkMode() {
 }
 
 /**
- * Affiche une notification toast (legacy function - compatibility)
+ * Initialise les infos utilisateur au chargement
  */
-function showToast(message, isSuccess = true) {
-  showNotification(message, isSuccess ? 'success' : 'error');
+function initUserInfo() {
+  const username = localStorage.getItem("username");
+  if (username) {
+    updateUserInfo(username);
+  }
 }
 
 /**
- * Récupère et affiche le compte à rebours du prochain GP
+ * Initialise la navbar
  */
-async function fetchNextRaceCountdown() {
-  try {
-    const response = await fetch('/next_race_countdown');
-    const data = await response.json();
-
-    const countdownText = document.getElementById('countdownText');
-    const raceNameText = document.getElementById('raceNameText');
-
-    if (data && data.countdown && data.countdown.trim()) {
-      countdownText.textContent = data.countdown;
-      countdownText.classList.remove('text-gray-400');
-      countdownText.classList.add('text-gray-300');
-
-      // Nom de la course + circuit si disponible
-      let raceInfo = '';
-      if (data.race_name) {
-        raceInfo = `📍 ${data.race_name}`;
-        if (data.circuit) {
-          raceInfo += ` - ${data.circuit}`;
-        }
-      }
-
-      // Ajouter la source en petit en dessous
-      if (data.source) {
-        raceInfo += `\n<span class="text-xs text-gray-500">Source: ${data.source}</span>`;
-      }
-
-      raceNameText.innerHTML = raceInfo;
-    } else {
-      // Fallback si aucune donnée
-      countdownText.textContent = 'Prochainement...';
-      raceNameText.innerHTML = '';
-    }
-  } catch (error) {
-    console.error('Erreur récupération countdown:', error);
-    const countdownText = document.getElementById('countdownText');
-    const raceNameText = document.getElementById('raceNameText');
-    if (countdownText) {
-      countdownText.textContent = 'Informations bientôt disponibles';
-      raceNameText.innerHTML = '';
-    }
-  }
+function initNavbar() {
+  // Navbar visible par défaut (non collapsed)
+  mainNavbar.classList.remove("navbar-collapsed");
 }
 
-// Rafraîchir le compte à rebours toutes les 5 minutes
-setInterval(fetchNextRaceCountdown, 5 * 60 * 1000);
+// ===== WIDGETS F1 =====
 
-/**
- * Animation de particules F1 en arrière-plan
- */
-function initF1Particles() {
-  const canvas = document.createElement('canvas');
-  canvas.style.position = 'fixed';
-  canvas.style.top = '0';
-  canvas.style.left = '0';
-  canvas.style.width = '100%';
-  canvas.style.height = '100%';
-  canvas.style.pointerEvents = 'none';
-  canvas.style.zIndex = '0';
-  canvas.style.opacity = '0.4';
-  document.body.insertBefore(canvas, document.body.firstChild);
-
-  const ctx = canvas.getContext('2d');
-  let particles = [];
-  let animationId;
-
-  function resizeCanvas() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-  }
-
-  class Particle {
-    constructor() {
-      this.reset();
-    }
-
-    reset() {
-      this.x = Math.random() * canvas.width;
-      this.y = Math.random() * canvas.height;
-      this.vx = -2 - Math.random() * 3; // Vitesse horizontale (vers la gauche)
-      this.vy = (Math.random() - 0.5) * 0.5; // Légère dérive verticale
-      this.size = Math.random() * 2 + 1;
-      this.opacity = Math.random() * 0.5 + 0.2;
-      this.life = 1;
-    }
-
-    update() {
-      this.x += this.vx;
-      this.y += this.vy;
-      this.life -= 0.005;
-
-      // Réinitialiser si hors écran ou vie écoulée
-      if (this.x < -50 || this.life <= 0) {
-        this.x = canvas.width + 50;
-        this.y = Math.random() * canvas.height;
-        this.life = 1;
-      }
-    }
-
-    draw() {
-      ctx.fillStyle = `rgba(220, 38, 38, ${this.opacity * this.life})`;
-      ctx.fillRect(this.x, this.y, this.size * 15, this.size);
-    }
-  }
-
-  function init() {
-    resizeCanvas();
-    particles = [];
-    for (let i = 0; i < 30; i++) {
-      particles.push(new Particle());
-    }
-  }
-
-  function animate() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    particles.forEach(particle => {
-      particle.update();
-      particle.draw();
-    });
-
-    animationId = requestAnimationFrame(animate);
-  }
-
-  window.addEventListener('resize', resizeCanvas);
-
-  init();
-  animate();
-
-  // Cleanup function
-  return () => {
-    cancelAnimationFrame(animationId);
-    window.removeEventListener('resize', resizeCanvas);
-    canvas.remove();
-  };
-}
-
-// Initialiser les particules F1 au chargement
-document.addEventListener('DOMContentLoaded', () => {
-  setTimeout(() => {
-    initF1Particles();
-  }, 500);
+// Initialisation
+document.addEventListener("DOMContentLoaded", () => {
+  initNavbar();
+  initDarkMode();
+  initUserInfo();
+  renderConversationList();
+  renderNavbarHistory();
 });
