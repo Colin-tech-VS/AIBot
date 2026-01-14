@@ -654,3 +654,51 @@
 [2026-01-14 20:28:27] [WARNING] [backend.f1_bot:949] Ollama HTTP API failed: ReadTimeout, trying subprocess fallback
 [2026-01-14 20:28:42] [ERROR] [backend.f1_bot:976] Ollama subprocess timeout
 [2026-01-14 20:28:49] [WARNING] [backend.f1_bot:944] Ollama response too short (4 chars): RIEN
+[2026-01-14 20:41:49] [WARNING] [__main__:460] Port 8001 indisponible. Bascule sur 8002.
+[2026-01-14 20:41:49] [INFO] [__main__:468] auto_train désactivé (AUTO_TRAIN=0).
+[2026-01-14 20:41:49] [INFO] [__main__:497] 🕷️ Aucun crawl précédent détecté, lancement du crawling...
+[2026-01-14 20:41:49] [WARNING] [__main__:543] ⚠️ Script crawler non trouvé: C:\Users\cococ\Desktop\IA\scripts\crawler_f1.py
+[2026-01-14 20:41:49] [INFO] [__main__:614] ✅ MondayScheduler démarré (refresh widgets le lundi)
+[2026-01-14 20:42:14] [INFO] [app:166] Input sanitized: safe=True, length=79
+[2026-01-14 20:42:14] [INFO] [backend.f1_bot:1218] Question reçue: Bonjour, peux tu me dire qui est Lewis Hamilton et son historique depuis 2000 ?
+[2026-01-14 20:42:14] [INFO] [backend.f1_bot:1226] Contexte long terme récupéré
+[2026-01-14 20:42:30] [WARNING] [backend.f1_bot:949] Ollama HTTP API failed: ReadTimeout, trying subprocess fallback
+[2026-01-14 20:42:45] [ERROR] [backend.f1_bot:976] Ollama subprocess timeout
+[2026-01-14 20:42:51] [INFO] [backend.f1_bot:1156] Apprentissage (texte) : {"facts": [], "preferences": null}
+[2026-01-14 20:43:20] [INFO] [app:166] Input sanitized: safe=True, length=73
+[2026-01-14 20:43:20] [INFO] [backend.f1_bot:1218] Question reçue: je veux savoir qui est Hamilton et ce qu'il a fait depuis les années 2000
+[2026-01-14 20:43:20] [INFO] [backend.f1_bot:1226] Contexte long terme récupéré
+[2026-01-14 20:43:20] [INFO] [backend.f1_bot:1297] F1? True, Générale? False, Circuit? False
+[2026-01-14 20:43:20] [INFO] [backend.f1_bot:1352] Pipeline F1 optimisé
+[2026-01-14 20:43:20] [INFO] [backend.f1_bot:1368] ✅ KB PRIORITAIRE: 15 chunks utilisés (score ≥0.35)
+[2026-01-14 20:43:31] [INFO] [backend.f1_bot:1430] ✅ MEMORY: Contexte long terme récupéré (1325 chars)
+[2026-01-14 20:43:46] [WARNING] [backend.f1_bot:949] Ollama HTTP API failed: ReadTimeout, trying subprocess fallback
+[2026-01-14 20:44:01] [ERROR] [backend.f1_bot:976] Ollama subprocess timeout
+[2026-01-14 20:44:07] [INFO] [backend.f1_bot:1151] Apprentissage réussi : 0 faits, 0 prefs
+[2026-01-14 20:46:17] [WARNING] [__main__:460] Port 8001 indisponible. Bascule sur 8002.
+[2026-01-14 20:46:17] [INFO] [__main__:468] auto_train désactivé (AUTO_TRAIN=0).
+[2026-01-14 20:46:17] [INFO] [__main__:497] 🕷️ Aucun crawl précédent détecté, lancement du crawling...
+[2026-01-14 20:46:17] [INFO] [__main__:529] 🕷️ Crawling en arrière-plan...
+[2026-01-14 20:46:17] [INFO] [__main__:614] ✅ MondayScheduler démarré (refresh widgets le lundi)
+[2026-01-14 20:46:22] [ERROR] [__main__:547] ❌ Erreur crawling: 'NoneType' object is not subscriptable
+[2026-01-14 20:49:35] [WARNING] [__main__:460] Port 8001 indisponible. Bascule sur 8002.
+[2026-01-14 20:49:35] [INFO] [__main__:468] auto_train désactivé (AUTO_TRAIN=0).
+[2026-01-14 20:49:35] [INFO] [__main__:497] 🕷️ Aucun crawl précédent détecté, lancement du crawling...
+[2026-01-14 20:49:35] [INFO] [__main__:529] 🕷️ Crawling en arrière-plan...
+[2026-01-14 20:49:35] [INFO] [__main__:615] ✅ MondayScheduler démarré (refresh widgets le lundi)
+[2026-01-14 20:49:38] [WARNING] [__main__:542] ⚠️ Crawling terminé avec erreurs: [2026-01-14 20:49:36,259] [INFO] [__main__] 🕷️ Aucun crawl précédent détecté, lancement du crawling...
+[2026-01-14 20:49:36,259] [INFO] [__main__] 🕷️ Scraping motorsport.com...
+[2026-01-14 20:49:37,02
+[2026-01-14 20:50:16] [INFO] [app:165] Input sanitized: safe=True, length=52
+[2026-01-14 20:50:16] [INFO] [backend.f1_bot:1217] Question reçue: Hello, tu peux me donner les actus F1 en ce moment ?
+[2026-01-14 20:50:16] [INFO] [backend.f1_bot:1225] Contexte long terme récupéré
+[2026-01-14 20:50:16] [INFO] [backend.f1_bot:1296] F1? True, Générale? False, Circuit? False
+[2026-01-14 20:50:16] [INFO] [backend.f1_bot:1351] Pipeline F1 optimisé
+[2026-01-14 20:50:16] [INFO] [backend.knowledge_base:126] Chargement modèle embeddings: sentence-transformers/all-MiniLM-L6-v2...
+[2026-01-14 20:50:21] [INFO] [backend.knowledge_base:138] FAISS index initialisé (vide)
+[2026-01-14 20:53:26] [INFO] [backend.knowledge_base:425] Knowledge Base chargée: 2233 documents, 7983 chunks indexés.
+[2026-01-14 20:53:26] [INFO] [backend.f1_bot:1367] ✅ KB PRIORITAIRE: 15 chunks utilisés (score ≥0.35)
+[2026-01-14 20:53:26] [INFO] [backend.f1_bot:1429] ✅ MEMORY: Contexte long terme récupéré (1405 chars)
+[2026-01-14 20:53:42] [WARNING] [backend.f1_bot:948] Ollama HTTP API failed: ReadTimeout, trying subprocess fallback
+[2026-01-14 20:53:57] [ERROR] [backend.f1_bot:975] Ollama subprocess timeout
+[2026-01-14 20:54:03] [INFO] [backend.f1_bot:1150] Apprentissage réussi : 0 faits, 0 prefs

@@ -83,7 +83,7 @@ def scrape_source(source_name: str, source_config: dict) -> list[dict]:
                 title_text = title_elem.get_text(strip=True)
                 
                 # Chercher le lien (soit dans title_elem soit parent)
-                link_elem = title_elem.find("a") or title_elem.parent.find("a")
+                link_elem = title_elem.find("a") or (title_elem.parent.find("a") if title_elem.parent else None)
                 link = link_elem.get("href", "") if link_elem else ""
                 
                 if link and not link.startswith("http"):

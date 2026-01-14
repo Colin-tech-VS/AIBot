@@ -49,7 +49,7 @@ OLLAMA_PATHS = [
     "ollama",
 ]
 OLLAMA_MODEL = "qwen2.5:3b"  # Qwen 2.5 3B - Rapide et performant
-OLLAMA_TIMEOUT = 15  # DRASTIQUE réduit de 30s→15s pour réponse ultra-rapide
+OLLAMA_TIMEOUT = 10  # DRASTIQUE réduit de 15s→10s pour réponse ultra-rapide
 OLLAMA_URL = os.getenv("OLLAMA_URL", "http://127.0.0.1:11434/api/generate")
 
 # Mode RAG strict : pas de scraping web général
@@ -217,7 +217,7 @@ HEADERS = get_random_headers()  # Headers par défaut
 http_client = httpx.Client(
     headers=get_random_headers(),  # Headers rotatifs
     follow_redirects=True,
-    timeout=httpx.Timeout(3.0, connect=1.5),  # Augmenté 2s→3s (sites anti-bot plus lents)
+    timeout=httpx.Timeout(2.0, connect=1.0),  # Réduit 3s→2s (rapid fail si lent)
     limits=httpx.Limits(max_connections=30, max_keepalive_connections=15)  # Pool augmenté 20→30
 )
 
@@ -282,9 +282,9 @@ def retry_with_backoff(max_attempts: int = 3, base_delay: float = 1.0, max_delay
     return decorator
 
 
-@retry_with_backoff(max_attempts=2, base_delay=0.5, max_delay=2.0)  # 2 tentatives avec headers rotatifs
-def fetch_url(url: str, timeout: int = 6) -> str:  # Timeout augmenté 3s→6s (anti-bot protection)
-    """Récupère le contenu HTML d'une URL avec retry automatique et headers rotatifs."""
+@retry_with_backoff(max_attempts=1, base_delay=0.5, max_delay=1.0)  # 1 seule tentative (rapide fail)
+def fetch_url(url: str, timeout: int = 2) -> str:  # Timeout réduit 6s→2s (fail rapide si lent)
+    """Récupère le contenu HTML d'une URL avec headers rotatifs."""
     # Créer un client avec headers frais pour chaque requête (éviter fingerprinting)
     headers = get_random_headers()
     resp = http_client.get(url, headers=headers, timeout=timeout)
@@ -922,12 +922,12 @@ def call_ollama(prompt: str, min_response_length: int = 15) -> str:
         "prompt": prompt,
         "stream": False,
         "options": {
-            "temperature": 0.15,      # TRÈS BAS pour cohérence et vitesse
-            "top_p": 0.85,            # Focus sur meilleurs tokens
-            "num_ctx": 512,           # Context réduit pour vitesse
-            "num_predict": 150,       # DRASTIQUE: max 150 tokens pour <2s
-            "top_k": 10,              # Beam search réduit
-            "repeat_penalty": 1.1,    # Anti-répétition
+            "temperature": 0.10,      # ULTRA-BAS pour cohérence et vitesse
+            "top_p": 0.80,            # Focus strict sur meilleurs tokens
+            "num_ctx": 384,           # Context réduit drastiquement pour vitesse
+            "num_predict": 120,       # DRASTIQUE: max 120 tokens pour <1.5s
+            "top_k": 5,               # Beam search TRÈS réduit
+            "repeat_penalty": 1.05,   # Anti-répétition réduit
         }
     }
     try:
@@ -1356,18 +1356,18 @@ def _answer_f1_question_internal(user_question: str, history=None, rag_only: Opt
             wiki_data = None
             season_csv_summary = None
 
-            # ÉTAPE 1: Knowledge Base (PRIORITAIRE - CHARGEMENT MAXIMAL)
+            # ÉTAPE 1: Knowledge Base (PRIORITAIRE - CHARGEMENT RAPIDE)
             try:
                 kb = get_knowledge_base()
-                # OPTIMISÉ: top_k=15 pour récupérer BEAUCOUP plus de docs, min_score=0.35 (plus permissif)
-                kb_results = kb.search(user_question, top_k=15, min_score=0.35)
+                # OPTIMISÉ: top_k=5 (réduit de 15) pour récupérer SEULEMENT les meilleurs, min_score=0.45 (plus strict)
+                kb_results = kb.search(user_question, top_k=5, min_score=0.45)
                 if kb_results:
-                    # Prendre TOUS les résultats pertinents (pas de limite à 3000 chars)
-                    kb_content = "\n\n".join(kb_results)[:5000]  # Augmenté de 3000→5000
-                    logger.info(f"✅ KB PRIORITAIRE: {len(kb_results)} chunks utilisés (score ≥0.35)")
+                    # Prendre SEULEMENT les meilleurs résultats (limité 3000 chars)
+                    kb_content = "\n\n".join(kb_results)[:3000]  # Réduit de 5000→3000
+                    logger.info(f"✅ KB PRIORITAIRE: {len(kb_results)} chunks utilisés (score ≥0.45)")
                     sources.append("Knowledge Base F1 (base de connaissances locale)")
                 else:
-                    logger.info(f"KB: Aucun résultat (score <0.35)")
+                    logger.info(f"KB: Aucun résultat (score <0.45)")
             except Exception as e:
                 logger.warning(f"KB search failed: {e}")
 
@@ -1460,39 +1460,11 @@ def _answer_f1_question_internal(user_question: str, history=None, rag_only: Opt
             
             response = call_ollama(prompt)
             
-            # ÉTAPE 5: Web Search UNIQUEMENT si échec total (DERNIER RECOURS)
-            # Critères d'échec: réponse vide, trop courte, ou incertaine
-            if not response or "désolé" in response.lower() or "pas d'info" in response.lower() or "je n'ai pas" in response.lower() or len(response) < 30:
-                logger.info("⚠️ LLM incertain avec KB+Memory, tentative Web Search (dernier recours)...")
-                
-                # Chercher Wikipedia (timeout TRÈS réduit pour respecter <2s)
-                wiki_content = []
-                try:
-                    search_queries = [f"F1 {user_question}"]
-                    for search_q in search_queries[:1]:  # Limité à 1 seule requête
-                        wiki_params = {"list": "search", "srsearch": search_q, "srlimit": 2}  # Réduit à 2 résultats
-                        data = fetch_wikimedia_api("query", params=wiki_params)
-                        if data and "query" in data and "search" in data["query"]:
-                            for r in data["query"]["search"][:2]:  # Max 2 résultats
-                                wiki_content.append(f"{r['title']}: {r['snippet'][:150]}")
-                    wiki_data = " | ".join(wiki_content[:2])  # Max 2 snippets
-                except Exception as e:
-                    logger.warning(f"Web Search échoué: {e}")
-                    wiki_data = None
-
-                # Nouveau prompt avec Web Search SEULEMENT si wiki_data existe
-                if wiki_data:
-                    prompt = OptimizedPromptBuilder.build_f1_question(
-                        question=user_question,
-                        kb_content=kb_content,
-                        standings=ergast_summary,
-                        news_summary=wiki_data,
-                        conversation_history=history_text,
-                        long_term_context=memory_context
-                    )
-                    response = call_ollama(prompt)
-                    sources.append("Recherche web (Wikipedia)")
-                    logger.info(f"✅ Web Search utilisé en dernier recours")
+            # ÉTAPE 5: Fallback direct (sans Web Search pour respect du timeout)
+            # Le Web Search ralentit trop - on accepte l'incertitude plutôt que le délai
+            if not response or response.startswith("[ERREUR"):
+                logger.info("⚠️ LLM échoué, retour de message par défaut (pas de Web Search)")
+                return "Désolé, j'ai une petite latence! Essaie ta question dans quelques secondes 😊 Ou demande-moi direct sur la F1 🏎️", sources
 
             if response and not response.startswith("[ERREUR"):
                 return response, sources
@@ -1502,26 +1474,16 @@ def _answer_f1_question_internal(user_question: str, history=None, rag_only: Opt
 
         # QUESTIONS GÉNÉRALES (non-F1)
         if is_general and not is_f1:
-            logger.info("Question générale (non-F1) — mode libre")
-            kb = get_knowledge_base()
-            # Optimisé: min_score=0.5 pour questions générales (plus strict)
-            kb_results = kb.search(user_question, top_k=2, min_score=0.5)
-            kb_content = "\n".join(kb_results) if kb_results else ""
+            logger.info("Question générale (non-F1) — mode libre rapide (pas de KB)")
+            # OPTIMISÉ: Pas de recherche KB pour questions générales (trop lent)
+            # Mode libre direct sans contexte local
+            kb_content = ""
 
-            if kb_content and _is_kb_result_relevant(user_question, kb_content):
-                logger.info(f"✅ KB générale: {len(kb_results)} chunks (score ≥0.5)")
-                prompt = OptimizedPromptBuilder.build_f1_question(
-                    question=user_question,
-                    kb_content=kb_content,
-                    conversation_history=history_text,
-                    long_term_context=lt_context
-                )
-            else:
-                prompt = OptimizedPromptBuilder.build_general_question(
-                    question=user_question,
-                    conversation_history=history_text,
-                    long_term_context=lt_context
-                )
+            prompt = OptimizedPromptBuilder.build_general_question(
+                question=user_question,
+                conversation_history=history_text,
+                long_term_context=lt_context
+            )
 
             response = call_ollama(prompt)
             if response and not response.startswith("[ERREUR"):

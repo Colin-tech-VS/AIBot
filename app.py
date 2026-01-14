@@ -531,6 +531,7 @@ if __name__ == "__main__":
                                 [sys.executable, str(crawler_script)],
                                 capture_output=True,
                                 text=True,
+                                encoding='utf-8',
                                 timeout=600  # 10 minutes max
                             )
                             if result.returncode == 0:

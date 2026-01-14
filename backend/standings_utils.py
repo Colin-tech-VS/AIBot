@@ -29,7 +29,7 @@ def get_random_headers():
     }
 
 
-def _fetch_url(url: str, timeout: int = 6) -> str:  # Timeout augmenté 4s→6s (anti-bot)
+def _fetch_url(url: str, timeout: int = 2) -> str:  # Timeout réduit 6s→2s (fail rapide si lent)
     """Récupère une URL avec headers rotatifs et gestion d'erreurs."""
     try:
         headers = get_random_headers()  # Headers rotatifs à chaque requête
