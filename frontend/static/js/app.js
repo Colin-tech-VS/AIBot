@@ -425,8 +425,8 @@ document.addEventListener("DOMContentLoaded", () => {
   // Charger le compte à rebours du prochain GP
   fetchNextRaceCountdown();
   
-  // Charger le top 5 des pilotes
-  fetchTop5Drivers();
+  // Charger le top 3 des pilotes
+  fetchTop3Drivers();
   
   if (!conversations || conversations.length === 0) {
     createConversation();
@@ -631,59 +631,56 @@ setInterval(fetchNextRaceCountdown, 5 * 60 * 1000);
 /**
  * Récupère et affiche le top 5 des pilotes F1
  */
-async function fetchTop5Drivers() {
+async function fetchTop3Drivers() {
   try {
-    const response = await fetch('/top_drivers');
+    const response = await fetch('/top_drivers?top_n=3');
     const data = await response.json();
 
-    const driversList = document.getElementById('top5DriversList');
+    const driversList = document.getElementById('top3DriversList');
     if (!driversList) return;
 
     if (data && data.drivers && data.drivers.length > 0) {
-      const medals = ['🥇', '🥈', '🥉', '4.', '5.'];
+      const medals = ['🥇', '🥈', '🥉'];
       let html = '';
-      data.drivers.forEach((driver, index) => {
+      data.drivers.slice(0, 3).forEach((driver, index) => {
         const medal = medals[index] || `${index + 1}.`;
-        html += `<div class="flex justify-between items-center py-0.5">
-          <span class="text-gray-300">${medal} ${driver.name}</span>
-          <span class="text-red-400 font-semibold">${driver.points} pts</span>
-        </div>`;
+        html += `<div class="truncate">${medal} ${driver.name}</div>`;
       });
       driversList.innerHTML = html;
     } else {
-      driversList.innerHTML = '<p class="text-gray-500">Non disponible</p>';
+      driversList.innerHTML = '<p class="text-gray-600 text-xs">—</p>';
     }
   } catch (error) {
-    console.error('Erreur récupération top 5:', error);
-    const driversList = document.getElementById('top5DriversList');
+    console.error('Erreur récupération top 3:', error);
+    const driversList = document.getElementById('top3DriversList');
     if (driversList) {
-      driversList.innerHTML = '<p class="text-gray-500">Non disponible</p>';
+      driversList.innerHTML = '<p class="text-gray-600 text-xs">—</p>';
     }
   }
 }
 
-// Rafraîchir le top 5 tous les lundis (les classements changent le dimanche après les courses)
-function scheduleTop5Refresh() {
+// Rafraîchir le top 3 tous les lundis (cache hebdomadaire)
+function scheduleTop3Refresh() {
   const now = new Date();
   const dayOfWeek = now.getDay(); // 0=dimanche, 1=lundi, ...
   
   // Si c'est lundi, rafraîchir
   if (dayOfWeek === 1) {
     // Vérifier si on a déjà rafraîchi aujourd'hui
-    const lastRefresh = localStorage.getItem('top5LastRefresh');
+    const lastRefresh = localStorage.getItem('top3LastRefresh');
     const today = now.toDateString();
     if (lastRefresh !== today) {
-      fetchTop5Drivers();
-      localStorage.setItem('top5LastRefresh', today);
+      fetchTop3Drivers();
+      localStorage.setItem('top3LastRefresh', today);
     }
   }
   
   // Vérifier toutes les heures si on est lundi
-  setTimeout(scheduleTop5Refresh, 60 * 60 * 1000);
+  setTimeout(scheduleTop3Refresh, 60 * 60 * 1000);
 }
 
 // Lancer la vérification hebdomadaire
-scheduleTop5Refresh();
+scheduleTop3Refresh();
 
 /**
  * Animation de particules F1 en arrière-plan

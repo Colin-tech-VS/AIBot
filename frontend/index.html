@@ -137,17 +137,6 @@
                 </button>
             </div>
 
-            <!-- Next Race Countdown -->
-            <div id="nextRaceCountdown" class="px-4 pb-3 hidden md:block">
-                <div class="bg-red-950/20 border border-red-900/30 rounded-lg p-3">
-                    <div class="flex items-center gap-2 mb-1">
-                        <span class="text-red-500 text-xs font-semibold">🔴 PROCHAIN GP</span>
-                    </div>
-                    <p class="text-xs text-gray-300 font-medium" id="countdownText">Chargement...</p>
-                    <p class="text-xs text-red-400 mt-1 font-semibold" id="raceNameText"></p>
-                </div>
-            </div>
-            
             <!-- History -->
             <div class="flex-1 px-4 py-4 overflow-y-auto hidden md:block">
                 <h3 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-4 ml-2">Historique</h3>
@@ -156,19 +145,8 @@
                 </div>
             </div>
             
-            <!-- Footer with Top 5 -->
+            <!-- Footer -->
             <div class="p-4 border-t border-red-900/20 hidden md:block mt-auto">
-                <div id="top5DriversWidget" class="mb-4">
-                    <div class="bg-slate-900/60 border border-red-900/30 rounded-lg p-3">
-                        <div class="flex items-center gap-2 mb-2">
-                            <span class="text-red-500 text-xs font-semibold">🏆 TOP 5 PILOTES</span>
-                        </div>
-                        <div id="top5DriversList" class="space-y-1 text-xs">
-                            <p class="text-gray-500">Chargement...</p>
-                        </div>
-                    </div>
-                </div>
-                
                 <button onclick="openUserProfile()" class="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-red-950/20 transition text-gray-300 hover:text-red-400">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path></svg>
                     <span>Parametres</span>
@@ -178,6 +156,39 @@
         
         <!-- CHAT AREA -->
         <div id="chatContainer" class="flex-1 flex flex-col min-h-0 bg-black">
+            
+            <!-- TOP WIDGETS BAR - Horizontal F1 Info -->
+            <div class="border-b border-red-900/20 bg-black/40 backdrop-blur px-4 py-3 flex-shrink-0">
+                <div class="max-w-6xl mx-auto">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        
+                        <!-- Prochain GP Widget -->
+                        <div id="nextRaceCountdown" class="bg-gradient-to-r from-red-950/40 to-red-900/10 border border-red-900/40 rounded-lg p-3 hover:border-red-900/60 transition">
+                            <div class="flex items-center gap-3">
+                                <div class="text-2xl">🏁</div>
+                                <div class="flex-1 min-w-0">
+                                    <div class="text-xs font-bold text-red-400 uppercase tracking-widest">Prochain GP</div>
+                                    <p class="text-sm text-gray-200 font-semibold mt-0.5 truncate" id="countdownText">Chargement...</p>
+                                    <p class="text-xs text-gray-400 mt-0.5 truncate" id="raceNameText"></p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Top 3 Drivers Widget (Discret) -->
+                        <div id="top3DriversWidget" class="bg-gradient-to-r from-slate-900/30 to-slate-800/5 border border-red-900/20 rounded p-2 hover:border-red-900/40 transition">
+                            <div class="flex items-start gap-2">
+                                <div class="text-lg mt-0.5">🏆</div>
+                                <div class="flex-1 min-w-0">
+                                    <div class="text-xs font-bold text-red-300/80 uppercase tracking-widest leading-tight">Top 3</div>
+                                    <div id="top3DriversList" class="mt-0.5 space-y-0.5 text-xs text-gray-400">
+                                        <div class="text-gray-600">...</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             
             <!-- Messages Container - SCROLLABLE -->
             <div id="chatBox" class="flex-1 overflow-y-auto p-6 space-y-4">
