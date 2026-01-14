@@ -1,42 +1,42 @@
 [
     {
-        "user": "sources f1 que tu prend",
-        "assistant": "🙅‍♂️ Je ne vais pas prendre de sources, car ce prompt n'est pas lié à une conversation spécifique ou à un sujet que j'ai déjà abordé. Cependant, je peux vous fournir des informations générales sur la Formule 1 et les résultats de la saison dernière. 🏎️"
-    },
-    {
-        "user": "combien episode de one peace",
-        "assistant": "🙅‍♂️ Je ne peux pas répondre à ta question sur le nombre d'épisodes de \"One Piece\" car ce n'est pas lié à la Formule 1 ou à un sujet que nous avons abordé. Pour les informations sur \"One Piece\", je vous recommande de consulter une source fiable telles que [Wikipedia](https://fr.wikipedia.org/wiki/One_Piece) ou [Anime News Network](https://www.animenews.org/)."
-    },
-    {
-        "user": "qui a est arrivé en quatrieme position au dernier championa f1 et avec quelle voiture",
-        "assistant": "🏎️ Dernier Grand Prix de la saison 2025, il n'y a pas encore de résultats officiels. Cependant, je peux vous donner des informations générales sur les résultats récents de la Formule 1.\n\nLe dernier Grand Prix de la saison 2025 s'est déroulé au circuit de Silverstone en Grande-Bretagne. Selon les classements officiels, **Max Verstappen** a terminé en deuxième position avec sa voiture Mercedes-AMG F1 W13 EQ."
-    },
-    {
-        "user": "bonjour",
-        "assistant": "👋 Bonjour ! Je suis ravi de vous aider. Quelle est votre question sur la Formule 1 ? 🏎️"
-    },
-    {
-        "user": "Bonjour comment vas tuy ?",
-        "assistant": "Je ne suis pas sûr de comprendre ta question, mais si ça parle de F1, je peux sûrement t'aider !"
-    },
-    {
-        "user": "Bonjour, peux tu me dire qui est Lewis Hamilton et son historique depuis 2000 ?",
-        "assistant": "On vient de commencer à discuter, j'ai pas encore d'historique !  C'est quoi ta question sur la F1 ? 🏎️"
-    },
-    {
-        "user": "je veux savoir qui est Hamilton et ce qu'il a fait depuis les années 2000",
-        "assistant": "Désolé, j'ai cherché dans ma base et sur le web mais je n'ai pas trouvé de détails précis sur ça... 😕 Tu peux me demander autre chose sur la F1 ? 🏎️"
-    },
-    {
-        "user": "Hello, tu peux me donner les actus F1 en ce moment ?",
-        "assistant": "Désolé, j'ai cherché dans ma base et sur le web mais je n'ai pas trouvé de détails précis sur ça... 😕 Tu peux me demander autre chose sur la F1 ? 🏎️"
-    },
-    {
         "user": "Peux tu me dire combien il y a de circuits en tout ?",
         "assistant": "Désolé, j'ai une petite latence! Essaie ta question dans quelques secondes 😊 Ou demande-moi direct sur la F1 🏎️"
     },
     {
         "user": "Peux tu me dire combien de circuits existent dans la F1 ?",
+        "assistant": "Ollama a dépassé le timeout - je n'ai pas pu répondre assez vite. Réessaie ta question! 😊"
+    },
+    {
+        "user": "Peux tu me dire combien de circuits existent dans la F1 ?",
+        "assistant": "Il n'y a pas de nombre précis d'entrées en course de circuits dans la F1, car les circuits peuvent être changés d'un an à l'autre. La F1 utilise différents circuits chaque saison."
+    },
+    {
+        "user": "ok, et peux tu lme dire pour quelle équipe cours Norris",
+        "assistant": "Lewis Hamilton court pour Mercedes, Max Verstappen pour Red Bull, et Charles Leclerc pour Ferrari. Norris court actuellement pour McLaren."
+    },
+    {
+        "user": "ok, actuellement , il est combien au classement ? je parle de norris",
+        "assistant": "Lors de la dernière course disputée, Norris était au 12ème rang du classement général."
+    },
+    {
+        "user": "Pas mal, mais cest combien de coureur enfait une course au GP ?",
+        "assistant": "Il y a généralement 20 pilotes au Grand Prix."
+    },
+    {
+        "user": "Donc 12/20 cest pas ouf si ?",
+        "assistant": "C'est plutôt moyen, avec 12 pilotes sur 20 coureurs."
+    },
+    {
+        "user": "i la deja fini premier a un GP ?",
+        "assistant": "Oui, un pilote a déjà remporté un Grand Prix en étant le premier à l'arrivée."
+    },
+    {
+        "user": "lequel ?",
+        "assistant": "Norris a déjà remporté un Grand Prix en étant le premier à l'arrivée."
+    },
+    {
+        "user": "mais quel grand prix ? quelle année quel circuit ?",
         "assistant": "Ollama a dépassé le timeout - je n'ai pas pu répondre assez vite. Réessaie ta question! 😊"
     }
 ]

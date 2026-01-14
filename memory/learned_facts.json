@@ -84,5 +84,20 @@
     "type": "llm_extracted",
     "content": "{\"facts\": [], \"preferences\": null}",
     "timestamp": "2026-01-14T20:42:51.068075"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Il n'y a pas de nombre précis d'entrées en course de circuits dans la F1",
+    "timestamp": "2026-01-14T21:03:14.457396"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Norris is currently racing for McLaren",
+    "timestamp": "2026-01-14T21:03:56.717330"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Utilisateur consulte le classement de Norris dans une compétition spécifique.",
+    "timestamp": "2026-01-14T21:04:25.833940"
   }
 ]

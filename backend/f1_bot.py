@@ -49,7 +49,7 @@ OLLAMA_PATHS = [
     "ollama",
 ]
 OLLAMA_MODEL = "qwen2.5:3b"  # Qwen 2.5 3B - Rapide et performant (change si 7b est chargé)
-OLLAMA_TIMEOUT = 8  # ULTRA-DRASTIQUE 10s→8s (accepte les timeouts pour éviter bloquer)
+OLLAMA_TIMEOUT = 12  # Augmenté 8s→12s pour réponses plus cohérentes
 OLLAMA_URL = os.getenv("OLLAMA_URL", "http://127.0.0.1:11434/api/generate")
 
 # Mode RAG strict : pas de scraping web général
@@ -916,18 +916,18 @@ def call_ollama(prompt: str, min_response_length: int = 15) -> str:
     Fallback subprocess si l'API échoue.
     Valide que la réponse n'est pas trop courte ou vide.
     """
-    # Payload avec paramètres optimisés pour vitesse <2s
+    # Payload avec paramètres optimisés pour vitesse <3s
     payload = {
         "model": OLLAMA_MODEL,
         "prompt": prompt,
         "stream": False,
         "options": {
-            "temperature": 0.05,      # ULTRA-MINIMAL pour réponses ultra-déterministes
+            "temperature": 0.05,      # ULTRA-MINIMAL pour réponses déterministes
             "top_p": 0.75,            # Focus strict
-            "num_ctx": 256,           # DRASTIQUE 384→256 (contexte minimal)
-            "num_predict": 80,        # DRASTIQUE 120→80 tokens (2-3 phrases courtes)
-            "top_k": 3,               # ULTRA-RÉDUIT 5→3 (3 choix max)
-            "repeat_penalty": 1.0,    # Désactiver (penalty=1.0)
+            "num_ctx": 256,           # Context minimal
+            "num_predict": 100,       # 100 tokens = 3-4 phrases courtes
+            "top_k": 3,               # 3 choix max
+            "repeat_penalty": 1.0,    # Désactiver
         }
     }
     try:
@@ -972,15 +972,15 @@ def call_ollama(prompt: str, min_response_length: int = 15) -> str:
             logger.error(f"Ollama subprocess failed with code {proc.returncode}: {proc.stderr.strip()[:100]}")
             return f"[ERREUR OLLAMA] {proc.stderr.strip() or 'retcode != 0'}"
         except subprocess.TimeoutExpired:
-            logger.error("Ollama subprocess timeout - returning graceful fallback")
-            # Plutôt que de bloquer, retourner une réponse courte et rapide
-            return "Ollama a dépassé le timeout - je n'ai pas pu répondre assez vite. Réessaie ta question! 😊"
+            logger.error("Ollama subprocess timeout - forcer réponse partielle")
+            # Plutôt que de bloquer, retourner une réponse vague mais rapide
+            return "Je prépare ma réponse... 🤔 Réessaie dans 2-3 secondes!"
         except FileNotFoundError:
             logger.error(f"Ollama not found at {OLLAMA_PATH}")
             return f"[ERREUR] Ollama introuvable à {OLLAMA_PATH}"
         except Exception as exc:
             logger.error(f"Ollama subprocess error: {type(exc).__name__}: {str(exc)[:100]}")
-            return f"Désolé, Ollama a une petite latence! Réessaie dans quelques secondes 😊"
+            return f"J'ai besoin d'une seconde... Pose-moi ta question à nouveau! 😊"
 
 
 # Pipeline principal : à appeler depuis /chat

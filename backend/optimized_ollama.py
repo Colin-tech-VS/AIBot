@@ -19,10 +19,10 @@ class OllamaConfig:
     temperature: float = 0.05           # ULTRA-MINIMAL pour déterminisme
     top_p: float = 0.75                 # Focus strict
     num_ctx: int = 256                  # DRASTIQUE 384→256 pour vitesse
-    num_predict: int = 80               # DRASTIQUE 120→80 tokens (<1s)
+    num_predict: int = 100              # Augmenté 80→100 pour réponses plus complètes
     top_k: int = 3                      # ULTRA-RÉDUIT 5→3
     repeat_penalty: float = 1.0         # Désactiver penalty
-    timeout: int = 8                    # ULTRA-DRASTIQUE 10s→8s
+    timeout: int = 12                   # Augmenté 8s→12s pour réponses meilleures
 
 
 OLLAMA_PATHS = [

@@ -752,3 +752,94 @@
 [2026-01-14 21:00:29] [WARNING] [backend.f1_bot:1481] Web Search échoué: Client error '403 Forbidden' for url 'https://en.wikipedia.org/w/api.php?list=search&srsearch=F1+Peux+tu+me+dire+combien+de+circuits+existent+dans+la+F1+%3F&srlimit=1&action=query&format=json'
 For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
 [2026-01-14 21:00:35] [INFO] [backend.f1_bot:1151] Apprentissage réussi : 0 faits, 0 prefs
+[2026-01-14 21:02:44] [WARNING] [__main__:460] Port 8001 indisponible. Bascule sur 8002.
+[2026-01-14 21:02:44] [INFO] [__main__:468] auto_train désactivé (AUTO_TRAIN=0).
+[2026-01-14 21:02:44] [INFO] [__main__:497] 🕷️ Aucun crawl précédent détecté, lancement du crawling...
+[2026-01-14 21:02:44] [INFO] [__main__:529] 🕷️ Crawling en arrière-plan...
+[2026-01-14 21:02:44] [INFO] [__main__:615] ✅ MondayScheduler démarré (refresh widgets le lundi)
+[2026-01-14 21:02:46] [WARNING] [__main__:542] ⚠️ Crawling terminé avec erreurs: [2026-01-14 21:02:44,505] [INFO] [__main__] 🕷️ Aucun crawl précédent détecté, lancement du crawling...
+[2026-01-14 21:02:44,505] [INFO] [__main__] 🕷️ Scraping motorsport.com...
+[2026-01-14 21:02:45,14
+[2026-01-14 21:02:57] [INFO] [app:165] Input sanitized: safe=True, length=57
+[2026-01-14 21:02:57] [INFO] [backend.f1_bot:1218] Question reçue: Peux tu me dire combien de circuits existent dans la F1 ?
+[2026-01-14 21:02:57] [INFO] [backend.f1_bot:1226] Contexte long terme récupéré
+[2026-01-14 21:02:57] [INFO] [backend.f1_bot:1297] F1? True, Générale? False, Circuit? True
+[2026-01-14 21:02:57] [INFO] [backend.f1_bot:1307] Recherche circuit CSV
+[2026-01-14 21:02:57] [WARNING] [backend.f1_bot:116] Erreur chargement circuits CSV: [Errno 2] No such file or directory: 'C:\\Users\\cococ\\Desktop\\IA\\knowledge_base\\circuits_kb.csv'
+[2026-01-14 21:02:57] [INFO] [backend.f1_bot:1352] Pipeline F1 optimisé
+[2026-01-14 21:02:57] [INFO] [backend.knowledge_base:126] Chargement modèle embeddings: sentence-transformers/all-MiniLM-L6-v2...
+[2026-01-14 21:03:00] [INFO] [backend.knowledge_base:196] ✅ FAISS index validé: 7983 vecteurs, 2233 documents, dim=384
+[2026-01-14 21:03:00] [INFO] [backend.knowledge_base:136] FAISS index chargé: 7983 vecteurs
+[2026-01-14 21:03:01] [INFO] [backend.f1_bot:1368] ✅ KB PRIORITAIRE: 5 chunks utilisés (score ≥0.45)
+[2026-01-14 21:03:01] [INFO] [backend.f1_bot:1430] ✅ MEMORY: Contexte long terme récupéré (1983 chars)
+[2026-01-14 21:03:14] [INFO] [backend.f1_bot:1151] Apprentissage réussi : 1 faits, 0 prefs
+[2026-01-14 21:03:45] [INFO] [app:165] Input sanitized: safe=True, length=55
+[2026-01-14 21:03:45] [INFO] [backend.f1_bot:1218] Question reçue: ok, et peux tu lme dire pour quelle équipe cours Norris
+[2026-01-14 21:03:45] [INFO] [backend.f1_bot:1226] Contexte long terme récupéré
+[2026-01-14 21:03:45] [INFO] [backend.f1_bot:1297] F1? True, Générale? False, Circuit? False
+[2026-01-14 21:03:45] [INFO] [backend.f1_bot:1352] Pipeline F1 optimisé
+[2026-01-14 21:03:45] [WARNING] [backend.knowledge_base:303] Aucun résultat FAISS > 0.45, fallback recherche simple
+[2026-01-14 21:03:45] [INFO] [backend.f1_bot:1371] KB: Aucun résultat (score <0.45)
+[2026-01-14 21:03:45] [INFO] [backend.f1_bot:1430] ✅ MEMORY: Contexte long terme récupéré (2011 chars)
+[2026-01-14 21:03:46] [WARNING] [backend.standings_utils:158] StandF1 constructors: No tables found
+[2026-01-14 21:03:46] [INFO] [backend.f1_bot:1449] Impossible de récupérer les standings via StandF1
+[2026-01-14 21:03:56] [INFO] [backend.f1_bot:1151] Apprentissage réussi : 1 faits, 0 prefs
+[2026-01-14 21:04:13] [INFO] [app:165] Input sanitized: safe=True, length=68
+[2026-01-14 21:04:13] [INFO] [backend.f1_bot:1218] Question reçue: ok, actuellement , il est combien au classement ? je parle de norris
+[2026-01-14 21:04:13] [INFO] [backend.f1_bot:1226] Contexte long terme récupéré
+[2026-01-14 21:04:13] [INFO] [backend.f1_bot:1297] F1? True, Générale? False, Circuit? False
+[2026-01-14 21:04:13] [INFO] [backend.f1_bot:1352] Pipeline F1 optimisé
+[2026-01-14 21:04:13] [INFO] [backend.f1_bot:1368] ✅ KB PRIORITAIRE: 1 chunks utilisés (score ≥0.45)
+[2026-01-14 21:04:14] [INFO] [backend.f1_bot:1430] ✅ MEMORY: Contexte long terme récupéré (1978 chars)
+[2026-01-14 21:04:15] [WARNING] [backend.standings_utils:70] StandF1: No table found in HTML
+[2026-01-14 21:04:15] [INFO] [backend.f1_bot:1449] Impossible de récupérer les standings via StandF1
+[2026-01-14 21:04:25] [INFO] [backend.f1_bot:1151] Apprentissage réussi : 1 faits, 0 prefs
+[2026-01-14 21:05:18] [INFO] [app:165] Input sanitized: safe=True, length=63
+[2026-01-14 21:05:18] [INFO] [backend.f1_bot:1218] Question reçue: Pas mal, mais cest combien de coureur enfait une course au GP ?
+[2026-01-14 21:05:18] [INFO] [backend.f1_bot:1226] Contexte long terme récupéré
+[2026-01-14 21:05:18] [INFO] [backend.f1_bot:1297] F1? True, Générale? False, Circuit? False
+[2026-01-14 21:05:18] [INFO] [backend.f1_bot:1352] Pipeline F1 optimisé
+[2026-01-14 21:05:18] [INFO] [backend.f1_bot:1368] ✅ KB PRIORITAIRE: 5 chunks utilisés (score ≥0.45)
+[2026-01-14 21:05:18] [INFO] [backend.f1_bot:1430] ✅ MEMORY: Contexte long terme récupéré (1995 chars)
+[2026-01-14 21:05:26] [INFO] [backend.f1_bot:1151] Apprentissage réussi : 0 faits, 0 prefs
+[2026-01-14 21:05:34] [INFO] [app:165] Input sanitized: safe=True, length=28
+[2026-01-14 21:05:34] [INFO] [backend.f1_bot:1218] Question reçue: Donc 12/20 cest pas ouf si ?
+[2026-01-14 21:05:34] [INFO] [backend.f1_bot:1226] Contexte long terme récupéré
+[2026-01-14 21:05:34] [INFO] [backend.f1_bot:1297] F1? False, Générale? False, Circuit? False
+[2026-01-14 21:05:34] [INFO] [backend.f1_bot:1524] Question hors F1 — mode libre
+[2026-01-14 21:05:34] [INFO] [backend.f1_bot:1528] Question non catégorisée, utilisation du LLM direct
+[2026-01-14 21:05:43] [WARNING] [backend.f1_bot:943] Ollama response too short (4 chars) - trying fallback
+[2026-01-14 21:05:43] [WARNING] [backend.f1_bot:1159] Erreur lors de l'apprentissage en arrière-plan : Response too short (4 chars)
+[2026-01-14 21:05:58] [INFO] [app:165] Input sanitized: safe=True, length=32
+[2026-01-14 21:05:58] [INFO] [backend.f1_bot:1218] Question reçue: i la deja fini premier a un GP ?
+[2026-01-14 21:05:58] [INFO] [backend.f1_bot:1226] Contexte long terme récupéré
+[2026-01-14 21:05:58] [INFO] [backend.f1_bot:1297] F1? True, Générale? False, Circuit? False
+[2026-01-14 21:05:58] [INFO] [backend.f1_bot:1352] Pipeline F1 optimisé
+[2026-01-14 21:05:58] [INFO] [backend.f1_bot:1368] ✅ KB PRIORITAIRE: 5 chunks utilisés (score ≥0.45)
+[2026-01-14 21:05:58] [INFO] [backend.f1_bot:1430] ✅ MEMORY: Contexte long terme récupéré (921 chars)
+[2026-01-14 21:05:58] [WARNING] [backend.standings_utils:70] StandF1: No table found in HTML
+[2026-01-14 21:05:58] [INFO] [backend.f1_bot:1449] Impossible de récupérer les standings via StandF1
+[2026-01-14 21:06:08] [INFO] [backend.f1_bot:1151] Apprentissage réussi : 0 faits, 0 prefs
+[2026-01-14 21:06:10] [INFO] [app:165] Input sanitized: safe=True, length=8
+[2026-01-14 21:06:10] [INFO] [backend.f1_bot:1218] Question reçue: lequel ?
+[2026-01-14 21:06:10] [INFO] [backend.f1_bot:1226] Contexte long terme récupéré
+[2026-01-14 21:06:10] [INFO] [backend.f1_bot:1297] F1? False, Générale? True, Circuit? False
+[2026-01-14 21:06:10] [INFO] [backend.f1_bot:1302] Relance courte avec historique F1 — persistance sur F1
+[2026-01-14 21:06:10] [INFO] [backend.f1_bot:1352] Pipeline F1 optimisé
+[2026-01-14 21:06:10] [WARNING] [backend.knowledge_base:303] Aucun résultat FAISS > 0.45, fallback recherche simple
+[2026-01-14 21:06:10] [INFO] [backend.f1_bot:1371] KB: Aucun résultat (score <0.45)
+[2026-01-14 21:06:10] [INFO] [backend.f1_bot:1430] ✅ MEMORY: Contexte long terme récupéré (921 chars)
+[2026-01-14 21:06:19] [INFO] [backend.f1_bot:1151] Apprentissage réussi : 0 faits, 0 prefs
+[2026-01-14 21:06:28] [INFO] [app:165] Input sanitized: safe=True, length=50
+[2026-01-14 21:06:28] [INFO] [backend.f1_bot:1218] Question reçue: mais quel grand prix ? quelle année quel circuit ?
+[2026-01-14 21:06:28] [INFO] [backend.f1_bot:1226] Contexte long terme récupéré
+[2026-01-14 21:06:28] [INFO] [backend.f1_bot:1297] F1? True, Générale? False, Circuit? True
+[2026-01-14 21:06:28] [INFO] [backend.f1_bot:1307] Recherche circuit CSV
+[2026-01-14 21:06:28] [WARNING] [backend.f1_bot:116] Erreur chargement circuits CSV: [Errno 2] No such file or directory: 'C:\\Users\\cococ\\Desktop\\IA\\knowledge_base\\circuits_kb.csv'
+[2026-01-14 21:06:28] [INFO] [backend.f1_bot:1352] Pipeline F1 optimisé
+[2026-01-14 21:06:28] [INFO] [backend.f1_bot:1368] ✅ KB PRIORITAIRE: 5 chunks utilisés (score ≥0.45)
+[2026-01-14 21:06:28] [INFO] [backend.f1_bot:1430] ✅ MEMORY: Contexte long terme récupéré (1539 chars)
+[2026-01-14 21:06:36] [WARNING] [backend.f1_bot:948] Ollama HTTP timeout (8s) - trying subprocess fallback
+[2026-01-14 21:06:44] [ERROR] [backend.f1_bot:975] Ollama subprocess timeout - returning graceful fallback
+[2026-01-14 21:06:44] [INFO] [backend.f1_bot:1467] ⚠️ LLM incertain, tentative Web Search (fallback Wikipedia)...
+[2026-01-14 21:06:50] [INFO] [backend.f1_bot:1151] Apprentissage réussi : 0 faits, 0 prefs
