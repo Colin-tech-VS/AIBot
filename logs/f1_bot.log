@@ -726,3 +726,29 @@
 [2026-01-14 20:57:11] [ERROR] [backend.f1_bot:975] Ollama subprocess timeout
 [2026-01-14 20:57:11] [INFO] [backend.f1_bot:1466] ⚠️ LLM échoué, retour de message par défaut (pas de Web Search)
 [2026-01-14 20:57:17] [INFO] [backend.f1_bot:1150] Apprentissage réussi : 0 faits, 0 prefs
+[2026-01-14 20:59:45] [WARNING] [__main__:460] Port 8001 indisponible. Bascule sur 8002.
+[2026-01-14 20:59:45] [INFO] [__main__:468] auto_train désactivé (AUTO_TRAIN=0).
+[2026-01-14 20:59:45] [INFO] [__main__:497] 🕷️ Aucun crawl précédent détecté, lancement du crawling...
+[2026-01-14 20:59:45] [INFO] [__main__:529] 🕷️ Crawling en arrière-plan...
+[2026-01-14 20:59:45] [INFO] [__main__:615] ✅ MondayScheduler démarré (refresh widgets le lundi)
+[2026-01-14 20:59:47] [WARNING] [__main__:542] ⚠️ Crawling terminé avec erreurs: [2026-01-14 20:59:45,736] [INFO] [__main__] 🕷️ Aucun crawl précédent détecté, lancement du crawling...
+[2026-01-14 20:59:45,736] [INFO] [__main__] 🕷️ Scraping motorsport.com...
+[2026-01-14 20:59:46,36
+[2026-01-14 21:00:11] [INFO] [app:165] Input sanitized: safe=True, length=57
+[2026-01-14 21:00:11] [INFO] [backend.f1_bot:1218] Question reçue: Peux tu me dire combien de circuits existent dans la F1 ?
+[2026-01-14 21:00:11] [INFO] [backend.f1_bot:1226] Contexte long terme récupéré
+[2026-01-14 21:00:11] [INFO] [backend.f1_bot:1297] F1? True, Générale? False, Circuit? True
+[2026-01-14 21:00:11] [INFO] [backend.f1_bot:1307] Recherche circuit CSV
+[2026-01-14 21:00:11] [WARNING] [backend.f1_bot:116] Erreur chargement circuits CSV: [Errno 2] No such file or directory: 'C:\\Users\\cococ\\Desktop\\IA\\knowledge_base\\circuits_kb.csv'
+[2026-01-14 21:00:11] [INFO] [backend.f1_bot:1352] Pipeline F1 optimisé
+[2026-01-14 21:00:11] [INFO] [backend.knowledge_base:126] Chargement modèle embeddings: sentence-transformers/all-MiniLM-L6-v2...
+[2026-01-14 21:00:13] [INFO] [backend.knowledge_base:196] ✅ FAISS index validé: 7983 vecteurs, 2233 documents, dim=384
+[2026-01-14 21:00:13] [INFO] [backend.knowledge_base:136] FAISS index chargé: 7983 vecteurs
+[2026-01-14 21:00:13] [INFO] [backend.f1_bot:1368] ✅ KB PRIORITAIRE: 5 chunks utilisés (score ≥0.45)
+[2026-01-14 21:00:13] [INFO] [backend.f1_bot:1430] ✅ MEMORY: Contexte long terme récupéré (1814 chars)
+[2026-01-14 21:00:21] [WARNING] [backend.f1_bot:948] Ollama HTTP timeout (8s) - trying subprocess fallback
+[2026-01-14 21:00:29] [ERROR] [backend.f1_bot:975] Ollama subprocess timeout - returning graceful fallback
+[2026-01-14 21:00:29] [INFO] [backend.f1_bot:1467] ⚠️ LLM incertain, tentative Web Search (fallback Wikipedia)...
+[2026-01-14 21:00:29] [WARNING] [backend.f1_bot:1481] Web Search échoué: Client error '403 Forbidden' for url 'https://en.wikipedia.org/w/api.php?list=search&srsearch=F1+Peux+tu+me+dire+combien+de+circuits+existent+dans+la+F1+%3F&srlimit=1&action=query&format=json'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+[2026-01-14 21:00:35] [INFO] [backend.f1_bot:1151] Apprentissage réussi : 0 faits, 0 prefs

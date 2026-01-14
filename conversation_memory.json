@@ -1,9 +1,5 @@
 [
     {
-        "user": "tu prend ou tes sources",
-        "assistant": "🙅‍♂️ Je ne vais pas prendre de sources, car ce prompt n'est pas lié à une conversation spécifique ou à un sujet que j'ai déjà abordé. Cependant, je peux vous fournir des informations générales sur la Formule 1 et les résultats de la saison dernière. 🏎️"
-    },
-    {
         "user": "sources f1 que tu prend",
         "assistant": "🙅‍♂️ Je ne vais pas prendre de sources, car ce prompt n'est pas lié à une conversation spécifique ou à un sujet que j'ai déjà abordé. Cependant, je peux vous fournir des informations générales sur la Formule 1 et les résultats de la saison dernière. 🏎️"
     },
@@ -38,5 +34,9 @@
     {
         "user": "Peux tu me dire combien il y a de circuits en tout ?",
         "assistant": "Désolé, j'ai une petite latence! Essaie ta question dans quelques secondes 😊 Ou demande-moi direct sur la F1 🏎️"
+    },
+    {
+        "user": "Peux tu me dire combien de circuits existent dans la F1 ?",
+        "assistant": "Ollama a dépassé le timeout - je n'ai pas pu répondre assez vite. Réessaie ta question! 😊"
     }
 ]

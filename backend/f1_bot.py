@@ -1614,14 +1614,26 @@ def fetch_jolpica_data(endpoint: str, params: Optional[Dict] = None) -> Dict:
 
 
 def fetch_wikimedia_api(endpoint: str, params: Optional[Dict] = None) -> Dict:
-    """Fetch data from Wikimedia API."""
+    """Fetch data from Wikimedia API with proper User-Agent."""
     base_url = "https://en.wikipedia.org/w/api.php"
     try:
-        response = http_client.get(base_url, params={**params, "action": "query", "format": "json"}, timeout=3)  # Réduit 10s→3s
+        # Wikipedia nécessite un User-Agent valide (sinon 403)
+        headers = {
+            "User-Agent": "F1ChatBot/1.0 (formula1-assistant; +http://localhost:8002)"
+        }
+        response = httpx.get(
+            base_url, 
+            params={**params, "action": "query", "format": "json"}, 
+            headers=headers,
+            timeout=3
+        )
         response.raise_for_status()
         return response.json()
     except httpx.RequestError as e:
         logger.warning(f"Wikimedia API request failed: {e}")
+        return {}
+    except Exception as e:
+        logger.warning(f"Wikimedia API error: {e}")
         return {}
 
 
