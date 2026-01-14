@@ -49,6 +49,7 @@ else:
     TEMPLATES_DIR = BASE_DIR / "frontend"
 
 STATIC_DIR = BASE_DIR / "frontend" / "static"
+IMAGE_DIR = BASE_DIR / "frontend" / "image"
 
 # Configuration Ollama (multiplateforme)
 OLLAMA_PATHS = [
@@ -87,6 +88,7 @@ if OLLAMA_PATH is None:
 
 # Montage des fichiers statiques
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
+app.mount("/image", StaticFiles(directory=IMAGE_DIR), name="image")
 templates = Jinja2Templates(directory=TEMPLATES_DIR)
 
 # URL API Ollama (Windows par défaut)
