@@ -217,18 +217,18 @@ function renderConversationList() {
   if (!historyContent) return;
   historyContent.innerHTML = '';
   if (!conversations || conversations.length===0) {
-    historyContent.innerHTML = `<p class="text-sm text-slate-500 dark:text-slate-400">Aucune conversation.</p>`;
+    historyContent.innerHTML = `<p class="text-sm text-[#8A97A8] dark:text-[#6F8197]">Aucune conversation.</p>`;
     return;
   }
   conversations.forEach(conv => {
     const item = document.createElement('div');
-    item.className = 'p-3 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer transition flex justify-between items-center group';
+    item.className = 'p-3 rounded-lg hover:bg-[#FCE8E7] dark:hover:bg-[#1B2F46] cursor-pointer transition flex justify-between items-center group';
     item.title = conv.title;
 
     const titleDiv = document.createElement('div');
     titleDiv.className = 'flex-1 min-w-0';
     const titleEl = document.createElement('p');
-    titleEl.className = 'text-xs font-medium text-slate-900 dark:text-white truncate';
+    titleEl.className = 'text-xs font-medium text-[#0B1C2D] dark:text-[#E6ECF2] truncate';
     titleEl.textContent = conv.title;
     titleDiv.appendChild(titleEl);
 
@@ -236,7 +236,7 @@ function renderConversationList() {
     actions.className = 'flex gap-1 opacity-0 group-hover:opacity-100 transition';
 
     const delBtn = document.createElement('button');
-    delBtn.className = 'p-1 rounded hover:bg-red-100 dark:hover:bg-red-900 text-red-900 dark:text-red-400 transition';
+    delBtn.className = 'p-1 rounded hover:bg-[#FCE8E7] dark:hover:bg-[#FF3B30]/20 text-[#E10600] dark:text-[#FF3B30] transition';
     delBtn.title = 'Supprimer';
     delBtn.innerHTML = '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>';
     delBtn.onclick = (e) => { e.stopPropagation(); deleteConversation(conv.id); };
@@ -268,7 +268,7 @@ function renderNavbarHistory() {
   
   conversations.forEach(conv => {
     const item = document.createElement('button');
-    item.className = 'flex items-center gap-2 w-full p-2 rounded hover:bg-[#c8afa0] dark:hover:bg-[#4a4d55] transition text-left text-[#0d0737] dark:text-white text-xs group';
+    item.className = 'flex items-center gap-2 w-full p-2 rounded hover:bg-[#FCE8E7] dark:hover:bg-[#1B2F46] transition text-left text-[#0B1C2D] dark:text-[#E6ECF2] text-xs group';
     item.title = conv.title;
     
     const icon = document.createElement('svg');
@@ -287,7 +287,7 @@ function renderNavbarHistory() {
     
     // Bouton supprimer au hover
     const delBtn = document.createElement('button');
-    delBtn.className = 'p-1 rounded hover:bg-[#c8afa0] dark:hover:bg-[#363745] text-[#0d0737] dark:text-white opacity-0 group-hover:opacity-100 transition flex-shrink-0';
+    delBtn.className = 'p-1 rounded hover:bg-[#FCE8E7] dark:hover:bg-[#FF3B30]/20 text-[#E10600] dark:text-[#FF3B30] opacity-0 group-hover:opacity-100 transition flex-shrink-0';
     delBtn.title = 'Supprimer';
     delBtn.innerHTML = '<svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>';
     delBtn.onclick = (e) => { e.stopPropagation(); deleteConversation(conv.id); };
@@ -376,7 +376,7 @@ function displayMessage(text, role = "user", opts = {save: true}) {
     const isDarkMode = document.documentElement.classList.contains("dark");
     bubble.style.backgroundColor = isDarkMode ? "#9b473e" : "#0d0737";
   } else {
-    const roleClass = "bg-slate-100 dark:bg-[#363745] text-slate-900 dark:text-white rounded-bl-none";
+    const roleClass = "bg-[#EEF1F5] dark:bg-[#13263B] text-[#0B1C2D] dark:text-[#E6ECF2] rounded-bl-none";
     bubble.className = `${baseClass} ${roleClass}`;
   }
   
@@ -406,7 +406,7 @@ function displayLoader() {
   loadingDiv.className = "flex justify-start";
 
   const bubble = document.createElement("div");
-  bubble.className = "px-4 py-2 rounded-lg bg-slate-100 dark:bg-slate-800 rounded-bl-none";
+  bubble.className = "px-4 py-2 rounded-lg bg-[#EEF1F5] dark:bg-[#13263B] rounded-bl-none";
   bubble.innerHTML = `
     <div class="flex gap-1">
       <span class="inline-block animate-bounce">🏎️</span>
@@ -689,7 +689,7 @@ function updateUserInfo(username) {
   if (!userInfo) return;
   userInfo.innerHTML = `
     <p class="text-sm">Connecté en tant que <strong>${username}</strong></p>
-    <button class="w-full px-4 py-2 rounded-lg bg-red-900 hover:bg-red-800 text-white transition text-sm font-medium" onclick="handleLogout()">Se déconnecter</button>
+    <button class="w-full px-4 py-2 rounded-lg bg-[#E10600] hover:bg-[#FF3B30] text-white transition text-sm font-medium" onclick="handleLogout()">Se déconnecter</button>
   `;
 }
 
@@ -701,8 +701,8 @@ function handleLogout() {
   const userInfo = document.getElementById("userInfo");
   if (!userInfo) return;
   userInfo.innerHTML = `
-    <p class="text-sm text-slate-500 dark:text-slate-400">Non connecté</p>
-    <button class="w-full px-4 py-2 rounded-lg bg-red-900 hover:bg-red-800 text-white transition text-sm font-medium mt-2" onclick="handleLogin()">Se connecter</button>
+    <p class="text-sm text-[#8A97A8] dark:text-[#6F8197]">Non connecté</p>
+    <button class="w-full px-4 py-2 rounded-lg bg-[#E10600] hover:bg-[#FF3B30] text-white transition text-sm font-medium mt-2" onclick="handleLogin()">Se connecter</button>
   `;
 }
 
