@@ -1528,24 +1528,42 @@ def _answer_f1_question_internal(user_question: str, history=None, rag_only: Opt
         logger.info("Question non catégorisée, utilisation du LLM direct")
 
         # STRATÉGIE: Pour questions générales non-F1, chercher Wikipedia d'abord
-        # pour enrichir le contexte (car Hadjar, Dupont, etc. ne sont pas en KB F1)
+        # Essayer plusieurs variantes: anglais, français, avec "F1", etc.
         wiki_data = None
         wiki_content = []
         
-        # Essayer recherche Wikipedia (timeout court: 3s)
+        # Essayer recherche Wikipedia avec plusieurs stratégies
+        search_strategies = [
+            (user_question, "en"),                           # Anglais direct
+            (user_question, "fr"),                           # Français direct
+            (f"F1 {user_question}", "en"),                   # Anglais + F1
+            (f"Formula 1 {user_question}", "en"),            # Anglais + Formula 1
+            (f"{user_question} pilot", "en"),                # Anglais + pilot
+            (f"{user_question} pilote", "fr"),               # Français + pilote
+        ]
+        
         try:
-            logger.debug("Recherche préalable Wikipedia pour question générale...")
-            wiki_params = {"list": "search", "srsearch": user_question, "srlimit": 2}
-            data = fetch_wikimedia_api("query", params=wiki_params)
-            if data and "query" in data and "search" in data["query"] and len(data["query"]["search"]) > 0:
-                for r in data["query"]["search"][:1]:  # Max 1 résultat
-                    snippet = r.get("snippet", "")[:300]
-                    wiki_content.append(f"{r['title']}: {snippet}")
-                wiki_data = " | ".join(wiki_content)
-                logger.info(f"✅ Wikipedia trouvé: {wiki_content[0][:60]}...")
-                sources.append("Recherche web (Wikipedia)")
-            else:
-                logger.debug("Aucun résultat Wikipedia trouvé")
+            logger.debug("Recherche Wikipedia pour question générale...")
+            for search_query, lang in search_strategies:
+                if wiki_data:  # Déjà trouvé, ne pas continuer
+                    break
+                try:
+                    wiki_params = {"list": "search", "srsearch": search_query, "srlimit": 2}
+                    data = fetch_wikimedia_api("query", params=wiki_params, lang=lang)
+                    if data and "query" in data and "search" in data["query"] and len(data["query"]["search"]) > 0:
+                        for r in data["query"]["search"][:1]:  # Max 1 résultat
+                            snippet = r.get("snippet", "")[:300]
+                            wiki_content.append(f"{r['title']}: {snippet}")
+                        wiki_data = " | ".join(wiki_content)
+                        logger.info(f"✅ Wikipedia trouvé ({lang}): {wiki_content[0][:60]}...")
+                        sources.append(f"Recherche web (Wikipedia {lang.upper()})")
+                        break
+                except Exception as e:
+                    logger.debug(f"Stratégie Wikipedia '{search_query}' ({lang}) échouée: {e}")
+                    continue
+            
+            if not wiki_data:
+                logger.debug("Aucun résultat Wikipedia trouvé après toutes les stratégies")
         except Exception as e:
             logger.warning(f"Web Search préalable échoué: {e}")
             wiki_data = None
@@ -1561,30 +1579,51 @@ def _answer_f1_question_internal(user_question: str, history=None, rag_only: Opt
         response = call_ollama(prompt)
         
         # Fallback supplémentaire: si Ollama échoue complètement ET pas de Wikipedia,
-        # essayer une recherche Wikipedia plus large
+        # essayer une recherche Wikipedia plus large avec variantes
         if (not response or response.startswith("[ERREUR") or "désolé" in response.lower() or "je n'ai pas" in response.lower()) and not wiki_data:
             logger.info("⚠️ Ollama incertain et pas de Wikipedia... tentative élargies")
             try:
-                # Chercher avec paramètres moins restrictifs
-                wiki_params = {"list": "search", "srsearch": user_question, "srlimit": 5}
-                data = fetch_wikimedia_api("query", params=wiki_params)
-                if data and "query" in data and "search" in data["query"]:
-                    results = []
-                    for r in data["query"]["search"][:2]:  # Jusqu'à 2 résultats
-                        snippet = r.get("snippet", "")[:250]
-                        results.append(f"{r['title']}: {snippet}")
-                    wiki_data = " | ".join(results)
+                # Essayer des variantes élargies
+                expanded_searches = [
+                    f"{user_question} F1",
+                    f"{user_question} pilot",
+                    f"{user_question} pilote",
+                    user_question,
+                ]
+                for search_query in expanded_searches:
                     if wiki_data:
-                        prompt = OptimizedPromptBuilder.build_f1_question(
-                            question=user_question,
-                            news_summary=wiki_data,
-                            conversation_history=history_text,
-                            long_term_context=lt_context
-                        )
-                        response = call_ollama(prompt)
-                        if "Recherche web" not in sources:
-                            sources.append("Recherche web (Wikipedia)")
-                        logger.info("✅ Web Search élargies utilisés")
+                        break
+                    try:
+                        # Essayer en anglais et français
+                        for lang in ["en", "fr"]:
+                            if wiki_data:
+                                break
+                            wiki_params = {"list": "search", "srsearch": search_query, "srlimit": 3}
+                            data = fetch_wikimedia_api("query", params=wiki_params, lang=lang)
+                            if data and "query" in data and "search" in data["query"]:
+                                results = []
+                                for r in data["query"]["search"][:2]:  # Jusqu'à 2 résultats
+                                    snippet = r.get("snippet", "")[:250]
+                                    results.append(f"{r['title']}: {snippet}")
+                                wiki_data = " | ".join(results)
+                                if wiki_data:
+                                    logger.info(f"✅ Web Search élargies trouvé ({lang}): {results[0][:50]}...")
+                                    if "Recherche web" not in sources:
+                                        sources.append(f"Recherche web (Wikipedia {lang.upper()})")
+                                    break
+                    except Exception as e:
+                        logger.debug(f"Recherche élargies '{search_query}' échouée: {e}")
+                        continue
+                        
+                if wiki_data:
+                    prompt = OptimizedPromptBuilder.build_f1_question(
+                        question=user_question,
+                        news_summary=wiki_data,
+                        conversation_history=history_text,
+                        long_term_context=lt_context
+                    )
+                    response = call_ollama(prompt)
+                    logger.info("✅ Web Search élargies utilisé")
             except Exception as e:
                 logger.warning(f"Web Search élargies échoué: {e}")
         
@@ -1667,9 +1706,15 @@ def fetch_jolpica_data(endpoint: str, params: Optional[Dict] = None) -> Dict:
         return {}
 
 
-def fetch_wikimedia_api(endpoint: str, params: Optional[Dict] = None) -> Dict:
-    """Fetch data from Wikimedia API with proper User-Agent."""
-    base_url = "https://en.wikipedia.org/w/api.php"
+def fetch_wikimedia_api(endpoint: str, params: Optional[Dict] = None, lang: str = "en") -> Dict:
+    """Fetch data from Wikimedia API with proper User-Agent.
+    
+    Args:
+        endpoint: API endpoint (e.g., "query")
+        params: Query parameters
+        lang: Language code ("en" for English, "fr" for French)
+    """
+    base_url = f"https://{lang}.wikipedia.org/w/api.php"
     try:
         # Wikipedia nécessite un User-Agent valide (sinon 403)
         headers = {
@@ -1684,10 +1729,10 @@ def fetch_wikimedia_api(endpoint: str, params: Optional[Dict] = None) -> Dict:
         response.raise_for_status()
         return response.json()
     except httpx.RequestError as e:
-        logger.warning(f"Wikimedia API request failed: {e}")
+        logger.warning(f"Wikimedia API ({lang}) request failed: {e}")
         return {}
     except Exception as e:
-        logger.warning(f"Wikimedia API error: {e}")
+        logger.warning(f"Wikimedia API ({lang}) error: {e}")
         return {}
 
 
