@@ -702,3 +702,27 @@
 [2026-01-14 20:53:42] [WARNING] [backend.f1_bot:948] Ollama HTTP API failed: ReadTimeout, trying subprocess fallback
 [2026-01-14 20:53:57] [ERROR] [backend.f1_bot:975] Ollama subprocess timeout
 [2026-01-14 20:54:03] [INFO] [backend.f1_bot:1150] Apprentissage réussi : 0 faits, 0 prefs
+[2026-01-14 20:56:14] [WARNING] [__main__:460] Port 8001 indisponible. Bascule sur 8002.
+[2026-01-14 20:56:14] [INFO] [__main__:468] auto_train désactivé (AUTO_TRAIN=0).
+[2026-01-14 20:56:14] [INFO] [__main__:497] 🕷️ Aucun crawl précédent détecté, lancement du crawling...
+[2026-01-14 20:56:14] [INFO] [__main__:529] 🕷️ Crawling en arrière-plan...
+[2026-01-14 20:56:14] [INFO] [__main__:615] ✅ MondayScheduler démarré (refresh widgets le lundi)
+[2026-01-14 20:56:17] [WARNING] [__main__:542] ⚠️ Crawling terminé avec erreurs: [2026-01-14 20:56:14,617] [INFO] [__main__] 🕷️ Aucun crawl précédent détecté, lancement du crawling...
+[2026-01-14 20:56:14,617] [INFO] [__main__] 🕷️ Scraping motorsport.com...
+[2026-01-14 20:56:15,38
+[2026-01-14 20:56:48] [INFO] [app:165] Input sanitized: safe=True, length=52
+[2026-01-14 20:56:48] [INFO] [backend.f1_bot:1217] Question reçue: Peux tu me dire combien il y a de circuits en tout ?
+[2026-01-14 20:56:48] [INFO] [backend.f1_bot:1225] Contexte long terme récupéré
+[2026-01-14 20:56:49] [INFO] [backend.f1_bot:1296] F1? True, Générale? False, Circuit? True
+[2026-01-14 20:56:49] [INFO] [backend.f1_bot:1306] Recherche circuit CSV
+[2026-01-14 20:56:49] [WARNING] [backend.f1_bot:116] Erreur chargement circuits CSV: [Errno 2] No such file or directory: 'C:\\Users\\cococ\\Desktop\\IA\\knowledge_base\\circuits_kb.csv'
+[2026-01-14 20:56:49] [INFO] [backend.f1_bot:1351] Pipeline F1 optimisé
+[2026-01-14 20:56:49] [INFO] [backend.knowledge_base:126] Chargement modèle embeddings: sentence-transformers/all-MiniLM-L6-v2...
+[2026-01-14 20:56:51] [INFO] [backend.knowledge_base:196] ✅ FAISS index validé: 7983 vecteurs, 2233 documents, dim=384
+[2026-01-14 20:56:51] [INFO] [backend.knowledge_base:136] FAISS index chargé: 7983 vecteurs
+[2026-01-14 20:56:51] [INFO] [backend.f1_bot:1367] ✅ KB PRIORITAIRE: 1 chunks utilisés (score ≥0.45)
+[2026-01-14 20:56:51] [INFO] [backend.f1_bot:1429] ✅ MEMORY: Contexte long terme récupéré (1384 chars)
+[2026-01-14 20:57:01] [WARNING] [backend.f1_bot:948] Ollama HTTP API failed: ReadTimeout, trying subprocess fallback
+[2026-01-14 20:57:11] [ERROR] [backend.f1_bot:975] Ollama subprocess timeout
+[2026-01-14 20:57:11] [INFO] [backend.f1_bot:1466] ⚠️ LLM échoué, retour de message par défaut (pas de Web Search)
+[2026-01-14 20:57:17] [INFO] [backend.f1_bot:1150] Apprentissage réussi : 0 faits, 0 prefs

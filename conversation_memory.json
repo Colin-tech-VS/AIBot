@@ -1,9 +1,5 @@
 [
     {
-        "user": "derniere actu",
-        "assistant": "Salut !\n\nLa saison de Formule 1 2025 a été une saison incroyablement intéressante ! Max Verstappen a encore renforcé son avance en championnat, mais Stoffel Vandoorne a remporté son premier titre mondial et suivi par un certain Carlos Sainz Jr.\n\nPour les amateurs de course, il est important de noter que le Grand Prix d'Abu Dhabi de 2025 a été une des courses les plus disputées de la saison. La victoire de Max Verstappen a été très controversée, mais cela n'a pas affecté son avance dans le championnat.\n\nEn ce qui concerne les résultats des Grands Prix de 2024, voici les classements :\n\n1. Stoffel Vandoorne (McLaren)\n2. Carlos Sainz Jr. (Ferrari)\n3. Charles Leclerc (Ferrari)\n4. Sergio Pérez (Red Bull Racing)\n5. Max Verstappen (Red Bull Racing)\n\nEt pour les amateurs de course qui aiment suivre les dernières actualités, j'ai quelques informations à partager :\n\nLa saison de test de Formule 1 2026 a commencé en décembre 2025 et s'est poursuivie jusqu'à fin janvier 2026. Les pilotes des équipes de F1 ont effectué des essais sur les circuits les plus récents, tels que le circuit de Melbourne en Australie et le circuit de São Paulo au Brésil.\n\nJe suis impatient de voir ce qui se passera cette saison-là ! Et toi, qu'est-ce que tu attends de la prochaine saison de F1 ?\n\nVérifie les liens suivants pour obtenir plus d'informations sur la dernière saison de Formule 1 :\n\n* [Lien vers un article de F1] (lien non disponible)\n* [Lien vers une page de résultats de course] (lien non disponible)\n\nPuisque je n'ai pas accès aux données récentes, je ne peux pas vous fournir les derniers résultats des courses. Mais je peux vous assurer que la saison prochaine sera encore plus excitante !"
-    },
-    {
         "user": "tu prend ou tes sources",
         "assistant": "🙅‍♂️ Je ne vais pas prendre de sources, car ce prompt n'est pas lié à une conversation spécifique ou à un sujet que j'ai déjà abordé. Cependant, je peux vous fournir des informations générales sur la Formule 1 et les résultats de la saison dernière. 🏎️"
     },
@@ -38,5 +34,9 @@
     {
         "user": "Hello, tu peux me donner les actus F1 en ce moment ?",
         "assistant": "Désolé, j'ai cherché dans ma base et sur le web mais je n'ai pas trouvé de détails précis sur ça... 😕 Tu peux me demander autre chose sur la F1 ? 🏎️"
+    },
+    {
+        "user": "Peux tu me dire combien il y a de circuits en tout ?",
+        "assistant": "Désolé, j'ai une petite latence! Essaie ta question dans quelques secondes 😊 Ou demande-moi direct sur la F1 🏎️"
     }
 ]

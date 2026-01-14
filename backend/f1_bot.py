@@ -48,8 +48,8 @@ OLLAMA_PATHS = [
     # Fallback (cherche dans PATH)
     "ollama",
 ]
-OLLAMA_MODEL = "qwen2.5:3b"  # Qwen 2.5 3B - Rapide et performant
-OLLAMA_TIMEOUT = 10  # DRASTIQUE réduit de 15s→10s pour réponse ultra-rapide
+OLLAMA_MODEL = "qwen2.5:3b"  # Qwen 2.5 3B - Rapide et performant (change si 7b est chargé)
+OLLAMA_TIMEOUT = 8  # ULTRA-DRASTIQUE 10s→8s (accepte les timeouts pour éviter bloquer)
 OLLAMA_URL = os.getenv("OLLAMA_URL", "http://127.0.0.1:11434/api/generate")
 
 # Mode RAG strict : pas de scraping web général
@@ -922,12 +922,12 @@ def call_ollama(prompt: str, min_response_length: int = 15) -> str:
         "prompt": prompt,
         "stream": False,
         "options": {
-            "temperature": 0.10,      # ULTRA-BAS pour cohérence et vitesse
-            "top_p": 0.80,            # Focus strict sur meilleurs tokens
-            "num_ctx": 384,           # Context réduit drastiquement pour vitesse
-            "num_predict": 120,       # DRASTIQUE: max 120 tokens pour <1.5s
-            "top_k": 5,               # Beam search TRÈS réduit
-            "repeat_penalty": 1.05,   # Anti-répétition réduit
+            "temperature": 0.05,      # ULTRA-MINIMAL pour réponses ultra-déterministes
+            "top_p": 0.75,            # Focus strict
+            "num_ctx": 256,           # DRASTIQUE 384→256 (contexte minimal)
+            "num_predict": 80,        # DRASTIQUE 120→80 tokens (2-3 phrases courtes)
+            "top_k": 3,               # ULTRA-RÉDUIT 5→3 (3 choix max)
+            "repeat_penalty": 1.0,    # Désactiver (penalty=1.0)
         }
     }
     try:
@@ -937,15 +937,15 @@ def call_ollama(prompt: str, min_response_length: int = 15) -> str:
         
         # Validation: réponse non vide et longueur minimale
         if not response:
-            logger.warning("Ollama returned empty response")
-            return "[ERREUR] Réponse vide de l'IA"
+            logger.warning("Ollama returned empty response - trying fallback")
+            raise Exception("Empty response from Ollama")
         if len(response) < min_response_length:
-            logger.warning(f"Ollama response too short ({len(response)} chars): {response}")
-            return "[ERREUR] Réponse trop courte de l'IA"
+            logger.warning(f"Ollama response too short ({len(response)} chars) - trying fallback")
+            raise Exception(f"Response too short ({len(response)} chars)")
         
         return response
-    except Exception as http_err:
-        logger.warning(f"Ollama HTTP API failed: {type(http_err).__name__}, trying subprocess fallback")
+    except httpx.TimeoutException:
+        logger.warning(f"Ollama HTTP timeout ({OLLAMA_TIMEOUT}s) - trying subprocess fallback")
         # Fallback subprocess
         try:
             cmd = [OLLAMA_PATH, "run", OLLAMA_MODEL, prompt]
@@ -972,14 +972,15 @@ def call_ollama(prompt: str, min_response_length: int = 15) -> str:
             logger.error(f"Ollama subprocess failed with code {proc.returncode}: {proc.stderr.strip()[:100]}")
             return f"[ERREUR OLLAMA] {proc.stderr.strip() or 'retcode != 0'}"
         except subprocess.TimeoutExpired:
-            logger.error("Ollama subprocess timeout")
-            return "[ERREUR] Ollama a dépassé le timeout"
+            logger.error("Ollama subprocess timeout - returning graceful fallback")
+            # Plutôt que de bloquer, retourner une réponse courte et rapide
+            return "Ollama a dépassé le timeout - je n'ai pas pu répondre assez vite. Réessaie ta question! 😊"
         except FileNotFoundError:
             logger.error(f"Ollama not found at {OLLAMA_PATH}")
             return f"[ERREUR] Ollama introuvable à {OLLAMA_PATH}"
         except Exception as exc:
             logger.error(f"Ollama subprocess error: {type(exc).__name__}: {str(exc)[:100]}")
-            return f"[ERREUR] {type(exc).__name__}: {exc}"
+            return f"Désolé, Ollama a une petite latence! Réessaie dans quelques secondes 😊"
 
 
 # Pipeline principal : à appeler depuis /chat

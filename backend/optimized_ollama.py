@@ -16,13 +16,13 @@ from dataclasses import dataclass
 class OllamaConfig:
     """Configuration optimisée pour Ollama - ULTRA RAPIDE"""
     model: str = "qwen2.5:3b"
-    temperature: float = 0.1           # ULTRA-BAS 0.15→0.1 pour cohérence maximale/vitesse
-    top_p: float = 0.80                # Réduit 0.85→0.80 pour focus maximal
-    num_ctx: int = 384                 # DRASTIQUE 512→384 pour vitesse (moins de contexte)
-    num_predict: int = 120             # DRASTIQUE 150→120 tokens pour <1.5s
-    top_k: int = 5                     # Réduit 10→5 pour focus strict
-    repeat_penalty: float = 1.05       # Réduit 1.1→1.05 (moins strict)
-    timeout: int = 10                  # DRASTIQUE 15s→10s max pour réponse
+    temperature: float = 0.05           # ULTRA-MINIMAL pour déterminisme
+    top_p: float = 0.75                 # Focus strict
+    num_ctx: int = 256                  # DRASTIQUE 384→256 pour vitesse
+    num_predict: int = 80               # DRASTIQUE 120→80 tokens (<1s)
+    top_k: int = 3                      # ULTRA-RÉDUIT 5→3
+    repeat_penalty: float = 1.0         # Désactiver penalty
+    timeout: int = 8                    # ULTRA-DRASTIQUE 10s→8s
 
 
 OLLAMA_PATHS = [
