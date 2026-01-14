@@ -1,6 +1,17 @@
 """
 Système de cache optimisé pour chatbot F1
 TTL intelligent, invalidation et stats
+
+Cache TTL Configuration:
+- news_articles: 1800s (30 min) - Actualités F1 mises à jour fréquemment
+- web_search: 2400s (40 min) - Recherches web générales (anti-bot throttling)
+- kb_search: 3600s (60 min) - Knowledge Base (contenu statique)
+- standings: 3600s (60 min) - Classements StandF1 (changent après courses)
+- ergast_race: 1800s (30 min) - Résultats de course Ergast API
+- ergast_standings: 1800s (30 min) - Classements via Ergast API
+
+Ces durées représentent un équilibre entre fraîcheur des données et performance.
+Ajustez selon vos besoins en éditant CACHE_TTL ci-dessous.
 """
 
 import time
