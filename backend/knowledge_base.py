@@ -403,7 +403,7 @@ class KnowledgeBase:
                     else:
                         # Fallback: convertir le tableau CSV en texte compact et indexer comme un doc
                         header = rows[0] if rows else []
-                        data_rows = rows[1:51]  # limiter à 50 lignes pour éviter surcharge
+                        data_rows = rows[1:201]  # limiter à 200 lignes (augmenté de 50)
                         parts = []
                         if header:
                             parts.append(" | ".join([str(h).strip() for h in header]))
@@ -412,7 +412,7 @@ class KnowledgeBase:
                         content_text = "\n".join(parts)
                         title = csv_file.stem.replace("_", " ").title()
                         doc_id = rel.replace("/", "_")
-                        self.add_document(KnowledgeDoc(doc_id, title, content_text[:8000], "wiki-csv"))
+                        self.add_document(KnowledgeDoc(doc_id, title, content_text[:20000], "wiki-csv"))  # 20K chars
                         if KB_LOG_VERBOSE:
                             logger.info(f"Fichier CSV (fallback) indexé: {rel} (1 document)")
             except Exception as e:

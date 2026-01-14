@@ -1,0 +1,42 @@
+# Frédéric Vasseur raconte comment le changement de réglementation pour la saison 2026 va bouleverser la F1 : « On part tous dans l'inconnu »
+
+**Source**: [https://www.lequipe.fr/Formule-1/Article/Frederic-vasseur-raconte-comment-le-changement-de-reglementation-va-bouleverser-la-f1-on-part-tous-dans-l-inconnu/1627924](https://www.lequipe.fr/Formule-1/Article/Frederic-vasseur-raconte-comment-le-changement-de-reglementation-va-bouleverser-la-f1-on-part-tous-dans-l-inconnu/1627924)
+**Crawlé le**: 2026-01-13 22:58
+
+---
+
+Le patron de Ferrari Frédéric Vasseur explique pour « L'Equipe » comment on prévoit, dessine, façonne une monoplace lorsque le règlement de la Formule 1 change drastiquement, comme ce sera le cas en 2026.
+
+Dehors, sur la piste de Fiorano, une nouvelle Ferrari de route en tenue de camouflage tourne discrètement. À l'intérieur de l'espace de réception de la Scuderia, derrière l'historique maison du Commendatore en train d'être refaite à neuf, Frédéric Vasseur vient, avant le traditionnel repas de Noël instauré par Enzo Ferrari, répondre aux questions des journalistes et dresser le bilan d'une saison forcément « décevante » .
+
+Dans l'assemblée, Piero, le fils du Commendatore, le président Benedetto Vigna, le directeur technique Loïc Serra, recruté l'an dernier , et le directeur du département moteurs Enrico Gualtieri sont également présents, signe de l'importance du moment et du soutien au boss parisien.
+
+Boost, overtake, recharge... Le nouveau dico de la F1 pour 2026 dévoilé
+
+Pour L'Equipe , le patron de Ferrari depuis janvier 2023 a accepté de faire le bilan 2025 afin d'expliquer comment on prépare une voiture pour une nouvelle saison, surtout quand il y a tellement de changements réglementaires, techniques et technologiques. Une belle leçon didactique des immenses difficultés qui se dressent devant les onze écuries l'an prochain.
+
+« Depuis que vous êtes arrivé, il y avait encore l'impact d'Enrico Cardile ( directeur technique parti l'été dernier pour Aston Martin ) sur vos voitures. La Ferrari 2026 sera-t-elle la première voiture Vasseur ? Je ne dirais pas cela. Je dirais plutôt que c'est celle de Loïc. Non pas que je veuille fuir mes responsabilités, mais puisque vous parlez de Cardile, il faut mentionner le travail de son successeur Serra. Et puis, je dirais que ce n'est pas ma voiture ou celle d'un ingénieur, c'est plutôt celle de toute une équipe. Les changements sont tellement importants et les compétences si fines que pour avoir une voiture gagnante, il faut les meilleurs dans chaque département.
+
+Quand a débuté le travail pour 2026 ? La première étape, c'est de recevoir la règle et la décrypter. Le projet moteur, on connaît le règlement depuis quatre ans. Quand je suis arrivé, le projet était lancé. Aujourd'hui, on commence déjà à parler du moteur 2031. Pour le moteur 2026, on a commencé par construire deux ou trois moteurs en parallèle pour essayer plusieurs idées avant de se lancer dans un modèle. Le problème du moteur, c'est le temps d'usinage de certaines pièces qui est très long. Le châssis, lui, c'est une autre histoire. Le règlement final, on ne l'a connu qu'à la toute fin d'année 2024.
+
+Auriez-vous pu faire toute l'année sur la voiture 2026 ? Au début non, car les changements qu'on doit faire au début sur une voiture sont des gros changements. Surtout avec cette nouvelle réglementation que l'on découvre. Quand on commence, les nouvelles pièces sont des grosses pièces qui prennent, elles aussi, du temps à fabriquer. Donc, en début d'année, on lançait un chantier 2026 et puis on avait le temps de voir la voiture 2025. Ce n'est que lorsqu'on commence à avoir une vision plus fine de la nouvelle voiture qu'on peut choisir de passer tout son temps sur elle et d'oublier la saison en cours.
+
+« La clé, c'est d'anticiper la manière dont la voiture va fonctionner »
+
+Ce fut une décision dure à prendre ? Forcément, ce n'est pas facile de dire à l'équipe et aux pilotes qu'on n'aura plus de nouveauté. On savait que cela allait être dur, mais je n'imaginais pas autant. Je n'avais pas anticipé combien ce serait difficile à vivre, que ce soit à Maranello, à la piste et même pour moi. Mais attention, n'imaginez pas que notre voiture du printemps est la même que celle d'Abu Dhabi. Nous n'avons plus travaillé l'aéro après nos dernières pièces arrivées en Autriche, mais la SF-25 a continué d'évoluer, avec les suspensions, les réglages, le travail sur la chauffe des pneus, le patin du fond plat. Ce n'est pas comme si on s'était mis en pause.
+
+Revenons à 2026. Comment faites-vous pour dessiner cette voiture à partir d'un règlement ? Le plus dur, c'est d'abord de connaître les pneus. Et les gommes 2026, on n'a pu les tester que la semaine dernière à Abu Dhabi. Et encore, c'était avec une voiture 2025. On avait les dimensions du Pirelli, mais il nous a fallu imaginer quelles contraintes la voiture allait lui imposer. Cela va conditionner l'empattement, le poids, la répartition des masses. Va-t-on plus demander au train arrière ou au train avant ? La clé, c'est d'anticiper la manière dont la voiture va fonctionner. Et pour tout ça, on devait connaître le niveau d'adhérence.
+
+Comment ça ? Si vous avez une voiture qui passe à fond dans les virages parce que l'adhérence du pneu est maximale, la récupération d'énergie du moteur devient un élément essentiel du moteur. Il faut travailler sur les freins parce qu'ils vont chauffer. En revanche, vous avez des gommes sans adhérence, les pilotes arriveront après avoir levé le pied en ligne droite. Plus de problème de température de freins, plus de problèmes de récupération d'énergie, la voiture devient différente.
+
+« L'an prochain, cela va changer tout le temps. (...) On va avoir besoin d'apprendre, de comprendre »
+
+Pouvez-vous vous être totalement trompé dans ces analyses ? On fait tous des paris, mais avec ce nouveau règlement, on devrait pouvoir corriger. En 2025, si vous regardez les tests de Bahreïn et le classement d'Abu Dhabi, il n'y a aucune surprise. L'an prochain, cela va changer tout le temps. La photo de Barcelone (tests à huis clos en janvier) ne sera pas celle de Suzuka (troisième Grand Prix de la saison, le 29 mars) . On va avoir besoin d'apprendre, de comprendre. Le début de saison sera crucial car on part tous dans l'inconnu. Je ne parle pas de Barcelone, qui va nous servir à fiabiliser la nouvelle voiture. Cela sera essentiel.
+
+Aux essais de Bahreïn 1 (début février) , on va commencer à voir les vraies voitures. Et peut-être à Bahreïn 2 (mi-février) , il y aura des surprises sur les choix d'ailerons avant, sur le dessin des pontons. On se dira : "Merde, on n'y avait pas pensé !" Mais commencera alors une autre boucle de développement. Et on repartira sur ces idées avec l'idée de développer pour Bahreïn (12 avril) ou Miami (3 mai) , qui devraient être deux grosses marques de développement dans le calendrier.
+
+Le nouveau règlement peut-il pousser Verstappen vers la sortie ?
+
+Pour cette nouvelle réglementation, vous êtes en permanence en contact ou en négociation avec la FIA ? C'est essentiel. Imaginez que vous trouvez une idée géniale pour votre aileron avant. Vous avez les yeux de l'amour et vous vous dites, ça va passer. Vous construisez votre voiture pour cet aileron et cette idée. Et puis, en décembre, les gars de la FIA débarquent et vous disent : "Non, c'est interdit ! Vous avez oublié l'article 56.B alinéa 3." Votre voiture, c'est poubelle. Même chose pour le moteur. Quand on a une idée, il faut s'assurer qu'elle est légale.
+
+Cette année, votre poste a été sous tension. Pensez-vous que le poste de boss d'une écurie de F1 ressemble à celui de coach d'une équipe de foot ? Je ne crois pas. C'est beaucoup plus dur pour eux. Et je sais de quoi je parle. Je suis depuis enfant grand fan du PSG. Et quand je dirigeais Sauber (2017-2022) , j'ai été en négociation avec le Qatar, qui voulait racheter l'équipe. Alors cette année-là, je suis très souvent allé au Parc pour discuter avec Nasser (al-Khelaïfi, président du club parisien) . Un entraîneur de foot, il peut avoir de l'impact rapidement sur son équipe, mais il dépend aussi d'un penalty raté. Imaginez le match du PSG contre Liverpool (1-0, 4-1 aux t.a.b., 8e de finale retour de la Ligue des champions, en mars) , ça s'est joué à un millimètre aux pénos. Luis Enrique est un héros aujourd'hui, mais il aurait pu aussi être viré si le penalty n'était pas rentré. En F1, on a besoin de temps. J'attends encore des gars que j'ai recrutés à mon arrivée en 2023. »

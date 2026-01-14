@@ -34,6 +34,18 @@ logger = get_logger(__name__)
 # Import CSV parser
 import csv
 
+# Import index CSV optimisé
+from backend.csv_index import load_csv_index, search_csv, get_driver_info, get_index_stats, format_csv_results_for_llm
+
+# Import validateur de cohérence statistique
+from backend.stats_validator import (
+    add_coherence_disclaimer,
+    get_season_context,
+    validate_stat_value,
+    CURRENT_YEAR,
+    SEASON_DATA
+)
+
 
 # Configuration Ollama (multiplateforme)
 OLLAMA_PATHS = [
@@ -49,8 +61,8 @@ OLLAMA_PATHS = [
     # Fallback (cherche dans PATH)
     "ollama",
 ]
-OLLAMA_MODEL = "qwen2.5:3b"  # Qwen 2.5 3B - Rapide et performant
-OLLAMA_TIMEOUT = 15  # DRASTIQUE réduit de 30s→15s pour réponse ultra-rapide
+OLLAMA_MODEL = "qwen2.5:7b"  # Qwen 2.5 7B - Qualité GPT-like
+OLLAMA_TIMEOUT = 60  # Timeout élevé pour modèle 7B
 OLLAMA_URL = os.getenv("OLLAMA_URL", "http://127.0.0.1:11434/api/generate")
 
 # Mode RAG strict : pas de scraping web général
@@ -176,10 +188,8 @@ def find_longest_circuit() -> Optional[Dict]:
 NEWS_SOURCES = [
     "https://www.motorsport.com/f1/news/",
     "https://www.autosport.com/f1/news/",
-    "https://www.actuf1.com/",  # Actualités F1
     "https://www.standf1.com/",  # Classements/Stats
     "https://www.lequipe.fr/Formule-1/",  # L'Équipe F1 (FR)
-    "https://aurupteur.com/",  # Aurupteur F1 (FR)
 ]
 
 # Sources complémentaires (officiel FIA)
@@ -323,27 +333,6 @@ def extract_main_text(html: str, max_chars: int = 1500) -> str:
     return text[:upper]
 
 
-def _extract_article_links_actuf1(html: str, base_url: str = "https://www.actuf1.com/") -> List[Tuple[str, str]]:
-    """Extrait jusqu'à 3 liens d'articles internes depuis ActuF1 (titre + URL absolue)."""
-    out: List[Tuple[str, str]] = []
-    try:
-        soup = BeautifulSoup(html, "html.parser")
-        for art in soup.find_all("article")[:5]:
-            a = art.find("a", href=True)
-            title = (art.find("h2") or art.find("h3") or a)
-            if a and title:
-                url = urljoin(base_url, a["href"])
-                if url and url.startswith(base_url):
-                    t = title.get_text(" ", strip=True)
-                    if t and (t, url) not in out:
-                        out.append((t, url))
-            if len(out) >= 3:
-                break
-    except Exception:
-        pass
-    return out
-
-
 def _extract_article_links_lequipe(html: str) -> List[Tuple[str, str]]:
     """Extrait jusqu'à 3 liens internes F1 depuis L'Équipe."""
     out: List[Tuple[str, str]] = []
@@ -387,36 +376,6 @@ def _follow_and_extract(links: List[Tuple[str, str]], cache_prefix: str, max_pag
         except Exception:
             continue
     return results
-
-
-@retry_with_backoff(max_attempts=1, base_delay=0.3, max_delay=2.0)  # ULTRA-RAPIDE: 1 seule tentative
-def scrape_actuf1() -> str:
-    """Scrape ActuF1 - actualités F1 spécialisées (avec retry)."""
-    html = fetch_url("https://www.actuf1.com/", timeout=2)  # TIMEOUT DRASTIQUE 4s→2s
-    if not html:
-        raise httpx.TimeoutException("ActuF1 inaccessible")
-    
-    try:
-        soup = BeautifulSoup(html, "html.parser")
-        # Chercher les articles principaux
-        articles = soup.find_all("article")[:3]  # Top 3 articles
-        contents = []
-        for article in articles:
-            title = article.find("h2") or article.find("h3")
-            summary = article.find("p")
-            if title and summary:
-                contents.append(f"{title.get_text().strip()}: {summary.get_text().strip()}")
-        base = " | ".join(contents) if contents else extract_main_text(html, 600)
-        # Suivi de liens internes (limité)
-        if ENABLE_LINK_FOLLOW:
-            links = _extract_article_links_actuf1(html)
-            followed = _follow_and_extract(links, cache_prefix="actuf1", max_pages=2)
-            if followed:
-                base = (base + " | " + " | ".join(followed))[:900]
-        return base
-    except Exception:
-        # Silencieux - ActuF1 est instable
-        return ""
 
 
 @retry_with_backoff(max_attempts=1, base_delay=0.3, max_delay=2.0)  # ULTRA-RAPIDE: 1 seule tentative
@@ -492,36 +451,6 @@ def scrape_standf1() -> str:
         return ""
 
 
-@retry_with_backoff(max_attempts=1, base_delay=0.3, max_delay=2.0)  # ULTRA-RAPIDE: 1 seule tentative
-def scrape_aurupteur() -> str:
-    """Scrape Aurupteur - actualités F1 françaises (avec retry)."""
-    html = fetch_url("https://aurupteur.com/", timeout=2)
-    if not html:
-        raise httpx.TimeoutException("Aurupteur inaccessible")
-    
-    try:
-        soup = BeautifulSoup(html, "html.parser")
-        # Chercher les articles principaux
-        articles = soup.find_all("article")[:3]  # Top 3 articles
-        if not articles:
-            # Fallback: chercher les titres h2/h3
-            articles = soup.find_all(["h2", "h3"])[:3]
-        
-        contents = []
-        for article in articles:
-            title = article.find(["h2", "h3", "h1"])
-            summary = article.find("p")
-            if title:
-                t = title.get_text().strip()
-                s = summary.get_text().strip() if summary else ""
-                if t:
-                    contents.append(f"{t}: {s}" if s else t)
-        
-        return " | ".join(contents)[:600] if contents else extract_main_text(html, 600)
-    except Exception:
-        return ""
-
-
 # get_standf1_standings_summary déplacé vers backend/standings_utils.py
 
 
@@ -562,6 +491,33 @@ def scrape_fia_regulations() -> str:
         return ""
 
 
+@retry_with_backoff(max_attempts=1, base_delay=0.3, max_delay=2.0)
+def scrape_toutf1() -> str:
+    """Scrape Tout-F1 - actualités et infos F1."""
+    html = fetch_url("https://www.tout-f1.com/", timeout=2)
+    if not html:
+        raise httpx.TimeoutException("Tout-F1 inaccessible")
+    
+    try:
+        soup = BeautifulSoup(html, "html.parser")
+        # Extraire les articles récents
+        articles = soup.find_all("article")[:5]
+        if articles:
+            contents = []
+            for article in articles:
+                title = article.find(["h1", "h2", "h3"])
+                if title:
+                    contents.append(title.get_text().strip()[:100])
+            return " | ".join(contents)[:600] if contents else extract_main_text(html, 600)
+        # Fallback sur les liens d'actualités
+        links = soup.find_all("a", href=lambda x: x and "/actualite" in x)[:5]
+        if links:
+            return " | ".join([link.get_text().strip()[:80] for link in links])[:600]
+        return extract_main_text(html, 600)
+    except Exception:
+        return ""
+
+
 def get_news_summaries(limit: int = 1) -> List[NewsItem]:
     """Récupère et valide jusqu'à `limit` sources récentes (mix de sources avec liens).
     
@@ -580,10 +536,9 @@ def get_news_summaries(limit: int = 1) -> List[NewsItem]:
     
     # Mix de scrapers avec timeouts DRASTIQUES pour <2s - TOUS les sites activés
     sources = [
-        ("ActuF1", scrape_actuf1, "https://www.actuf1.com/", 2),  # DRASTIQUE 4s→2s
         ("StandF1", scrape_standf1, "https://www.standf1.com/", 2),  # DRASTIQUE 4s→2s
         ("L'Équipe F1", scrape_lequipe, "https://www.lequipe.fr/Formule-1/", 2),  # DRASTIQUE 4s→2s
-        ("Aurupteur", scrape_aurupteur, "https://aurupteur.com/", 2),  # Actualités F1 FR
+        ("Tout-F1", scrape_toutf1, "https://www.tout-f1.com/", 2),  # Nouveau site F1
         ("FIA Calendar", scrape_fia_calendar, "https://www.fia.com/events/fia-formula-one-world-championship/season-2025/", 3),  # Calendrier officiel
         ("FIA Regulations", scrape_fia_regulations, "https://www.fia.com/regulation/category/110", 3),  # Règlements officiels
     ]
@@ -826,12 +781,12 @@ def _clamp(text: str, max_len: int) -> str:
 def build_prompt(news_summary: str, user_question: str, history_text: str = "") -> str:
     """Construction prompt avec monitoring overflow et stratégie réduction intelligente
 
-    Qwen 2.5 3B context: 8192 tokens max
-    Target: <3000 tokens (ultra-rapide) pour vitesse maximale
+    Qwen 2.5 7B context: 32768 tokens max
+    Target: <6000 tokens pour bon équilibre vitesse/qualité
     """
-    # Limites par défaut - DRASTIQUEMENT RÉDUITES pour vitesse
-    MAX_TOKENS = 3000  # Réduit de 6000→3000 pour inférence 2x plus rapide
-    WARNING_THRESHOLD = 2500  # Réduit de 5000→2500
+    # Limites par défaut - Augmentées pour réponses complètes
+    MAX_TOKENS = 6000  # Augmenté de 3000→6000 pour réponses complètes
+    WARNING_THRESHOLD = 5000  # Augmenté de 2500→5000
     
     # Template système avec NIVEAU 2 - Anti-Jailbreak RENFORCÉ
     system_template = """Tu es un assistant F1 expert. Réponds EN FRANÇAIS de manière DIRECTE et CONCISE.
@@ -916,18 +871,18 @@ Réponds maintenant (direct et concis):
 
 # Appel Ollama
 def call_ollama(prompt: str) -> str:
-    """Appel HTTP à Ollama (daemon) avec paramètres ULTRA-RAPIDES. Fallback subprocess si l'API échoue."""
-    # Payload avec paramètres optimisés pour vitesse <2s
+    """Appel HTTP à Ollama (daemon) - OPTIMISÉ VITESSE."""
+    # Payload optimisé pour réponses complètes
     payload = {
         "model": OLLAMA_MODEL,
         "prompt": prompt,
         "stream": False,
         "options": {
-            "temperature": 0.15,      # TRÈS BAS pour cohérence et vitesse
-            "top_p": 0.85,            # Focus sur meilleurs tokens
-            "num_ctx": 512,           # Context réduit pour vitesse
-            "num_predict": 150,       # DRASTIQUE: max 150 tokens pour <2s
-            "top_k": 10,              # Beam search réduit
+            "temperature": 0.3,       # Un peu plus créatif
+            "top_p": 0.9,             # Focus tokens
+            "num_ctx": 4096,          # Contexte suffisant pour questions complexes
+            "num_predict": 512,       # Réponses complètes (augmenté de 150→512)
+            "top_k": 40,              # Bon compromis
             "repeat_penalty": 1.1,    # Anti-répétition
         }
     }
@@ -989,19 +944,31 @@ def _is_f1_question(q: str) -> bool:
     ql = q.lower()
     f1_keywords = [
         "f1", "formula 1", "formule 1", "grand prix", "gp",
-        # Pilotes modernes
+        # Pilotes 2024-2026
         "verstappen", "hamilton", "leclerc", "alonso", "perez", "sainz", "norris", "piastri",
         "russell", "ocon", "gasly", "tsunoda", "bottas", "zhou", "stroll", "hulkenberg", "magnussen",
-        # Pilotes historiques fréquents
+        "bearman", "lawson", "doohan", "hadjar", "antonelli", "colapinto", "bortoleto",
+        # Variantes orthographiques courantes
+        "noris", "lecler", "verstapen", "alonzo", "peréz", "hülkenberg", "magnusen",
+        "hajar", "dohan", "collapinto", "antoneli",  # Fautes fréquentes
+        # Pilotes historiques
         "schumacher", "michael schumacher", "senna", "ayrton senna", "prost", "alain prost", "lauda", "niki lauda",
-        "vettel", "raikkonen", "massa", "rosberg", "nico rosberg", "mansell", "piquet", "berger", "hill",
-        "jackie stewart", "jim clark", "fangio", "hunt", "villeneuve", "gilles villeneuve", "button",
-        "mercedes", "ferrari", "red bull", "mclaren", "aston martin", "alpine", "williams", "haas", "sauber",
+        "vettel", "raikkonen", "kimi", "massa", "rosberg", "nico rosberg", "mansell", "piquet", "berger", "hill",
+        "jackie stewart", "jim clark", "fangio", "hunt", "villeneuve", "gilles villeneuve", "button", "barrichello",
+        "hakkinen", "montoya", "webber", "ricciardo", "kvyat", "grosjean", "maldonado", "kobayashi",
+        # Écuries
+        "mercedes", "ferrari", "red bull", "redbull", "mclaren", "aston martin", "alpine", "williams", "haas", "sauber",
+        "racing point", "toro rosso", "alphatauri", "rb", "visa", "kick", "stake",
+        # Termes techniques F1
         "circuit", "piste", "champion", "victoire", "course", "pilote", "constructeur",
-        "pole position", "podium", "drs", "kers", "qualif", "essai", "essais libres",
-        "monza", "spa", "monaco", "silverstone", "imola", "suzuka", "interlagos",
+        "pole position", "podium", "drs", "kers", "qualif", "essai", "essais libres", "sprint",
+        "stand", "pit", "pneu", "gomme", "stratégie", "dépassement", "safety car", "voiture de sécurité",
+        # Circuits
+        "monza", "spa", "monaco", "silverstone", "imola", "suzuka", "interlagos", "bahreïn", "bahrain",
+        "jeddah", "melbourne", "barcelone", "hungaroring", "zandvoort", "singapour", "las vegas", "austin",
+        # Verbes/stats
         "gagn", "gagne", "gangé", "perdu", "perd", "classement", "position", "résultat",
-        "victoire", "victoires", "points", "total", "somme", "addition"
+        "victoire", "victoires", "points", "total", "somme", "addition", "titre", "champion"
     ]
     return any(k in ql for k in f1_keywords)
 
@@ -1036,6 +1003,7 @@ def _is_kb_result_relevant(query: str, result: str, min_keyword_match: int = 1) 
     
     Évite les faux positifs comme "Qui est Colin ?" qui retourne la FAQ F1.
     Utilise word boundaries pour des matches exacts (pas des sous-chaînes).
+    Exige au moins 1 mot-clé correspondant pour valider la pertinence.
     """
     import re
     query_lower = query.lower()
@@ -1231,7 +1199,9 @@ def _answer_f1_question_internal(user_question: str, history=None, rag_only: Opt
                 handler = FAST_HANDLERS.get(intent.name)
                 if handler:
                     logger.info(f"⚡ Intent rapide: {intent.name} (conf={intent.confidence:.2f})")
-                    return handler()
+                    handler_result = handler()
+                    sources.append("Handler rapide")
+                    return handler_result, sources
         except Exception as e:
             logger.warning(f"Routage échoué: {e}")
 
@@ -1275,7 +1245,7 @@ def _answer_f1_question_internal(user_question: str, history=None, rag_only: Opt
                 )
                 response = call_ollama(prompt)
                 if response and not response.startswith("[ERREUR"):
-                    return response
+                    return response, sources
 
         # DÉTECTION TYPE DE QUESTION
         rag_mode = RAG_ONLY if rag_only is None else rag_only
@@ -1316,29 +1286,29 @@ def _answer_f1_question_internal(user_question: str, history=None, rag_only: Opt
             wiki_data = None
             season_csv_summary = None
 
-            # ÉTAPE 1: Knowledge Base (PRIORITAIRE - CHARGEMENT MAXIMAL)
+            # ÉTAPE 1: Knowledge Base (PRIORITAIRE - LIMITÉ pour vitesse)
             try:
                 kb = get_knowledge_base()
-                # OPTIMISÉ: top_k=15 pour récupérer BEAUCOUP plus de docs, min_score=0.35 (plus permissif)
-                kb_results = kb.search(user_question, top_k=15, min_score=0.35)
+                # min_score=0.4 et top_k=3 pour vitesse
+                kb_results = kb.search(user_question, top_k=3, min_score=0.4)
                 if kb_results:
-                    # Prendre TOUS les résultats pertinents (pas de limite à 3000 chars)
-                    kb_content = "\n\n".join(kb_results)[:5000]  # Augmenté de 3000→5000
-                    logger.info(f"✅ KB PRIORITAIRE: {len(kb_results)} chunks utilisés (score ≥0.35)")
-                    sources.append("Knowledge Base F1 (base de connaissances locale)")
+                    # Limiter le contexte pour vitesse
+                    kb_content = "\n\n".join(kb_results)[:800]  # MAX 800 chars
+                    logger.info(f"✅ KB: {len(kb_results)} chunks (score ≥0.4)")
+                    sources.append("Knowledge Base F1")
                 else:
-                    logger.info(f"KB: Aucun résultat (score <0.35)")
+                    logger.info(f"KB: Aucun résultat")
             except Exception as e:
                 logger.warning(f"KB search failed: {e}")
 
-            # ÉTAPE 1.5: Données locales CSV des saisons (f1_wiki_csv)
-            # Détection: présence d'une année (1950–2026) ou mot-clé saison/season
+            # ÉTAPE 1.5: Données locales CSV (index optimisé)
+            # TOUJOURS chercher dans les CSV pour les questions F1 (pilotes, saisons, stats)
             try:
                 import re
                 year_match = re.search(r"\b(19[5-9]\d|20[0-2]\d|2026)\b", user_question)
-                saison_indicators = any(k in q_lower for k in ["saison", "season", "championnat", "classement "])  # espace volontaire après classement
-                if year_match or saison_indicators:
-                    csv_entries = search_f1_wiki_data(user_question)
+                # Utiliser l'index CSV optimisé (pré-chargé au démarrage)
+                if is_f1:  # Toujours chercher si c'est une question F1
+                    csv_entries = search_csv(user_question, max_results=5)  # Réduit pour vitesse
                     if csv_entries:
                         # Construire un résumé compact des premières entrées
                         lines = []
@@ -1346,7 +1316,7 @@ def _answer_f1_question_internal(user_question: str, history=None, rag_only: Opt
                         # Essayer de dériver un lien Wikipedia à partir du dossier source
                         try:
                             from backend.wiki_utils import normalize_wiki_title_from_dir, build_wiki_url_from_title, fetch_wiki_extract_by_title
-                            source_dirs = [e.get('source_dir') for e in csv_entries if e.get('source_dir')]
+                            source_dirs = [e.get('_source_dir') for e in csv_entries if e.get('_source_dir')]
                             source_dirs = [d for d in source_dirs if d]
                             if source_dirs:
                                 title = normalize_wiki_title_from_dir(source_dirs[0])
@@ -1356,37 +1326,40 @@ def _answer_f1_question_internal(user_question: str, history=None, rag_only: Opt
                                     wiki_link_line = f"Page Wiki: [Lien]({url}) — {extract[:200]}"
                         except Exception:
                             pass
-                        for entry in csv_entries[:5]:
-                            # Afficher fichier source et 2-3 paires clé/valeur courtes
-                            src = entry.get('source_file', '')
+                        for entry in csv_entries[:10]:  # Top 10 résultats
+                            # Afficher fichier source et paires clé/valeur
+                            src = entry.get('_source_file', '')
                             kvs = []
                             for k, v in entry.items():
-                                if k == 'source_file':
+                                if k.startswith('_'):  # Ignorer métadonnées
                                     continue
                                 val = str(v).strip()
-                                if val:
-                                    kvs.append(f"{k}: {val[:60]}")
-                                if len(kvs) >= 3:
+                                if val and len(val) < 100:
+                                    kvs.append(f"{k}: {val}")
+                                if len(kvs) >= 4:
                                     break
                             line = (src + " — " + "; ".join(kvs)) if kvs else src
                             if line:
-                                lines.append(line[:160])
+                                lines.append(line[:200])
                         if lines:
-                            season_csv_summary = "\n".join(lines)
+                            # Utiliser le formatage intelligent pour le LLM - LIMITÉ
+                            season_csv_summary = format_csv_results_for_llm(csv_entries, max_results=5)
+                            if not season_csv_summary:
+                                season_csv_summary = "\n".join(lines[:3])  # Max 3 lignes
+                            season_csv_summary = season_csv_summary[:500]  # MAX 500 chars
                             if wiki_link_line:
                                 season_csv_summary = wiki_link_line + "\n" + season_csv_summary
                                 sources.append("Wikipedia F1")
-                            sources.append("Données historiques CSV")
-                            logger.info(f"Saisons CSV: {len(csv_entries)} entrées (résumé {len(lines)})")
+                            sources.append("CSV Index")
+                            logger.info(f"✅ CSV: {len(csv_entries)} entrées")
             except Exception as e:
-                logger.warning(f"Saison CSV search failed: {e}")
+                logger.warning(f"CSV Index search failed: {e}")
 
-            # ÉTAPE 2: Memory Long Terme (PRIORITÉ #2 après KB)
-            # Récupérer contexte mémoire ENRICHI si KB insuffisant
+            # ÉTAPE 2: Memory Long Terme (PRIORITÉ #2 après KB) - LIMITÉ
             memory_context = None
-            if lt_context:  # lt_context déjà récupéré en début de fonction
-                memory_context = lt_context
-                logger.info(f"✅ MEMORY: Contexte long terme récupéré ({len(lt_context)} chars)")
+            if lt_context:
+                memory_context = lt_context[:300]  # MAX 300 chars
+                logger.info(f"✅ MEMORY: {len(lt_context)} chars (tronqué à 300)")
             
             # ÉTAPE 3: Standings via StandF1 (sans Ergast)
             standings_keywords = [
@@ -1484,69 +1457,14 @@ def _answer_f1_question_internal(user_question: str, history=None, rag_only: Opt
             )
 
             response = call_ollama(prompt)
-
-            # ÉTAPE 6: Si réponse toujours insuffisante ET pas encore de web search, réessayer
-            if (not response or "désolé" in response.lower() or "pas d'info" in response.lower() or "je n'ai pas" in response.lower() or len(response) < 30) and not wiki_data and not f1_sites_data:
-                logger.info("⚠️ LLM incertain, tentative Web Search complète (dernier recours)...")
-
-                # 1. Chercher sur les sites F1 spécialisés
-                try:
-                    f1_results = search_f1_sites(user_question)
-                    if f1_results:
-                        f1_sites_data = " | ".join(f1_results)
-                        sources.append("Sites F1 spécialisés (ActuF1, StandF1, L'Équipe, Aurupteur)")
-                        logger.info(f"✅ Sites F1 (dernier recours): {len(f1_results)} résultats trouvés")
-                except Exception as e:
-                    logger.warning(f"Recherche sites F1 échouée: {e}")
-
-                # 2. Chercher Wikipedia
-                wiki_content = []
-                try:
-                    search_queries = [f"F1 {user_question}", user_question]
-                    for search_q in search_queries[:2]:
-                        wiki_params = {"list": "search", "srsearch": search_q, "srlimit": 3}
-                        data = fetch_wikimedia_api("query", params=wiki_params)
-                        if data and "query" in data and "search" in data["query"]:
-                            for r in data["query"]["search"][:3]:
-                                wiki_content.append(f"{r['title']}: {r['snippet'][:200]}")
-                            if wiki_content:
-                                break
-                    if wiki_content:
-                        wiki_data = " | ".join(wiki_content[:3])
-                        sources.append("Recherche web (Wikipedia)")
-                        logger.info(f"✅ Web Search Wikipedia (dernier recours)")
-                except Exception as e:
-                    logger.warning(f"Web Search échoué: {e}")
-                    wiki_data = None
-
-                # Nouveau prompt avec Web Search + Sites F1
-                if wiki_data or f1_sites_data:
-                    sources_to_combine = []
-                    if season_csv_summary:
-                        sources_to_combine.append(season_csv_summary)
-                    if f1_sites_data:
-                        sources_to_combine.append(f1_sites_data)
-                    if wiki_data:
-                        sources_to_combine.append(wiki_data)
-
-                    final_news_summary = "\n\n".join(sources_to_combine) if sources_to_combine else None
-
-                    prompt = OptimizedPromptBuilder.build_f1_question(
-                        question=user_question,
-                        kb_content=kb_content,
-                        standings=ergast_summary,
-                        news_summary=final_news_summary,
-                        conversation_history=history_text,
-                        long_term_context=memory_context
-                    )
-                    response = call_ollama(prompt)
-                    logger.info(f"✅ Web Search complet utilisé en dernier recours")
-
+            
+            # Ajouter disclaimer de cohérence si nécessaire (stats temporelles)
             if response and not response.startswith("[ERREUR"):
+                response = add_coherence_disclaimer(response, user_question)
                 return response, sources
 
             # Fallback final si toujours rien
-            return "Désolé, j'ai cherché dans ma base et sur le web mais je n'ai pas trouvé de détails précis sur ça... 😕 Tu peux me demander autre chose sur la F1 ? 🏎️", sources
+            return "Je n'ai pas trouvé d'info précise. Reformule ta question ? 🏎️", sources
 
         # QUESTIONS GÉNÉRALES (non-F1)
         if is_general and not is_f1:
@@ -1630,19 +1548,44 @@ def load_f1_wiki_csv_data() -> List[Dict]:
 
 
 def search_f1_wiki_data(query: str) -> List[Dict]:
-    """Recherche dans les données chargées depuis f1_wiki_csv."""
+    """Recherche dans les données chargées depuis f1_wiki_csv.
+    
+    Cherche chaque mot significatif (>3 chars) individuellement,
+    et trie les résultats par nombre de mots matchés.
+    """
     data = load_f1_wiki_csv_data()
     query_lower = query.lower().strip()
 
     if not query_lower:
         return []
 
-    results = []
-    for entry in data:
-        if any(query_lower in str(value).lower() for value in entry.values()):
-            results.append(entry)
+    # Extraire les mots significatifs (ignorer les mots courts et stop words)
+    stop_words = {"qui", "est", "quoi", "que", "quel", "quelle", "les", "des", "son", "ses", 
+                  "une", "par", "pour", "dans", "sur", "avec", "sans", "son", "parle", "moi",
+                  "tout", "tous", "cette", "ces", "comment", "pourquoi"}
+    keywords = [w for w in query_lower.split() if len(w) > 2 and w not in stop_words]
+    
+    if not keywords:
+        # Fallback: chercher la requête entière
+        results = []
+        for entry in data:
+            if any(query_lower in str(value).lower() for value in entry.values()):
+                results.append(entry)
+        return results
 
-    return results
+    # Chercher les entrées qui matchent au moins un mot-clé
+    scored_results = []
+    for entry in data:
+        entry_text = " ".join(str(v).lower() for v in entry.values())
+        matches = sum(1 for kw in keywords if kw in entry_text)
+        if matches > 0:
+            scored_results.append((matches, entry))
+    
+    # Trier par nombre de matches (descroissant)
+    scored_results.sort(key=lambda x: x[0], reverse=True)
+    
+    # Retourner les résultats (max 100)
+    return [entry for _, entry in scored_results[:100]]
 
 
 # Scraping helpers for recommended sites

@@ -1,42 +1,42 @@
 [
     {
-        "user": "c'est qui hadjar ?",
-        "assistant": "Je n'ai aucune information sur une personne nommée Hadjar. Il y a peut-être un faux-pas dans le nom ou il s'agit d'une personnalité très récente/connue que je ne connais pas. Pouvez-vous me donner plus de contexte ?"
+        "user": "redonne la reponse pour 2025",
+        "assistant": "En 2025, après 24 courses, **Max Verstappen** a remporté son quatrième titre mondial 🏆, consolidant sa position comme l'un des pilotes les plus titrés de l'histoire. De son côté, **Lewis Hamilton**, qui a rejoint Ferrari en 2025, n'a pas réussi à remporter le championnat cette année-là. Les écuries de **Red Bull** et **Ferrari** ont perdu des points comparativement à 2024, mais les quatre plus petites écuries se sont distinguées, réduisant l'écart entre elles en termes de performances."
     },
     {
-        "user": "peux tu me dire le nombre de virage dans le circuit de Chine ?",
-        "assistant": "🏎️ circuit_63 à Circuit: Circuit international de Shanghai,\"https://fr.wikipedia.org/wiki/Circuit_international_de_Shanghai\". Situe a \"Grand Prix de Chine\". Courses: \"2004-2019, 2024-2025\". Annees d'activite: \"18. — circuits"
+        "user": "qui est fernando alonso",
+        "assistant": "Fernando Alonso est un pilote de Formule 1 connu pour sa carrière impressionnante. À 44 ans, il a disputé la saison 2025 avec Aston Martin et a remporté 161 points 🏎️. Il a également obtenu 7 victoires, 15 podiums et 6 poles positions au cours de sa carrière, notamment en 2005 lorsqu'il était pilote Renault 🏆🏁."
     },
     {
-        "user": "ok et comapre le svictoire de Hamilton, Leclerc, Vettel et Schumacher et dis moi le meilleur et son taux de victore",
-        "assistant": "Désolé, j'ai cherché dans ma base et sur le web mais je n'ai pas trouvé de détails précis sur ça... 😕 Tu peux me demander autre chose sur la F1 ? 🏎️"
+        "user": "qui est schumarer",
+        "assistant": "Schumacher, tu parles de Michael Schumacher ! C'était un pilote allemand de Formule 1 légendaire, souvent considéré comme l'un des plus grands de tous les temps. Il a remporté sept championnats du monde en F1 entre 1994 et 2006, ce qui est un record. Schumacher a disputé sa carrière principale chez Benetton (en tant que Benetton), Ferrari, et Mercedes.\n\nIl a connu des moments d'incroyable réussite avec Ferrari, notamment en remportant ses six premiers titres mondiaux avec l'écurie italienne. Sa dernière saison en F1 a été en 2006 chez Mercedes.\n\nMalheureusement, Schumacher a eu un accident grave lors d'une descente de montagne en 2013 qui a nécessité plusieurs opérations et une longue période de rétablissement. Il est toujours sous surveillance médicale aujourd'hui, mais reste un nom emblématique dans l'histoire de la Formule 1."
     },
     {
-        "user": "Bonjour, as tu le nombre de virage du circuit de chine ?",
-        "assistant": "Je suis désolé, mais je n'ai pas d'information sur le nombre de virages du circuit chinois dans cette base de données."
+        "user": "qui est l ecrutie qui a gagné le plus de championat du monde",
+        "assistant": "Le pilote qui a remporté le plus de championnats du monde en Formule 1 est Michael Schumacher 🏎️, avec sept titres mondiaux entre 1994 et 2006."
     },
     {
-        "user": "Quel est le taux de victoire de Hamilton ?",
-        "assistant": "Désolé, j'ai cherché dans ma base et sur le web mais je n'ai pas trouvé de détails précis sur ça... 😕 Tu peux me demander autre chose sur la F1 ? 🏎️"
+        "user": "oui mais l ecurie pas le piolote",
+        "assistant": "L'écurie qui a remporté le plus de championnats mondiaux constructeurs est Ferrari 🏎️🏁🏆. L'équipe italienne a remporté 16 titres mondiaux constructeurs, ce qui est un record dans l'histoire de la Formule 1.\n\nCette performance exceptionnelle a été réalisée principalement grâce aux talents de pilotes comme Michael Schumacher, mais aussi avec d'autres pilotes au cours des années."
     },
     {
-        "user": "quelle voiture à le plus de victoire ?",
-        "assistant": "Charles Leclerc a le plus de victoires avec deux victoires au Grand Prix de Singapour 2019."
+        "user": "quel a été la pire saison de lewis hamilton",
+        "assistant": "La pire saison de Lewis Hamilton est sans aucun doute 2025 chez Ferrari 🏎️, où il n'a pas réussi à terminer un seul Grand Prix sur le podium. Ce résultat marque la première fois depuis 18 ans de carrière que Hamilton ne termine pas sur le podium en fin de saison."
     },
     {
-        "user": "qui sont les 3 derniers champion de GP 2025 2024 et 2023",
-        "assistant": "Désolé, j'ai cherché dans ma base et sur le web mais je n'ai pas trouvé de détails précis sur ça... 😕 Tu peux me demander autre chose sur la F1 ? 🏎️"
+        "user": "qui a été le champion en 2025",
+        "assistant": "Le champion de la Formule 1 en 2025 a été Max Verstappen 🏎️🏆, qui a remporté son quatrième titre mondial cette année."
     },
     {
-        "user": "qui est champion 2024",
-        "assistant": "Olivier Panis champions en 2024."
+        "user": "quand est mort senna",
+        "assistant": "Ayrton Senna est décédé lors du Grand Prix du Brésil 1994, après un accident sur la ligne d'arrivée 🏎️🏁. Sa mort a marqué une triste fin à sa brillante carrière et reste un événement mémorable dans l'histoire de la Formule 1."
     },
     {
-        "user": "avec quelle voiture et combien est son temps et combien de tours",
-        "assistant": "Pour répondre à cette question, je devrais avoir les informations du calendrier ou des résultats courants. Pourrait-on vérifier ces données ?"
+        "user": "qui sont les prochain coureur red bull",
+        "assistant": "Je n'ai pas cette info sur qui seront les prochains conducteurs de Red Bull pour la saison 2026. Cependant, Max Verstappen a indiqué sur ses réseaux sociaux qu'il reste avec l'équipe Red Bull Racing 🏎️. Il remercie Helmut Marko, son mentor, pour avoir cru en lui tout au long de sa carrière."
     },
     {
-        "user": "Bonjour comment ca va ?",
-        "assistant": "Je ne suis pas sûr de comprendre ta question, mais si ça parle de F1, je peux sûrement t'aider !"
+        "user": "et hadjar?",
+        "assistant": "Isack Hadjar a été l'un des prochains conducteurs de Red Bull pour la saison 2026 🏎️. Après un début difficile, il a réussi à prendre l'avantage sur Liam Lawson et s'est classé au côté de Max Verstappen en 2026. Bien que sans points cette année-là, Hadjar avait déjà une carrière impressionnante avec 81 victoires en Formule 1 🏆."
     }
 ]

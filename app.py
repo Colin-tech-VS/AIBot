@@ -5,6 +5,10 @@ Communication frontend ↔ backend ↔ Ollama fonctionnelle.
 Compatible: Windows, macOS, Linux
 """
 
+import warnings
+# Supprimer le warning Pydantic V1 de langchain-core (compatibilité Python 3.14)
+warnings.filterwarnings("ignore", message=".*Pydantic V1.*", category=UserWarning)
+
 import httpx
 from fastapi import FastAPI, Request, BackgroundTasks
 from fastapi.responses import HTMLResponse, JSONResponse
@@ -26,6 +30,8 @@ from backend.input_validator import sanitize_user_input
 from backend.standings_utils import get_standf1_standings_summary, get_standf1_constructors_summary
 from bs4 import BeautifulSoup
 import re
+import json
+from datetime import datetime, timedelta
 
 # Import logger structuré
 from backend.logger import get_logger
@@ -85,7 +91,7 @@ templates = Jinja2Templates(directory=TEMPLATES_DIR)
 
 # URL API Ollama (Windows par défaut)
 OLLAMA_URL = "http://127.0.0.1:11434/api/generate"
-OLLAMA_MODEL = "qwen2.5:3b"  # Qwen 2.5 3B - Rapide et performant
+OLLAMA_MODEL = "qwen2.5:7b"  # Qwen 2.5 7B - Qualité GPT-like
 
 # MODELS
 class HistoryItem(BaseModel):
@@ -265,9 +271,35 @@ async def get_memory_summary():
     return long_term_memory.get_learning_summary()
 
 
-# Shared function for next race countdown (used by both endpoint and fast handler)
-def get_next_race_data() -> dict:
-    """Récupère les données du prochain GP depuis Aurupteur (partagé par endpoint et fast handler)"""
+@app.get("/top_drivers")
+async def get_top_drivers():
+    """Récupère le top 5 des pilotes F1 actuels"""
+    from backend.standings_utils import get_driver_standings
+    try:
+        standings = get_driver_standings(top_n=5)
+        if standings:
+            # Parser le format "1. Nom — NN pts"
+            drivers = []
+            for line in standings.split("\n"):
+                if line.strip():
+                    parts = line.split(" — ")
+                    if len(parts) >= 2:
+                        name_part = parts[0].split(". ", 1)
+                        name = name_part[1] if len(name_part) > 1 else parts[0]
+                        points = parts[1].replace(" pts", "")
+                        drivers.append({"name": name, "points": points})
+                    else:
+                        drivers.append({"name": line, "points": ""})
+            return {"drivers": drivers[:5], "source": "F1 Standings"}
+        return {"drivers": [], "source": None}
+    except Exception as e:
+        logger.warning(f"Erreur récupération classement: {e}")
+        return {"drivers": [], "source": None}
+
+
+@app.get("/next_race_countdown")
+async def get_next_race_countdown():
+    """Récupère le compte à rebours du prochain GP depuis plusieurs sources (Aurupteur, Ergast API)"""
     from datetime import datetime, timezone
     
     try:
@@ -559,17 +591,99 @@ if __name__ == "__main__":
     # Lancer auto_train.py au démarrage si activé et présent
     launch_auto_train()
 
+    # CRAWLING AUTOMATIQUE HEBDOMADAIRE
+    def auto_crawl_if_needed():
+        """Lance le crawling automatiquement si le dernier date de plus de 7 jours."""
+        CRAWL_INTERVAL_DAYS = 7  # Crawl toutes les semaines
+        CRAWL_META_FILE = BASE_DIR / "knowledge_base" / "crawled" / "_crawl_metadata.json"
+        
+        try:
+            # Vérifier la date du dernier crawl
+            should_crawl = False
+            
+            if not CRAWL_META_FILE.exists():
+                logger.info("🕷️ Aucun crawl précédent détecté, lancement du crawling...")
+                should_crawl = True
+            else:
+                try:
+                    with open(CRAWL_META_FILE, 'r', encoding='utf-8') as f:
+                        meta = json.load(f)
+                    
+                    last_crawl = meta.get("last_crawl", {})
+                    if last_crawl:
+                        # Prendre la date la plus récente
+                        dates = [datetime.fromisoformat(d) for d in last_crawl.values() if d]
+                        if dates:
+                            latest = max(dates)
+                            age_days = (datetime.now() - latest).days
+                            if age_days >= CRAWL_INTERVAL_DAYS:
+                                logger.info(f"🕷️ Dernier crawl il y a {age_days} jours, relancement...")
+                                should_crawl = True
+                            else:
+                                logger.info(f"✅ Crawl récent ({age_days} jours), pas de re-crawl")
+                        else:
+                            should_crawl = True
+                    else:
+                        should_crawl = True
+                except (json.JSONDecodeError, KeyError, ValueError) as e:
+                    logger.warning(f"⚠️ Metadata crawl corrompue: {e}")
+                    should_crawl = True
+            
+            if should_crawl:
+                def run_crawler():
+                    try:
+                        crawler_script = BASE_DIR / "scripts" / "crawler_f1.py"
+                        if crawler_script.exists():
+                            logger.info("🕷️ Crawling en arrière-plan...")
+                            result = subprocess.run(
+                                [sys.executable, str(crawler_script)],
+                                capture_output=True,
+                                text=True,
+                                timeout=600  # 10 minutes max
+                            )
+                            if result.returncode == 0:
+                                logger.info("✅ Crawling terminé, rechargement KB...")
+                                reload_knowledge_base()
+                                logger.info("✅ Knowledge Base rechargée avec nouveaux fichiers")
+                            else:
+                                logger.warning(f"⚠️ Crawling terminé avec erreurs: {result.stderr[:200]}")
+                        else:
+                            logger.warning(f"⚠️ Script crawler non trouvé: {crawler_script}")
+                    except subprocess.TimeoutExpired:
+                        logger.warning("⚠️ Crawling timeout (>10min)")
+                    except Exception as e:
+                        logger.error(f"❌ Erreur crawling: {e}")
+                
+                # Lancer en arrière-plan pour ne pas bloquer le démarrage
+                threading.Thread(target=run_crawler, daemon=True).start()
+        
+        except Exception as e:
+            logger.warning(f"⚠️ Erreur vérification crawl: {e}")
+
+    # Lancer le crawl auto si nécessaire
+    AUTO_CRAWL_ENABLED = os.environ.get("AUTO_CRAWL", "1").lower() in ("1", "true", "yes")
+    if AUTO_CRAWL_ENABLED:
+        auto_crawl_if_needed()
+    else:
+        logger.info("🕷️ Auto-crawl désactivé (AUTO_CRAWL=0)")
+
     # PRÉ-CHARGEMENT DU CACHE au démarrage (optimisation vitesse première requête)
     def preload_cache():
         """Pré-charge les données fréquentes en cache pour accélérer les premières requêtes."""
         try:
             logger.info("🚀 Pré-chargement du cache...")
-            # 1. Pré-charger knowledge base (désactiver FAISS - problème réseau)
+            # 1. Pré-charger knowledge base
+            kb = get_knowledge_base()
+            logger.info(f"✅ KB chargée: {len(kb.docs)} documents")
+            
+            # 1.5 Pré-charger l'index CSV F1 (43K+ entrées)
             try:
-                kb = get_knowledge_base(use_faiss=False)
-                logger.info(f"✅ KB chargée: {len(kb.docs)} documents")
-            except Exception as kb_error:
-                logger.warning(f"⚠️ KB erreur: {kb_error}")
+                from backend.csv_index import load_csv_index, get_index_stats
+                count = load_csv_index()
+                stats = get_index_stats()
+                logger.info(f"✅ Index CSV chargé: {count} entrées, {stats['unique_keywords']} mots-clés")
+            except Exception as e:
+                logger.warning(f"⚠️ Index CSV non chargé: {e}")
 
             # 2. Pré-charger classements (en background)
             def load_standings():
