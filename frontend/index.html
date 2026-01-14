@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{{ title or 'Chatbot Ollama' }}</title>
+    <title>F1 Tech - Chatbot IA</title>
     <link rel="icon" type="image/png" href="/image/favicon.png?v={{ range(100000) | random }}">
     <!-- Tailwind CSS avec config sombre automatique -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -24,6 +24,12 @@
       })();
     </script>
     <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
       #mainNavbar {
         transition: width 0.3s ease;
         width: 15rem;
@@ -133,13 +139,15 @@
         padding: 1rem 1.5rem;
       }
 
-      #chatContainer.active-chat #inputContainer h1 {
-        display: none;
+      #chatContainer.active-chat #inputContainer .content-center {
+        max-width: 100%;
       }
 
-      #chatContainer.active-chat #inputContainer > div {
-        width: 100%;
-        max-width: 100%;
+      #chatContainer.active-chat #inputContainer .main-title,
+      #chatContainer.active-chat #inputContainer .main-subtitle,
+      #chatContainer.active-chat #inputContainer .main-logo,
+      #chatContainer.active-chat #inputContainer .suggestions-grid {
+        display: none;
       }
 
       .input-racing {
@@ -170,6 +178,10 @@
         color: #0B1C2D;
         font-size: 0.95em;
         letter-spacing: 0.5px;
+      }
+
+      .dark .input-racing::placeholder {
+        color: rgba(255,255,255,0.6);
       }
 
       /* Navbar F1 Racing Style */
@@ -221,36 +233,208 @@
       #mainNavbar.navbar-collapsed ~ #chatContainer {
         margin-left: 4rem;
       }
+
+      /* Suggestions Grid */
+      .suggestions-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        margin-top: 30px;
+      }
+
+      .suggestion-chip {
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 14px 20px;
+        border-radius: 25px;
+        font-size: 0.9em;
+        cursor: pointer;
+        transition: all 0.3s;
+        text-align: center;
+        color: #E6ECF2;
+      }
+
+      .suggestion-chip:hover {
+        background: rgba(225, 6, 0, 0.15);
+        border-color: #e10600;
+        transform: translateY(-2px);
+      }
+
+      /* Prochain GP section */
+      .next-gp-section {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 12px;
+        padding: 16px;
+        transition: all 0.3s;
+        margin: 0 0 20px 0;
+      }
+
+      .next-gp-section:hover {
+        background: rgba(255, 255, 255, 0.05);
+        border-color: rgba(225, 6, 0, 0.3);
+      }
+
+      .gp-badge {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 10px;
+      }
+
+      .gp-dot {
+        width: 10px;
+        height: 10px;
+        background: #e10600;
+        border-radius: 50%;
+        animation: pulse 2s infinite;
+      }
+
+      @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.5; }
+      }
+
+      .gp-label {
+        font-size: 0.85em;
+        font-weight: 600;
+        color: #e10600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .gp-countdown {
+        font-size: 0.9em;
+        color: #ccc;
+        margin-bottom: 8px;
+      }
+
+      .gp-name {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 0.9em;
+        color: #aaa;
+      }
+
+      .gp-flag {
+        font-size: 1.1em;
+      }
+
+      .gp-source {
+        font-size: 0.75em;
+        color: #666;
+        margin-top: 4px;
+      }
+
+      /* Main content styling */
+      .main-logo {
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(135deg, #e10600, #ff6b00);
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2.5em;
+        margin: 0 auto 25px auto;
+        box-shadow: 0 10px 30px rgba(225, 6, 0, 0.3);
+      }
+
+      .main-title {
+        font-size: 2em;
+        font-weight: 300;
+        text-align: center;
+        margin-bottom: 12px;
+        color: #E6ECF2;
+      }
+
+      .main-subtitle {
+        text-align: center;
+        color: #888;
+        margin-bottom: 35px;
+        font-size: 1.05em;
+      }
+
+      .search-container {
+        position: relative;
+        width: 100%;
+      }
+
+      .search-button {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 45px;
+        height: 45px;
+        background: linear-gradient(135deg, #e10600, #ff6b00);
+        border: none;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2em;
+        color: white;
+        transition: all 0.3s;
+      }
+
+      .search-button:hover {
+        transform: translateY(-50%) scale(1.08);
+        box-shadow: 0 5px 15px rgba(225, 6, 0, 0.4);
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .suggestions-grid {
+          grid-template-columns: 1fr;
+        }
+      }
     </style>
   </head>
-  <body class="bg-[#F5F6F8] dark:bg-[#050A10] text-[#0B1C2D] dark:text-[#E6ECF2] h-screen overflow-hidden">
+  <body class="bg-gradient-to-b from-[#f8f9fa] to-[#ffffff] dark:bg-[#050A10] text-[#1a1d2e] dark:text-[#E6ECF2] h-screen overflow-hidden">
     <div class="flex h-full">
       <!-- Navbar collapsible -->
-      <nav id="mainNavbar" class="bg-[#F5F6F8] dark:bg-[#0C1A28] flex flex-col py-3 shadow-lg overflow-hidden fixed left-0 top-0 h-full z-50">
+      <nav id="mainNavbar" class="bg-gradient-to-b from-[#ffffff] to-[#f8f9fa] dark:from-[#0C1A28] dark:to-[#050A10] flex flex-col py-3 shadow-lg overflow-hidden fixed left-0 top-0 h-full z-50">
         <!-- Header avec toggle icon -->
-        <div class="px-4 py-3 flex items-center justify-between bg-[#F5F6F8] dark:bg-[#0C1A28] relative border-b-4 border-[#E10600]">
+        <div class="px-4 py-3 flex items-center justify-between bg-gradient-to-r from-[#ffffff] to-[#f8f9fa] dark:from-[#0C1A28] dark:to-[#050A10] relative border-b-4 border-[#E10600]">
           <!-- F1 logo - à gauche en ouvert, centré en fermé -->
           <button class="navbar-logo text-2xl hover:scale-110 transition-transform duration-200" title="Logo">🏎️</button>
           
           <!-- Icone toggle - à droite en ouvert, remplace F1 au hover en fermé -->
-          <button class="navbar-toggle-icon items-center text-[#0B1C2D] dark:text-[#E6ECF2] p-2 rounded-lg hover:bg-[#FCE8E7] dark:hover:bg-[#1B2F46] hover:scale-110 transition-all duration-200" onclick="toggleNavbar()" title="Fermer">
+          <button class="navbar-toggle-icon items-center text-[#1a1d2e] dark:text-[#E6ECF2] p-2 rounded-lg hover:bg-[#f5f5f5] dark:hover:bg-[#1B2F46] hover:scale-110 transition-all duration-200" onclick="toggleNavbar()" title="Fermer">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
           </button>
         </div>
 
         <!-- Boutons de navigation -->
-        <div class="flex flex-col gap-2 px-3 py-2 border-b border-[#D8DEE6] dark:border-[#1F334A]">
-          <button id="newConvNavBtn" class="flex items-center gap-2 p-2 rounded-lg hover:bg-[#FCE8E7] dark:hover:bg-[#1B2F46] transition-all duration-200 active:scale-95 text-[#E10600] dark:text-[#FF3B30] text-left text-sm font-semibold" onclick="createConversation()">
+        <div class="flex flex-col gap-2 px-3 py-2">
+          <button id="newConvNavBtn" class="flex items-center gap-2 p-2 rounded-lg hover:bg-[#f5f5f5] dark:hover:bg-[#1B2F46] transition-all duration-200 active:scale-95 text-[#E10600] dark:text-[#FF3B30] text-left text-sm font-semibold" onclick="createConversation()">
             <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
             <span class="whitespace-nowrap overflow-hidden" data-navbar-text>Nouvelle discussion</span>
           </button>
         </div>
 
+        <!-- Section Prochain GP -->
+        <div class="px-3 py-2 next-gp-section bg-[rgba(225,6,0,0.03)] dark:bg-[rgba(255,255,255,0.03)] border border-[rgba(225,6,0,0.15)] dark:border-[rgba(255,255,255,0.08)] rounded-lg" id="gpWidget">
+          <div class="gp-badge">
+            <div class="gp-dot"></div>
+            <span class="gp-label">Prochain GP</span>
+          </div>
+          <div class="gp-countdown" id="countdown">Chargement...</div>
+          <div class="gp-name text-[#2a3441] dark:text-[#ccc]">
+            <span class="gp-flag" id="gp-flag">🏁</span>
+            <span id="gp-name" data-navbar-text>Chargement...</span>
+          </div>
+          <div class="gp-source text-[#6c757d] dark:text-[#666]" id="gp-source">Recherche en cours...</div>
+        </div>
+
         <!-- Section Historique -->
         <div class="flex flex-col flex-1 overflow-hidden px-3 py-4">
           <div class="flex items-center justify-between mb-3">
-            <h3 class="text-xs font-bold text-[#0B1C2D] dark:text-[#E6ECF2] uppercase tracking-widest navbar-section-title" data-navbar-text>Historique</h3>
-            <button id="historyToggleBtn" class="p-0.5 rounded hover:bg-[#FCE8E7] dark:hover:bg-[#1B2F46] transition-all duration-200 text-[#0B1C2D] dark:text-[#A5B2C3] hover:text-[#0B1C2D] dark:hover:text-[#E6ECF2]" title="Masquer l'historique" onclick="toggleHistoryList()" data-navbar-text>
+            <h3 class="text-xs font-bold text-[#6c757d] dark:text-[#E6ECF2] uppercase tracking-widest navbar-section-title" data-navbar-text>Historique</h3>
+            <button id="historyToggleBtn" class="p-0.5 rounded hover:bg-[#f5f5f5] dark:hover:bg-[#1B2F46] transition-all duration-200 text-[#495057] dark:text-[#A5B2C3] hover:text-[#1a1d2e] dark:hover:text-[#E6ECF2]" title="Masquer l'historique" onclick="toggleHistoryList()" data-navbar-text>
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
             </button>
           </div>
@@ -260,8 +444,8 @@
         </div>
 
         <!-- Bouton paramètres en bas -->
-        <div class="px-3 py-4 border-t border-[#D8DEE6] dark:border-[#1F334A] bg-[#F5F6F8] dark:bg-[#13263B]">
-          <button id="userProfileBtn" class="flex items-center gap-2 p-2 rounded-lg hover:bg-[#FCE8E7] dark:hover:bg-[#1B2F46] transition-all duration-200 active:scale-95 text-[#E10600] dark:text-[#FF3B30] w-full text-left text-sm font-semibold" onclick="openUserProfile()">
+        <div class="px-3 py-4 border-t border-[#e8e8e8] dark:border-[#1F334A] bg-gradient-to-b from-[#ffffff] to-[#f8f9fa] dark:from-[#0C1A28] dark:to-[#050A10]">
+          <button id="userProfileBtn" class="flex items-center gap-2 p-2 rounded-lg hover:bg-[#f5f5f5] dark:hover:bg-[#1B2F46] transition-all duration-200 active:scale-95 text-[#E10600] dark:text-[#FF3B30] w-full text-left text-sm font-semibold" onclick="openUserProfile()">
             <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
             <span class="whitespace-nowrap overflow-hidden" data-navbar-text>Paramètres</span>
           </button>
@@ -278,43 +462,49 @@
       <div id="chatContainer" class="flex-1 flex flex-col overflow-hidden relative">
 
         <!-- Messages -->
-        <div id="chatBox" class="hidden overflow-y-auto p-6 space-y-4 flex-1">
+        <div id="chatBox" class="hidden overflow-y-auto p-6 space-y-4 flex-1 bg-gradient-to-b from-[#f8f9fa] to-[#ffffff] dark:from-[#050A10] dark:to-[#13263B]">
         </div>
 
         <!-- Zone de saisie - Nouveau design -->
-        <div id="inputContainer" class="flex flex-col items-center justify-center h-full px-4 py-8 bg-gradient-to-b from-[#F5F6F8] dark:from-[#050A10] to-[#EEF1F5] dark:to-[#13263B] transition-all duration-300">
-          <h1 class="text-[#0B1C2D] dark:text-[#E6ECF2] text-4xl font-bold text-center mb-3">
-            🏁 Bienvenue au Pit Stop 🏁
-          </h1>
-          <p class="text-[#4F647D] dark:text-[#A5B2C3] text-lg text-center mb-12">
-            Votre assistant expert en <span style="background: linear-gradient(135deg, #e10600, #ff6b00); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Formule 1</span> 🏎️
-          </p>
-          
-          <div class="w-full max-w-2xl">
-            <form id="chatForm" onsubmit="sendMessage(event)" class="flex items-center relative">
-              <input
-                type="text"
-                id="messageInput"
-                placeholder="pilotes, circuits, écuries, stratégies..."
-                required
-                autocomplete="off"
-                class="input-racing"
-              />
-              
-              <button type="submit" id="sendBtn" class="absolute right-3 p-2 rounded-full bg-[#EEF1F5] hover:bg-[#D8DEE6] text-[#0B1C2D] transition disabled:opacity-50" aria-label="Envoyer">
-                <svg class="w-5 h-5 rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
-              </button>
-            </form>
+        <div id="inputContainer" class="flex flex-col items-center justify-center h-full px-4 py-8 bg-gradient-to-b from-[#f8f9fa] via-[#ffffff] to-[#f8f9fa] dark:from-[#050A10] dark:via-[#15192b] dark:to-[#13263B] transition-all duration-300">
+          <div class="content-center max-w-2xl w-full">
+            <div class="main-logo">🏎️</div>
+            <h1 class="main-title text-[#1a1d2e] dark:text-[#E6ECF2]">Comment puis-je vous aider ?</h1>
+            <p class="main-subtitle text-[#6c757d] dark:text-[#888]">Votre assistant IA spécialisé en Formule 1</p>
+            
+            <div class="search-container">
+              <form id="chatForm" onsubmit="sendMessage(event)" class="flex items-center relative">
+                <input
+                  type="text"
+                  id="messageInput"
+                  placeholder="pilotes, circuits, écuries, stratégies..."
+                  required
+                  autocomplete="off"
+                  class="input-racing"
+                />
+                
+                <button type="submit" id="sendBtn" class="search-button" aria-label="Envoyer">
+                  ▶
+                </button>
+              </form>
+            </div>
+
+            <div class="suggestions-grid">
+              <div class="suggestion-chip bg-white dark:bg-[rgba(255,255,255,0.04)] border-[#e0e0e0] dark:border-[rgba(255,255,255,0.1)] text-[#1a1d2e] dark:text-[#E6ECF2] shadow-[0_2px_4px_rgba(0,0,0,0.05)] dark:shadow-none" onclick="document.getElementById('messageInput').value='📅 Calendrier 2026'; document.getElementById('chatForm').dispatchEvent(new Event('submit'));">📅 Calendrier 2026</div>
+              <div class="suggestion-chip bg-white dark:bg-[rgba(255,255,255,0.04)] border-[#e0e0e0] dark:border-[rgba(255,255,255,0.1)] text-[#1a1d2e] dark:text-[#E6ECF2] shadow-[0_2px_4px_rgba(0,0,0,0.05)] dark:shadow-none" onclick="document.getElementById('messageInput').value='🏆 Classements pilotes'; document.getElementById('chatForm').dispatchEvent(new Event('submit'));">🏆 Classements pilotes</div>
+              <div class="suggestion-chip bg-white dark:bg-[rgba(255,255,255,0.04)] border-[#e0e0e0] dark:border-[rgba(255,255,255,0.1)] text-[#1a1d2e] dark:text-[#E6ECF2] shadow-[0_2px_4px_rgba(0,0,0,0.05)] dark:shadow-none" onclick="document.getElementById('messageInput').value='⚙️ Règles techniques'; document.getElementById('chatForm').dispatchEvent(new Event('submit'));">⚙️ Règles techniques</div>
+              <div class="suggestion-chip bg-white dark:bg-[rgba(255,255,255,0.04)] border-[#e0e0e0] dark:border-[rgba(255,255,255,0.1)] text-[#1a1d2e] dark:text-[#E6ECF2] shadow-[0_2px_4px_rgba(0,0,0,0.05)] dark:shadow-none" onclick="document.getElementById('messageInput').value='📊 Stats & records'; document.getElementById('chatForm').dispatchEvent(new Event('submit'));">📊 Stats & records</div>
+            </div>
           </div>
         </div>
       </div>
 
         <!-- Panneau d'historique (coulissant par la droite) -->
-        <aside id="historyPanel" class="fixed right-0 top-0 w-64 h-full border-l border-[#D8DEE6] dark:border-[#1F334A] bg-[#F5F6F8] dark:bg-[#0C1A28] flex flex-col shadow-lg hidden z-35 transition-transform duration-300 transform translate-x-full" aria-hidden="true">
-          <div class="px-4 py-4 border-b border-[#D8DEE6] dark:border-[#1F334A] flex justify-between items-center bg-[#E10600] dark:bg-[#13263B]">
+        <aside id="historyPanel" class="fixed right-0 top-0 w-64 h-full border-l border-[#e8e8e8] dark:border-[#1F334A] bg-[#ffffff] dark:bg-[#0C1A28] flex flex-col shadow-lg hidden z-35 transition-transform duration-300 transform translate-x-full" aria-hidden="true">
+          <div class="px-4 py-4 border-b border-[#e8e8e8] dark:border-[#1F334A] flex justify-between items-center bg-[#E10600] dark:bg-[#13263B]">
             <h3 class="font-semibold text-[#FFFFFF] dark:text-[#E6ECF2]">Historique</h3>
             <div class="relative group">
-              <button id="closeHistoryBtn" class="p-1 rounded hover:bg-[#EEF1F5] dark:hover:bg-[#1B2F46] transition" onclick="closeHistoryPanel()">
+              <button id="closeHistoryBtn" class="p-1 rounded hover:bg-[#f5f5f5] dark:hover:bg-[#1B2F46] transition" onclick="closeHistoryPanel()">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
               </button>
               <div class="absolute left-10 top-1/2 -translate-y-1/2 bg-[#0B1C2D] dark:bg-[#13263B] text-white text-xs px-2 py-1 rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition pointer-events-none">Fermer</div>
@@ -331,29 +521,29 @@
     <div id="userProfileOverlay" class="fixed inset-0 bg-black/50 hidden z-40" onclick="closeUserProfile()"></div>
     
     <!-- Panneau profil utilisateur -->
-    <div id="userProfilePanel" class="fixed top-0 right-0 w-96 h-full bg-[#F5F6F8] dark:bg-[#0C1A28] shadow-xl flex flex-col z-50 transform translate-x-full transition-transform" aria-hidden="true">
-      <div class="px-6 py-4 border-b border-[#D8DEE6] dark:border-[#1F334A] flex justify-between items-center bg-[#E10600] dark:bg-[#13263B]">
+    <div id="userProfilePanel" class="fixed top-0 right-0 w-96 h-full bg-[#ffffff] dark:bg-[#0C1A28] shadow-xl flex flex-col z-50 transform translate-x-full transition-transform" aria-hidden="true">
+      <div class="px-6 py-4 border-b border-[#e8e8e8] dark:border-[#1F334A] flex justify-between items-center bg-[#E10600] dark:bg-[#13263B]">
         <h3 class="font-semibold text-[#FFFFFF] dark:text-[#E6ECF2]">Profil</h3>
         <div class="relative group">
-          <button class="p-1 rounded hover:bg-[#EEF1F5] dark:hover:bg-[#1B2F46] transition" onclick="closeUserProfile()">
+          <button class="p-1 rounded hover:bg-[#f5f5f5] dark:hover:bg-[#1B2F46] transition" onclick="closeUserProfile()">
             <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
           </button>
-          <div class="absolute right-8 top-1/2 -translate-y-1/2 bg-[#0B1C2D] dark:bg-[#13263B] text-[#FFFFFF] text-xs px-2 py-1 rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition pointer-events-none">Fermer</div>
+          <div class="absolute right-8 top-1/2 -translate-y-1/2 bg-[#1a1d2e] dark:bg-[#13263B] text-[#FFFFFF] text-xs px-2 py-1 rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition pointer-events-none">Fermer</div>
         </div>
       </div>
       <div class="flex-1 overflow-y-auto p-6 space-y-6">
         <!-- Section apparence -->
         <div>
-          <h4 class="font-semibold text-[#0B1C2D] dark:text-[#E6ECF2] mb-3">Apparence</h4>
+          <h4 class="font-semibold text-[#1a1d2e] dark:text-[#E6ECF2] mb-3">Apparence</h4>
           <label class="flex items-center gap-3 cursor-pointer">
             <input type="checkbox" id="darkModeToggle" class="w-4 h-4 rounded cursor-pointer" onchange="toggleDarkMode()">
-            <span class="text-sm text-[#4F647D] dark:text-[#A5B2C3]">Mode sombre</span>
+            <span class="text-sm text-[#6c757d] dark:text-[#A5B2C3]">Mode sombre</span>
           </label>
         </div>
 
         <!-- Section données -->
         <div>
-          <h4 class="font-semibold text-[#0B1C2D] dark:text-[#E6ECF2] mb-3">Données</h4>
+          <h4 class="font-semibold text-[#1a1d2e] dark:text-[#E6ECF2] mb-3">Données</h4>
           <button id="clearHistoryBtn" class="w-full px-4 py-2 rounded-lg bg-[#E10600] dark:bg-[#FF3B30] hover:bg-[#FF3B30] dark:hover:bg-[#E10600] text-white transition text-sm font-medium" onclick="clearAllHistory()">Supprimer tout l'historique</button>
         </div>
       </div>
@@ -361,5 +551,47 @@
 
     <!-- Script client -->
     <script src="{{ url_for('static', path='js/app.js') }}"></script>
+    
+    <script>
+      // Données du prochain GP
+      const nextRace = {
+        name: "GP d'Australie",
+        country: "Australie",
+        flag: "🇦🇺",
+        date: new Date("2026-03-08T05:00:00"),
+        source: "Ergast API"
+      };
+
+      // Fonction pour calculer le compte à rebours en temps réel
+      function updateCountdown() {
+        const now = new Date();
+        const diff = nextRace.date - now;
+
+        if (diff <= 0) {
+          document.getElementById('countdown').textContent = "Le GP a commencé !";
+          return;
+        }
+
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+
+        document.getElementById('countdown').textContent = 
+          `Dans ${days}j ${hours}h ${minutes.toString().padStart(2, '0')}min`;
+      }
+
+      // Mise à jour des informations du GP
+      function initializeGPWidget() {
+        document.getElementById('gp-name').textContent = nextRace.name;
+        document.getElementById('gp-flag').textContent = nextRace.flag;
+        document.getElementById('gp-source').textContent = `Source: ${nextRace.source}`;
+        
+        updateCountdown();
+        setInterval(updateCountdown, 60000); // Mise à jour chaque minute
+      }
+
+      // Initialisation au chargement
+      window.addEventListener('DOMContentLoaded', initializeGPWidget);
+    </script>
   </body>
 </html>
