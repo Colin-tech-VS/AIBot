@@ -1,247 +1,574 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{{ title or 'F1 Tech' }}</title>
-    
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Tailwind CSS -->
+    <title>F1 Tech - Chatbot IA</title>
+    <link rel="icon" type="image/png" href="/image/favicon.png?v={{ range(100000) | random }}">
+    <!-- Tailwind CSS avec config sombre automatique -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-        tailwind.config = {
-            theme: {
-                fontFamily: {
-                    'f1': ['Orbitron', 'sans-serif'],
-                    'sans': ['Inter', 'sans-serif'],
-                }
-            }
-        }
+      tailwind.config = {
+        darkMode: 'class'
+      }
     </script>
-    
-    <!-- Custom Styles -->
-    <link rel="stylesheet" href="{{ url_for('static', path='css/style.css') }}">
+    <!-- Init dark mode before DOM renders -->
+    <script>
+      (function() {
+        const savedDarkMode = localStorage.getItem("darkMode");
+        const isDarkMode = savedDarkMode !== null ? savedDarkMode === "true" : true;
+        localStorage.setItem("darkMode", isDarkMode);
+        if (isDarkMode) {
+          document.documentElement.classList.add("dark");
+        }
+      })();
+    </script>
     <style>
-        * { font-family: 'Inter', sans-serif; }
-        .f1-title { font-family: 'Orbitron', sans-serif; }
-        
-        body {
-            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0f0f0f 100%);
-            background-attachment: fixed;
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      #mainNavbar {
+        transition: width 0.3s ease;
+        width: 15rem;
+      }
+      
+      #mainNavbar.navbar-collapsed {
+        width: 4rem;
+      }
+      
+      #mainNavbar.navbar-collapsed [data-navbar-text],
+      #mainNavbar.navbar-collapsed .navbar-section-title {
+        display: none;
+      }
+
+      /* Cacher la section historique quand la navbar est fermée */
+      #mainNavbar.navbar-collapsed > div:nth-child(3) {
+        display: none;
+      }
+
+      #mainNavbar.navbar-collapsed > div:nth-child(4) {
+        display: none;
+      }
+      
+      /* Changer le padding uniquement pour la section historique (div centrale) */
+      #mainNavbar.navbar-collapsed > div:nth-child(3) .px-3 {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+      }
+      
+      #mainNavbar.navbar-collapsed button {
+        justify-content: flex-start;
+      }
+      
+      [data-navbar-text] {
+        transition: opacity 0.3s ease;
+      }
+
+      /* Header icons visibility */
+      .navbar-logo {
+        transition: opacity 0.3s ease;
+      }
+
+      .navbar-toggle-icon {
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+
+      /* Navbar OUVERTE (state par défaut) */
+      /* F1 à gauche, icône à droite visible */
+      #mainNavbar:not(.navbar-collapsed) > div:first-child {
+        justify-content: space-between;
+      }
+
+      #mainNavbar:not(.navbar-collapsed) .navbar-logo {
+        opacity: 1;
+      }
+
+      #mainNavbar:not(.navbar-collapsed) .navbar-toggle-icon {
+        opacity: 1;
+      }
+
+      /* Navbar FERMÉE */
+      /* F1 et icône restent à gauche, sans mouvement */
+      #mainNavbar.navbar-collapsed > div:first-child {
+        justify-content: flex-start;
+        position: relative;
+      }
+
+      #mainNavbar.navbar-collapsed .navbar-toggle-icon {
+        position: absolute;
+        left: 0.5rem;
+        transform: none;
+      }
+
+      #mainNavbar.navbar-collapsed .navbar-toggle-icon:hover {
+        opacity: 1;
+      }
+
+      #mainNavbar.navbar-collapsed > div:first-child:has(.navbar-toggle-icon:hover) .navbar-logo {
+        opacity: 0;
+      }
+
+      /* Fixation des éléments de la navbar */
+      #mainNavbar > div:first-child {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        overflow: hidden;
+      }
+
+      #mainNavbar > div:nth-child(2) {
+        position: sticky;
+        top: 4.5rem;
+        z-index: 10;
+        overflow: hidden;
+      }
+
+      #mainNavbar > div:last-child {
+        position: sticky;
+        bottom: 0;
+        z-index: 10;
+        margin-top: auto;
+        overflow: hidden;
+      }
+
+      /* États du layout chat */
+      #chatContainer.active-chat #chatBox {
+        display: flex;
+        flex-direction: column;
+      }
+
+      #chatContainer.active-chat #inputContainer {
+        height: auto;
+        padding: 1rem 1.5rem;
+      }
+
+      #chatContainer.active-chat #inputContainer .content-center {
+        max-width: 100%;
+      }
+
+      #chatContainer.active-chat #inputContainer .main-title,
+      #chatContainer.active-chat #inputContainer .main-subtitle,
+      #chatContainer.active-chat #inputContainer .main-logo,
+      #chatContainer.active-chat #inputContainer .suggestions-grid {
+        display: none;
+      }
+
+      .input-racing {
+        width: 100%;
+        background: linear-gradient(135deg, rgba(225,6,0,0.2), rgba(139,0,0,0.2));
+        border: 2px solid #e10600;
+        border-radius: 50px;
+        padding: 18px 60px 18px 25px;
+        color: white;
+        font-size: 1em;
+        outline: none;
+        transition: all 0.3s;
+      }
+
+      .input-racing:hover {
+        background: linear-gradient(135deg, rgba(225,6,0,0.3), rgba(139,0,0,0.3));
+        border-color: #ff1e1e;
+        box-shadow: 0 0 20px rgba(225,6,0,0.3);
+      }
+
+      .input-racing:focus {
+        background: linear-gradient(135deg, rgba(225,6,0,0.25), rgba(139,0,0,0.25));
+        border-color: #ff3333;
+        box-shadow: 0 0 25px rgba(225,6,0,0.4);
+      }
+
+      .input-racing::placeholder {
+        color: #0B1C2D;
+        font-size: 0.95em;
+        letter-spacing: 0.5px;
+      }
+
+      .dark .input-racing::placeholder {
+        color: rgba(255,255,255,0.6);
+      }
+
+      /* Navbar F1 Racing Style */
+      .sidebar-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 30px;
+        padding-bottom: 20px;
+        border-bottom: 2px solid rgba(225,6,0,0.3);
+      }
+
+      #mainNavbar.navbar-collapsed .sidebar-header {
+        margin-bottom: 0;
+        padding-bottom: 0;
+        border-bottom: none;
+      }
+
+      .f1-logo-nav {
+        font-size: 1.8em;
+        flex-shrink: 0;
+      }
+
+      .brand-name {
+        font-size: 1.1em;
+        font-weight: 600;
+        background: linear-gradient(135deg, #e10600, #ff6b00);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      #mainNavbar.navbar-collapsed .brand-name {
+        display: none;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        #chatContainer.active-chat #inputContainer {
+          border-top-color: #1e293b;
         }
-        
-        /* Ligne rouge en haut */
-        body::after {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: linear-gradient(90deg, transparent 0%, #dc2626 5%, #dc2626 95%, transparent 100%);
-            box-shadow: 0 0 20px rgba(220, 38, 38, 0.6);
-            z-index: 1000;
-            pointer-events: none;
+      }
+
+      /* Décalage du chat container pour laisser place à la navbar */
+      #chatContainer {
+        margin-left: 15rem;
+        transition: margin-left 0.3s ease;
+      }
+
+      #mainNavbar.navbar-collapsed ~ #chatContainer {
+        margin-left: 4rem;
+      }
+
+      /* Suggestions Grid */
+      .suggestions-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        margin-top: 30px;
+      }
+
+      .suggestion-chip {
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 14px 20px;
+        border-radius: 25px;
+        font-size: 0.9em;
+        cursor: pointer;
+        transition: all 0.3s;
+        text-align: center;
+        color: #E6ECF2;
+      }
+
+      .suggestion-chip:hover {
+        background: rgba(225, 6, 0, 0.15);
+        border-color: #e10600;
+        transform: translateY(-2px);
+      }
+
+      /* Prochain GP section */
+      .next-gp-section {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 12px;
+        padding: 16px;
+        transition: all 0.3s;
+        margin: 0 0 20px 0;
+      }
+
+      .next-gp-section:hover {
+        background: rgba(255, 255, 255, 0.05);
+        border-color: rgba(225, 6, 0, 0.3);
+      }
+
+      .gp-badge {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 10px;
+      }
+
+      .gp-dot {
+        width: 10px;
+        height: 10px;
+        background: #e10600;
+        border-radius: 50%;
+        animation: pulse 2s infinite;
+      }
+
+      @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.5; }
+      }
+
+      .gp-label {
+        font-size: 0.85em;
+        font-weight: 600;
+        color: #e10600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .gp-countdown {
+        font-size: 0.9em;
+        color: #ccc;
+        margin-bottom: 8px;
+      }
+
+      .gp-name {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 0.9em;
+        color: #aaa;
+      }
+
+      .gp-flag {
+        font-size: 1.1em;
+      }
+
+      .gp-source {
+        font-size: 0.75em;
+        color: #666;
+        margin-top: 4px;
+      }
+
+      /* Main content styling */
+      .main-logo {
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(135deg, #e10600, #ff6b00);
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2.5em;
+        margin: 0 auto 25px auto;
+        box-shadow: 0 10px 30px rgba(225, 6, 0, 0.3);
+      }
+
+      .main-title {
+        font-size: 2em;
+        font-weight: 300;
+        text-align: center;
+        margin-bottom: 12px;
+        color: #E6ECF2;
+      }
+
+      .main-subtitle {
+        text-align: center;
+        color: #888;
+        margin-bottom: 35px;
+        font-size: 1.05em;
+      }
+
+      .search-container {
+        position: relative;
+        width: 100%;
+      }
+
+      .search-button {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 45px;
+        height: 45px;
+        background: linear-gradient(135deg, #e10600, #ff6b00);
+        border: none;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2em;
+        color: white;
+        transition: all 0.3s;
+      }
+
+      .search-button:hover {
+        transform: translateY(-50%) scale(1.08);
+        box-shadow: 0 5px 15px rgba(225, 6, 0, 0.4);
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .suggestions-grid {
+          grid-template-columns: 1fr;
         }
-        
-        /* SCROLLBAR STYLING */
-        #chatBox {
-            scrollbar-width: thin;
-            scrollbar-color: rgba(220, 38, 38, 0.5) rgba(0,0,0,0.3);
-        }
-        #chatBox::-webkit-scrollbar {
-            width: 10px;
-        }
-        #chatBox::-webkit-scrollbar-track {
-            background: rgba(0,0,0,0.3);
-            border-radius: 5px;
-        }
-        #chatBox::-webkit-scrollbar-thumb {
-            background-color: rgba(220, 38, 38, 0.6);
-            border-radius: 5px;
-            border: 2px solid transparent;
-        }
-        #chatBox::-webkit-scrollbar-thumb:hover {
-            background-color: rgba(220, 38, 38, 0.8);
-        }
-        
-        /* Message bubbles */
-        .user-message {
-            background: linear-gradient(135deg, #dc2626, #b91c1c);
-            color: white;
-            padding: 12px 16px;
-            border-radius: 18px 18px 4px 18px;
-            max-width: 80%;
-            word-wrap: break-word;
-        }
-        .bot-message {
-            background: #1e293b;
-            color: #e2e8f0;
-            padding: 12px 16px;
-            border-radius: 18px 18px 18px 4px;
-            max-width: 85%;
-            word-wrap: break-word;
-            line-height: 1.6;
-        }
-        
-        /* Typing indicator */
-        .typing-indicator {
-            display: flex;
-            gap: 4px;
-            padding: 12px 16px;
-            background: #1e293b;
-            border-radius: 18px;
-            width: fit-content;
-        }
-        .typing-dot {
-            width: 8px;
-            height: 8px;
-            background: #dc2626;
-            border-radius: 50%;
-            animation: typing 1.4s infinite ease-in-out;
-        }
-        .typing-dot:nth-child(1) { animation-delay: 0s; }
-        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
-        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
-        @keyframes typing {
-            0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
-            30% { transform: translateY(-8px); opacity: 1; }
-        }
+      }
     </style>
-</head>
-<body class="bg-black text-white h-screen overflow-hidden">
-    <div class="h-screen flex flex-col md:flex-row">
-        
-        <!-- NAVBAR -->
-        <nav class="w-full md:w-80 bg-gradient-to-b from-slate-950 to-black border-b md:border-b-0 md:border-r border-red-900/30 shadow-2xl flex-shrink-0 flex flex-col">
-            <!-- Header -->
-            <div class="p-6 border-b border-red-900/20">
-                <div class="flex items-center gap-3">
-                    <div class="text-4xl">🏁</div>
-                    <div>
-                        <h1 class="f1-title text-2xl font-bold bg-gradient-to-r from-red-500 to-red-600 bg-clip-text text-transparent">F1 Tech</h1>
-                        <p class="text-xs text-gray-400">Powered by AI</p>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- New Chat Button -->
-            <div class="p-4">
-                <button onclick="createConversation()" class="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-red-900/50">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-                    Nouvelle discussion
-                </button>
-            </div>
-
-            <!-- History -->
-            <div class="flex-1 px-4 py-4 overflow-y-auto hidden md:block">
-                <h3 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-4 ml-2">Historique</h3>
-                <div id="navbarHistoryList" class="space-y-2">
-                    <p class="text-sm text-gray-500 text-center py-8">Aucune conversation</p>
-                </div>
-            </div>
-            
-            <!-- Footer -->
-            <div class="p-4 border-t border-red-900/20 hidden md:block mt-auto">
-                <button onclick="openUserProfile()" class="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-red-950/20 transition text-gray-300 hover:text-red-400">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path></svg>
-                    <span>Parametres</span>
-                </button>
-            </div>
-        </nav>
-        
-        <!-- CHAT AREA -->
-        <div id="chatContainer" class="flex-1 flex flex-col min-h-0 bg-black">
-            
-            <!-- TOP WIDGETS BAR - Horizontal F1 Info -->
-            <div class="border-b border-red-900/20 bg-black/40 backdrop-blur px-4 py-3 flex-shrink-0">
-                <div class="max-w-6xl mx-auto">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-                        
-                        <!-- Prochain GP Widget -->
-                        <div id="nextRaceCountdown" class="bg-gradient-to-r from-red-950/40 to-red-900/10 border border-red-900/40 rounded-lg p-3 hover:border-red-900/60 transition">
-                            <div class="flex items-center gap-3">
-                                <div class="text-2xl">🏁</div>
-                                <div class="flex-1 min-w-0">
-                                    <div class="text-xs font-bold text-red-400 uppercase tracking-widest">Prochain GP</div>
-                                    <p class="text-sm text-gray-200 font-semibold mt-0.5 truncate" id="countdownText">Chargement...</p>
-                                    <p class="text-xs text-gray-400 mt-0.5 truncate" id="raceNameText"></p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Top 3 Drivers Widget (Discret) -->
-                        <div id="top3DriversWidget" class="bg-gradient-to-r from-slate-900/30 to-slate-800/5 border border-red-900/20 rounded p-2 hover:border-red-900/40 transition">
-                            <div class="flex items-start gap-2">
-                                <div class="text-lg mt-0.5">🏆</div>
-                                <div class="flex-1 min-w-0">
-                                    <div class="text-xs font-bold text-red-300/80 uppercase tracking-widest leading-tight">Top 3</div>
-                                    <div id="top3DriversList" class="mt-0.5 space-y-0.5 text-xs text-gray-400">
-                                        <div class="text-gray-600">...</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Messages Container - SCROLLABLE -->
-            <div id="chatBox" class="flex-1 overflow-y-auto p-6 space-y-4">
-                <!-- Messages will be inserted here dynamically -->
-            </div>
-            
-            <!-- Input Area - Fixed at bottom -->
-            <div id="inputContainer" class="border-t border-red-900/20 bg-black/90 backdrop-blur px-4 py-4 flex-shrink-0">
-                <div class="max-w-3xl mx-auto w-full">
-                    <form id="messageForm" class="flex gap-3 items-center">
-                        <input 
-                            id="messageInput" 
-                            type="text" 
-                            placeholder="Qui est le champion 2024 ? Strategie a Monaco ? ..." 
-                            class="flex-1 bg-slate-900/80 border border-red-900/40 rounded-xl px-5 py-3 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/30 transition-all"
-                            autocomplete="off"
-                        />
-                        <button 
-                            id="sendBtn"
-                            type="submit" 
-                            class="bg-red-600 hover:bg-red-700 text-white p-3 rounded-xl transition-all duration-200 flex items-center justify-center hover:shadow-lg hover:shadow-red-900/50 shrink-0 disabled:opacity-50 disabled:cursor-not-allowed"
-                            title="Envoyer"
-                        >
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
-                        </button>
-                    </form>
-                </div>
-            </div>
+  </head>
+  <body class="bg-gradient-to-b from-[#f8f9fa] to-[#ffffff] dark:bg-[#050A10] text-[#1a1d2e] dark:text-[#E6ECF2] h-screen overflow-hidden">
+    <div class="flex h-full">
+      <!-- Navbar collapsible -->
+      <nav id="mainNavbar" class="bg-gradient-to-b from-[#ffffff] to-[#f8f9fa] dark:from-[#0C1A28] dark:to-[#050A10] flex flex-col py-3 shadow-lg overflow-hidden fixed left-0 top-0 h-full z-50">
+        <!-- Header avec toggle icon -->
+        <div class="px-4 py-3 flex items-center justify-between bg-gradient-to-r from-[#ffffff] to-[#f8f9fa] dark:from-[#0C1A28] dark:to-[#050A10] relative border-b-4 border-[#E10600]">
+          <!-- F1 logo - à gauche en ouvert, centré en fermé -->
+          <button class="navbar-logo text-2xl hover:scale-110 transition-transform duration-200" title="Logo">🏎️</button>
+          
+          <!-- Icone toggle - à droite en ouvert, remplace F1 au hover en fermé -->
+          <button class="navbar-toggle-icon items-center text-[#1a1d2e] dark:text-[#E6ECF2] p-2 rounded-lg hover:bg-[#f5f5f5] dark:hover:bg-[#1B2F46] hover:scale-110 transition-all duration-200" onclick="toggleNavbar()" title="Fermer">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+          </button>
         </div>
-    </div>
-    
-    <!-- Settings Overlay -->
-    <div id="userProfileOverlay" class="fixed inset-0 bg-black/60 hidden z-40" onclick="closeUserProfile()"></div>
-    
-    <!-- Settings Panel -->
-    <div id="userProfilePanel" class="fixed top-0 right-0 w-80 h-full bg-slate-900 shadow-2xl flex flex-col z-50 transform translate-x-full transition-transform duration-300">
-        <div class="px-6 py-4 border-b border-slate-700 flex justify-between items-center">
-            <h3 class="font-semibold text-white">Parametres</h3>
-            <button class="p-2 rounded-lg hover:bg-slate-700 transition" onclick="closeUserProfile()">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+
+        <!-- Boutons de navigation -->
+        <div class="flex flex-col gap-2 px-3 py-2 mb-6 overflow-hidden" style="width: 15rem;">
+          <button id="newConvNavBtn" class="flex items-center gap-2 p-2 rounded-lg hover:bg-[#f5f5f5] dark:hover:bg-[#1B2F46] transition-all duration-200 active:scale-95 text-[#E10600] dark:text-[#FF3B30] text-left text-sm font-semibold min-w-0" onclick="createConversation()">
+            <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+            <span class="whitespace-nowrap overflow-hidden" data-navbar-text>Nouvelle discussion</span>
+          </button>
+        </div>
+
+        <!-- WIDGETS ROW (Prochain GP + Top 3) - NOUVEAU DESIGN -->
+        <div class="grid grid-cols-1 gap-2 px-3 py-2 mb-4">
+          <!-- Widget Prochain GP (NOUVEAU) -->
+          <div class="bg-gradient-to-br from-[#E10600]/10 to-[#E10600]/5 dark:from-[#E10600]/20 dark:to-[#E10600]/5 border border-[#E10600]/30 dark:border-[#E10600]/40 rounded-lg p-3 hover:shadow-lg transition-shadow">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="text-lg">🏁</span>
+              <span class="text-xs font-bold text-[#E10600] dark:text-[#FF3B30] uppercase">Prochain GP</span>
+            </div>
+            <div class="text-sm font-bold text-[#E10600] dark:text-[#FF3B30]" id="widget-countdown">—</div>
+            <div class="text-xs text-[#2a3441] dark:text-[#bbb] mt-1">
+              <span id="widget-gp-name">—</span>
+            </div>
+          </div>
+
+          <!-- Widget Top 3 Drivers -->
+          <div class="bg-gradient-to-br from-[#6B7280]/10 to-[#6B7280]/5 dark:from-[#6B7280]/20 dark:to-[#6B7280]/5 border border-[#6B7280]/30 dark:border-[#6B7280]/40 rounded-lg p-3 hover:shadow-lg transition-shadow">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="text-lg">🏆</span>
+              <span class="text-xs font-bold text-[#6B7280] dark:text-[#AAB1BA] uppercase">Drivers</span>
+            </div>
+            <div id="widget-top-drivers" class="text-xs text-[#2a3441] dark:text-[#bbb] space-y-0.5">
+              <div class="text-[#6c757d] dark:text-[#777]">—</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section Historique -->
+        <div class="flex flex-col flex-1 overflow-hidden px-3 py-4" style="width: 15rem;">
+          <div class="flex items-center justify-between mb-3 min-w-0">
+            <h3 class="text-xs font-bold text-[#6c757d] dark:text-[#E6ECF2] uppercase tracking-widest navbar-section-title" data-navbar-text>Historique</h3>
+            <button id="historyToggleBtn" class="p-0.5 rounded hover:bg-[#f5f5f5] dark:hover:bg-[#1B2F46] transition-all duration-200 text-[#495057] dark:text-[#A5B2C3] hover:text-[#1a1d2e] dark:hover:text-[#E6ECF2]" title="Masquer l'historique" onclick="toggleHistoryList()" data-navbar-text>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
             </button>
+          </div>
+          <div id="navbarHistoryList" class="flex-1 overflow-y-auto space-y-1">
+            <p class="text-xs text-[#0d0737]/50 dark:text-white/50 text-center py-4">Aucune conversation</p>
+          </div>
         </div>
-        <div class="flex-1 overflow-y-auto p-6">
-            <div>
-                <h4 class="font-semibold text-white mb-3">Donnees</h4>
-                <button id="clearHistoryBtn" class="w-full px-4 py-3 rounded-lg bg-red-600 hover:bg-red-700 text-white transition text-sm font-medium" onclick="clearAllHistory()">
-                    Supprimer tout l'historique
+
+        <!-- Bouton paramètres en bas -->
+        <div class="px-3 py-4 border-t border-[#e8e8e8] dark:border-[#1F334A] bg-gradient-to-b from-[#ffffff] to-[#f8f9fa] dark:from-[#0C1A28] dark:to-[#050A10] overflow-hidden" style="width: 15rem;">
+          <button id="userProfileBtn" class="flex items-center gap-2 p-2 rounded-lg hover:bg-[#f5f5f5] dark:hover:bg-[#1B2F46] transition-all duration-200 active:scale-95 text-[#E10600] dark:text-[#FF3B30] w-full text-left text-sm font-semibold min-w-0" onclick="openUserProfile()">
+            <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+            <span class="whitespace-nowrap overflow-hidden" data-navbar-text>Paramètres</span>
+          </button>
+        </div>
+      </nav>
+
+      <!-- Overlay pour mobile -->
+      <div id="navOverlay" class="fixed inset-0 bg-black/50 hidden z-30 lg:hidden" onclick="closeNavbar()"></div>
+
+      <!-- Overlay pour l'historique -->
+      <div id="historyOverlay" class="fixed inset-0 bg-black/50 hidden z-34" onclick="closeHistoryPanel()"></div>
+
+      <!-- Zone de chat et historique -->
+      <div id="chatContainer" class="flex-1 flex flex-col overflow-hidden relative">
+
+        <!-- Messages -->
+        <div id="chatBox" class="hidden overflow-y-auto p-6 space-y-4 flex-1 bg-gradient-to-b from-[#f8f9fa] to-[#ffffff] dark:from-[#050A10] dark:to-[#13263B]">
+        </div>
+
+        <!-- Zone de saisie - Nouveau design -->
+        <div id="inputContainer" class="flex flex-col items-center justify-center h-full px-4 py-8 bg-gradient-to-b from-[#f8f9fa] via-[#ffffff] to-[#f8f9fa] dark:from-[#050A10] dark:via-[#15192b] dark:to-[#13263B] transition-all duration-300">
+          <div class="content-center max-w-2xl w-full">
+            <div class="main-logo">🏎️</div>
+            <h1 class="main-title text-[#1a1d2e] dark:text-[#E6ECF2]">Comment puis-je vous aider ?</h1>
+            <p class="main-subtitle text-[#6c757d] dark:text-[#888]">Votre assistant IA spécialisé en Formule 1</p>
+            
+            <div class="search-container">
+              <form id="chatForm" onsubmit="sendMessage(event)" class="flex items-center relative">
+                <input
+                  type="text"
+                  id="messageInput"
+                  placeholder="pilotes, circuits, écuries, stratégies..."
+                  required
+                  autocomplete="off"
+                  class="input-racing"
+                />
+                
+                <button type="submit" id="sendBtn" class="search-button" aria-label="Envoyer">
+                  ▶
                 </button>
+              </form>
             </div>
+
+            <div class="suggestions-grid">
+              <div class="suggestion-chip bg-white dark:bg-[rgba(255,255,255,0.04)] border-[#e0e0e0] dark:border-[rgba(255,255,255,0.1)] text-[#1a1d2e] dark:text-[#E6ECF2] shadow-[0_2px_4px_rgba(0,0,0,0.05)] dark:shadow-none" onclick="document.getElementById('messageInput').value='📅 Calendrier 2026'; document.getElementById('chatForm').dispatchEvent(new Event('submit'));">📅 Calendrier 2026</div>
+              <div class="suggestion-chip bg-white dark:bg-[rgba(255,255,255,0.04)] border-[#e0e0e0] dark:border-[rgba(255,255,255,0.1)] text-[#1a1d2e] dark:text-[#E6ECF2] shadow-[0_2px_4px_rgba(0,0,0,0.05)] dark:shadow-none" onclick="document.getElementById('messageInput').value='🏆 Classements pilotes'; document.getElementById('chatForm').dispatchEvent(new Event('submit'));">🏆 Classements pilotes</div>
+              <div class="suggestion-chip bg-white dark:bg-[rgba(255,255,255,0.04)] border-[#e0e0e0] dark:border-[rgba(255,255,255,0.1)] text-[#1a1d2e] dark:text-[#E6ECF2] shadow-[0_2px_4px_rgba(0,0,0,0.05)] dark:shadow-none" onclick="document.getElementById('messageInput').value='⚙️ Règles techniques'; document.getElementById('chatForm').dispatchEvent(new Event('submit'));">⚙️ Règles techniques</div>
+              <div class="suggestion-chip bg-white dark:bg-[rgba(255,255,255,0.04)] border-[#e0e0e0] dark:border-[rgba(255,255,255,0.1)] text-[#1a1d2e] dark:text-[#E6ECF2] shadow-[0_2px_4px_rgba(0,0,0,0.05)] dark:shadow-none" onclick="document.getElementById('messageInput').value='📊 Stats & records'; document.getElementById('chatForm').dispatchEvent(new Event('submit'));">📊 Stats & records</div>
+            </div>
+          </div>
         </div>
+      </div>
+
+        <!-- Panneau d'historique (coulissant par la droite) -->
+        <aside id="historyPanel" class="fixed right-0 top-0 w-64 h-full border-l border-[#e8e8e8] dark:border-[#1F334A] bg-[#ffffff] dark:bg-[#0C1A28] flex flex-col shadow-lg hidden z-35 transition-transform duration-300 transform translate-x-full" aria-hidden="true">
+          <div class="px-4 py-4 border-b border-[#e8e8e8] dark:border-[#1F334A] flex justify-between items-center bg-[#E10600] dark:bg-[#13263B]">
+            <h3 class="font-semibold text-[#FFFFFF] dark:text-[#E6ECF2]">Historique</h3>
+            <div class="relative group">
+              <button id="closeHistoryBtn" class="p-1 rounded hover:bg-[#f5f5f5] dark:hover:bg-[#1B2F46] transition" onclick="closeHistoryPanel()">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+              </button>
+              <div class="absolute left-10 top-1/2 -translate-y-1/2 bg-[#0B1C2D] dark:bg-[#13263B] text-white text-xs px-2 py-1 rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition pointer-events-none">Fermer</div>
+            </div>
+          </div>
+          <div id="historyContent" class="flex-1 overflow-y-auto p-3 space-y-2">
+            <p class="text-sm text-[#8A97A8] dark:text-[#6F8197]">Chargement...</p>
+          </div>
+        </aside>
+      </div>
     </div>
 
-    <!-- Script -->
+    <!-- Overlay profil -->
+    <div id="userProfileOverlay" class="fixed inset-0 bg-black/50 hidden z-40" onclick="closeUserProfile()"></div>
+    
+    <!-- Panneau profil utilisateur -->
+    <div id="userProfilePanel" class="fixed top-0 right-0 w-96 h-full bg-[#ffffff] dark:bg-[#0C1A28] shadow-xl flex flex-col z-50 transform translate-x-full transition-transform" aria-hidden="true">
+      <div class="px-6 py-4 border-b border-[#e8e8e8] dark:border-[#1F334A] flex justify-between items-center bg-[#E10600] dark:bg-[#13263B]">
+        <h3 class="font-semibold text-[#FFFFFF] dark:text-[#E6ECF2]">Profil</h3>
+        <div class="relative group">
+          <button class="p-1 rounded hover:bg-[#f5f5f5] dark:hover:bg-[#1B2F46] transition" onclick="closeUserProfile()">
+            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+          </button>
+          <div class="absolute right-8 top-1/2 -translate-y-1/2 bg-[#1a1d2e] dark:bg-[#13263B] text-[#FFFFFF] text-xs px-2 py-1 rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition pointer-events-none">Fermer</div>
+        </div>
+      </div>
+      <div class="flex-1 overflow-y-auto p-6 space-y-6">
+        <!-- Section apparence -->
+        <div>
+          <h4 class="font-semibold text-[#1a1d2e] dark:text-[#E6ECF2] mb-3">Apparence</h4>
+          <label class="flex items-center gap-3 cursor-pointer">
+            <input type="checkbox" id="darkModeToggle" class="w-4 h-4 rounded cursor-pointer" onchange="toggleDarkMode()">
+            <span class="text-sm text-[#6c757d] dark:text-[#A5B2C3]">Mode sombre</span>
+          </label>
+        </div>
+
+        <!-- Section données -->
+        <div>
+          <h4 class="font-semibold text-[#1a1d2e] dark:text-[#E6ECF2] mb-3">Données</h4>
+          <button id="clearHistoryBtn" class="w-full px-4 py-2 rounded-lg bg-[#E10600] dark:bg-[#FF3B30] hover:bg-[#FF3B30] dark:hover:bg-[#E10600] text-white transition text-sm font-medium" onclick="clearAllHistory()">Supprimer tout l'historique</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Script client -->
     <script src="{{ url_for('static', path='js/app.js') }}"></script>
-</body>
+  </body>
 </html>
