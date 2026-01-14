@@ -915,7 +915,7 @@ def call_ollama(prompt: str) -> str:
     Fallback subprocess si l'API échoue.
     Accepte tout réponse non-vide de l'LLM.
     """
-    # Payload avec paramètres optimisés pour vitesse <3s
+    # Payload avec paramètres optimisés pour vitesse <3s + meilleur suivi du contexte
     payload = {
         "model": OLLAMA_MODEL,
         "prompt": prompt,
@@ -923,7 +923,7 @@ def call_ollama(prompt: str) -> str:
         "options": {
             "temperature": 0.05,      # ULTRA-MINIMAL pour réponses déterministes
             "top_p": 0.75,            # Focus strict
-            "num_ctx": 256,           # Context minimal
+            "num_ctx": 1024,          # Contexte élargi pour historique conversationnel (~8000 chars)
             "num_predict": 100,       # 100 tokens = 3-4 phrases courtes
             "top_k": 3,               # 3 choix max
             "repeat_penalty": 1.0,    # Désactiver

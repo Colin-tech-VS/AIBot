@@ -51,6 +51,15 @@ STYLE DE RÉPONSE:
 - Pour les calculs (points, écarts, pourcentages), calcule précisément à partir des données du contexte.
 - Ne propose pas d'actions hors produit (réseaux sociaux, achats, etc.).
 
+🔥 SUIVI CONVERSATIONNEL (CRITIQUE):
+- Lis ATTENTIVEMENT l'HISTORIQUE RÉCENT pour comprendre le sujet discuté.
+- Quand la question contient "il", "elle", "ce pilote", "cette équipe" → Résous ces pronoms EN UTILISANT L'HISTORIQUE.
+- Si une question continue une discussion précédente (ex: "Il a gagné combien?" après "Peux-tu me dire qui est Hamilton?"), 
+  RÉFÉRENCE LA MÊME PERSONNE/ENTITÉ de la question précédente, NE CHANGE PAS DE SUJET.
+- Exemple MAUVAIS: User: "Qui est Hamilton?" / IA: "Lewis Hamilton..." / User: "Il a gagné combien?" / IA: "Vettel a annoncé..."
+  → C'est INCORRECT car on change le sujet de Hamilton vers Vettel.
+- Sois cohérent avec le contexte de la conversation entière.
+
 Note: La dernière saison complète est 2024, Max Verstappen est le champion en titre.
 """
     
@@ -100,6 +109,7 @@ Note: La dernière saison complète est 2024, Max Verstappen est le champion en 
         - Ajout de la date actuelle dans le contexte
         - Priorité à la Knowledge Base
         - Inclusion de l'historique conversationnel et de la mémoire long terme
+        - Amélioration: structurer l'historique pour mieux résoudre les pronoms
         """
         parts = [
             OptimizedPromptBuilder.SYSTEM_PROMPT,
@@ -115,11 +125,14 @@ Note: La dernière saison complète est 2024, Max Verstappen est le champion en 
                 "",
             ])
 
-        # Ajouter l'historique conversationnel récent
+        # Ajouter l'historique conversationnel récent avec clarification
         if conversation_history:
             parts.extend([
-                "=== HISTORIQUE RÉCENT ===",
+                "=== HISTORIQUE RÉCENT (CONTEXTE POUR RÉSOUDRE LES PRONOMS) ===",
                 conversation_history,
+                "",
+                "⚠️ IMPORTANT: La question actuelle peut contenir des pronoms (il, elle, etc.) ou des références implicites.",
+                "Utilise l'HISTORIQUE RÉCENT pour comprendre clairement de qui/quoi on parle.",
                 "",
             ])
 
