@@ -1,7 +1,15 @@
 fastapi
 uvicorn
 jinja2
+httpx
 requests
 beautifulsoup4
 pydantic
-chromadb>=0.5.0  # Knowledge base avec embeddings (optionnel)
+numpy
+sentence-transformers
+langchain-text-splitters
+bcrypt
+PyJWT
+python-docx
+faiss-cpu
+transformers>=4.39.0

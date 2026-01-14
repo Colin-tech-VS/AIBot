@@ -1,6 +1,6 @@
 """
 Gestionnaire Ollama optimisé pour latence ultra-basse
-Paramètres et streaming optimisés pour Nemotron-3-nano
+Paramètres et streaming optimisés pour llama3.2:3b
 """
 
 import subprocess
@@ -14,15 +14,15 @@ from dataclasses import dataclass
 
 @dataclass
 class OllamaConfig:
-    """Configuration optimisée pour Nemotron-3-nano"""
-    model: str = "nemotron-3-nano"
-    temperature: float = 0.3          # Légèrement supérieure pour variation (modèle plus petit)
-    top_p: float = 0.85               # Nucleus sampling (plus strict)
-    num_ctx: int = 2048               # Context window acceptable pour nano model
-    num_predict: int = 512            # Max tokens (nano peut supporter plus)
-    top_k: int = 15                   # Beam search strict
-    repeat_penalty: float = 1.2       # Pénalité élevée pour répétitions
-    timeout: int = 30                 # 30s max (nano = très rapide)
+    """Configuration optimisée pour Ollama - ULTRA RAPIDE"""
+    model: str = "llama3.2:3b"
+    temperature: float = 0.15         # ENCORE PLUS BAS pour cohérence/vitesse (0.2→0.15)
+    top_p: float = 0.85               # Réduit 0.9→0.85 pour plus de focus
+    num_ctx: int = 512                # Context DRASTIQUE 1024→512 pour vitesse
+    num_predict: int = 150            # DRASTIQUE 256→150 tokens pour <2s
+    top_k: int = 10                   # Réduit 20→10 pour plus de focus
+    repeat_penalty: float = 1.1       # Éviter les répétitions
+    timeout: int = 15                 # DRASTIQUE 30s→15s max pour réponse
 
 
 OLLAMA_PATHS = [

@@ -1,6 +1,17 @@
 """
 Système de cache optimisé pour chatbot F1
 TTL intelligent, invalidation et stats
+
+Cache TTL Configuration:
+- news_articles: 1800s (30 min) - Actualités F1 mises à jour fréquemment
+- web_search: 2400s (40 min) - Recherches web générales (anti-bot throttling)
+- kb_search: 3600s (60 min) - Knowledge Base (contenu statique)
+- standings: 3600s (60 min) - Classements StandF1 (changent après courses)
+- ergast_race: 1800s (30 min) - Résultats de course Ergast API
+- ergast_standings: 1800s (30 min) - Classements via Ergast API
+
+Ces durées représentent un équilibre entre fraîcheur des données et performance.
+Ajustez selon vos besoins en éditant CACHE_TTL ci-dessous.
 """
 
 import time
@@ -119,11 +130,14 @@ def get_cache() -> OptimizedCache:
     return _cache_instance
 
 
-# TTL constants (en secondes)
+# TTL constants (en secondes) - OPTIMISÉ: cache plus long pour réduire requêtes
 CACHE_TTL = {
-    "ergast_standings": 1800,      # 30 min (standings changent rarement)
-    "ergast_race": 3600,           # 1h (race schedule)
-    "news_articles": 600,          # 10 min (actualités)
-    "web_search": 900,             # 15 min (recherche web)
-    "kb_search": 1200,             # 20 min (KB)
+    "news_articles": 1800,         # 30 min (actualités) - augmenté de 10→30min
+    "web_search": 2400,            # 40 min (recherche web) - augmenté de 15→40min
+    "kb_search": 3600,             # 60 min (KB) - augmenté de 20→60min
+    "standings": 3600,             # 60 min (standings StandF1.com) - augmenté de 30→60min
+    "ergast_race": 1800,           # 30 min (race info)
+    "ergast_standings": 1800,      # 30 min (classements)
+    "widget_standings": 604800,    # 7 jours (604800 sec) - widgets Top 3 Drivers
+    "widget_race": 604800,         # 7 jours (604800 sec) - widget Prochain GP
 }

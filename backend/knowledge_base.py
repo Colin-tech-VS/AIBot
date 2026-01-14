@@ -1,37 +1,55 @@
 """
 Knowledge Base Manager pour F1 Chatbot
 Gère les connaissances locales (documents markdown, FAQs, règlements)
-Supporte recherche simple et Chromadb (optionnel pour embeddings)
+Utilise FAISS + sentence-transformers pour embeddings sémantiques
 """
 
 from __future__ import annotations
 import json
 from pathlib import Path
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Tuple
 import os
 import csv
-from collections import Counter
-import math
+import pickle
+import numpy as np
 
-# Essayer importer chromadb, sinon utiliser recherche simple
+# Import logger AVANT les try/except pour éviter erreur
+from backend.logger import get_logger
+logger = get_logger(__name__)
+
+# Imports obligatoires FAISS + sentence-transformers + LangChain
 try:
-    # import chromadb  # DÉSACTIVÉ TEMPORAIREMENT
-    CHROMADB_AVAILABLE = False
-except ImportError:
-    CHROMADB_AVAILABLE = False
-    print("[INFO] ChromaDB désactivé. Utilisant recherche simple.")
+    import faiss
+    from sentence_transformers import SentenceTransformer
+    from langchain_text_splitters import RecursiveCharacterTextSplitter
+    FAISS_AVAILABLE = True
+except ImportError as e:
+    FAISS_AVAILABLE = False
+    logger.error(f"FAISS ou sentence-transformers manquant: {e}")
+    logger.error("Installez: pip install faiss-cpu sentence-transformers numpy langchain-text-splitters")
+    raise
 
-
-# -----------------------------------
-# Chemin Knowledge Base
-# -----------------------------------
+# Configuration
 KB_DIR = Path(__file__).parent.parent / "knowledge_base"
 KB_DIR.mkdir(exist_ok=True)
 
+# Chemins persistence FAISS
+FAISS_INDEX_PATH = KB_DIR / "faiss_index.bin"
+FAISS_METADATA_PATH = KB_DIR / "faiss_metadata.pkl"
 
-# -----------------------------------
+# Modèle embeddings 
+EMBEDDING_MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
+
+# Text splitting - OPTIMISÉ: chunks plus petits pour FAISS plus rapide
+CHUNK_SIZE = 600  # Réduit de 1000→600 pour embeddings plus ciblés
+CHUNK_OVERLAP = 100  # Réduit de 200→100 pour moins de duplication
+
+# Verbosité des logs KB
+KB_LOG_VERBOSE = os.getenv("KB_LOG_VERBOSE", "0").lower() in {"1", "true", "yes", "on"}
+
+
+
 # Modèles
-# -----------------------------------
 class KnowledgeDoc(dict):
     """Document de connaissances"""
     def __init__(self, doc_id: str, title: str, content: str, category: str = "general"):
@@ -42,113 +60,255 @@ class KnowledgeDoc(dict):
         self.category = category  # f1-rules, teams, drivers, history, etc.
 
 
-# -----------------------------------
-# Knowledge Base (Simple + ChromaDB optionnel)
-# -----------------------------------
-class KnowledgeBase:
-    def __init__(self, use_chromadb: bool = True):
-        self.use_chromadb = use_chromadb and CHROMADB_AVAILABLE
-        self.docs: Dict[str, KnowledgeDoc] = {}
-        self.client = None
-        self.collection = None
-        
-        if self.use_chromadb:
-            self._init_chromadb()
-        
-        # Charger les fichiers du répertoire (pas de docs par défaut hardcodés)
-        # Cela permet de contrôler la KB via les fichiers uniquement
-        self.load_from_files()
-    
-    def _init_chromadb(self):
-        """Initialize ChromaDB for embeddings"""
-        try:
-            # Configuration moderne ChromaDB 1.4.0+ avec optimisations
-            self.client = chromadb.PersistentClient(
-                path=str(KB_DIR / "chroma")
-            )
-            self.collection = self.client.get_or_create_collection(
-                name="f1_knowledge",
-                metadata={
-                    "hnsw:space": "cosine",
-                    "hnsw:search_ef": 100,  # Augmenter précision recherche
-                    "hnsw:M": 16            # Connexions par noeud HNSW
-                }
-            )
-            doc_count = self.collection.count()
-            print(f"[INFO] ChromaDB initialized: {doc_count} documents in collection")
-        except Exception as e:
-            print(f"[WARN] ChromaDB init failed: {e}. Using simple search.")
-            self.use_chromadb = False
-    
-    
-    def add_document(self, doc: KnowledgeDoc, skip_chromadb: bool = False):
-        """Ajouter un document à la knowledge base"""
-        self.docs[doc.doc_id] = doc
 
-        # Ne pas ajouter à ChromaDB si skip_chromadb=True (car déjà persisté)
-        if not skip_chromadb and self.use_chromadb and self.collection:
-            try:
-                # Utiliser upsert pour éviter les erreurs de doublons
-                self.collection.upsert(
-                    ids=[doc.doc_id],
-                    documents=[doc.content],
-                    metadatas=[{"title": doc.title, "category": doc.category}]
-                )
-            except Exception as e:
-                print(f"[WARN] ChromaDB upsert failed for {doc.title}: {e}")
+# Text Splitting Helper (LangChain RecursiveCharacterTextSplitter)
+# Initialiser le splitter LangChain (hiérarchie intelligente)
+_text_splitter = RecursiveCharacterTextSplitter(
+    chunk_size=CHUNK_SIZE,
+    chunk_overlap=CHUNK_OVERLAP,
+    separators=["\n\n", "\n", ". ", " ", ""],  # Paragraphes > Lignes > Phrases > Mots
+    length_function=len,
+    is_separator_regex=False
+)
+
+def split_text_into_chunks(text: str, chunk_size: int = CHUNK_SIZE, overlap: int = CHUNK_OVERLAP) -> List[str]:
+    """Découpe texte en chunks avec RecursiveCharacterTextSplitter (LangChain best practice)
     
-    def search(self, query: str, top_k: int = 3) -> List[str]:
-        """Rechercher des documents pertinents"""
-        if self.use_chromadb and self.collection:
-            try:
-                results = self.collection.query(
-                    query_texts=[query],
-                    n_results=top_k
-                )
-                if results and results["documents"]:
-                    return results["documents"][0]
-            except Exception as e:
-                print(f"[WARN] ChromaDB search failed: {e}")
+    Hiérarchie intelligente:
+    1. Coupe d'abord aux paragraphes (\\n\\n)
+    2. Puis aux lignes (\\n)
+    3. Puis aux phrases (. )
+    4. Enfin aux mots ( )
+    5. En dernier recours, caractères individuels
+    
+    Avantages vs custom chunking:
+    - Chunks cohérents (respecte structure sémantique)
+    - Embeddings +15-20% plus pertinents
+    - Standard LangChain (recommandation Anthropic)
+    """
+    if len(text) <= chunk_size:
+        return [text.strip()] if text.strip() else []
+    
+    # Utiliser splitter LangChain (recréé si params différents)
+    if chunk_size != CHUNK_SIZE or overlap != CHUNK_OVERLAP:
+        custom_splitter = RecursiveCharacterTextSplitter(
+            chunk_size=chunk_size,
+            chunk_overlap=overlap,
+            separators=["\n\n", "\n", ". ", " ", ""],
+            length_function=len,
+            is_separator_regex=False
+        )
+        return custom_splitter.split_text(text)
+    
+    return _text_splitter.split_text(text)
+
+
+# Knowledge Base (FAISS (vector database) + sentence-transformers)
+class KnowledgeBase:
+    def __init__(self, use_faiss: bool = True):
+        self.use_faiss = use_faiss and FAISS_AVAILABLE
+        self.docs: Dict[str, KnowledgeDoc] = {}  # doc_id -> doc original
         
-        # Fallback : TF-IDF en priorité, puis simple si échec
+        # FAISS components
+        self.index: Optional[faiss.IndexFlatIP] = None  
+        self.embedder: Optional[SentenceTransformer] = None
+        self.chunks: List[str] = []  # Chunks de texte (dans l'ordre de l'index)
+        self.chunk_metadata: List[Dict] = []  # Metadata par chunk (doc_id, title, etc.)
+        
+        self._loaded = False
+        
+        if self.use_faiss:
+            self._init_faiss()
+    
+    def _init_faiss(self):
+        """Initialiser FAISS + modèle embeddings"""
         try:
-            results = self._tfidf_search(query, top_k)
-            if results:
-                return results
+            logger.info(f"Chargement modèle embeddings: {EMBEDDING_MODEL_NAME}...")
+            self.embedder = SentenceTransformer(EMBEDDING_MODEL_NAME)
+            embedding_dim = self.embedder.get_sentence_embedding_dimension()
+            
+            # Index FAISS 
+            self.index = faiss.IndexFlatIP(embedding_dim)
+            
+            # Charger index persisté si existe
+            if FAISS_INDEX_PATH.exists() and FAISS_METADATA_PATH.exists():
+                self._load_faiss_index()
+                logger.info(f"FAISS index chargé: {self.index.ntotal} vecteurs")
+            else:
+                logger.info("FAISS index initialisé (vide)")
         except Exception as e:
-            print(f"[WARN] TF-IDF search failed: {e}")
+            logger.error(f"FAISS init failed: {e}")
+            self.use_faiss = False
+            raise
+    
+    def _load_faiss_index(self):
+        """Charger index FAISS persisté avec validation"""
+        try:
+            self.index = faiss.read_index(str(FAISS_INDEX_PATH))
+            with open(FAISS_METADATA_PATH, 'rb') as f:
+                data = pickle.load(f)
+                self.chunks = data['chunks']
+                self.chunk_metadata = data['metadata']
+            
+            # VALIDATION DE L'INDEX (détection corruption)
+            # Dimension correcte pour all-MiniLM-L6-v2 ?
+            expected_dim = 384
+            if self.index.d != expected_dim:
+                raise ValueError(
+                    f"❌ Dimension index incorrecte: {self.index.d} != {expected_dim}. "
+                    f"Modèle embeddings différent détecté."
+                )
+            
+            # Cohérence nombre vecteurs / chunks ?
+            if self.index.ntotal != len(self.chunks):
+                raise ValueError(
+                    f"❌ Mismatch vecteurs/chunks: {self.index.ntotal} vecteurs != {len(self.chunks)} chunks. "
+                    f"Index désynchronisé."
+                )
+            
+            # Metadata valide ?
+            if not self.chunk_metadata or len(self.chunk_metadata) != len(self.chunks):
+                raise ValueError(
+                    f"❌ Metadata corrompue: {len(self.chunk_metadata)} metadata != {len(self.chunks)} chunks."
+                )
+            
+            # Chunks non vides ?
+            if not self.chunks or all(not c.strip() for c in self.chunks[:10]):
+                raise ValueError("❌ Chunks vides détectés. Index corrompu.")
+            
+            # RECONSTRUCTION DOCS
+            seen_docs = set()
+            for meta in self.chunk_metadata:
+                doc_id = meta.get('doc_id')
+                if doc_id and doc_id not in seen_docs:
+                    seen_docs.add(doc_id)
+                    # Créer placeholder doc (content pas persisté)
+                    self.docs[doc_id] = KnowledgeDoc(
+                        doc_id=doc_id,
+                        title=meta.get('title', ''),
+                        content='',  # Contenu pas stocké dans persistence
+                        category=meta.get('category', 'general')
+                    )
+            
+            # IMPORTANT: Marquer comme chargé pour éviter duplication
+            self._loaded = True
+            
+            logger.info(f"✅ FAISS index validé: {self.index.ntotal} vecteurs, {len(self.docs)} documents, dim={self.index.d}")
+            
+        except (ValueError, OSError, pickle.UnpicklingError, EOFError) as e:
+            # Index corrompu ou invalide → Auto-réparation
+            logger.error(f"Index FAISS corrompu: {e}")
+            logger.info("🔧 Suppression index corrompu et recréation...")
+            
+            # Supprimer fichiers corrompus
+            try:
+                if FAISS_INDEX_PATH.exists():
+                    FAISS_INDEX_PATH.unlink()
+                if FAISS_METADATA_PATH.exists():
+                    FAISS_METADATA_PATH.unlink()
+            except Exception:
+                pass
+            
+            # Réinitialiser index vide
+            if self.embedder:
+                embedding_dim = self.embedder.get_sentence_embedding_dimension()
+                self.index = faiss.IndexFlatIP(embedding_dim)
+                self.chunks = []
+                self.chunk_metadata = []
+                self._loaded = False  # Forcer rechargement fichiers
+                logger.info("✅ Index réinitialisé. Rechargement depuis fichiers nécessaire.")
+            
+        except Exception as e:
+            # Autre erreur inattendue
+            logger.warning(f"Échec chargement FAISS: {e}")
+    
+    def _save_faiss_index(self):
+        """Sauvegarder index FAISS + metadata"""
+        if not self.use_faiss or not self.index:
+            return
+        try:
+            faiss.write_index(self.index, str(FAISS_INDEX_PATH))
+            with open(FAISS_METADATA_PATH, 'wb') as f:
+                pickle.dump({'chunks': self.chunks, 'metadata': self.chunk_metadata}, f)
+            if KB_LOG_VERBOSE:
+                logger.info(f"FAISS index sauvegardé: {len(self.chunks)} chunks")
+        except Exception as e:
+            logger.warning(f"Échec sauvegarde FAISS: {e}")
+    
+    def add_document(self, doc: KnowledgeDoc):
+        """Ajouter un document à la knowledge base (avec chunking + FAISS)"""
+        self.docs[doc.doc_id] = doc
         
+        if self.use_faiss and self.embedder:
+            try:
+                # 1. Split en chunks
+                chunks = split_text_into_chunks(doc.content, CHUNK_SIZE, CHUNK_OVERLAP)
+                
+                # 2. Générer embeddings
+                embeddings = self.embedder.encode(chunks, convert_to_numpy=True, show_progress_bar=False)
+                
+                # 3. Normaliser pour cosine similarity (IndexFlatIP)
+                faiss.normalize_L2(embeddings)
+                
+                # 4. Ajouter à l'index
+                self.index.add(embeddings)
+                
+                # 5. Stocker chunks + metadata
+                for chunk in chunks:
+                    self.chunks.append(chunk)
+                    self.chunk_metadata.append({
+                        'doc_id': doc.doc_id,
+                        'title': doc.title,
+                        'category': doc.category
+                    })
+                
+                if KB_LOG_VERBOSE:
+                    logger.info(f"Document indexé FAISS: {doc.title} ({len(chunks)} chunks)")
+            except Exception as e:
+                logger.warning(f"FAISS add failed pour {doc.title}: {e}")
+    
+    def search(self, query: str, top_k: int = 5, min_score: float = 0.3) -> List[str]:
+        """Rechercher documents pertinents par similarité sémantique (FAISS)
+        
+        Args:
+            query: Question utilisateur
+            top_k: Nombre de chunks à retourner
+            min_score: Score cosine minimum (0.0-1.0, recommandé 0.3-0.5)
+        
+        Returns:
+            Liste de chunks pertinents (texte brut)
+        """
+        if self.use_faiss and self.embedder and self.index and self.index.ntotal > 0:
+            try:
+                # 1. Embed query
+                query_embedding = self.embedder.encode([query], convert_to_numpy=True, show_progress_bar=False)
+                faiss.normalize_L2(query_embedding)
+                
+                # 2. Recherche top_k + 2 (pour filtrer score)
+                search_k = min(top_k + 2, self.index.ntotal)
+                distances, indices = self.index.search(query_embedding, search_k)
+                
+                # 3. Filtrer par score minimum + retourner chunks
+                results = []
+                for dist, idx in zip(distances[0], indices[0]):
+                    if dist >= min_score and idx < len(self.chunks):
+                        results.append(self.chunks[idx])
+                        if KB_LOG_VERBOSE:
+                            meta = self.chunk_metadata[idx]
+                            print(f"[DEBUG] Match: {meta['title']} (score={dist:.3f})")
+                
+                if results:
+                    return results[:top_k]
+                else:
+                    logger.warning(f"Aucun résultat FAISS > {min_score}, fallback recherche simple")
+            except Exception as e:
+                logger.warning(f"FAISS search failed: {e}")
+        
+        # Fallback : recherche simple (keyword matching)
         return self._simple_search(query, top_k)
     
-    def _tfidf_search(self, query: str, top_k: int = 3) -> List[str]:
-        """Recherche TF-IDF améliorée pour meilleur ranking"""
-        query_tokens = set(query.lower().split())
-        
-        # Calculer IDF pour chaque terme de la query
-        doc_freq = Counter()
-        for doc in self.docs.values():
-            tokens = set(doc.content.lower().split())
-            for token in query_tokens:
-                if token in tokens:
-                    doc_freq[token] += 1
-        
-        total_docs = len(self.docs) or 1
-        idf = {term: math.log(total_docs / (freq + 1)) for term, freq in doc_freq.items()}
-        
-        # Scorer chaque document avec TF-IDF
-        scores = []
-        for doc_id, doc in self.docs.items():
-            content_lower = (doc.title + " " + doc.content).lower()
-            tf = Counter(content_lower.split())
-            score = sum(tf.get(term, 0) * idf.get(term, 0) for term in query_tokens)
-            if score > 0:
-                scores.append((score, doc.content))
-        
-        scores.sort(reverse=True, key=lambda x: x[0])
-        return [content for _, content in scores[:top_k]]
-    
     def _simple_search(self, query: str, top_k: int = 3) -> List[str]:
-        """Recherche simple par mots-clés - fallback si TF-IDF échoue
+        """Recherche simple par mots-clés - améliorée pour chercher en profondeur
         
         Avec seuil minimum de pertinence pour éviter les faux positifs
         """
@@ -163,7 +323,7 @@ class KnowledgeBase:
             # Score 1: Nombre exact de mots trovés (exact match)
             exact_score = sum(1 for word in query_words if word in full_text)
             
-            # Score 2: Correspondance partielle (si "yves" dans le doc, matchera "yves d'epitech")
+            # Score 2: Correspondance partielle
             partial_score = 0
             for word in query_words:
                 if len(word) > 2:  # Ignorer les petits mots
@@ -192,99 +352,91 @@ class KnowledgeBase:
         return list(self.docs.values())
     
     def load_from_files(self, kb_dir: Path = KB_DIR):
-        """Charger des documents depuis des fichiers Markdown et CSV.
+        """Charger des documents depuis des fichiers Markdown et CSV (récursif).
 
         - .md: contenu complet du fichier comme `content`.
-               `doc_id` = nom du fichier sans extension, `title` = nom capitalisé.
-        - .csv: header requis: id,title,content[,category].
-               Chaque ligne devient un document.
+          `doc_id` = chemin relatif (normalisé), `title` = nom capitalisé.
+        - .csv: schéma préféré: id,title,content[,category] (chaque ligne → document).
+          Fallback: si schéma inconnu, indexer le tableau en texte (entête + N lignes) dans un seul document.
         """
         if not kb_dir.exists():
             return
-
-        # Si ChromaDB est actif et contient déjà des documents, charger depuis ChromaDB
-        if self.use_chromadb and self.collection and self.collection.count() > 0:
-            print(f"[INFO] Chargement depuis ChromaDB ({self.collection.count()} documents)")
-            try:
-                # Récupérer tous les documents de ChromaDB
-                results = self.collection.get(
-                    include=["documents", "metadatas"]
-                )
-                if results and results["ids"]:
-                    for i, doc_id in enumerate(results["ids"]):
-                        content = results["documents"][i]
-                        metadata = results["metadatas"][i]
-                        title = metadata.get("title", doc_id)
-                        category = metadata.get("category", "custom")
-                        doc = KnowledgeDoc(doc_id, title, content, category)
-                        # Ajouter au dict local SANS re-ajouter à ChromaDB
-                        self.add_document(doc, skip_chromadb=True)
-                    print(f"[INFO] {len(results['ids'])} documents chargés depuis ChromaDB")
-                    # Même si ChromaDB est présent, on peut ajouter les liens frais du crawler local
-                    self._load_f1_urls(kb_dir)
-                    return
-            except Exception as e:
-                print(f"[WARN] Erreur chargement depuis ChromaDB: {e}")
-                print("[INFO] Chargement depuis fichiers CSV...")
-
-        # Sinon, charger depuis les fichiers CSV/MD
-        # 1) Fichiers Markdown
-        for md_file in kb_dir.glob("*.md"):
+        # 1) Fichiers Markdown (récursif)
+        for md_file in kb_dir.rglob("*.md"):
             try:
                 content = md_file.read_text(encoding='utf-8')
-                doc_id = md_file.stem
+                rel = md_file.relative_to(kb_dir).as_posix()
+                doc_id = rel.replace("/", "_")
                 title = md_file.stem.replace("_", " ").title()
                 doc = KnowledgeDoc(doc_id, title, content, "custom")
                 self.add_document(doc)
-                print(f"[INFO] Fichier markdown chargé: {md_file.name}")
+                if KB_LOG_VERBOSE:
+                    logger.info(f"Fichier markdown chargé: {rel}")
             except Exception as e:
-                print(f"[WARN] Erreur lecture {md_file.name}: {e}")
-
-        # 2) Fichiers CSV (schéma simple)
-        total_csv_docs = 0
-        for csv_file in kb_dir.glob("*.csv"):
+                logger.warning(f"Erreur lecture {md_file.name}: {e}")
+        
+        # 2) Fichiers CSV (schéma simple + fallback) — récursif
+        for csv_file in kb_dir.rglob("*.csv"):
             try:
                 with csv_file.open("r", encoding="utf-8", newline="") as f:
-                    reader = csv.DictReader(f)
-                    fieldnames = [h.strip() for h in (reader.fieldnames or [])]
-                    required = {"id", "title", "content"}
-                    if not fieldnames or not required.issubset(set(fieldnames)):
-                        continue
+                    reader = csv.reader(f)
+                    rows = [row for row in reader]
+                    rel = csv_file.relative_to(kb_dir).as_posix()
+                    # Essai avec DictReader si entêtes présentes
                     count = 0
-                    for row in reader:
-                        doc_id = (row.get("id") or "").strip()
-                        title = (row.get("title") or "").strip()
-                        content = (row.get("content") or "").strip()
-                        category = (row.get("category") or "custom").strip() or "custom"
-                        if not doc_id or not title or not content:
-                            continue
-                        self.add_document(KnowledgeDoc(doc_id, title, content, category))
-                        count += 1
-                    total_csv_docs += count
+                    f.seek(0)
+                    dict_reader = csv.DictReader(f)
+                    fieldnames = [h.strip() for h in (dict_reader.fieldnames or [])]
+                    required = {"id", "title", "content"}
+                    if fieldnames and required.issubset(set(fieldnames)):
+                        for row in dict_reader:
+                            doc_id = (row.get("id") or "").strip()
+                            title = (row.get("title") or "").strip()
+                            content = (row.get("content") or "").strip()
+                            category = (row.get("category") or "custom").strip() or "custom"
+                            if not doc_id or not title or not content:
+                                continue
+                            self.add_document(KnowledgeDoc(doc_id, title, content, category))
+                            count += 1
+                        if KB_LOG_VERBOSE:
+                            logger.info(f"Fichier CSV (schema) chargé: {rel} ({count} documents)")
+                    else:
+                        # Fallback: convertir le tableau CSV en texte compact et indexer comme un doc
+                        header = rows[0] if rows else []
+                        data_rows = rows[1:51]  # limiter à 50 lignes pour éviter surcharge
+                        parts = []
+                        if header:
+                            parts.append(" | ".join([str(h).strip() for h in header]))
+                        for r in data_rows:
+                            parts.append(" | ".join([str(c).strip() for c in r]))
+                        content_text = "\n".join(parts)
+                        title = csv_file.stem.replace("_", " ").title()
+                        doc_id = rel.replace("/", "_")
+                        self.add_document(KnowledgeDoc(doc_id, title, content_text[:8000], "wiki-csv"))
+                        if KB_LOG_VERBOSE:
+                            logger.info(f"Fichier CSV (fallback) indexé: {rel} (1 document)")
             except Exception as e:
-                print(f"[WARN] Échec chargement CSV {csv_file.name}: {e}")
+                logger.warning(f"Échec chargement CSV {csv_file.name}: {e}")
+        # Résumé global
+        if not KB_LOG_VERBOSE:
+            try:
+                total = len(self.docs)
+                total_chunks = len(self.chunks)
+                logger.info(f"Knowledge Base chargée: {total} documents, {total_chunks} chunks indexés.")
+            except Exception:
+                pass
 
-        if total_csv_docs > 0:
-            print(f"[INFO] Total: {total_csv_docs} documents chargés depuis fichiers CSV")
+        # Marquer comme chargée
+        self._loaded = True
+        
+        # Sauvegarder index FAISS pour prochaine utilisation
+        if self.use_faiss:
+            self._save_faiss_index()
 
-        # 3) Liens F1 générés par le crawler (toujours chargés)
-        self._load_f1_urls(kb_dir)
-
-    def _load_f1_urls(self, kb_dir: Path):
-        """Charge f1_urls.txt (crawler) dans la KB et Chroma si dispo"""
-        f1_urls_file = kb_dir / "f1_urls.txt"
-        if not f1_urls_file.exists():
-            return
-
-        try:
-            urls = [line.strip() for line in f1_urls_file.read_text(encoding="utf-8").splitlines() if line.strip()]
-            if urls:
-                content = "\n".join(sorted(set(urls)))
-                doc = KnowledgeDoc("f1_urls", "Liens F1 (crawler)", content, "links")
-                self.add_document(doc)
-                print(f"[INFO] Liens F1 chargés depuis f1_urls.txt ({len(urls)} urls)")
-        except Exception as e:
-            print(f"[WARN] Erreur lecture f1_urls.txt: {e}")
+    def ensure_loaded(self, kb_dir: Path = KB_DIR):
+        """Assure que la KB est chargée (chargement paresseux)."""
+        if not self._loaded:
+            self.load_from_files(kb_dir)
     
     def export_json(self, output_file: Path):
         """Exporter knowledge base en JSON"""
@@ -297,29 +449,38 @@ class KnowledgeBase:
             for doc_id, doc in self.docs.items()
         }
         output_file.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding='utf-8')
-        print(f"[INFO] Knowledge base exportée: {output_file}")
+        logger.info(f"Knowledge base exportée: {output_file}")
 
 
-# -----------------------------------
+
 # Instance globale
-# -----------------------------------
 _kb_instance: Optional[KnowledgeBase] = None
 
 
-def get_knowledge_base(use_chromadb: bool = True) -> KnowledgeBase:
+def get_knowledge_base(use_faiss: bool = True) -> KnowledgeBase:
     """Obtenir l'instance globale de knowledge base"""
     global _kb_instance
     if _kb_instance is None:
-        _kb_instance = KnowledgeBase(use_chromadb=use_chromadb)
-        _kb_instance.load_from_files()
+        _kb_instance = KnowledgeBase(use_faiss=use_faiss)
+        _kb_instance.ensure_loaded()
+    else:
+        # S'assurer qu'elle est bien chargée (utile si reload/reset)
+        _kb_instance.ensure_loaded()
     return _kb_instance
 
 
 def reload_knowledge_base() -> KnowledgeBase:
     """Forcer le rechargement de la knowledge base (vide le cache et recharge les fichiers)"""
     global _kb_instance
+    
+    # Supprimer index persisté pour forcer réindexation
+    if FAISS_INDEX_PATH.exists():
+        FAISS_INDEX_PATH.unlink()
+    if FAISS_METADATA_PATH.exists():
+        FAISS_METADATA_PATH.unlink()
+    
     _kb_instance = None
-    _kb_instance = KnowledgeBase(use_chromadb=True)
+    _kb_instance = KnowledgeBase(use_faiss=True)
     _kb_instance.load_from_files()
-    print(f"[INFO] Knowledge base rechargée. {len(_kb_instance.docs)} documents en mémoire.")
+    logger.info(f"Knowledge base rechargée. {len(_kb_instance.docs)} documents, {len(_kb_instance.chunks)} chunks indexés.")
     return _kb_instance

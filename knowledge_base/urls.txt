@@ -151,3 +151,6 @@ https://fr.wikinews.org/wiki/Cat%C3%A9gorie:Formule_1
 https://fr.wikinews.org/wiki/Cat%C3%A9gorie:Championnat_du_monde_de_Formule_1
 https://en.wikinews.org/wiki/Category:Formula_One
 https://en.wikinews.org/wiki/Category:Auto_racing
+
+# PRESSE FR — L'Équipe (Actualités F1)
+https://www.lequipe.fr/Formule-1/

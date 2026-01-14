@@ -22,6 +22,16 @@ function clearAllHistory() {
   }
 }
 
+/**
+ * Toggle la visibilité de la liste d'historique
+ */
+function toggleHistoryList() {
+  const historyList = document.getElementById('navbarHistoryList');
+  if (historyList) {
+    historyList.classList.toggle('hidden');
+  }
+}
+
 // Références au DOM
 const chatBox = document.getElementById("chatBox");
 const messageInput = document.getElementById("messageInput");
@@ -138,7 +148,7 @@ function renameConversation(id) {
   renderNavbarHistory();
 }
 
-function addMessageToCurrentConversation(role, content, sources = []) {
+function addMessageToCurrentConversation(role, content) {
   if (!currentConversationId) {
     createConversation();
   }
@@ -155,7 +165,7 @@ function addMessageToCurrentConversation(role, content, sources = []) {
     }
   }
   
-  conv.messages.push({role, content, ts: Date.now(), sources});
+  conv.messages.push({role, content, ts: Date.now()});
   saveConversations();
   renderConversationList();
 }
@@ -190,7 +200,7 @@ function loadConversationIntoChat(id) {
   chatContainer.classList.add("active-chat");
   
   conv.messages.forEach(m => {
-    displayMessage(m.content, m.role, {save:false, sources: m.sources || []});
+    displayMessage(m.content, m.role, {save:false});
   });
 }
 
@@ -207,18 +217,18 @@ function renderConversationList() {
   if (!historyContent) return;
   historyContent.innerHTML = '';
   if (!conversations || conversations.length===0) {
-    historyContent.innerHTML = `<p class="text-sm text-slate-500 dark:text-slate-400">Aucune conversation.</p>`;
+    historyContent.innerHTML = `<p class="text-sm text-[#8A97A8] dark:text-[#6F8197]">Aucune conversation.</p>`;
     return;
   }
   conversations.forEach(conv => {
     const item = document.createElement('div');
-    item.className = 'p-3 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer transition flex justify-between items-center group';
+    item.className = 'p-3 rounded-lg hover:bg-[#FCE8E7] dark:hover:bg-[#1B2F46] cursor-pointer transition flex justify-between items-center group';
     item.title = conv.title;
 
     const titleDiv = document.createElement('div');
     titleDiv.className = 'flex-1 min-w-0';
     const titleEl = document.createElement('p');
-    titleEl.className = 'text-sm font-medium text-slate-900 dark:text-white truncate';
+    titleEl.className = 'text-xs font-medium text-[#0B1C2D] dark:text-[#E6ECF2] truncate';
     titleEl.textContent = conv.title;
     titleDiv.appendChild(titleEl);
 
@@ -226,7 +236,7 @@ function renderConversationList() {
     actions.className = 'flex gap-1 opacity-0 group-hover:opacity-100 transition';
 
     const delBtn = document.createElement('button');
-    delBtn.className = 'p-1 rounded hover:bg-red-100 dark:hover:bg-red-900 text-red-900 dark:text-red-400 transition';
+    delBtn.className = 'p-1 rounded hover:bg-[#FCE8E7] dark:hover:bg-[#FF3B30]/20 text-[#E10600] dark:text-[#FF3B30] transition';
     delBtn.title = 'Supprimer';
     delBtn.innerHTML = '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>';
     delBtn.onclick = (e) => { e.stopPropagation(); deleteConversation(conv.id); };
@@ -252,13 +262,13 @@ function renderNavbarHistory() {
   
   navbarHistoryList.innerHTML = '';
   if (!conversations || conversations.length === 0) {
-    navbarHistoryList.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">Aucune conversation</p>`;
+    navbarHistoryList.innerHTML = `<p class="text-xs text-[#0d0737]/50 dark:text-white/50 text-center py-4">Aucune conversation</p>`;
     return;
   }
   
   conversations.forEach(conv => {
     const item = document.createElement('button');
-    item.className = 'flex items-center gap-2 w-full p-2 rounded hover:bg-red-800 dark:hover:bg-red-900 transition text-left text-white text-sm group';
+    item.className = 'flex items-center gap-2 w-full p-2 rounded hover:bg-[#FCE8E7] dark:hover:bg-[#1B2F46] transition text-left text-[#0B1C2D] dark:text-[#E6ECF2] text-xs group';
     item.title = conv.title;
     
     const icon = document.createElement('svg');
@@ -277,7 +287,7 @@ function renderNavbarHistory() {
     
     // Bouton supprimer au hover
     const delBtn = document.createElement('button');
-    delBtn.className = 'p-1 rounded hover:bg-red-700 text-white opacity-0 group-hover:opacity-100 transition flex-shrink-0';
+    delBtn.className = 'p-1 rounded hover:bg-[#FCE8E7] dark:hover:bg-[#FF3B30]/20 text-[#E10600] dark:text-[#FF3B30] opacity-0 group-hover:opacity-100 transition flex-shrink-0';
     delBtn.title = 'Supprimer';
     delBtn.innerHTML = '<svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>';
     delBtn.onclick = (e) => { e.stopPropagation(); deleteConversation(conv.id); };
@@ -334,8 +344,7 @@ async function sendMessage(event) {
 
     removeMessage(loaderId);
 
-    const sources = Array.isArray(data.sources) ? data.sources : [];
-    displayMessage(data.bot_response, "bot", {sources});
+    displayBotMessageWithTyping(data.bot_response);
   } catch (error) {
     removeMessage(loaderId);
 
@@ -356,7 +365,6 @@ async function sendMessage(event) {
  * Support du markdown et emojis (liens cliquables)
  */
 function formatMarkdown(text) {
-  if (!text) return "";
   return text
     .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" class="underline font-semibold hover:opacity-80">$1</a>')
     .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
@@ -364,74 +372,64 @@ function formatMarkdown(text) {
     .replace(/\n/g, "<br>");
 }
 
-function displayMessage(text, role = "user", opts = {save: true, sources: []}) {
+function displayMessage(text, role = "user", opts = {save: true}) {
   const messageDiv = document.createElement("div");
-  messageDiv.className = `flex flex-col ${role === "user" ? "items-end" : "items-start"}`;
+  messageDiv.className = `flex ${role === "user" ? "justify-end" : "justify-start"} mb-2`;
 
   const bubble = document.createElement("div");
   const baseClass = `max-w-xs lg:max-w-md xl:max-w-lg px-4 py-2 rounded-lg text-sm`;
-  const roleClass = role === "user" 
-    ? "bg-red-900 text-white rounded-br-none" 
-    : "bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white rounded-bl-none";
   
-  bubble.className = `${baseClass} ${roleClass}`;
+  if (role === "user") {
+    bubble.className = `${baseClass} text-white rounded-br-none user-message-bubble`;
+    const isDarkMode = document.documentElement.classList.contains("dark");
+    bubble.style.backgroundColor = isDarkMode ? "#9b473e" : "#0d0737";
+  } else {
+    const roleClass = "bg-[#EEF1F5] dark:bg-[#13263B] text-[#0B1C2D] dark:text-[#E6ECF2] rounded-bl-none";
+    bubble.className = `${baseClass} ${roleClass}`;
+  }
   
   bubble.innerHTML = formatMarkdown(text);
 
   messageDiv.appendChild(bubble);
-
-  // Badge des sources recherchées (uniquement pour les réponses bot)
-  const sources = opts.sources || [];
-  if (role === "bot" && sources.length > 0) {
-    const badgeWrapper = document.createElement("div");
-    badgeWrapper.className = "flex flex-wrap items-center gap-2 mt-2 text-xs text-slate-600 dark:text-slate-300 max-w-xs lg:max-w-md xl:max-w-lg";
-
-    const label = document.createElement("span");
-    label.className = "inline-flex items-center gap-1 px-2 py-1 rounded-full bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-slate-100 font-medium";
-    label.innerHTML = "<span>🔎</span><span>Sources recherchées</span>";
-    badgeWrapper.appendChild(label);
-
-    sources.forEach(src => {
-      const pill = document.createElement("span");
-      pill.className = "inline-flex items-center gap-1 px-2 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-100 border border-slate-200 dark:border-slate-700 max-w-xs overflow-hidden";
-      
-      // Détecter si c'est une URL et la rendre cliquable avec texte tronqué
-      const urlRegex = /(https?:\/\/[^\s]+)/g;
-      if (urlRegex.test(src)) {
-        const url = src.match(urlRegex)[0];
-        let displayText = url;
-        
-        // Tronquer si trop long (garder domaine + ... + fin)
-        if (url.length > 50) {
-          const urlObj = new URL(url);
-          const domain = urlObj.hostname.replace('www.', '');
-          const path = urlObj.pathname + urlObj.search;
-          if (path.length > 20) {
-            displayText = domain + path.substring(0, 15) + '...' + path.substring(path.length - 10);
-          } else {
-            displayText = domain + path;
-          }
-        }
-        
-        pill.innerHTML = `<a href="${url}" target="_blank" rel="noopener noreferrer" class="underline hover:opacity-80 truncate" title="${url}">${displayText}</a>`;
-      } else {
-        // Pour les sources non-URL, tronquer simplement le texte
-        const maxLen = 60;
-        const displayText = src.length > maxLen ? src.substring(0, maxLen) + '...' : src;
-        pill.innerHTML = `<span class="truncate" title="${src}">${formatMarkdown(displayText)}</span>`;
-      }
-      
-      badgeWrapper.appendChild(pill);
-    });
-
-    messageDiv.appendChild(badgeWrapper);
-  }
-
   chatBox.appendChild(messageDiv);
 
   chatBox.scrollTop = chatBox.scrollHeight;
 
-  if (opts.save !== false) addMessageToCurrentConversation(role, text, sources);
+  if (opts.save !== false) addMessageToCurrentConversation(role, text);
+
+  return messageDiv;
+}
+
+/**
+ * Affiche un message bot avec effet "machine à écrire"
+ */
+function displayBotMessageWithTyping(text, opts = {save: true}) {
+  const messageDiv = document.createElement("div");
+  messageDiv.className = "flex justify-start mb-2";
+
+  const bubble = document.createElement("div");
+  const baseClass = `max-w-xs lg:max-w-md xl:max-w-lg px-4 py-2 rounded-lg text-sm`;
+  const roleClass = "bg-[#EEF1F5] dark:bg-[#13263B] text-[#0B1C2D] dark:text-[#E6ECF2] rounded-bl-none";
+  bubble.className = `${baseClass} ${roleClass}`;
+  bubble.textContent = "";
+
+  messageDiv.appendChild(bubble);
+  chatBox.appendChild(messageDiv);
+  chatBox.scrollTop = chatBox.scrollHeight;
+
+  let idx = 0;
+  const total = text.length;
+  const typingInterval = setInterval(() => {
+    if (idx >= total) {
+      clearInterval(typingInterval);
+      bubble.innerHTML = formatMarkdown(text);
+      if (opts.save !== false) addMessageToCurrentConversation("bot", text);
+      return;
+    }
+    bubble.textContent += text[idx];
+    idx += 1;
+    chatBox.scrollTop = chatBox.scrollHeight;
+  }, 12);
 
   return messageDiv;
 }
@@ -444,20 +442,25 @@ function displayLoader() {
   loadingDiv.className = "flex justify-start";
 
   const bubble = document.createElement("div");
-  bubble.className = "px-4 py-2 rounded-lg bg-slate-100 dark:bg-slate-800 rounded-bl-none";
-  bubble.innerHTML = `
-    <div class="flex gap-1">
-      <span class="inline-block animate-bounce">🏎️</span>
-      <span class="inline-block animate-bounce" style="animation-delay: 0.1s">🏁</span>
-      <span class="inline-block animate-bounce" style="animation-delay: 0.2s">⚡</span>
-    </div>
-  `;
+  bubble.className = "px-4 py-2 rounded-lg bg-[#EEF1F5] dark:bg-[#13263B] rounded-bl-none";
+  const dots = document.createElement("span");
+  dots.textContent = "●";
+  dots.style.display = "inline-block";
+  bubble.appendChild(dots);
 
   loadingDiv.appendChild(bubble);
   chatBox.appendChild(loadingDiv);
 
   chatBox.scrollTop = chatBox.scrollHeight;
 
+  const frames = ["●  ", "●● ", "●●●", " ●●", "  ●", "   "];
+  let idx = 0;
+  const timer = setInterval(() => {
+    dots.textContent = frames[idx % frames.length];
+    idx += 1;
+  }, 220);
+
+  loadingDiv._loaderTimer = timer;
   return loadingDiv;
 }
 
@@ -466,6 +469,9 @@ function displayLoader() {
  */
 function removeMessage(messageElement) {
   if (messageElement && messageElement.parentNode) {
+    if (messageElement._loaderTimer) {
+      clearInterval(messageElement._loaderTimer);
+    }
     messageElement.remove();
   }
 }
@@ -539,11 +545,44 @@ function doDeleteConversation() {
 /**
  * Initialisation au chargement de la page
  */
+
+async function fetchNextRaceCountdown() {
+  const countdownEl = document.getElementById("widget-countdown");
+  const nameEl = document.getElementById("widget-gp-name");
+  if (!countdownEl || !nameEl) return;
+  try {
+    const res = await fetch("/next_race_countdown");
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    const data = await res.json();
+    countdownEl.textContent = data.countdown || "—";
+    const name = data.race_name ? `${data.race_name} — ${data.location}` : "—";
+    nameEl.textContent = name;
+  } catch (err) {
+    console.error("[widget] next race", err);
+    countdownEl.textContent = "—";
+    nameEl.textContent = "—";
+  }
+}
+
+async function fetchTop3Drivers() {
+  const container = document.getElementById("widget-top-drivers");
+  if (!container) return;
+  try {
+    const res = await fetch("/top_drivers");
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    const data = await res.json();
+    const drivers = (data.drivers || []).slice(0, 3);
+    if (!drivers.length) throw new Error("No drivers");
+    container.innerHTML = drivers
+      .map((d, idx) => `<div class="flex items-center gap-2"><span class="text-[11px] font-semibold text-[#6B7280] dark:text-[#AAB1BA]">${idx+1}.</span><span class="text-xs text-[#2a3441] dark:text-[#ddd] font-medium">${d.name}</span><span class="text-[11px] text-[#6B7280] dark:text-[#AAB1BA]">${d.points} pts</span></div>`)
+      .join("");
+  } catch (err) {
+    console.error("[widget] top drivers", err);
+    container.innerHTML = `<div class="text-[#6c757d] dark:text-[#777]">—</div>`;
+  }
+}
 document.addEventListener("DOMContentLoaded", () => {
   try {
-    historyPanel = document.getElementById("historyPanel");
-    historyContent = document.getElementById("historyContent");
-
     console.log('Frontend: history UI initialized', {historyPanel: !!historyPanel, historyContent: !!historyContent});
   } catch (e) {
     console.error('Erreur initialisation UI:', e);
@@ -554,29 +593,11 @@ document.addEventListener("DOMContentLoaded", () => {
   // Nettoyer les conversations vides au démarrage
   deleteEmptyConversations();
   
-  if (!conversations || conversations.length === 0) {
-    (async () => {
-      try {
-        const res = await fetch('/history');
-        if (res.ok) {
-          const data = await res.json();
-          const msgs = data.history || [];
-          const messages = msgs.map(m => ({role: m.role, content: m.content, ts: Date.now()}));
-          if (messages.length>0) createConversation({title: 'Session serveur', messages});
-          else createConversation();
-        } else {
-          createConversation();
-        }
-      } catch (e) {
-        console.error('Impossible de récupérer /history pour initialiser', e);
-        createConversation();
-      }
-    })();
-  } else {
-    renderConversationList();
-    renderNavbarHistory();
-    if (conversations.length>0) loadConversationIntoChat(conversations[0].id);
-  }
+  // Always create a new conversation on page load
+  createConversation();
+  renderConversationList();
+  renderNavbarHistory();
+  
   messageInput.focus();
 
   messageInput.addEventListener("keydown", (e) => {
@@ -621,47 +642,79 @@ document.addEventListener("DOMContentLoaded", () => {
     mainNavbar.classList.add("collapsed");
     isNavbarCollapsed = true;
   }
+  
+    // Widgets
+    fetchNextRaceCountdown();
+    fetchTop3Drivers();
+  
+  /**
+   * Charger les données du widget Prochain GP
+   */
+  async function fetchNextRaceCountdown() {
+    try {
+      const response = await fetch('/next_race_countdown');
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      const data = await response.json();
+      
+      // Mettre à jour les éléments du widget
+      const countdownEl = document.getElementById('widget-countdown');
+      const gpNameEl = document.getElementById('widget-gp-name');
+      
+      if (countdownEl) {
+        countdownEl.textContent = data.countdown || '—';
+      }
+      if (gpNameEl) {
+        gpNameEl.innerHTML = `<strong>${data.race_name || '—'}</strong><br><small>${data.location || '—'}</small>`;
+      }
+      
+      console.log('[fetchNextRaceCountdown] Widgets updated:', {countdown: data.countdown, race: data.race_name});
+    } catch (error) {
+      console.error('[fetchNextRaceCountdown] Error:', error);
+      const countdownEl = document.getElementById('widget-countdown');
+      if (countdownEl) countdownEl.textContent = 'Erreur ⚠️';
+    }
+  }
+
+  /**
+   * Charger les données du widget Top 3 Drivers
+   */
+  async function fetchTop3Drivers() {
+    try {
+      const response = await fetch('/top_drivers?top_n=3');
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      const data = await response.json();
+      
+      const driversEl = document.getElementById('widget-top-drivers');
+      if (driversEl && data.drivers && data.drivers.length > 0) {
+        driversEl.innerHTML = data.drivers.map((driver, idx) => {
+          const medal = ['🥇', '🥈', '🥉'][idx] || '•';
+          return `<div class="flex items-center justify-between gap-1">
+            <span>${medal} ${driver.name}</span>
+            <strong>${driver.points}pts</strong>
+          </div>`;
+        }).join('');
+      } else {
+        driversEl.innerHTML = '<div class="text-[#6c757d] dark:text-[#777]">—</div>';
+      }
+      
+      console.log('[fetchTop3Drivers] Widget updated:', {count: data.drivers?.length || 0});
+    } catch (error) {
+      console.error('[fetchTop3Drivers] Error:', error);
+      const driversEl = document.getElementById('widget-top-drivers');
+      if (driversEl) driversEl.innerHTML = '<div class="text-red-500">Erreur ⚠️</div>';
+    }
+  }
 });
 
 chatForm.addEventListener("submit", sendMessage);
 
-// Fonctions de gestion de la navbar collapsible
+// Fonctions de gestion de la navbar
 function toggleNavbar() {
-  // Sur mobile : open/close
-  // Sur desktop : collapse/expand
-  if (window.innerWidth < 1024) {
-    // Mobile
-    isNavbarOpen = !isNavbarOpen;
-    if (isNavbarOpen) {
-      mainNavbar.classList.remove("-translate-x-full");
-      navOverlay.classList.remove("hidden");
-    } else {
-      mainNavbar.classList.add("-translate-x-full");
-      navOverlay.classList.add("hidden");
-    }
-  } else {
-    // Desktop
-    toggleNavbarCollapsed();
-  }
-}
-
-function toggleNavbarCollapsed() {
-  isNavbarCollapsed = !isNavbarCollapsed;
-  localStorage.setItem('navbarCollapsed', isNavbarCollapsed);
-  
-  if (isNavbarCollapsed) {
-    mainNavbar.classList.add("collapsed");
-  } else {
-    mainNavbar.classList.remove("collapsed");
-  }
+  mainNavbar.classList.toggle("navbar-collapsed");
 }
 
 function closeNavbar() {
-  if (isNavbarOpen) {
-    isNavbarOpen = false;
-    mainNavbar.classList.add("-translate-x-full");
-    navOverlay.classList.add("hidden");
-  }
+  mainNavbar.classList.add("navbar-collapsed");
 }
 
 function toggleHistoryPanel() {
@@ -775,7 +828,7 @@ function updateUserInfo(username) {
   if (!userInfo) return;
   userInfo.innerHTML = `
     <p class="text-sm">Connecté en tant que <strong>${username}</strong></p>
-    <button class="w-full px-4 py-2 rounded-lg bg-red-900 hover:bg-red-800 text-white transition text-sm font-medium" onclick="handleLogout()">Se déconnecter</button>
+    <button class="w-full px-4 py-2 rounded-lg bg-[#E10600] hover:bg-[#FF3B30] text-white transition text-sm font-medium" onclick="handleLogout()">Se déconnecter</button>
   `;
 }
 
@@ -787,8 +840,8 @@ function handleLogout() {
   const userInfo = document.getElementById("userInfo");
   if (!userInfo) return;
   userInfo.innerHTML = `
-    <p class="text-sm text-slate-500 dark:text-slate-400">Non connecté</p>
-    <button class="w-full px-4 py-2 rounded-lg bg-red-900 hover:bg-red-800 text-white transition text-sm font-medium mt-2" onclick="handleLogin()">Se connecter</button>
+    <p class="text-sm text-[#8A97A8] dark:text-[#6F8197]">Non connecté</p>
+    <button class="w-full px-4 py-2 rounded-lg bg-[#E10600] hover:bg-[#FF3B30] text-white transition text-sm font-medium mt-2" onclick="handleLogin()">Se connecter</button>
   `;
 }
 
@@ -798,14 +851,25 @@ function handleLogout() {
 function toggleDarkMode() {
   const isDarkMode = document.documentElement.classList.toggle("dark");
   localStorage.setItem("darkMode", isDarkMode);
+  
+  // Mettre à jour la couleur de tous les messages utilisateurs existants
+  const userBubbles = document.querySelectorAll('.user-message-bubble');
+  userBubbles.forEach(bubble => {
+    bubble.style.backgroundColor = isDarkMode ? "#9b473e" : "#0d0737";
+  });
 }
 
 /**
  * Initialise le dark mode au chargement
  */
 function initDarkMode() {
-  const isDarkMode = localStorage.getItem("darkMode") === "true";
+  const savedDarkMode = localStorage.getItem("darkMode");
+  const isDarkMode = savedDarkMode !== null ? savedDarkMode === "true" : true; // Dark mode activé par défaut
   const darkModeToggle = document.getElementById("darkModeToggle");
+  
+  // Toujours sauvegarder l'état pour synchroniser le localStorage
+  localStorage.setItem("darkMode", isDarkMode);
+  
   if (isDarkMode) {
     document.documentElement.classList.add("dark");
   } else {
@@ -827,130 +891,20 @@ function initUserInfo() {
 }
 
 /**
- * Affiche une notification toast
+ * Initialise la navbar
  */
-function showToast(message, isSuccess = true) {
-  const toast = document.getElementById("toast");
-  const toastMessage = document.getElementById("toastMessage");
-  const toastDiv = toast.querySelector("div");
-
-  toastMessage.textContent = message;
-
-  // Changer la couleur selon succès ou erreur
-  if (isSuccess) {
-    toastDiv.className = "bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg flex items-center gap-3";
-  } else {
-    toastDiv.className = "bg-red-600 text-white px-6 py-3 rounded-lg shadow-lg flex items-center gap-3";
-  }
-
-  // Afficher le toast
-  toast.classList.remove("translate-x-full");
-
-  // Masquer après 3 secondes
-  setTimeout(() => {
-    toast.classList.add("translate-x-full");
-  }, 3000);
+function initNavbar() {
+  // Navbar visible par défaut (non collapsed)
+  mainNavbar.classList.remove("navbar-collapsed");
 }
 
-/**
- * Gère le drag over
- */
-function handleDragOver(event) {
-  event.preventDefault();
-  event.stopPropagation();
-  const dropZone = document.getElementById("kbDropZone");
-  dropZone.classList.add("border-blue-500", "dark:border-blue-400", "bg-blue-50", "dark:bg-blue-900/20");
-}
+// ===== WIDGETS F1 =====
 
-/**
- * Gère le drag leave
- */
-function handleDragLeave(event) {
-  event.preventDefault();
-  event.stopPropagation();
-  const dropZone = document.getElementById("kbDropZone");
-  dropZone.classList.remove("border-blue-500", "dark:border-blue-400", "bg-blue-50", "dark:bg-blue-900/20");
-}
-
-/**
- * Gère le drop de fichiers/dossiers
- */
-async function handleDrop(event) {
-  event.preventDefault();
-  event.stopPropagation();
-
-  const dropZone = document.getElementById("kbDropZone");
-  dropZone.classList.remove("border-blue-500", "dark:border-blue-400", "bg-blue-50", "dark:bg-blue-900/20");
-
-  const items = event.dataTransfer.items;
-  if (!items || items.length === 0) return;
-
-  // Récupérer le premier dossier déposé
-  for (let i = 0; i < items.length; i++) {
-    const item = items[i].webkitGetAsEntry();
-    if (item && item.isDirectory) {
-      await processDroppedFolder(item.fullPath);
-      return;
-    }
-  }
-
-  showToast("Veuillez déposer un dossier", false);
-}
-
-/**
- * Gère la sélection de dossier via input
- */
-async function handleFolderSelect(event) {
-  const files = event.target.files;
-  if (!files || files.length === 0) return;
-
-  // Le navigateur ne donne pas le chemin absolu pour des raisons de sécurité
-  // On demande à l'utilisateur d'entrer le chemin complet
-  const folderPath = prompt("Entrez le chemin complet du dossier:");
-  if (!folderPath) return;
-
-  await processDroppedFolder(folderPath);
-}
-
-/**
- * Traite un dossier déposé
- */
-async function processDroppedFolder(folderPath) {
-  const dropZone = document.getElementById("kbDropZone");
-  const originalHTML = dropZone.innerHTML;
-
-  // Afficher un spinner
-  dropZone.innerHTML = `
-    <div class="flex flex-col items-center gap-3">
-      <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
-      <p class="text-sm text-slate-700 dark:text-slate-300">Importation en cours...</p>
-    </div>
-  `;
-
-  try {
-    const response = await fetch("/api/kb/add-folder", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ folder_path: folderPath })
-    });
-
-    const data = await response.json();
-
-    if (data.success) {
-      showToast(`Ajouté sur ChromaDB (${data.count} documents)`, true);
-    } else {
-      showToast(data.error || "Erreur lors de l'importation", false);
-    }
-  } catch (error) {
-    showToast("Erreur lors de l'importation", false);
-  } finally {
-    dropZone.innerHTML = originalHTML;
-  }
-}
-
-// Initialisation au chargement de la page
+// Initialisation
 document.addEventListener("DOMContentLoaded", () => {
+  initNavbar();
   initDarkMode();
   initUserInfo();
-  loadConversations();
+  renderConversationList();
+  renderNavbarHistory();
 });

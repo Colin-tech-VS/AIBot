@@ -7,7 +7,7 @@ import re
 import time
 from pathlib import Path
 
-import requests
+import httpx
 import pandas as pd
 
 
@@ -27,7 +27,7 @@ def safe_name(s: str) -> str:
 
 
 def fetch_html(url: str, timeout: int = 30) -> str:
-    r = requests.get(url, headers=HEADERS, timeout=timeout, allow_redirects=True)
+    r = httpx.get(url, headers=HEADERS, timeout=timeout, follow_redirects=True)
     status = r.status_code
 
     # Erreurs typiques quand Wikipedia rate-limit
