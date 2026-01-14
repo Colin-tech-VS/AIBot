@@ -23,12 +23,11 @@ import threading
 import sys
 import socket
 
-from backend.f1_bot import answer_f1_question, perform_background_learning, get_news_summaries, fetch_url, extract_main_text
+from backend.f1_bot import answer_f1_question, perform_background_learning
 from backend.knowledge_base import get_knowledge_base, reload_knowledge_base, KnowledgeDoc
 from backend.optimized_prompts import ConversationMemory
 from backend.input_validator import sanitize_user_input
 from backend.standings_utils import get_standf1_standings_summary, get_standf1_constructors_summary
-from bs4 import BeautifulSoup
 import re
 import json
 from datetime import datetime
@@ -49,7 +48,7 @@ else:
     TEMPLATES_DIR = BASE_DIR / "frontend"
 
 STATIC_DIR = BASE_DIR / "frontend" / "static"
-IMAGE_DIR = BASE_DIR / "frontend" / "image"
+IMAGE_DIR = BASE_DIR / "frontend" / "images"
 
 # Configuration Ollama (multiplateforme)
 OLLAMA_PATHS = [
@@ -88,7 +87,10 @@ if OLLAMA_PATH is None:
 
 # Montage des fichiers statiques
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
-app.mount("/image", StaticFiles(directory=IMAGE_DIR), name="image")
+if IMAGE_DIR.exists():
+    app.mount("/images", StaticFiles(directory=IMAGE_DIR), name="images")
+else:
+    print(f"⚠️ Warning: Image directory not found at {IMAGE_DIR}")
 templates = Jinja2Templates(directory=TEMPLATES_DIR)
 
 # URL API Ollama (Windows par défaut)

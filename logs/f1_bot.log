@@ -638,3 +638,19 @@
 [2026-01-13 09:40:11] [INFO] [backend.f1_bot:1232] Pipeline F1 optimisé
 [2026-01-13 09:40:11] [WARNING] [backend.knowledge_base:315] Aucun résultat FAISS > 0.4, fallback recherche simple
 [2026-01-13 09:40:11] [INFO] [backend.f1_bot:1250] KB: Aucun résultat (score <0.4)
+[2026-01-14 20:21:08] [INFO] [__main__:469] auto_train désactivé (AUTO_TRAIN=0).
+[2026-01-14 20:21:08] [INFO] [__main__:498] 🕷️ Aucun crawl précédent détecté, lancement du crawling...
+[2026-01-14 20:21:08] [WARNING] [__main__:544] ⚠️ Script crawler non trouvé: C:\Users\cococ\Desktop\IA\scripts\crawler_f1.py
+[2026-01-14 20:21:08] [INFO] [__main__:615] ✅ MondayScheduler démarré (refresh widgets le lundi)
+[2026-01-14 20:28:08] [INFO] [app:166] Input sanitized: safe=True, length=25
+[2026-01-14 20:28:08] [INFO] [backend.f1_bot:1218] Question reçue: Bonjour comment vas tuy ?
+[2026-01-14 20:28:09] [INFO] [backend.f1_bot:1226] Contexte long terme récupéré
+[2026-01-14 20:28:09] [INFO] [backend.f1_bot:1297] F1? False, Générale? True, Circuit? False
+[2026-01-14 20:28:09] [INFO] [backend.f1_bot:1506] Question générale (non-F1) — mode libre
+[2026-01-14 20:28:09] [INFO] [backend.knowledge_base:126] Chargement modèle embeddings: sentence-transformers/all-MiniLM-L6-v2...
+[2026-01-14 20:28:11] [INFO] [backend.knowledge_base:196] ✅ FAISS index validé: 5551 vecteurs, 2233 documents, dim=384
+[2026-01-14 20:28:11] [INFO] [backend.knowledge_base:136] FAISS index chargé: 5551 vecteurs
+[2026-01-14 20:28:11] [WARNING] [backend.knowledge_base:303] Aucun résultat FAISS > 0.5, fallback recherche simple
+[2026-01-14 20:28:27] [WARNING] [backend.f1_bot:949] Ollama HTTP API failed: ReadTimeout, trying subprocess fallback
+[2026-01-14 20:28:42] [ERROR] [backend.f1_bot:976] Ollama subprocess timeout
+[2026-01-14 20:28:49] [WARNING] [backend.f1_bot:944] Ollama response too short (4 chars): RIEN

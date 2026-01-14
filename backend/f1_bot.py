@@ -10,9 +10,8 @@ from typing import Dict, List, Tuple, Optional
 import httpx
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
-from pydantic import BaseModel, Field, ValidationError
+from pydantic import BaseModel, Field
 from concurrent.futures import ThreadPoolExecutor, as_completed
-import concurrent.futures
 
 # Import Knowledge Base
 from backend.knowledge_base import get_knowledge_base
