@@ -1461,11 +1461,39 @@ def _answer_f1_question_internal(user_question: str, history=None, rag_only: Opt
             
             response = call_ollama(prompt)
             
-            # ÉTAPE 5: Fallback direct (sans Web Search pour respect du timeout)
-            # Le Web Search ralentit trop - on accepte l'incertitude plutôt que le délai
-            if not response or response.startswith("[ERREUR"):
-                logger.info("⚠️ LLM échoué, retour de message par défaut (pas de Web Search)")
-                return "Désolé, j'ai une petite latence! Essaie ta question dans quelques secondes 😊 Ou demande-moi direct sur la F1 🏎️", sources
+            # ÉTAPE 5: Web Search OPTIONNEL si échec (avec timeout court)
+            # Critères d'échec: réponse vide, erreur ou incertaine
+            if not response or response.startswith("[ERREUR") or "désolé" in response.lower() or "je n'ai pas" in response.lower() or len(response) < 40:
+                logger.info("⚠️ LLM incertain, tentative Web Search (fallback Wikipedia)...")
+                
+                # Chercher Wikipedia (timeout TRÈS réduit pour respecter <3s)
+                wiki_content = []
+                try:
+                    search_queries = [f"F1 {user_question}"]
+                    for search_q in search_queries[:1]:  # Limité à 1 seule requête
+                        wiki_params = {"list": "search", "srsearch": search_q, "srlimit": 1}  # 1 seul résultat
+                        data = fetch_wikimedia_api("query", params=wiki_params)
+                        if data and "query" in data and "search" in data["query"]:
+                            for r in data["query"]["search"][:1]:  # Max 1 résultat
+                                wiki_content.append(f"{r['title']}: {r['snippet'][:200]}")
+                    wiki_data = " | ".join(wiki_content[:1])  # Max 1 snippet
+                except Exception as e:
+                    logger.warning(f"Web Search échoué: {e}")
+                    wiki_data = None
+
+                # Nouveau prompt avec Web Search SEULEMENT si wiki_data existe
+                if wiki_data:
+                    prompt = OptimizedPromptBuilder.build_f1_question(
+                        question=user_question,
+                        kb_content=kb_content,
+                        standings=ergast_summary,
+                        news_summary=wiki_data,
+                        conversation_history=history_text,
+                        long_term_context=memory_context
+                    )
+                    response = call_ollama(prompt)
+                    sources.append("Recherche web (Wikipedia)")
+                    logger.info(f"✅ Web Search utilisé en fallback")
 
             if response and not response.startswith("[ERREUR"):
                 return response, sources
