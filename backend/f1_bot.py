@@ -1527,45 +1527,66 @@ def _answer_f1_question_internal(user_question: str, history=None, rag_only: Opt
         # AUTRES QUESTIONS (CATCH-ALL INTELLIGENT)
         logger.info("Question non catégorisée, utilisation du LLM direct")
 
+        # STRATÉGIE: Pour questions générales non-F1, chercher Wikipedia d'abord
+        # pour enrichir le contexte (car Hadjar, Dupont, etc. ne sont pas en KB F1)
+        wiki_data = None
+        wiki_content = []
+        
+        # Essayer recherche Wikipedia (timeout court: 3s)
+        try:
+            logger.debug("Recherche préalable Wikipedia pour question générale...")
+            wiki_params = {"list": "search", "srsearch": user_question, "srlimit": 2}
+            data = fetch_wikimedia_api("query", params=wiki_params)
+            if data and "query" in data and "search" in data["query"] and len(data["query"]["search"]) > 0:
+                for r in data["query"]["search"][:1]:  # Max 1 résultat
+                    snippet = r.get("snippet", "")[:300]
+                    wiki_content.append(f"{r['title']}: {snippet}")
+                wiki_data = " | ".join(wiki_content)
+                logger.info(f"✅ Wikipedia trouvé: {wiki_content[0][:60]}...")
+                sources.append("Recherche web (Wikipedia)")
+            else:
+                logger.debug("Aucun résultat Wikipedia trouvé")
+        except Exception as e:
+            logger.warning(f"Web Search préalable échoué: {e}")
+            wiki_data = None
+
+        # Construire prompt AVEC données Wikipedia si trouvées
         prompt = OptimizedPromptBuilder.build_f1_question(
             question=user_question,
+            news_summary=wiki_data if wiki_data else None,
             conversation_history=history_text,
             long_term_context=lt_context
         )
 
         response = call_ollama(prompt)
         
-        # Fallback Web Search pour les questions générales si Ollama échoue
-        if not response or response.startswith("[ERREUR") or "désolé" in response.lower() or "je n'ai pas" in response.lower():
-            logger.info("⚠️ LLM général incertain, tentative Web Search...")
-            wiki_content = []
+        # Fallback supplémentaire: si Ollama échoue complètement ET pas de Wikipedia,
+        # essayer une recherche Wikipedia plus large
+        if (not response or response.startswith("[ERREUR") or "désolé" in response.lower() or "je n'ai pas" in response.lower()) and not wiki_data:
+            logger.info("⚠️ Ollama incertain et pas de Wikipedia... tentative élargies")
             try:
-                # Chercher la question directement (pas de préfixe F1 pour les questions générales)
-                search_queries = [user_question]
-                for search_q in search_queries:
-                    wiki_params = {"list": "search", "srsearch": search_q, "srlimit": 2}
-                    data = fetch_wikimedia_api("query", params=wiki_params)
-                    if data and "query" in data and "search" in data["query"]:
-                        for r in data["query"]["search"][:1]:
-                            wiki_content.append(f"{r['title']}: {r['snippet'][:200]}")
-                            break
-                    if wiki_content:
-                        break
-                wiki_data = " | ".join(wiki_content[:1])
+                # Chercher avec paramètres moins restrictifs
+                wiki_params = {"list": "search", "srsearch": user_question, "srlimit": 5}
+                data = fetch_wikimedia_api("query", params=wiki_params)
+                if data and "query" in data and "search" in data["query"]:
+                    results = []
+                    for r in data["query"]["search"][:2]:  # Jusqu'à 2 résultats
+                        snippet = r.get("snippet", "")[:250]
+                        results.append(f"{r['title']}: {snippet}")
+                    wiki_data = " | ".join(results)
+                    if wiki_data:
+                        prompt = OptimizedPromptBuilder.build_f1_question(
+                            question=user_question,
+                            news_summary=wiki_data,
+                            conversation_history=history_text,
+                            long_term_context=lt_context
+                        )
+                        response = call_ollama(prompt)
+                        if "Recherche web" not in sources:
+                            sources.append("Recherche web (Wikipedia)")
+                        logger.info("✅ Web Search élargies utilisés")
             except Exception as e:
-                logger.warning(f"Web Search général échoué: {e}")
-                wiki_data = None
-            
-            if wiki_data:
-                prompt = OptimizedPromptBuilder.build_f1_question(
-                    question=user_question,
-                    news_summary=wiki_data,  # Utiliser les résultats Wikipedia comme contexte
-                    conversation_history=history_text,
-                    long_term_context=lt_context
-                )
-                response = call_ollama(prompt)
-                sources.append("Recherche web (Wikipedia)")
-                logger.info("✅ Web Search utilisé en fallback pour question générale")
+                logger.warning(f"Web Search élargies échoué: {e}")
         
         if response and not response.startswith("[ERREUR"):
             return response, sources
