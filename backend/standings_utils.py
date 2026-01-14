@@ -103,6 +103,78 @@ def get_standf1_standings_summary(top_n: int = 10) -> Optional[str]:
         return None
 
 
+def get_lequipe_standings_summary(top_n: int = 10) -> Optional[str]:
+    """Récupère le classement pilotes depuis L'Équipe F1 (fallback).
+    
+    Renvoie markdown: "1. Nom — NN pts" (top_n). Met en cache ~10 min.
+    """
+    cache = get_cache()
+    cache_key = f"standings:lequipe:top{top_n}"
+    cached = cache.get(cache_key)
+    if cached:
+        return cached
+
+    try:
+        html = _fetch_url("https://www.lequipe.fr/Formule-1/f1-classement-pilotes.html", timeout=5)
+        if not html:
+            return None
+        soup = BeautifulSoup(html, "html.parser")
+
+        summary_items: List[str] = []
+
+        # Structure L'Équipe: tbody tr avec cellules [Position, Nom, Points, Victoires]
+        rows = soup.select("tbody tr")
+        
+        for tr in rows:
+            cells = tr.find_all("td")
+            if len(cells) < 3:
+                continue
+
+            # Cellules: [0]=Position, [1]=Nom, [2]=Points, [3]=Victoires
+            try:
+                position = cells[0].get_text(strip=True)
+                name = cells[1].get_text(strip=True)
+                pts = cells[2].get_text(strip=True)
+                
+                # Vérifier que c'est une vraie ligne de données
+                if not position.isdigit():
+                    continue
+                if not pts.isdigit():
+                    continue
+                    
+                rank = int(position)
+                summary_items.append(f"{rank}. {name} — {pts} pts")
+                
+                if len(summary_items) >= top_n:
+                    break
+            except (IndexError, ValueError):
+                continue
+
+        if not summary_items:
+            return None
+
+        summary = "\n".join(summary_items)
+        cache.set(cache_key, summary, CACHE_TTL.get("news_articles", 600))
+        return summary
+    except Exception as e:
+        print(f"[WARN] L'Équipe standings parse failed: {e}")
+        return None
+
+
+def get_driver_standings(top_n: int = 10) -> Optional[str]:
+    """Récupère le classement pilotes depuis StandF1 ou L'Équipe (fallback).
+    
+    Essaie d'abord StandF1, puis L'Équipe si échec.
+    """
+    # Essayer StandF1 d'abord
+    standings = get_standf1_standings_summary(top_n)
+    if standings:
+        return standings
+    
+    # Fallback L'Équipe
+    return get_lequipe_standings_summary(top_n)
+
+
 def get_standf1_constructors_summary(top_n: int = 10) -> Optional[str]:
     """Récupère et formate un résumé des classements (constructeurs) via StandF1.
 

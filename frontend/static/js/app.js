@@ -425,6 +425,9 @@ document.addEventListener("DOMContentLoaded", () => {
   // Charger le compte à rebours du prochain GP
   fetchNextRaceCountdown();
   
+  // Charger le top 5 des pilotes
+  fetchTop5Drivers();
+  
   if (!conversations || conversations.length === 0) {
     createConversation();
   } else {
@@ -624,6 +627,63 @@ async function fetchNextRaceCountdown() {
 
 // Rafraîchir le compte à rebours toutes les 5 minutes
 setInterval(fetchNextRaceCountdown, 5 * 60 * 1000);
+
+/**
+ * Récupère et affiche le top 5 des pilotes F1
+ */
+async function fetchTop5Drivers() {
+  try {
+    const response = await fetch('/top_drivers');
+    const data = await response.json();
+
+    const driversList = document.getElementById('top5DriversList');
+    if (!driversList) return;
+
+    if (data && data.drivers && data.drivers.length > 0) {
+      const medals = ['🥇', '🥈', '🥉', '4.', '5.'];
+      let html = '';
+      data.drivers.forEach((driver, index) => {
+        const medal = medals[index] || `${index + 1}.`;
+        html += `<div class="flex justify-between items-center py-0.5">
+          <span class="text-gray-300">${medal} ${driver.name}</span>
+          <span class="text-red-400 font-semibold">${driver.points} pts</span>
+        </div>`;
+      });
+      driversList.innerHTML = html;
+    } else {
+      driversList.innerHTML = '<p class="text-gray-500">Non disponible</p>';
+    }
+  } catch (error) {
+    console.error('Erreur récupération top 5:', error);
+    const driversList = document.getElementById('top5DriversList');
+    if (driversList) {
+      driversList.innerHTML = '<p class="text-gray-500">Non disponible</p>';
+    }
+  }
+}
+
+// Rafraîchir le top 5 tous les lundis (les classements changent le dimanche après les courses)
+function scheduleTop5Refresh() {
+  const now = new Date();
+  const dayOfWeek = now.getDay(); // 0=dimanche, 1=lundi, ...
+  
+  // Si c'est lundi, rafraîchir
+  if (dayOfWeek === 1) {
+    // Vérifier si on a déjà rafraîchi aujourd'hui
+    const lastRefresh = localStorage.getItem('top5LastRefresh');
+    const today = now.toDateString();
+    if (lastRefresh !== today) {
+      fetchTop5Drivers();
+      localStorage.setItem('top5LastRefresh', today);
+    }
+  }
+  
+  // Vérifier toutes les heures si on est lundi
+  setTimeout(scheduleTop5Refresh, 60 * 60 * 1000);
+}
+
+// Lancer la vérification hebdomadaire
+scheduleTop5Refresh();
 
 /**
  * Animation de particules F1 en arrière-plan

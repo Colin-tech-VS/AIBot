@@ -1,11 +1,11 @@
 # Instructions pour agents (GitHub Copilot / IA)
 
 ## Vue d'ensemble 🚀
-**Chatbot F1** (frontend statique + backend FastAPI) : chatbot conversationnel sur la Formule 1 qui utilise **Ollama** (LLaMA 3.2 3B) localement pour générer des réponses. Architecture hybride **latency-first** combinant :
+**Chatbot F1** (frontend statique + backend FastAPI) : chatbot conversationnel sur la Formule 1 qui utilise **Ollama** (Qwen 2.5 3B) localement pour générer des réponses. Architecture hybride **latency-first** combinant :
 - **Routage d'intention** (regex) → handlers rapides (<100ms) pour questions simples (classements, calendrier)
 - **LLM pour questions complexes** (stratégies, historique, analyses)
-- **Knowledge Base** locale (markdown/CSV + ChromaDB optionnel pour embeddings)
-- Scrapers d'actualité (motorsport.com, autosport.com, actuf1.com, standf1.com)
+- **Knowledge Base** locale (markdown/CSV + FAISS pour embeddings)
+- Scrapers d'actualité (standf1.com, lequipe.fr, FIA)
 - API Ergast (résultats, standings, calendrier)
 
 **Points d'entrée clés** : `app.py` (FastAPI), `backend/f1_bot.py` (orchestration), `backend/intent_router.py` (routage sans-LLM), `backend/knowledge_base.py` (KB).
@@ -41,20 +41,20 @@
 
 ### Prompt et LLM
 - **`backend/optimized_prompts.py`**  
-  - `OptimizedPromptBuilder` : construire prompts minimalistes (<400 tokens) pour latence <2s.  
-  - Méthodes : `build_f1_question()` (standings + news), `build_kb_question()` (KB seule).
-  - **Règles implicites** : français obligatoire, gras pour clés, emojis F1, citations de source.
+  - `OptimizedPromptBuilder` : construire prompts avec règles de sécurité anti-jailbreak.  
+  - Méthodes : `build_f1_question()` (standings + news + KB + mémoire), `build_kb_question()` (KB seule).
+  - **Règles implicites** : français obligatoire, gras pour clés, emojis F1, citations de source, anti-jailbreak.
 
-- **`backend/optimized_ollama.py`**  
-  - Wrapper Ollama avec `OllamaConfig` (température=0.2 ultra-basse, num_predict=256, timeout=30s).  
-  - Détecte chemin ollama.exe (Windows/macOS/Linux).  
-  - **Streaming** et gestion timeout intégrée.
+- **Configuration Ollama** (dans `f1_bot.py`)  
+  - `OLLAMA_MODEL = "qwen2.5:3b"` — modèle rapide et performant.  
+  - `OLLAMA_TIMEOUT = 15` — timeout ultra-rapide (15s).  
+  - Détecte chemin ollama.exe (Windows/macOS/Linux) via `OLLAMA_PATHS`.
 
 ### Knowledge Base
 - **`backend/knowledge_base.py`**  
   - Charge fichiers `.md` et `.csv` du dossier `knowledge_base/`.  
-  - Classe `KnowledgeBase` : `search(q)` (simple booléen ou embeddings ChromaDB si installé).  
-  - **Persistence** ChromaDB : `knowledge_base/chroma/` (optionnel).  
+  - Classe `KnowledgeBase` : `search(q)` avec embeddings FAISS (sentence-transformers).  
+  - **Index FAISS** : ~5500 vecteurs, dimension 384, persisté localement.  
   - API HTTP via `app.py` : `/kb/docs`, `/kb/search?q=...`, `/kb/add`, `/kb/reload`.
 
 ### Frontend & server
@@ -69,7 +69,7 @@
 ## Workflows et commandes pratiques ✅
 - **Installation** : `pip install -r requirements.txt` (+ `chromadb` optionnel pour embeddings).
 - **Lancer Ollama** : `ollama serve` (daemon, obligatoire). Vérifier : `ollama --version` ou `GET /health`.
-- **Lancer backend** : `python app.py` (ou `uvicorn app:app --reload`). Accès : `http://localhost:8000`.
+- **Lancer backend** : `python app.py` (ou `uvicorn app:app --reload`). Accès : `http://localhost:8001` (fallback: 8002).
 - **Tests endpoints** :
   - `/health` → statut Ollama + KB.
   - `/chat` → POST `{"message": "..."}`.
@@ -90,15 +90,15 @@
 ---
 
 ## Points d'intégration externes & effets secondaires 🌐
-- **Ollama** (local) : dépendance système; chemin configurable dans `OLLAMA_PATHS` (Windows). Si absent, tests/flows fallback vers KB.
+- **Ollama** (local) : dépendance système; chemin configurable dans `OLLAMA_PATHS` (f1_bot.py). Si absent, tests/flows fallback vers KB.
 - **Ergast API** : données temps réel pour résultats et standings — code contient cache TTL 5 minutes.
-- **Sites d'actu**: scrapers pour `motorsport.com`, `autosport.com`, `actuf1.com`, `standf1.com` — fragile à changements structurels (tests E2E ou isolation recommandés).
-- **ChromaDB** : optionnelle; installez `chromadb` pour activer embeddings. Persistence path: `knowledge_base/chroma`.
+- **Sites d'actu**: scrapers pour `standf1.com`, `lequipe.fr/Formule-1`, FIA (calendrier + règlements) — fragile à changements structurels.
+- **FAISS** : index vectoriel pour recherche sémantique dans la Knowledge Base (~5500 vecteurs).
 
 ---
 
 ## Exemples concrets (où chercher/modifier) 🔎
-- Pour changer le modèle Ollama : éditer `backend/f1_bot.py` → `OLLAMA_MODEL = "llama3.2:3b"`.
+- Pour changer le modèle Ollama : éditer `backend/f1_bot.py` → `OLLAMA_MODEL = "qwen2.5:3b"` (actuel).
 - Pour ajuster la règle « répondre toujours en FR » : éditer le bloc `build_prompt` (voir les instructions textuelles détaillées dans `f1_bot.py`).
 - Pour ajouter une donnée persistante : créer un `.md` dans `knowledge_base/` puis `POST /kb/reload`.
 

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{{ title or 'F1 Tech' }}</title>
     
-    <!-- Google Fonts - Formule 1 Style -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -26,39 +26,15 @@
     <!-- Custom Styles -->
     <link rel="stylesheet" href="{{ url_for('static', path='css/style.css') }}">
     <style>
-        * {
-            font-family: 'Inter', sans-serif;
-        }
+        * { font-family: 'Inter', sans-serif; }
+        .f1-title { font-family: 'Orbitron', sans-serif; }
         
-        .f1-title {
-            font-family: 'Orbitron', sans-serif;
-        }
-        
-        /* Background piste F1 */
         body {
             background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #0f0f0f 100%);
             background-attachment: fixed;
-            position: relative;
-            overflow: hidden;
         }
         
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                /* Lignes de piste */
-                linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.02) 50%, transparent 100%),
-                /* Damier subtil */
-                repeating-linear-gradient(45deg, transparent, transparent 100px, rgba(220, 38, 38, 0.01) 100px, rgba(220, 38, 38, 0.01) 101px);
-            pointer-events: none;
-            z-index: 0;
-        }
-        
-        /* Ligne rouge en haut - Start/Finish */
+        /* Ligne rouge en haut */
         body::after {
             content: '';
             position: fixed;
@@ -72,33 +48,79 @@
             pointer-events: none;
         }
         
-        .content-wrapper {
-            position: relative;
-            z-index: 1;
+        /* SCROLLBAR STYLING */
+        #chatBox {
+            scrollbar-width: thin;
+            scrollbar-color: rgba(220, 38, 38, 0.5) rgba(0,0,0,0.3);
         }
-
-        /* Chat background - Arrière-plan noir simple */
-        #chatContainer {
-            position: relative;
-            overflow: hidden;
-            background: black;
+        #chatBox::-webkit-scrollbar {
+            width: 10px;
         }
-
-        #chatContainer > * {
-            position: relative;
-            z-index: 1;
+        #chatBox::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.3);
+            border-radius: 5px;
+        }
+        #chatBox::-webkit-scrollbar-thumb {
+            background-color: rgba(220, 38, 38, 0.6);
+            border-radius: 5px;
+            border: 2px solid transparent;
+        }
+        #chatBox::-webkit-scrollbar-thumb:hover {
+            background-color: rgba(220, 38, 38, 0.8);
+        }
+        
+        /* Message bubbles */
+        .user-message {
+            background: linear-gradient(135deg, #dc2626, #b91c1c);
+            color: white;
+            padding: 12px 16px;
+            border-radius: 18px 18px 4px 18px;
+            max-width: 80%;
+            word-wrap: break-word;
+        }
+        .bot-message {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 12px 16px;
+            border-radius: 18px 18px 18px 4px;
+            max-width: 85%;
+            word-wrap: break-word;
+            line-height: 1.6;
+        }
+        
+        /* Typing indicator */
+        .typing-indicator {
+            display: flex;
+            gap: 4px;
+            padding: 12px 16px;
+            background: #1e293b;
+            border-radius: 18px;
+            width: fit-content;
+        }
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background: #dc2626;
+            border-radius: 50%;
+            animation: typing 1.4s infinite ease-in-out;
+        }
+        .typing-dot:nth-child(1) { animation-delay: 0s; }
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes typing {
+            0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+            30% { transform: translateY(-8px); opacity: 1; }
         }
     </style>
-    
-  </head>
-  <body class="bg-black text-white">
-    <div class="content-wrapper h-screen flex flex-col md:flex-row">
+</head>
+<body class="bg-black text-white h-screen overflow-hidden">
+    <div class="h-screen flex flex-col md:flex-row">
         
         <!-- NAVBAR -->
-        <nav class="w-full md:w-80 bg-gradient-to-b from-slate-950 to-black border-b md:border-b-0 md:border-r border-red-900/30 shadow-2xl">
+        <nav class="w-full md:w-80 bg-gradient-to-b from-slate-950 to-black border-b md:border-b-0 md:border-r border-red-900/30 shadow-2xl flex-shrink-0 flex flex-col">
             <!-- Header -->
             <div class="p-6 border-b border-red-900/20">
-                <div class="flex items-center gap-3 mb-2">
+                <div class="flex items-center gap-3">
                     <div class="text-4xl">🏁</div>
                     <div>
                         <h1 class="f1-title text-2xl font-bold bg-gradient-to-r from-red-500 to-red-600 bg-clip-text text-transparent">F1 Tech</h1>
@@ -107,7 +129,7 @@
                 </div>
             </div>
             
-            <!-- Action Button -->
+            <!-- New Chat Button -->
             <div class="p-4">
                 <button onclick="createConversation()" class="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-semibold py-3 px-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-red-900/50">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
@@ -115,59 +137,71 @@
                 </button>
             </div>
 
-            <!-- Compte à rebours prochain GP -->
+            <!-- Next Race Countdown -->
             <div id="nextRaceCountdown" class="px-4 pb-3 hidden md:block">
                 <div class="bg-red-950/20 border border-red-900/30 rounded-lg p-3">
                     <div class="flex items-center gap-2 mb-1">
                         <span class="text-red-500 text-xs font-semibold">🔴 PROCHAIN GP</span>
                     </div>
-                    <p class="text-xs text-gray-300 font-medium" id="countdownText">Chargement du compte à rebours...</p>
+                    <p class="text-xs text-gray-300 font-medium" id="countdownText">Chargement...</p>
                     <p class="text-xs text-red-400 mt-1 font-semibold" id="raceNameText"></p>
                 </div>
             </div>
             
             <!-- History -->
-            <div class="flex-1 px-4 py-4 overflow-y-auto hidden md:block" style="max-height: calc(100vh - 400px);">
+            <div class="flex-1 px-4 py-4 overflow-y-auto hidden md:block">
                 <h3 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-4 ml-2">Historique</h3>
                 <div id="navbarHistoryList" class="space-y-2">
                     <p class="text-sm text-gray-500 text-center py-8">Aucune conversation</p>
                 </div>
             </div>
             
-            <!-- Footer -->
-            <div class="p-4 border-t border-red-900/20 hidden md:block">
+            <!-- Footer with Top 5 -->
+            <div class="p-4 border-t border-red-900/20 hidden md:block mt-auto">
+                <div id="top5DriversWidget" class="mb-4">
+                    <div class="bg-slate-900/60 border border-red-900/30 rounded-lg p-3">
+                        <div class="flex items-center gap-2 mb-2">
+                            <span class="text-red-500 text-xs font-semibold">🏆 TOP 5 PILOTES</span>
+                        </div>
+                        <div id="top5DriversList" class="space-y-1 text-xs">
+                            <p class="text-gray-500">Chargement...</p>
+                        </div>
+                    </div>
+                </div>
+                
                 <button onclick="openUserProfile()" class="w-full flex items-center gap-3 p-3 rounded-lg hover:bg-red-950/20 transition text-gray-300 hover:text-red-400">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path></svg>
-                    <span>Paramètres</span>
+                    <span>Parametres</span>
                 </button>
             </div>
         </nav>
         
         <!-- CHAT AREA -->
-        <div id="chatContainer" class="flex-1 flex flex-col overflow-hidden bg-black">
+        <div id="chatContainer" class="flex-1 flex flex-col min-h-0 bg-black">
             
-            <!-- Messages Container -->
-            <div id="chatBox" class="flex-1 overflow-y-auto p-6 space-y-6 scroll-smooth" style="scrollbar-width: thin; scrollbar-color: rgba(220, 38, 38, 0.3) transparent;">
-                <!-- Messages will be inserted here -->
+            <!-- Messages Container - SCROLLABLE -->
+            <div id="chatBox" class="flex-1 overflow-y-auto p-6 space-y-4">
+                <!-- Messages will be inserted here dynamically -->
             </div>
             
-            <!-- Input Area - Minimaliste ChatGPT Style -->
-            <div id="inputContainer" class="border-t border-red-900/20 bg-black px-4 py-4 flex flex-col items-center justify-center">
-                <div class="max-w-2xl mx-auto w-full">
-                    <form id="messageForm" class="flex gap-2 items-end">
+            <!-- Input Area - Fixed at bottom -->
+            <div id="inputContainer" class="border-t border-red-900/20 bg-black/90 backdrop-blur px-4 py-4 flex-shrink-0">
+                <div class="max-w-3xl mx-auto w-full">
+                    <form id="messageForm" class="flex gap-3 items-center">
                         <input 
                             id="messageInput" 
                             type="text" 
-                            placeholder="Qui est le champion 2024 ? Stratégie à Monaco ? ..." 
-                            class="flex-1 bg-slate-900/60 border border-red-900/40 rounded-xl px-4 py-3 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-red-600 focus:ring-1 focus:ring-red-600/50 transition-all"
+                            placeholder="Qui est le champion 2024 ? Strategie a Monaco ? ..." 
+                            class="flex-1 bg-slate-900/80 border border-red-900/40 rounded-xl px-5 py-3 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/30 transition-all"
                             autocomplete="off"
                         />
                         <button 
+                            id="sendBtn"
                             type="submit" 
-                            class="bg-red-600 hover:bg-red-700 text-white p-2.5 rounded-xl transition-all duration-200 flex items-center justify-center hover:shadow-lg hover:shadow-red-900/50 shrink-0"
+                            class="bg-red-600 hover:bg-red-700 text-white p-3 rounded-xl transition-all duration-200 flex items-center justify-center hover:shadow-lg hover:shadow-red-900/50 shrink-0 disabled:opacity-50 disabled:cursor-not-allowed"
                             title="Envoyer"
                         >
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M16.691 4.309L3.509 7.191c-.708.192-.708.924 0 1.116l13.182 2.882c.708.192 1.309.793 1.309 1.501v4.002c0 .708-.601 1.309-1.309 1.501l-13.182 2.882c-.708.192-.708.924 0 1.116l13.182 2.882c.708.192 1.309.793 1.309 1.501v1.408l6.4-8.883-6.4-8.883v1.408c0 .708-.601 1.309-1.309 1.501z"/></svg>
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
                         </button>
                     </form>
                 </div>
@@ -175,71 +209,28 @@
         </div>
     </div>
     
-    <!-- JS -->
+    <!-- Settings Overlay -->
+    <div id="userProfileOverlay" class="fixed inset-0 bg-black/60 hidden z-40" onclick="closeUserProfile()"></div>
+    
+    <!-- Settings Panel -->
+    <div id="userProfilePanel" class="fixed top-0 right-0 w-80 h-full bg-slate-900 shadow-2xl flex flex-col z-50 transform translate-x-full transition-transform duration-300">
+        <div class="px-6 py-4 border-b border-slate-700 flex justify-between items-center">
+            <h3 class="font-semibold text-white">Parametres</h3>
+            <button class="p-2 rounded-lg hover:bg-slate-700 transition" onclick="closeUserProfile()">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+        </div>
+        <div class="flex-1 overflow-y-auto p-6">
+            <div>
+                <h4 class="font-semibold text-white mb-3">Donnees</h4>
+                <button id="clearHistoryBtn" class="w-full px-4 py-3 rounded-lg bg-red-600 hover:bg-red-700 text-white transition text-sm font-medium" onclick="clearAllHistory()">
+                    Supprimer tout l'historique
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script -->
     <script src="{{ url_for('static', path='js/app.js') }}"></script>
 </body>
-</html>
-        <!-- Zone de saisie - Nouveau design -->
-        <div id="inputContainer" class="flex flex-col items-center justify-center h-full px-4 py-8 bg-black transition-all duration-300">
-          <h1 class="text-white text-3xl font-light text-center mb-12">
-            Comment puis-je vous aider ?
-          </h1>
-          
-          <div class="w-full max-w-2xl">
-            <form id="chatForm" onsubmit="sendMessage(event)" class="bg-slate-800 rounded-full shadow-2xl flex items-center px-6 py-4 border border-slate-700">
-              <input
-                type="text"
-                id="messageInput"
-                placeholder="Poser une question sur la F1..."
-                required
-                autocomplete="off"
-                class="flex-1 bg-transparent text-white placeholder-slate-400 outline-none text-base focus:outline-none"
-              />
-              
-              <button type="submit" id="sendBtn" class="ml-3 p-2 rounded-full bg-red-600 hover:bg-red-700 text-white transition disabled:opacity-50" aria-label="Envoyer">
-                <svg class="w-5 h-5 rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
-              </button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Overlay profil -->
-    <div id="userProfileOverlay" class="fixed inset-0 bg-black/50 hidden z-40" onclick="closeUserProfile()"></div>
-    
-    <!-- Panneau profil utilisateur (simplifié - sans compte) -->
-    <div id="userProfilePanel" class="fixed top-0 right-0 w-96 h-full bg-white dark:bg-slate-800 shadow-xl flex flex-col z-50 transform translate-x-full transition-transform" aria-hidden="true">
-      <div class="px-6 py-4 border-b border-slate-200 dark:border-slate-700 flex justify-between items-center bg-slate-50 dark:bg-slate-700">
-        <h3 class="font-semibold text-slate-900 dark:text-white">Paramètres</h3>
-        <div class="relative group">
-          <button class="p-1 rounded hover:bg-slate-200 dark:hover:bg-slate-700 transition" onclick="closeUserProfile()">
-            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-          </button>
-          <div class="absolute right-8 top-1/2 -translate-y-1/2 bg-slate-900 dark:bg-slate-700 text-white text-xs px-2 py-1 rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition pointer-events-none">Fermer</div>
-        </div>
-      </div>
-      <div class="flex-1 overflow-y-auto p-6 space-y-6">
-        
-        <!-- Section apparence -->
-        <div>
-          <h4 class="font-semibold text-slate-900 dark:text-white mb-3">Apparence</h4>
-          <label class="flex items-center gap-3 cursor-pointer">
-            <input type="checkbox" id="darkModeToggle" class="w-4 h-4 rounded cursor-pointer" onchange="toggleDarkMode()">
-            <span class="text-sm text-slate-700 dark:text-slate-300">Mode sombre</span>
-          </label>
-        </div>
-
-        <!-- Section données -->
-        <div>
-          <h4 class="font-semibold text-slate-900 dark:text-white mb-3">Données</h4>
-          <button id="clearHistoryBtn" class="w-full px-4 py-2 rounded-lg bg-red-600 hover:bg-red-700 text-white transition text-sm font-medium" onclick="clearAllHistory()">Supprimer tout l'historique</button>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- Script client -->
-    <script src="{{ url_for('static', path='js/app.js') }}?v=2"></script>
-  </body>
 </html>

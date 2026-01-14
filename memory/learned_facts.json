@@ -79,5 +79,285 @@
     "type": "llm_extracted",
     "content": "{\"facts\": [\"Fernando Alonso a remporté deux titres mondiaux en Formule 1 (2005 et 2006)\"], \"preferences\": {\"langue\": \"fr\", \"format\": \"gras\"}}",
     "timestamp": "2026-01-13T01:23:41.318785"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Le DRS (Drag Reduction System) est un dispositif qui ouvre une ailette pour réduire la traînée et favoriser les dépassements dans des zones spécifiques.",
+    "timestamp": "2026-01-13T22:46:45.714987"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Le calendrier officiel de Formule 1 peut être trouvé sur le site de la FIA et Formula1.com.",
+    "timestamp": "2026-01-13T22:46:45.716326"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Les constructeurs automobiles mentionnés sont Alfa Romeo, Maserati, Matra et Ligier.",
+    "timestamp": "2026-01-13T23:17:09.164000"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Certains modèles ont eu des périodes de dominance (ex: Alfa Romeo 1950-1985).",
+    "timestamp": "2026-01-13T23:17:09.165168"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Il y a des marques italiennes dominantes (Alfa Romeo, Maserati, Matra, Ligier) et françaises (Matra, Ligier).",
+    "timestamp": "2026-01-13T23:17:09.166082"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Audi a annoncé son nom complet et son logo pour sa nouvelle écurie de Formule 1, avec la révélation prévue pour le 13 janvier 2026.",
+    "timestamp": "2026-01-13T23:55:48.320918"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "alonso était un pilote de Formule 1",
+    "timestamp": "2026-01-14T00:15:34.408612"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Prost est présent à un tournoi de tennis",
+    "timestamp": "2026-01-14T00:15:58.488834"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Oscar Piastri (McLaren) a connu une augmentation significative de ses points marqués entre 2024 et 2025",
+    "timestamp": "2026-01-14T00:26:42.521329"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Charles Leclerc (Ferrari) a connu une dégringolade notoirement impressionnante",
+    "timestamp": "2026-01-14T00:26:42.522820"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Utilisateur recherchait des informations sur un personnage lié à la Formule 1 appelé Hadjar",
+    "timestamp": "2026-01-14T00:29:25.021012"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Sébastien Loeb a remporté le Grand Prix de France",
+    "timestamp": "2026-01-14T01:16:34.784809"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Oscar Piastri continue d'avoir une excellente saison avec McLaren",
+    "timestamp": "2026-01-14T01:16:34.786152"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Oscar Piastri continue d'avoir une excellente saison avec McLaren",
+    "timestamp": "2026-01-14T01:29:42.716088"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Oscar Piastri a marqué des points importants et a connu une augmentation significative de ses points marqués entre 2024 et 2025",
+    "timestamp": "2026-01-14T01:29:42.717472"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Charles Leclerc a connu une dégringolade notoirement impressionnante cette saison",
+    "timestamp": "2026-01-14T01:29:42.718576"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Sébastien Loeb a remporté récemment le Grand Prix de France",
+    "timestamp": "2026-01-14T02:11:16.827809"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Oscar Piastri continue d'avoir une excellente performance et marque des points importants",
+    "timestamp": "2026-01-14T02:11:16.829452"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Charles Leclerc a connu une dégringolade impressionnante cette saison",
+    "timestamp": "2026-01-14T02:11:16.830446"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Charles Leclerc est le pilote Ferrari",
+    "timestamp": "2026-01-14T08:11:11.177977"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Leclerc domine Lewis Hamilton en 2026",
+    "timestamp": "2026-01-14T08:11:11.179159"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Leclerc a 264 points",
+    "timestamp": "2026-01-14T08:11:11.179854"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Hamilton n'a pas eu de podiums en 2026",
+    "timestamp": "2026-01-14T08:11:11.180453"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "C'est la première saison cauchemardesque de carrière pour Hamilton",
+    "timestamp": "2026-01-14T08:11:11.181112"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Charles Leclerc domine Lewis Hamilton en 2026",
+    "timestamp": "2026-01-14T08:12:42.423180"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Hamilton n'a pas encore remporté de podium cette saison",
+    "timestamp": "2026-01-14T08:12:42.424163"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Hamilton fait référence à Lewis Hamilton",
+    "timestamp": "2026-01-14T08:16:21.549784"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Lewis Hamilton a remporté 9 titres mondiaux de pilote",
+    "timestamp": "2026-01-14T08:16:21.551419"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Red Bull Racing a conservé ses podiums à 297 entre 2024 et 2025",
+    "timestamp": "2026-01-14T08:17:00.610408"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Mercedes a maintenu les siens à 310 entre 2024 et 2025",
+    "timestamp": "2026-01-14T08:17:00.612142"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Ferrari reste en tête avec 836 podiums au compteur depuis 1950",
+    "timestamp": "2026-01-14T08:17:00.613190"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "McLaren compte 558 podiums depuis 1966",
+    "timestamp": "2026-01-14T08:17:00.614114"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Deux grandes écuries, Red Bull et Ferrari, ont perdu beaucoup de points comparativement à 2024.",
+    "timestamp": "2026-01-14T08:23:08.323494"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Ces pertes ont été compensées par une progression des quatre plus petites écuries qui se sont distinguées.",
+    "timestamp": "2026-01-14T08:23:08.325204"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Cette situation a réduit l'écart entre les écuries classées 4e et 5e en 2025.",
+    "timestamp": "2026-01-14T08:23:08.326346"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Max Verstappen a remporté son quatrième titre mondial en 2025",
+    "timestamp": "2026-01-14T08:25:26.847456"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Lewis Hamilton a rejoint Ferrari en 2025 mais n'a pas réussi à remporter le championnat cette année-là",
+    "timestamp": "2026-01-14T08:25:26.849294"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Les écuries de Red Bull et Ferrari ont perdu des points comparativement à 2024",
+    "timestamp": "2026-01-14T08:25:26.850443"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Les quatre plus petites écuries se sont distinguées en réduisant l'écart entre elles en termes de performances en 2025",
+    "timestamp": "2026-01-14T08:25:26.851480"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Fernando Alonso est un pilote de Formule 1.",
+    "timestamp": "2026-01-14T08:25:58.299352"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Il a disputé la saison 2025 avec Aston Martin et a remporté 161 points.",
+    "timestamp": "2026-01-14T08:25:58.300768"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Il a obtenu 7 victoires, 15 podiums et 6 poles positions au cours de sa carrière.",
+    "timestamp": "2026-01-14T08:25:58.302062"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Il a remporté le championnat du monde de Formule 1 en 2005 lorsqu'il était pilote Renault.",
+    "timestamp": "2026-01-14T08:25:58.303358"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Michael Schumacher était un pilote allemand de Formule 1",
+    "timestamp": "2026-01-14T08:30:50.309080"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Il a remporté sept championnats du monde en F1 entre 1994 et 2006",
+    "timestamp": "2026-01-14T08:30:50.311008"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Le pilote qui a remporté le plus de championnats du monde en Formule 1 est Michael Schumacher avec sept titres.",
+    "timestamp": "2026-01-14T08:32:00.595111"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "L'écurie Ferrari a remporté 16 titres mondiaux constructeurs en Formule 1.",
+    "timestamp": "2026-01-14T08:32:21.212336"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Cette performance a été réalisée principalement grâce aux talents de pilotes comme Michael Schumacher.",
+    "timestamp": "2026-01-14T08:32:21.214151"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "La pire saison de Lewis Hamilton a été 2025 chez Ferrari où il n'a pas réussi à terminer un seul Grand Prix sur le podium",
+    "timestamp": "2026-01-14T08:33:07.171849"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "C'est la première fois depuis 18 ans que Hamilton ne termine pas sur le podium en fin de saison.",
+    "timestamp": "2026-01-14T08:33:07.173455"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Le champion de la Formule 1 en 2025 a été Max Verstappen",
+    "timestamp": "2026-01-14T08:33:38.396576"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Ayrton Senna est décédé lors du Grand Prix du Brésil 1994, après un accident sur la ligne d'arrivée",
+    "timestamp": "2026-01-14T08:34:05.641131"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Max Verstappen a indiqué sur ses réseaux sociaux qu'il reste avec l'équipe Red Bull Racing",
+    "timestamp": "2026-01-14T08:35:07.270586"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Isack Hadjar a été l'un des prochains conducteurs de Red Bull pour la saison 2026",
+    "timestamp": "2026-01-14T08:35:33.998362"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Il a réussi à prendre l'avantage sur Liam Lawson et s'est classé au côté de Max Verstappen en 2026",
+    "timestamp": "2026-01-14T08:35:34.000072"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Bien que sans points cette année-là, Hadjar avait déjà une carrière impressionnante avec 81 victoires en Formule 1",
+    "timestamp": "2026-01-14T08:35:34.001340"
   }
 ]
