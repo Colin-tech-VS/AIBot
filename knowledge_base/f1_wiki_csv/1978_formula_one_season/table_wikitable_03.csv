@@ -1,0 +1,50 @@
+Pos,Driver,ARG,BRA,RSA,USW,MON,BEL,ESP,SWE,FRA,GBR,GER,AUT,NED,ITA,USA,CAN,Pts
+1,Mario Andretti,1,4,7,2,11,1,1,Ret,1,Ret,1,Ret,1,6,Ret,10,64
+2,Ronnie Peterson,5,Ret,1,4,Ret,2,2,3,2,Ret,Ret,1,2,Ret,,,51
+3,Carlos Reutemann,7,1,Ret,1,8,3,Ret,10,18,1,Ret,DSQ,7,3,1,3,48
+4,Niki Lauda,2,3,Ret,Ret,2,Ret,Ret,1,Ret,2,Ret,Ret,3,1,Ret,Ret,44
+5,Patrick Depailler,3,Ret,2,3,1,Ret,Ret,Ret,Ret,4,Ret,2,Ret,11,Ret,5,34
+6,John Watson,Ret,8,3,Ret,4,Ret,5,Ret,4,3,7,7,4,2,Ret,Ret,25
+7,Jody Scheckter,10,Ret,Ret,Ret,3,Ret,4,Ret,6,Ret,2,Ret,12,12,3,2,24
+8,Jacques Laffite,16,9,5,5,Ret,5,3,7,7,10,3,5,8,4,11,Ret,19
+9,Gilles Villeneuve,8,Ret,Ret,Ret,Ret,4,10,9,12,Ret,8,3,6,7,Ret,1,17
+=[16],Emerson Fittipaldi,9,2,Ret,8,9,Ret,Ret,6,Ret,Ret,4,4,5,8,5,Ret,17
+11,Alan Jones,Ret,11,4,7,Ret,10,8,Ret,5,Ret,Ret,Ret,Ret,13,2,9,11
+=[17],Riccardo Patrese,,10,Ret,6,6,Ret,Ret,2,8,Ret,9,Ret,Ret,Ret,,4,11
+13,James Hunt,4,Ret,Ret,Ret,Ret,Ret,6,8,3,Ret,DSQ,Ret,10,Ret,7,Ret,8
+=[18],Patrick Tambay,6,Ret,Ret,12,7,,Ret,4,9,6,Ret,Ret,9,5,6,8,8
+15,Didier Pironi,14,6,6,Ret,5,6,12,Ret,10,Ret,5,Ret,Ret,Ret,10,7,7
+16,Clay Regazzoni,15,5,DNQ,10,DNQ,Ret,15,5,Ret,Ret,DNQ,NC,DNQ,NC,14,DNQ,4
+17,Jean-Pierre Jabouille,,,Ret,Ret,10,NC,13,Ret,Ret,Ret,Ret,Ret,Ret,Ret,4,12,3
+18,Hans-Joachim Stuck,17,Ret,DNQ,DNS,Ret,Ret,Ret,11,11,5,Ret,Ret,Ret,Ret,Ret,Ret,2
+19,Héctor Rebaque,DNQ,Ret,10,DNPQ,DNPQ,DNPQ,Ret,12,DNQ,Ret,6,Ret,11,DNQ,Ret,DNQ,1
+=[19],Vittorio Brambilla,18,DNQ,12,Ret,DNQ,13,7,Ret,17,9,Ret,6,DSQ,Ret,,,1
+=[19],Derek Daly,,,,DNPQ,DNPQ,DNQ,,,DNQ,Ret,,DSQ,Ret,10,8,6,1
+—,Brett Lunger,13,Ret,11,DNQ,DNPQ,7,DNQ,DNQ,Ret,8,DNPQ,8,Ret,Ret,13,,0
+—,Bruno Giacomelli,,,,,,8,,,Ret,7,,,Ret,14,,,0
+—,Jochen Mass,11,7,Ret,Ret,DNQ,11,9,13,13,NC,Ret,DNQ,DNQ,,,,0
+—,Jean-Pierre Jarier,12,DNS,8,11,DNQ,,,,,,DNQ,,,,15,Ret,0
+—,René Arnoux,,,DNQ,,DNPQ,9,,,14,,DNPQ,9,Ret,,9,Ret,0
+—,Rolf Stommelen,,,9,9,Ret,Ret,14,14,15,DNQ,DSQ,DNPQ,DNPQ,DNPQ,16,DNQ,0
+—,Nelson Piquet,,,,,,,,,,,Ret,Ret,Ret,9,,11,0
+—,Keke Rosberg,,,Ret,DNPQ,DNPQ,DNQ,DNPQ,15,16,Ret,10,NC,Ret,DNPQ,Ret,NC,0
+—,Rupert Keegan,Ret,Ret,Ret,DNS,Ret,DNQ,11,DNQ,Ret,DNQ,DNQ,DNQ,DNS,,,,0
+—,Harald Ertl,,,,,,,,,,,11,Ret,DNPQ,DNQ,,,0
+—,Jacky Ickx,,,,,Ret,12,Ret,DNQ,,,,,,,,,0
+—,Bobby Rahal,,,,,,,,,,,,,,,12,Ret,0
+—,Arturo Merzario,Ret,DNQ,Ret,Ret,DNPQ,DNPQ,DNQ,NC,DNQ,Ret,DNQ,DNQ,Ret,Ret,Ret,DNQ,0
+—,Lamberto Leoni,Ret,DNS,DNQ,DNQ,,,,,,,,,,,,,0
+—,Danny Ongais,Ret,Ret,,DNPQ,,,,,,,,,DNPQ,,,,0
+—,Michael Bleekemolen,,,,,,,,,,,,,DNQ,DNQ,Ret,DNQ,0
+—,Eddie Cheever,DNQ,DNQ,Ret,,,,,,,,,,,,,,0
+—,Alberto Colombo,,,,,,DNQ,DNQ,,,,,,,DNPQ,,,0
+—,Divina Galica,DNQ,DNQ,,,,,,,,,,,,,,,0
+—,Beppe Gabbiani,,,,,,,,,,,,,,,DNQ,DNQ,0
+—,Emilio de Villota,,,,,,,DNQ,,,,,,,,,,0
+—,Geoff Lees,,,,,,,,,,DNQ,,,,,,,0
+—,Tony Trimmer,,,,,,,,,,DNQ,,,,,,,0
+—,Hans Binder,,,,,,,,,,,,DNQ,,,,,0
+—,Gimax,,,,,,,,,,,,,,DNQ,,,0
+—,Patrick Nève,,,,,,DNP,,,,,,,,,,,0
+—,Bernard de Dryver,,,,,,DNP,,,,,,,,,,,0
+Pos,Driver,ARG,BRA,RSA,USW,MON,BEL,ESP,SWE,FRA,GBR,GER,AUT,NED,ITA,USA,CAN,Pts

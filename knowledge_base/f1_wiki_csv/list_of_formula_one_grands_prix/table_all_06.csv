@@ -1,0 +1,13 @@
+Race,Season,Grand Prix,Circuit,Winner,Winner
+Race,Season,Grand Prix,Circuit,Driver,Constructor
+100,1961,German,Nürburgring,Stirling Moss (GBR),Lotus-Climax (GBR)
+200,1971,Monaco,Monte Carlo,Jackie Stewart (GBR),Tyrrell-Ford (GBR)
+300,1978,South African,Kyalami,Ronnie Peterson (SWE),Lotus-Ford (GBR)
+400,1984,Austrian,Spielberg,Niki Lauda (AUT),McLaren-TAG (GBR)
+500,1990,Australian,Adelaide,Nelson Piquet (BRA),Benetton-Ford (GBR)
+600,1997,Argentine,Buenos Aires,Jacques Villeneuve (CAN),Williams-Renault (GBR)
+700,2003,Brazilian,Interlagos,Giancarlo Fisichella (ITA),Jordan-Ford (IRL)
+800,2008,Singapore,Marina Bay,Fernando Alonso (ESP),Renault (FRA)
+900,2014,Bahrain,Sakhir,Lewis Hamilton (GBR),Mercedes (GER)
+1000,2019,Chinese,Shanghai,Lewis Hamilton (GBR),Mercedes (GER)
+1100,2023,Las Vegas,Las Vegas,Max Verstappen (NED),Red Bull Racing-Honda RBPT (AUT)

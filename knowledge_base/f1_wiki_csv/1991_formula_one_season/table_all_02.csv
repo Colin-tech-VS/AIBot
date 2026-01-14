@@ -1,0 +1,54 @@
+Entrant,Constructor,Chassis,Engine,Tyre,No,Driver,Rounds
+Honda Marlboro McLaren,McLaren-Honda,MP4/6,Honda RA121E 3.5 V12,G,1,Ayrton Senna,All
+Honda Marlboro McLaren,McLaren-Honda,MP4/6,Honda RA121E 3.5 V12,G,2,Gerhard Berger,All
+Braun Tyrrell Honda,Tyrrell-Honda,020,Honda RA101E 3.5 V10,P,3,Satoru Nakajima,All
+Braun Tyrrell Honda,Tyrrell-Honda,020,Honda RA101E 3.5 V10,P,4,Stefano Modena,All
+Canon Williams Renault,Williams-Renault,FW14,Renault RS3 3.5 V10,G,5,Nigel Mansell,All
+Canon Williams Renault,Williams-Renault,FW14,Renault RS3 3.5 V10,G,6,Riccardo Patrese,All
+Brabham Yamaha F1 Team,Brabham-Yamaha,BT59Y BT60Y,Yamaha OX99 3.5 V12,P,7,Martin Brundle,All
+Brabham Yamaha F1 Team,Brabham-Yamaha,BT59Y BT60Y,Yamaha OX99 3.5 V12,P,8,Mark Blundell,All
+Footwork Porsche  Footwork Ford,Footwork-Porsche,A11C FA12,Porsche 3512 3.5 V12,G,9,Michele Alboreto,1–6
+Footwork Porsche  Footwork Ford,Footwork-Porsche,A11C FA12,Porsche 3512 3.5 V12,G,10,Alex Caffi,1–4
+Footwork Porsche  Footwork Ford,Footwork-Porsche,A11C FA12,Porsche 3512 3.5 V12,G,10,Stefan Johansson,5–6
+Footwork Porsche  Footwork Ford,Footwork-Ford,FA12C,Ford Cosworth DFR 3.5 V8,G,9,Michele Alboreto,7–16
+Footwork Porsche  Footwork Ford,Footwork-Ford,FA12C,Ford Cosworth DFR 3.5 V8,G,10,Stefan Johansson,7–8
+Footwork Porsche  Footwork Ford,Footwork-Ford,FA12C,Ford Cosworth DFR 3.5 V8,G,10,Alex Caffi,9–16
+Team Lotus,Lotus-Judd,102B,Judd EV 3.5 V8,G,11,Mika Häkkinen,All
+Team Lotus,Lotus-Judd,102B,Judd EV 3.5 V8,G,12,Julian Bailey,1–4
+Team Lotus,Lotus-Judd,102B,Judd EV 3.5 V8,G,12,Johnny Herbert,"5–8, 11, 13, 15–16"
+Team Lotus,Lotus-Judd,102B,Judd EV 3.5 V8,G,12,Michael Bartels,"9–10, 12, 14"
+Fondmetal,Fondmetal-Ford,FA1M-E Fomet-1,Ford Cosworth DFR 3.5 V8,G,14,Olivier Grouillard,1–13
+Fondmetal,Fondmetal-Ford,FA1M-E Fomet-1,Ford Cosworth DFR 3.5 V8,G,14,Gabriele Tarquini,14–16
+Leyton House Racing,Leyton House-Ilmor,CG911,Ilmor 2175A 3.5 V10,G,15,Maurício Gugelmin,All
+Leyton House Racing,Leyton House-Ilmor,CG911,Ilmor 2175A 3.5 V10,G,16,Ivan Capelli,1–14
+Leyton House Racing,Leyton House-Ilmor,CG911,Ilmor 2175A 3.5 V10,G,16,Karl Wendlinger,15–16
+AGS,AGS-Ford,JH25B JH27,Ford Cosworth DFR 3.5 V8,G,17,Gabriele Tarquini,1–13
+AGS,AGS-Ford,JH25B JH27,Ford Cosworth DFR 3.5 V8,G,17,Olivier Grouillard,14
+AGS,AGS-Ford,JH25B JH27,Ford Cosworth DFR 3.5 V8,G,18,Stefan Johansson,1–2
+AGS,AGS-Ford,JH25B JH27,Ford Cosworth DFR 3.5 V8,G,18,Fabrizio Barbazza,3–14
+Camel Benetton Ford,Benetton-Ford,B190B B191,Ford HBA4 3.5 V8 Ford HBA5 3.5 V8,P,19,Roberto Moreno,1–11
+Camel Benetton Ford,Benetton-Ford,B190B B191,Ford HBA4 3.5 V8 Ford HBA5 3.5 V8,P,19,Michael Schumacher,12–16
+Camel Benetton Ford,Benetton-Ford,B190B B191,Ford HBA4 3.5 V8 Ford HBA5 3.5 V8,P,20,Nelson Piquet,All
+BMS Scuderia Italia,BMS Dallara-Judd,F191,Judd GV 3.5 V10,P,21,Emanuele Pirro,All
+BMS Scuderia Italia,BMS Dallara-Judd,F191,Judd GV 3.5 V10,P,22,JJ Lehto,All
+Minardi Team,Minardi-Ferrari,M191,Ferrari Tipo 037 3.5 V12,G,23,Pierluigi Martini,All
+Minardi Team,Minardi-Ferrari,M191,Ferrari Tipo 037 3.5 V12,G,24,Gianni Morbidelli,1–15
+Minardi Team,Minardi-Ferrari,M191,Ferrari Tipo 037 3.5 V12,G,24,Roberto Moreno,16
+Équipe Ligier Gitanes,Ligier-Lamborghini,JS35 JS35B,Lamborghini LE3512 3.5 V12,G,25,Thierry Boutsen,All
+Équipe Ligier Gitanes,Ligier-Lamborghini,JS35 JS35B,Lamborghini LE3512 3.5 V12,G,26,Érik Comas,All
+Scuderia Ferrari,Ferrari,642 642/2 643,Ferrari Tipo 037 3.5 V12,G,27,Alain Prost,1–15
+Scuderia Ferrari,Ferrari,642 642/2 643,Ferrari Tipo 037 3.5 V12,G,27,Gianni Morbidelli,16
+Scuderia Ferrari,Ferrari,642 642/2 643,Ferrari Tipo 037 3.5 V12,G,28,Jean Alesi,All
+Larrousse F1,Lola-Ford,LC91,Ford Cosworth DFR 3.5 V8,G,29,Éric Bernard,1–15
+Larrousse F1,Lola-Ford,LC91,Ford Cosworth DFR 3.5 V8,G,29,Bertrand Gachot,16
+Larrousse F1,Lola-Ford,LC91,Ford Cosworth DFR 3.5 V8,G,30,Aguri Suzuki,All
+Coloni,Coloni-Ford,C4,Ford Cosworth DFR 3.5 V8,G,31,Pedro Chaves,1–13
+Coloni,Coloni-Ford,C4,Ford Cosworth DFR 3.5 V8,G,31,Naoki Hattori,15–16
+Team 7Up Jordan,Jordan-Ford,191,Ford HBA4 3.5 V8,G,32,Bertrand Gachot,1–10
+Team 7Up Jordan,Jordan-Ford,191,Ford HBA4 3.5 V8,G,32,Michael Schumacher,11
+Team 7Up Jordan,Jordan-Ford,191,Ford HBA4 3.5 V8,G,32,Roberto Moreno,12–13
+Team 7Up Jordan,Jordan-Ford,191,Ford HBA4 3.5 V8,G,32,Alessandro Zanardi,14–16
+Team 7Up Jordan,Jordan-Ford,191,Ford HBA4 3.5 V8,G,33,Andrea de Cesaris,All
+Central Park Modena Team,Lambo-Lamborghini,291,Lamborghini LE3512 3.5 V12,G,34,Nicola Larini,All
+Central Park Modena Team,Lambo-Lamborghini,291,Lamborghini LE3512 3.5 V12,G,35,Eric van de Poele,All
+Sources:[5],Sources:[5],Sources:[5],Sources:[5],Sources:[5],Sources:[5],Sources:[5],Sources:[5]

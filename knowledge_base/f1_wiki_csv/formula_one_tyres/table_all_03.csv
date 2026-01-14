@@ -1,0 +1,10 @@
+No.,Compound details,Compound details.1,Compound details.2,Compound details.3,Compound details.4,Compound details.5,Tread,Driving conditions,Grip,Durability
+C1,,Hard (white),,,,,Slick,Dry,6 – Least grip,1 – Most durable
+C2,,Hard (white),,Medium (yellow),,,Slick,Dry,5,2
+C3,,Hard (white),,Medium (yellow),,Soft (red),Slick,Dry,4,3
+C4,,Hard (white),,Medium (yellow),,Soft (red),Slick,Dry,3,4
+C5,,,,Medium (yellow),,Soft (red),Slick,Dry,2,5
+C6,,,,,,Soft (red),Slick,Dry,1 – Most grip,6 – Least durable
+–,,,,Intermediate (green),Intermediate (green),Intermediate (green),Treaded,Wet (light standing water),,
+–,,,,Wet (blue),Wet (blue),Wet (blue),Treaded,Wet (heavy standing water),,
+Source:[2],Source:[2],Source:[2],Source:[2],Source:[2],Source:[2],Source:[2],Source:[2],Source:[2],Source:[2],Source:[2]

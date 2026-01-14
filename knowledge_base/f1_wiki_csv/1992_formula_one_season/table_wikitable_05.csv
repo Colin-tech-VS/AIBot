@@ -1,0 +1,35 @@
+Pos.,Constructor,No.,RSA,MEX,BRA,ESP,SMR,MON,CAN,FRA,GBR,GER,HUN,BEL,ITA,POR,JPN,AUS,Points
+1,Williams-Renault,5,1PF,1P,1P,1PF,1P,2PF,Ret,1PF,1PF,1P,2F,2P,RetPF,1P,RetPF,RetP,164
+1,Williams-Renault,6,2,2,2F,Ret,2F,3,Ret,2,2,8F†,RetP,3,5,Ret,1,Ret,164
+2,McLaren-Honda,1,3,Ret,Ret,9†,3,1,RetP,Ret,Ret,2,1,5,1,3F,Ret,Ret,99
+2,McLaren-Honda,2,5,4F,Ret,4,Ret,Ret,1F,Ret,5,Ret,3,Ret,4,2,2,1,99
+3,Benetton-Ford,19,4,3,3,2,Ret,4,2,Ret,4,3,Ret,1F,3,7,Ret,2F,91
+3,Benetton-Ford,20,Ret,Ret,Ret,Ret,4,5,Ret,3,3,4,5,4,2,4,3,3,91
+4,Ferrari,27,Ret,Ret,4,3,Ret,Ret,3,Ret,Ret,5,Ret,Ret,Ret,Ret,5,4,21
+4,Ferrari,28,Ret,Ret,5,10†,Ret,Ret,Ret,Ret,9,Ret,6,Ret,Ret,Ret,12,11,21
+5,Lotus-Ford,11,9,6,10,Ret,DNQ,Ret,Ret,4,6,Ret,4,6,Ret,5,Ret,7,13
+5,Lotus-Ford,12,6,7,Ret,Ret,Ret,Ret,Ret,6,Ret,Ret,Ret,13†,Ret,Ret,Ret,13,13
+6,Tyrrell-Ilmor,3,Ret,Ret,Ret,Ret,8,Ret,12,11,11,Ret,Ret,Ret,Ret,Ret,Ret,Ret,8
+6,Tyrrell-Ilmor,4,Ret,5,Ret,Ret,14†,Ret,5,Ret,Ret,Ret,8,8,6,9,4,Ret,8
+7,Footwork-Mugen-Honda,9,10,13,6,5,5,7,7,7,7,9,7,Ret,7,6,15,Ret,6
+7,Footwork-Mugen-Honda,10,8,DNQ,Ret,7,10,11,DNQ,Ret,12,Ret,Ret,9,Ret,10,8,8,6
+8,Ligier-Renault,25,Ret,10,Ret,Ret,Ret,12,10,Ret,10,7,Ret,Ret,Ret,8,Ret,5,6
+8,Ligier-Renault,26,7,9,Ret,Ret,9,10,6,5,8,6,Ret,DNQ,Ret,Ret,Ret,Ret,6
+9,March-Ilmor,16,Ret,Ret,Ret,8,12,Ret,4,Ret,Ret,16,Ret,11,10,Ret,Ret,12,3
+9,March-Ilmor,17,DNQ,DNQ,DNQ,12,13,DNQ,14,DNQ,DNQ,13,9,12,Ret,11,13,Ret,3
+10,BMS Dallara-Ferrari,21,Ret,8,8,Ret,11†,9,9,9,13,10,DNQ,7,11†,Ret,9,Ret,2
+10,BMS Dallara-Ferrari,22,Ret,Ret,Ret,6,6,Ret,8,10,15,11,Ret,Ret,8,Ret,10,Ret,2
+11,Jordan-Yamaha,32,DNQ,Ret,Ret,DNQ,Ret,Ret,Ret,Ret,Ret,DNQ,Ret,15,DNQ,13,7,6,1
+11,Jordan-Yamaha,33,11,Ret,Ret,Ret,7,Ret,Ret,Ret,Ret,15,10,14,Ret,Ret,Ret,Ret,1
+12,Minardi-Lamborghini,23,Ret,Ret,Ret,11,Ret,8,13,DNQ,DNQ,Ret,DNQ,DNQ,DNQ,12,6,9,1
+12,Minardi-Lamborghini,24,Ret,Ret,7,Ret,Ret,Ret,11,8,17†,12,DNQ,16,Ret,14,14,10,1
+13,Venturi-Lamborghini,29,Ret,11,Ret,Ret,Ret,6,DSQ,Ret,Ret,14,Ret,18†,Ret,Ret,Ret,Ret,1
+13,Venturi-Lamborghini,30,12,12,9,DNQ,Ret,DNPQ,Ret,Ret,Ret,Ret,Ret,17,9†,Ret,11,Ret,1
+—,Fondmetal-Ford,14,DNQ,Ret,DNQ,Ret,DNQ,DNQ,DNQ,Ret,DNQ,DNQ,Ret,10,Ret,,,,0
+—,Fondmetal-Ford,15,Ret,Ret,Ret,Ret,Ret,Ret,Ret,Ret,14,Ret,Ret,Ret,Ret,,,,0
+—,Brabham-Judd,7,13,DNQ,DNQ,DNQ,DNQ,DNQ,DNQ,DNQ,DNQ,DNQ,,,,,,,0
+—,Brabham-Judd,8,DNQ,DNQ,DNQ,DNQ,DNQ,DNQ,DNQ,DNQ,16,DNQ,11,,,,,,0
+—,Andrea Moda-Judd,34,EX,DNP,DNPQ,DNPQ,DNPQ,Ret,DNPQ,DNA,DNPQ,DNPQ,DNQ,DNQ,,,,,0
+—,Andrea Moda-Judd,35,EX,DNP,EX,DNPQ,DNPQ,DNPQ,DNP,DNA,DNPQ,EX,DNPQ,DNQ,,,,,0
+Pos.,Constructor,No.,RSA,MEX,BRA,ESP,SMR,MON,CAN,FRA,GBR,GER,HUN,BEL,ITA,POR,JPN,AUS,Points
+Source:[16],Source:[16],Source:[16],Source:[16],Source:[16],Source:[16],Source:[16],Source:[16],Source:[16],Source:[16],Source:[16],Source:[16],Source:[16],Source:[16],Source:[16],Source:[16],Source:[16],Source:[16],Source:[16],Source:[16]

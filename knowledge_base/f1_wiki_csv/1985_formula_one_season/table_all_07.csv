@@ -1,0 +1,38 @@
+Pos[1],Driver[1],BRA,POR,SMR,MON,CAN,DET,FRA,GBR,GER,AUT,NED,ITA,BEL,EUR,RSA,AUS,Points[14]
+1,Alain Prost,1F,Ret,DSQ,1,3,Ret,3,1F,2,1PF,2F,1,3PF,(4),3,Ret,73 (76)
+2,Michele Alboreto,2P,2,RetF,2F,1,3,Ret,2,1,3,4,13†,Ret,Ret,Ret,Ret,53
+3,Keke Rosberg,Ret,Ret,Ret,8,4,1,2PF,RetP,12†,Ret,Ret,Ret,4,3,2F,1F,40
+4,Ayrton Senna,Ret,1PF,7P†,RetP,16F,RetPF,Ret,10†,Ret,2,3,3P,1,2P,Ret,RetP,38
+5,Elio de Angelis,3,4,1,3,5P,5,5,NC,Ret,5,5,6,Ret,5,Ret,DSQ,33
+6,Nigel Mansell,Ret,5,5†,7,6,Ret,DNS,Ret,6,Ret,6,11F†,2,1,1P,Ret,31
+7,Stefan Johansson,7,8,6†,Ret,2,2,4,Ret,9,4,Ret,5,Ret,Ret,4,5,26
+8,Nelson Piquet,Ret,Ret,8†,Ret,Ret,6,1,4,Ret,Ret,8P,2,5,Ret,Ret,Ret,21
+9,Jacques Laffite,6,Ret,Ret,6,8,12,Ret,3,3,Ret,Ret,Ret,11†,RetF,,2,16
+10,Niki Lauda,Ret,Ret,4,Ret,Ret,Ret,Ret,Ret,5F,Ret,1,Ret,DNS,,Ret,Ret,14
+11,Thierry Boutsen,11,Ret,2†,9,9,7,9,Ret,4,8,Ret,9,10,6,6,Ret,11
+12,Patrick Tambay,5,3,3,Ret,7,Ret,6,Ret,Ret,10†,Ret,7,Ret,12,,Ret,11
+13,Marc Surer,,,,,15,8,8†,6,Ret,6,10†,4,8,Ret,Ret,Ret,5
+14,Derek Warwick,10,7,10,5,Ret,Ret,7,5,Ret,Ret,Ret,Ret,6,Ret,,Ret,5
+15,Philippe Streiff,,,,,,,,,,,,10,9,8,Ret,3,4
+16,Stefan Bellof,,6,Ret,DNQ,11,4,13,11,8,7†,Ret,,,,,,4
+17[15],Andrea de Cesaris,Ret,Ret,Ret,4,14,10,Ret,Ret,Ret,Ret,Ret,,,,,,3
+18[15],René Arnoux,4,,,,,,,,,,,,,,,,3
+19[15],Ivan Capelli,,,,,,,,,,,,,,Ret,,4,3
+20,Gerhard Berger,Ret,Ret,Ret,Ret,13,11,Ret,8,7,Ret,9,Ret,7,10,5,6,3
+—,Martin Brundle,8,Ret,9†,10,12,Ret,Ret,7,10,DNQ,7,8,13,Ret,7,NC,0
+—,Huub Rothengatter,,,,,,,,,Ret,9,NC,Ret,NC,DNQ,Ret,7,0
+—,John Watson,,,,,,,,,,,,,,7,,,0
+—,Pierluigi Martini,Ret,Ret,Ret,DNQ,Ret,Ret,Ret,Ret,11†,Ret,Ret,Ret,12,Ret,Ret,8,0
+—,Riccardo Patrese,Ret,Ret,Ret,Ret,10,Ret,11,9,Ret,Ret,Ret,Ret,Ret,9,Ret,Ret,0
+—,Eddie Cheever,Ret,Ret,Ret,Ret,17,9,10,Ret,Ret,Ret,Ret,Ret,Ret,11,Ret,Ret,0
+—,Piercarlo Ghinzani,12,9,NC,DNQ,Ret,Ret,15,Ret,,DNS,Ret,DNS,Ret,Ret,Ret,Ret,0
+—,Philippe Alliot,9,Ret,Ret,DNQ,Ret,Ret,Ret,Ret,Ret,Ret,Ret,Ret,Ret,Ret,,,0
+—,Jonathan Palmer,,Ret,DNS,11,,,Ret,Ret,Ret,Ret,Ret,,,,,,0
+—,Manfred Winkelhock,13,NC,Ret,DNQ,Ret,Ret,12,Ret,Ret,,,,,,,,0
+—,Teo Fabi,,,,Ret,Ret,Ret,14†,Ret,RetP,Ret,Ret,12,Ret,Ret,Ret,Ret,0
+—,François Hesnault,Ret,Ret,Ret,DNQ,,,,,Ret,,,,,,,,0
+—,Alan Jones,,,,,,,,,,,,Ret,,Ret,DNS,Ret,0
+—,Mauro Baldi,Ret,Ret,Ret,,,,,,,,,,,,,,0
+—,Christian Danner,,,,,,,,,,,,,Ret,Ret,,,0
+—,Kenny Acheson,,,,,,,,,,Ret,DNQ,Ret,,,,,0
+Pos,Driver,BRA,POR,SMR,MON,CAN,DET,FRA,GBR,GER,AUT,NED,ITA,BEL,EUR,RSA,AUS,Points

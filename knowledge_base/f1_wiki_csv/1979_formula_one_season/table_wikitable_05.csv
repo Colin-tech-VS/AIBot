@@ -1,0 +1,36 @@
+Pos,Constructor,Car no.,ARG,BRA,RSA,USW,ESP,BEL,MON,FRA,GBR,GER,AUT,NED,ITA,CAN,USA,Pts
+1,Ferrari,11,Ret,6,2,2,4,1,1,7,5,4,4,2,1,4,Ret,113
+1,Ferrari,12,Ret,5,1,1,7,7,Ret,2,14†,8,2,Ret,2,2,1,113
+2,Williams-Ford,27,9,Ret,Ret,3,Ret,Ret,Ret,4,Ret,1,1,1,9,1,Ret,75
+2,Williams-Ford,28,10,15,9,Ret,Ret,Ret,2,6,1,2,5,Ret,3,3,Ret,75
+3,Ligier-Ford,25,4,2,Ret,5,1,Ret,5,Ret,6,Ret,Ret,5,Ret,Ret,Ret,61
+3,Ligier-Ford,26,1,1,Ret,Ret,Ret,2,Ret,8,Ret,3,3,3,Ret,Ret,Ret,61
+4,Lotus-Ford,1,5,Ret,4,4,3,Ret,Ret,Ret,Ret,Ret,Ret,Ret,5,10,Ret,39
+4,Lotus-Ford,2,2,3,5,Ret,2,4,3,13,8,Ret,Ret,Ret,7,Ret,Ret,39
+4,Lotus-Ford,31,Ret,DNQ,Ret,Ret,Ret,Ret,,12,9,Ret,DNQ,7,,,,39
+5,Tyrrell-Ford,3,Ret,4,Ret,DSQ,6,3,Ret,Ret,10,9,7,Ret,10,5,3,28
+5,Tyrrell-Ford,4,Ret,Ret,3,6,5,11,Ret,5,3,7,8,Ret,6,Ret,Ret,28
+5,Tyrrell-Ford,33,,,,,,,,,,,,,,Ret,Ret,28
+6,Renault,15,Ret,10,Ret,DNS,Ret,Ret,NC,1,Ret,Ret,Ret,Ret,14,Ret,Ret,26
+6,Renault,16,Ret,Ret,Ret,DNS,9,Ret,Ret,3,2,Ret,6,Ret,Ret,Ret,2,26
+7,McLaren-Ford,7,3,8,Ret,Ret,Ret,6,4,11,4,5,9,Ret,Ret,6,6,15
+7,McLaren-Ford,8,Ret,Ret,10,Ret,13,DNQ,DNQ,10,7,Ret,10,Ret,Ret,Ret,Ret,15
+8,Brabham-Alfa Romeo,5,Ret,Ret,6,Ret,Ret,Ret,Ret,Ret,Ret,Ret,Ret,Ret,4,,,7
+8,Brabham-Alfa Romeo,6,Ret,Ret,7,8,Ret,Ret,Ret,Ret,Ret,12,Ret,4,Ret,,,7
+9,Arrows-Ford,29,DNS,9,11,Ret,10,5,Ret,14,Ret,Ret,Ret,Ret,13,Ret,Ret,5
+9,Arrows-Ford,30,8,7,12,9,8,Ret,6,15,Ret,6,Ret,6,Ret,DNQ,DNQ,5
+10,Shadow-Ford,17,Ret,14,Ret,Ret,12,10,DNQ,18,11,10,Ret,Ret,DNQ,9,DNQ,3
+10,Shadow-Ford,18,7,12,Ret,7,Ret,Ret,DNQ,16,12,11,Ret,Ret,Ret,Ret,4,3
+11,ATS-Ford,9,DNQ,Ret,Ret,DSQ,14,8,Ret,DNS,DNQ,Ret,Ret,Ret,11,Ret,5,2
+12,Fittipaldi-Ford[3],14,6,11,13,Ret,11,9,Ret,Ret,Ret,Ret,Ret,Ret,8,8,7,1
+12,Fittipaldi-Ford[3],19,,,,,,,,,,,,,,DNQ,DNQ,1
+—,Brabham-Ford,5,,,,,,,,,,,,,,7,Ret,0
+—,Brabham-Ford,6,,,,,,,,,,,,,,Ret,Ret,0
+—,Wolf-Ford,20,Ret,Ret,8,Ret,Ret,Ret,Ret,9,Ret,Ret,Ret,Ret,Ret,DNQ,Ret,0
+—,Ensign-Ford,22,11,13,DNQ,Ret,DNQ,DNQ,DNQ,DNQ,13,DNQ,Ret,DNQ,DNQ,DNQ,Ret,0
+—,Alfa Romeo,35,,,,,,Ret,,17,,,,,Ret,,Ret,0
+—,Alfa Romeo,36,,,,,,,,,,,,,12,Ret,DNQ,0
+—,Merzario-Ford,24,Ret,DNQ,DNQ,Ret,DNQ,DNQ,DNPQ,DNQ,DNQ,DNQ,DNQ,DNQ,DNQ,DNQ,DNQ,0
+—,Rebaque-Ford,31,,,,,,,,,,,,,DNQ,Ret,DNQ,0
+—,Kauhsen-Ford,36,,,,,DNQ,DNQ,,,,,,,,,,0
+Pos,Constructor,Car no.,ARG,BRA,RSA,USW,ESP,BEL,MON,FRA,GBR,GER,AUT,NED,ITA,CAN,USA,Pts

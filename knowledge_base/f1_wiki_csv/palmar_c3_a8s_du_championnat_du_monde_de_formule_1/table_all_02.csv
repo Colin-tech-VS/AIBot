@@ -1,0 +1,69 @@
+Saison,Constructeur,Moteur,Pneus,Pilotes,Pole positions,Victoires,Podiums,Meilleurs tours en course,Points,Avance (points)
+1958,Vanwall,Vanwall,D,Stirling Moss  Tony Brooks,5,6,9,3,48.0,8.0
+1959,Cooper,Climax,D,Jack Brabham  Stirling Moss  Bruce McLaren,5,5,13,5,40.0,8.0
+1960,Cooper,Climax,D,Jack Brabham  Bruce McLaren,4,6,14,5,48.0,14.0
+1961,Ferrari,Ferrari,D,Phil Hill  Wolfgang von Trips,6,5,14,5,45.0,10.0
+1962,BRM,BRM,D,Graham Hill,1,4,8,3,42.0,6.0
+1963,Lotus,Climax,D,Jim Clark,7,7,9,6,54.0,18.0
+1964,Ferrari,Ferrari,D,John Surtees  Lorenzo Bandini,2,3,10,2,45.0,3.0
+1965,Lotus,Climax,D,Jim Clark,6,6,7,6,54.0,9.0
+1966,Brabham,Repco,G,Jack Brabham,3,4,9,2,42.0,11.0
+1967,Brabham,Repco,G,Denny Hulme  Jack Brabham,2,4,14,2,63.0,19.0
+1968,Lotus,Ford,F,Graham Hill  Joseph Siffert  Jim Clark  Jackie Oliver,5,5,9,5,62.0,13.0
+1969,Matra,Ford,D,Jackie Stewart  Jean-Pierre Beltoise,2,6,10,6,66.0,17.0
+1970,Lotus,Ford,F,Jochen Rindt  Emerson Fittipaldi  Graham Hill  John Miles,3,6,7,1,59.0,7.0
+1971,Tyrrell,Ford,G,Jackie Stewart  François Cevert,6,7,11,4,73.0,37.0
+1972,Lotus,Ford,F,Emerson Fittipaldi,3,5,8,4,61.0,10.0
+1973,Lotus,Ford,G,Emerson Fittipaldi  Ronnie Peterson,10,7,15,7,92.0,10.0
+1974,McLaren,Ford,G,Emerson Fittipaldi  Denny Hulme  Mike Hailwood  David Hobbs  Jochen Mass,2,4,10,1,73.0,8.0
+1975,Ferrari,Ferrari,G,Clay Regazzoni  Niki Lauda,9,6,11,6,72.5,18.5
+1976,Ferrari,Ferrari,G,Niki Lauda  Clay Regazzoni,4,6,13,7,83.0,9.0
+1977,Ferrari,Ferrari,G,Niki Lauda  Carlos Reutemann,2,4,16,3,95.0,33.0
+1978,Lotus,Ford,G,Mario Andretti  Ronnie Peterson,12,8,14,7,86.0,28.0
+1979,Ferrari,Ferrari,M,Jody Scheckter  Gilles Villeneuve,2,6,13,6,113.0,38.0
+1980,Williams,Ford,G,Alan Jones  Carlos Reutemann,3,6,18,5,120.0,54.0
+1981,Williams,Ford,G,Alan Jones  Carlos Reutemann,2,4,13,7,95.0,34.0
+1982,Ferrari,Ferrari,G,Gilles Villeneuve  Didier Pironi  Patrick Tambay  Mario Andretti,3,3,11,2,74.0,5.0
+1983,Ferrari,Ferrari,G,Patrick Tambay  René Arnoux,8,4,12,3,89.0,10.0
+1984,McLaren,TAG,M,Alain Prost  Niki Lauda,3,12,18,8,143.5,86.0
+1985,McLaren,TAG,G,Niki Lauda  Alain Prost  John Watson,2,6,12,6,90.0,8.0
+1986,Williams,Honda,G,Nigel Mansell  Nelson Piquet,4,9,19,11,141.0,45.0
+1987,Williams,Honda,G,Nigel Mansell  Nelson Piquet  Riccardo Patrese,12,9,18,7,137.0,61.0
+1988,McLaren,Honda,G,Alain Prost  Ayrton Senna,15,15,25,10,199.0,134.0
+1989,McLaren,Honda,G,Ayrton Senna  Alain Prost,15,10,18,8,141.0,64.0
+1990,McLaren,Honda,G,Ayrton Senna  Gerhard Berger,12,6,18,5,121.0,11.0
+1991,McLaren,Honda,G,Ayrton Senna  Gerhard Berger,10,8,18,4,139.0,14.0
+1992,Williams,Renault,G,Nigel Mansell  Riccardo Patrese,15,10,21,11,164.0,65.0
+1993,Williams,Renault,G,Damon Hill  Alain Prost,15,10,22,10,168.0,84.0
+1994,Williams,Renault,G,Damon Hill  Ayrton Senna  David Coulthard  Nigel Mansell,6,7,13,8,118.0,15.0
+1995,Benetton,Renault,G,Michael Schumacher  Johnny Herbert,4,11,15,8,137.0,25.0
+1996,Williams,Renault,G,Damon Hill  Jacques Villeneuve,12,12,21,11,175.0,105.0
+1997,Williams,Renault,G,Jacques Villeneuve  Heinz-Harald Frentzen,10,8,15,9,123.0,21.0
+1998,McLaren,Mercedes,B,David Coulthard  Mika Häkkinen,12,9,20,9,156.0,23.0
+1999,Ferrari,Ferrari,B,Michael Schumacher  Eddie Irvine  Mika Salo,3,6,17,6,128.0,4.0
+2000,Ferrari,Ferrari,B,Michael Schumacher  Rubens Barrichello,10,10,21,5,170.0,18.0
+2001,Ferrari,Ferrari,B,Michael Schumacher  Rubens Barrichello,11,9,24,3,179.0,77.0
+2002,Ferrari,Ferrari,B,Michael Schumacher  Rubens Barrichello,10,15,27,12,221.0,129.0
+2003,Ferrari,Ferrari,B,Michael Schumacher  Rubens Barrichello,8,8,16,8,158.0,14.0
+2004,Ferrari,Ferrari,B,Michael Schumacher  Rubens Barrichello,12,15,29,14,262.0,143.0
+2005,Renault,Renault,M,Fernando Alonso  Giancarlo Fisichella,7,8,18,3,191.0,9.0
+2006,Renault,Renault,M,Fernando Alonso  Giancarlo Fisichella,7,8,19,5,206.0,5.0
+2007,Ferrari,Ferrari,B,Felipe Massa  Kimi Räikkönen,11,9,22,11,204.0,103.0
+2008,Ferrari,Ferrari,B,Kimi Räikkönen  Felipe Massa,8,8,19,13,172.0,21.0
+2009,Brawn,Mercedes,B,Jenson Button  Rubens Barrichello,5,8,15,4,172.0,18.5
+2010,Red Bull,Renault,B,Sebastian Vettel  Mark Webber,15,9,20,6,498.0,44.0
+2011,Red Bull,Renault,P,Sebastian Vettel  Mark Webber,18,12,28,10,650.0,153.0
+2012,Red Bull,Renault,P,Sebastian Vettel  Mark Webber,8,7,14,7,460.0,60.0
+2013,Red Bull,Renault,P,Sebastian Vettel  Mark Webber,11,13,24,12,596.0,236.0
+2014,Mercedes,Mercedes,P,Nico Rosberg  Lewis Hamilton,18,16,31,11,701.0,296.0
+2015,Mercedes,Mercedes,P,Nico Rosberg  Lewis Hamilton,18,16,32,13,703.0,275.0
+2016,Mercedes,Mercedes,P,Nico Rosberg  Lewis Hamilton,20,19,33,9,765.0,297.0
+2017,Mercedes,Mercedes,P,Lewis Hamilton  Valtteri Bottas,15,12,26,9,668.0,146.0
+2018,Mercedes,Mercedes,P,Lewis Hamilton  Valtteri Bottas,13,11,25,10,655.0,84.0
+2019,Mercedes,Mercedes,P,Lewis Hamilton  Valtteri Bottas,10,15,33,9,739.0,235.0
+2020,Mercedes,Mercedes,P,Lewis Hamilton  Valtteri Bottas  George Russell,16,13,25,9,573.0,254.0
+2021,Mercedes,Mercedes,P,Lewis Hamilton  Valtteri Bottas,9,9,27,10,6135.0,28.0
+2022,Red Bull,RBPT,P,Max Verstappen  Sergio Pérez,8,17,28,8,759.0,205.0
+2023,Red Bull,Honda RBPT,P,Max Verstappen  Sergio Pérez,14,21,30,12,860.0,451.0
+2024,McLaren,Mercedes,P,Lando Norris  Oscar Piastri,8,6,21,7,666.0,14.0
+2025,McLaren,Mercedes,P,Lando Norris  Oscar Piastri,13,14,22,12,833.0,364.0

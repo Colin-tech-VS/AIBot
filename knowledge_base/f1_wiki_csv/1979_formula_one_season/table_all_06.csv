@@ -1,0 +1,62 @@
+0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17
+Pos Driver ARG  BRA  RSA  USW  ESP  BEL  MON  FRA  GBR  GER  AUT  NED  ITA  CAN  USA  Pts[10] 1  Jody Scheckter Ret (6) 2 2 (4) 1 1 7 (5) 4 4 2 1 (4) Ret 51 2  Gilles Villeneuve Ret 5 1 1 7 7 Ret 2 14† 8 2 Ret 2 (2) 1 47 3  Alan Jones 9 Ret Ret 3 Ret Ret Ret (4) Ret 1 1 1 9 1 Ret 40 4  Jacques Laffite 1 1 Ret Ret Ret 2 Ret 8 Ret 3 3 3 Ret Ret Ret 36 5  Clay Regazzoni 10 15 9 Ret Ret Ret 2 (6) 1 2 (5) Ret 3 3 Ret 29 6  Patrick Depailler 4 2 Ret 5 1 Ret (5) 20 7  Carlos Reutemann 2 3 (5) Ret 2 (4) 3 13 8 Ret Ret Ret 7 Ret Ret 20 8  René Arnoux Ret Ret Ret DNS 9 Ret Ret 3 2 Ret 6 Ret Ret Ret 2 17 9  John Watson 3 8 Ret Ret Ret 6 4 11 4 5 9 Ret Ret 6 6 15 10  Didier Pironi Ret 4 Ret DSQ 6 3 Ret Ret 10 9 7 Ret 10 5 3 14 11  Jean-Pierre Jarier Ret Ret 3 6 5 11 Ret 5 3 Ret 6 Ret Ret 14 12  Mario Andretti 5 Ret 4 4 3 Ret Ret Ret Ret Ret Ret Ret 5 10 Ret 14 13  Jean-Pierre Jabouille Ret 10 Ret DNS Ret Ret NC 1 Ret Ret Ret Ret 14 Ret Ret 9 14  Niki Lauda Ret Ret 6 Ret Ret Ret Ret Ret Ret Ret Ret Ret 4 WD 4 15[1]  Elio de Angelis 7 12 Ret 7 Ret Ret DNQ 16 12 11 Ret Ret Ret Ret 4 3 =[1]  Nelson Piquet Ret Ret 7 8 Ret Ret Ret Ret Ret 12 Ret 4 Ret Ret Ret 3 17  Jacky Ickx Ret 6 Ret Ret 5 Ret Ret Ret 3 18  Jochen Mass 8 7 12 9 8 Ret 6 15 Ret 6 Ret 6 Ret DNQ DNQ 3 19[1]  Riccardo Patrese DNS 9 11 Ret 10 5 Ret 14 Ret Ret Ret Ret 13 Ret Ret 2 =[1]  Hans-Joachim Stuck DNQ Ret Ret DSQ 14 8 Ret DNS DNQ Ret Ret Ret 11 Ret 5 2 21  Emerson Fittipaldi 6 11 13 Ret 11 9 Ret Ret Ret Ret Ret Ret 8 8 7 1 —  Héctor Rebaque Ret DNQ Ret Ret Ret Ret 12 9 Ret DNQ 7 DNQ Ret DNQ 0 —  Patrick Tambay Ret Ret 10 Ret 13 DNQ DNQ 10 7 Ret 10 Ret Ret Ret Ret 0 —  Ricardo Zunino 7 Ret 0 —  Geoff Lees 7 0 —  Derek Daly 11 13 DNQ Ret DNQ DNQ DNQ 8 Ret Ret 0 —  James Hunt Ret Ret 8 Ret Ret Ret Ret 0 —  Jan Lammers Ret 14 Ret Ret 12 10 DNQ 18 11 10 Ret Ret DNQ 9 DNQ 0 —  Keke Rosberg 9 Ret Ret Ret Ret Ret DNQ Ret 0 —  Vittorio Brambilla 12 Ret DNQ 0 —  Patrick Gaillard DNQ 13 DNQ Ret DNQ 0 —  Bruno Giacomelli Ret 17 Ret Ret 0 —  Arturo Merzario Ret DNQ DNQ Ret DNQ DNQ DNQ DNQ DNQ DNQ DNQ DNQ DNQ DNQ 0 —  Marc Surer DNQ DNQ Ret 0 —  Gianfranco Brancatelli DNQ DNQ DNPQ 0 —  Alex Ribeiro DNQ DNQ 0 Pos Driver ARG  BRA  RSA  USW  ESP  BEL  MON  FRA  GBR  GER  AUT  NED  ITA  CAN  USA  Pts,"Key Colour Result Gold Winner Silver Second place Bronze Third place Green Other points position Blue Other classified position Not classified, finished (NC) Purple Not classified, retired (Ret) Red Did not qualify (DNQ) Did not pre-qualify (DNPQ) Black Disqualified (DSQ) White Did not start (DNS) Race cancelled (C) Blank Did not practice (DNP) Excluded (EX) Did not arrive (DNA) Withdrawn (WD) Did not enter (cell empty) Text formatting Meaning Bold Pole position Italics Fastest lap",,,,,,,,,,,,,,,,
+Pos,Driver,ARG,BRA,RSA,USW,ESP,BEL,MON,FRA,GBR,GER,AUT,NED,ITA,CAN,USA,Pts[10]
+1,Jody Scheckter,Ret,(6),2,2,(4),1,1,7,(5),4,4,2,1,(4),Ret,51
+2,Gilles Villeneuve,Ret,5,1,1,7,7,Ret,2,14†,8,2,Ret,2,(2),1,47
+3,Alan Jones,9,Ret,Ret,3,Ret,Ret,Ret,(4),Ret,1,1,1,9,1,Ret,40
+4,Jacques Laffite,1,1,Ret,Ret,Ret,2,Ret,8,Ret,3,3,3,Ret,Ret,Ret,36
+5,Clay Regazzoni,10,15,9,Ret,Ret,Ret,2,(6),1,2,(5),Ret,3,3,Ret,29
+6,Patrick Depailler,4,2,Ret,5,1,Ret,(5),,,,,,,,,20
+7,Carlos Reutemann,2,3,(5),Ret,2,(4),3,13,8,Ret,Ret,Ret,7,Ret,Ret,20
+8,René Arnoux,Ret,Ret,Ret,DNS,9,Ret,Ret,3,2,Ret,6,Ret,Ret,Ret,2,17
+9,John Watson,3,8,Ret,Ret,Ret,6,4,11,4,5,9,Ret,Ret,6,6,15
+10,Didier Pironi,Ret,4,Ret,DSQ,6,3,Ret,Ret,10,9,7,Ret,10,5,3,14
+11,Jean-Pierre Jarier,Ret,Ret,3,6,5,11,Ret,5,3,,,Ret,6,Ret,Ret,14
+12,Mario Andretti,5,Ret,4,4,3,Ret,Ret,Ret,Ret,Ret,Ret,Ret,5,10,Ret,14
+13,Jean-Pierre Jabouille,Ret,10,Ret,DNS,Ret,Ret,NC,1,Ret,Ret,Ret,Ret,14,Ret,Ret,9
+14,Niki Lauda,Ret,Ret,6,Ret,Ret,Ret,Ret,Ret,Ret,Ret,Ret,Ret,4,WD,,4
+15[1],Elio de Angelis,7,12,Ret,7,Ret,Ret,DNQ,16,12,11,Ret,Ret,Ret,Ret,4,3
+=[1],Nelson Piquet,Ret,Ret,7,8,Ret,Ret,Ret,Ret,Ret,12,Ret,4,Ret,Ret,Ret,3
+17,Jacky Ickx,,,,,,,,Ret,6,Ret,Ret,5,Ret,Ret,Ret,3
+18,Jochen Mass,8,7,12,9,8,Ret,6,15,Ret,6,Ret,6,Ret,DNQ,DNQ,3
+19[1],Riccardo Patrese,DNS,9,11,Ret,10,5,Ret,14,Ret,Ret,Ret,Ret,13,Ret,Ret,2
+=[1],Hans-Joachim Stuck,DNQ,Ret,Ret,DSQ,14,8,Ret,DNS,DNQ,Ret,Ret,Ret,11,Ret,5,2
+21,Emerson Fittipaldi,6,11,13,Ret,11,9,Ret,Ret,Ret,Ret,Ret,Ret,8,8,7,1
+—,Héctor Rebaque,Ret,DNQ,Ret,Ret,Ret,Ret,,12,9,Ret,DNQ,7,DNQ,Ret,DNQ,0
+—,Patrick Tambay,Ret,Ret,10,Ret,13,DNQ,DNQ,10,7,Ret,10,Ret,Ret,Ret,Ret,0
+—,Ricardo Zunino,,,,,,,,,,,,,,7,Ret,0
+—,Geoff Lees,,,,,,,,,,7,,,,,,0
+—,Derek Daly,11,13,DNQ,Ret,DNQ,DNQ,DNQ,,,,8,,,Ret,Ret,0
+—,James Hunt,Ret,Ret,8,Ret,Ret,Ret,Ret,,,,,,,,,0
+—,Jan Lammers,Ret,14,Ret,Ret,12,10,DNQ,18,11,10,Ret,Ret,DNQ,9,DNQ,0
+—,Keke Rosberg,,,,,,,,9,Ret,Ret,Ret,Ret,Ret,DNQ,Ret,0
+—,Vittorio Brambilla,,,,,,,,,,,,,12,Ret,DNQ,0
+—,Patrick Gaillard,,,,,,,,DNQ,13,DNQ,Ret,DNQ,,,,0
+—,Bruno Giacomelli,,,,,,Ret,,17,,,,,Ret,,Ret,0
+—,Arturo Merzario,Ret,DNQ,DNQ,Ret,DNQ,DNQ,,DNQ,DNQ,DNQ,DNQ,DNQ,DNQ,DNQ,DNQ,0
+—,Marc Surer,,,,,,,,,,,,,DNQ,DNQ,Ret,0
+—,Gianfranco Brancatelli,,,,,DNQ,DNQ,DNPQ,,,,,,,,,0
+—,Alex Ribeiro,,,,,,,,,,,,,,DNQ,DNQ,0
+Pos,Driver,ARG,BRA,RSA,USW,ESP,BEL,MON,FRA,GBR,GER,AUT,NED,ITA,CAN,USA,Pts
+Key,Key,,,,,,,,,,,,,,,,
+Colour,Result,,,,,,,,,,,,,,,,
+Gold,Winner,,,,,,,,,,,,,,,,
+Silver,Second place,,,,,,,,,,,,,,,,
+Bronze,Third place,,,,,,,,,,,,,,,,
+Green,Other points position,,,,,,,,,,,,,,,,
+Blue,Other classified position,,,,,,,,,,,,,,,,
+Blue,"Not classified, finished (NC)",,,,,,,,,,,,,,,,
+Purple,"Not classified, retired (Ret)",,,,,,,,,,,,,,,,
+Red,Did not qualify (DNQ),,,,,,,,,,,,,,,,
+Red,Did not pre-qualify (DNPQ),,,,,,,,,,,,,,,,
+Black,Disqualified (DSQ),,,,,,,,,,,,,,,,
+White,Did not start (DNS),,,,,,,,,,,,,,,,
+White,Race cancelled (C),,,,,,,,,,,,,,,,
+Blank,Did not practice (DNP),,,,,,,,,,,,,,,,
+Blank,Excluded (EX),,,,,,,,,,,,,,,,
+Blank,Did not arrive (DNA),,,,,,,,,,,,,,,,
+Blank,Withdrawn (WD),,,,,,,,,,,,,,,,
+Blank,Did not enter (cell empty),,,,,,,,,,,,,,,,
+Text formatting,Meaning,,,,,,,,,,,,,,,,
+Bold,Pole position,,,,,,,,,,,,,,,,
+Italics,Fastest lap,,,,,,,,,,,,,,,,

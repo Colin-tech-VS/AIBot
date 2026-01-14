@@ -1,0 +1,68 @@
+0,1,2,3,4,5,6,7,8,9,10,11,12,13,14
+"Pos. Driver RSA ESP MON NED FRA GBR GER ITA CAN USA MEX Pts. 1  Jackie Stewart 1F 1 RetPF 1F 1PF 1F 2 1 Ret Ret 4 63 2  Jacky Ickx Ret 6 Ret 5 3 2 1PF 10 1PF Ret 2F 37 3  Bruce McLaren 5 2 5 Ret 4 3 3 4 5 DNS DNS 26 4  Jochen Rindt Ret RetPF RetP Ret 4P Ret 2P 3 1PF Ret 22 5  Jean-Pierre Beltoise 6 3 Ret 8 2 9 12 3F 4 Ret 5 21 6  Denny Hulme 3 4 6 4 8 Ret Ret 7 Ret Ret 1 20 7  Graham Hill 2 Ret 1 7 6 7 4 9 Ret Ret 19 8  Piers Courage Ret 2 Ret Ret 5 Ret 5 Ret 2 10 16 9  Jo Siffert 4 Ret 3 2 9 8 11 8 Ret Ret Ret 15 10  Jack Brabham RetP Ret Ret 6 Ret 2F 4 3P 14 11  John Surtees Ret 5 Ret 9 Ret DNS NC Ret 3 Ret 6 12  Chris Amon Ret Ret Ret 3 Ret Ret 4 13  Richard Attwood 4 61 3 14  Vic Elford 7 10 5 6 Ret 3 15  Pedro Rodríguez Ret Ret Ret Ret 6 Ret 5 7 3 16  Silvio Moser Ret Ret 7 Ret Ret 6 11 1 17  Jackie Oliver 7 Ret Ret Ret Ret Ret Ret Ret Ret 6 1 18  Johnny Servoz-Gavin Ret1 6 NC 8 1 —  Sam Tingle 8 0 —  Pete Lovely 7 Ret 9 0 —  John Miles Ret 10 Ret Ret Ret 0 —  Bill Brack NC 0 —  Mario Andretti Ret Ret Ret 0 —  Jo Bonnier Ret Ret 0 —  George Eaton Ret Ret 0 —  Peter de Klerk NC 0 —  Basil van Rooyen Ret 0 —  John Love Ret 0 —  Derek Bell Ret 0 —  John Cordts Ret 0 —  Al Pease DSQ 0 —  Ernesto Brambilla DNS 0 Drivers ineligible for Formula One points, because they drove with Formula Two cars —  Henri Pescarolo 5 —  Kurt Ahrens Jr. 7 —  Rolf Stommelen 8 —  Peter Westbury 9 —  Xavier Perrot 10 —  François Cevert Ret —  Gerhard Mitter DNS —  Hubert Hahne DNS —  Dieter Quester DNS —  Hans Herrmann DNS Pos. Driver RSA ESP MON NED FRA GBR GER ITA CAN USA MEX Pts.","Key Colour Result Gold Winner Silver Second place Bronze Third place Green Other points position Blue Other classified position Not classified, finished (NC) Purple Not classified, retired (Ret) Red Did not qualify (DNQ) Black Disqualified (DSQ) White Did not start (DNS) Race cancelled (C) Blank Did not practice (DNP) Excluded (EX) Did not arrive (DNA) Withdrawn (WD) Did not enter (empty cell) Annotation Meaning P Pole position F Fastest lap",,,,,,,,,,,,,
+Pos.,Driver,RSA,ESP,MON,NED,FRA,GBR,,GER,ITA,CAN,USA,MEX,Pts.
+1,Jackie Stewart,1F,1,RetPF,1F,1PF,1F,,2,1,Ret,Ret,4,63
+2,Jacky Ickx,Ret,6,Ret,5,3,2,,1PF,10,1PF,Ret,2F,37
+3,Bruce McLaren,5,2,5,Ret,4,3,,3,4,5,DNS,DNS,26
+4,Jochen Rindt,Ret,RetPF,,RetP,Ret,4P,,Ret,2P,3,1PF,Ret,22
+5,Jean-Pierre Beltoise,6,3,Ret,8,2,9,,12,3F,4,Ret,5,21
+6,Denny Hulme,3,4,6,4,8,Ret,,Ret,7,Ret,Ret,1,20
+7,Graham Hill,2,Ret,1,7,6,7,,4,9,Ret,Ret,,19
+8,Piers Courage,,Ret,2,Ret,Ret,5,,Ret,5,Ret,2,10,16
+9,Jo Siffert,4,Ret,3,2,9,8,,11,8,Ret,Ret,Ret,15
+10,Jack Brabham,RetP,Ret,Ret,6,,,,,Ret,2F,4,3P,14
+11,John Surtees,Ret,5,Ret,9,,Ret,,DNS,NC,Ret,3,Ret,6
+12,Chris Amon,Ret,Ret,Ret,3,Ret,Ret,,,,,,,4
+13,Richard Attwood,,,4,,,,,61,,,,,3
+14,Vic Elford,,,7,10,5,6,,Ret,,,,,3
+15,Pedro Rodríguez,Ret,Ret,Ret,,,Ret,,,6,Ret,5,7,3
+16,Silvio Moser,,,Ret,Ret,7,,,,Ret,Ret,6,11,1
+17,Jackie Oliver,7,Ret,Ret,Ret,,Ret,,Ret,Ret,Ret,Ret,6,1
+18,Johnny Servoz-Gavin,,,,,,,,Ret1,,6,NC,8,1
+—,Sam Tingle,8,,,,,,,,,,,,0
+—,Pete Lovely,,,,,,,,,,7,Ret,9,0
+—,John Miles,,,,,Ret,10,,,Ret,Ret,,Ret,0
+—,Bill Brack,,,,,,,,,,NC,,,0
+—,Mario Andretti,Ret,,,,,,,Ret,,,Ret,,0
+—,Jo Bonnier,,,,,,Ret,,Ret,,,,,0
+—,George Eaton,,,,,,,,,,,Ret,Ret,0
+—,Peter de Klerk,NC,,,,,,,,,,,,0
+—,Basil van Rooyen,Ret,,,,,,,,,,,,0
+—,John Love,Ret,,,,,,,,,,,,0
+—,Derek Bell,,,,,,Ret,,,,,,,0
+—,John Cordts,,,,,,,,,,Ret,,,0
+—,Al Pease,,,,,,,,,,DSQ,,,0
+—,Ernesto Brambilla,,,,,,,,,DNS,,,,0
+"Drivers ineligible for Formula One points, because they drove with Formula Two cars","Drivers ineligible for Formula One points, because they drove with Formula Two cars","Drivers ineligible for Formula One points, because they drove with Formula Two cars","Drivers ineligible for Formula One points, because they drove with Formula Two cars","Drivers ineligible for Formula One points, because they drove with Formula Two cars","Drivers ineligible for Formula One points, because they drove with Formula Two cars","Drivers ineligible for Formula One points, because they drove with Formula Two cars","Drivers ineligible for Formula One points, because they drove with Formula Two cars","Drivers ineligible for Formula One points, because they drove with Formula Two cars","Drivers ineligible for Formula One points, because they drove with Formula Two cars","Drivers ineligible for Formula One points, because they drove with Formula Two cars","Drivers ineligible for Formula One points, because they drove with Formula Two cars","Drivers ineligible for Formula One points, because they drove with Formula Two cars","Drivers ineligible for Formula One points, because they drove with Formula Two cars","Drivers ineligible for Formula One points, because they drove with Formula Two cars"
+—,Henri Pescarolo,,,,,,,,5,,,,,
+—,Kurt Ahrens Jr.,,,,,,,,7,,,,,
+—,Rolf Stommelen,,,,,,,,8,,,,,
+—,Peter Westbury,,,,,,,,9,,,,,
+—,Xavier Perrot,,,,,,,,10,,,,,
+—,François Cevert,,,,,,,,Ret,,,,,
+—,Gerhard Mitter,,,,,,,,DNS,,,,,
+—,Hubert Hahne,,,,,,,,DNS,,,,,
+—,Dieter Quester,,,,,,,,DNS,,,,,
+—,Hans Herrmann,,,,,,,,DNS,,,,,
+Pos.,Driver,RSA,ESP,MON,NED,FRA,GBR,,GER,ITA,CAN,USA,MEX,Pts.
+Key,Key,,,,,,,,,,,,,
+Colour,Result,,,,,,,,,,,,,
+Gold,Winner,,,,,,,,,,,,,
+Silver,Second place,,,,,,,,,,,,,
+Bronze,Third place,,,,,,,,,,,,,
+Green,Other points position,,,,,,,,,,,,,
+Blue,Other classified position,,,,,,,,,,,,,
+Blue,"Not classified, finished (NC)",,,,,,,,,,,,,
+Purple,"Not classified, retired (Ret)",,,,,,,,,,,,,
+Red,Did not qualify (DNQ),,,,,,,,,,,,,
+Black,Disqualified (DSQ),,,,,,,,,,,,,
+White,Did not start (DNS),,,,,,,,,,,,,
+White,Race cancelled (C),,,,,,,,,,,,,
+Blank,Did not practice (DNP),,,,,,,,,,,,,
+Blank,Excluded (EX),,,,,,,,,,,,,
+Blank,Did not arrive (DNA),,,,,,,,,,,,,
+Blank,Withdrawn (WD),,,,,,,,,,,,,
+Blank,Did not enter (empty cell),,,,,,,,,,,,,
+Annotation,Meaning,,,,,,,,,,,,,
+P,Pole position,,,,,,,,,,,,,
+F,Fastest lap,,,,,,,,,,,,,

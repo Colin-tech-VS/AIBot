@@ -1,0 +1,57 @@
+0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18
+Pos Driver BRA ESP SMR MON BEL CAN DET FRA GBR GER HUN AUT ITA POR MEX AUS Points[24] 1  Alain Prost Ret 3 1 1PF (6)F 2 3 2 3 (6)† Ret 1 DSQ 2 2 1 72 (74) 2  Nigel Mansell Ret 2F Ret 4 1 1P 5 1F 1F 3 3 Ret 2 1F (5) RetP 70 (72) 3  Nelson Piquet 1F Ret 2F 7 RetP 3F RetF 3 2P 1 1F Ret 1 3 4F 2F 69 4  Ayrton Senna 2P 1P RetP 3 2 5 1P RetP Ret 2 2P Ret Ret 4P† 3P Ret 55 5  Stefan Johansson Ret Ret 4 10 3 Ret Ret Ret Ret 11† 4 3 3 6 12† 3 23 6  Keke Rosberg Ret 4 5† 2 Ret 4 Ret 4 Ret 5P† Ret 9† 4 Ret Ret Ret 22 7  Gerhard Berger 6 6 3 Ret 10 Ret Ret Ret Ret 10F Ret 7F 5 Ret 1 Ret 17 8  Jacques Laffite 3 Ret Ret 6 5 7 2 6 Ret 14 9  Michele Alboreto Ret Ret 10† Ret 4 8 4 8 Ret Ret Ret 2 Ret 5 Ret Ret 14 10  René Arnoux 4 Ret Ret 5 Ret 6 Ret 5 4 4 Ret 10 Ret 7 15† 7 14 11  Martin Brundle 5 Ret 8 Ret Ret 9 Ret 10 5 Ret 6 Ret 10 Ret 11 4 8 12  Alan Jones Ret Ret Ret Ret 11† 10 Ret Ret Ret 9 Ret 4 6 Ret Ret Ret 4 13  Johnny Dumfries 9 Ret Ret DNQ Ret Ret 7 Ret 7 Ret 5 Ret Ret 9 Ret 6 3 14  Philippe Streiff 7 Ret Ret 11 12 11 9 Ret 6 Ret 8 Ret 9 Ret Ret 5† 3 15  Patrick Tambay Ret 8 Ret Ret Ret DNS Ret Ret 8 7 5 Ret NC Ret NC 2 16  Teo Fabi 10 5 Ret Ret 7 Ret Ret Ret Ret Ret Ret RetP RetPF 8 Ret 10 2 17  Riccardo Patrese Ret Ret 6† Ret 8 Ret 6 7 Ret Ret Ret Ret Ret Ret 13† Ret 2 18  Christian Danner Ret Ret Ret DNQ Ret Ret Ret 11 Ret Ret Ret 6 8 11 9 Ret 1 19  Philippe Alliot Ret 9 Ret Ret Ret 6 8 1 —  Thierry Boutsen Ret 7 7 8 Ret Ret Ret NC NC Ret Ret Ret 7 10 7 Ret 0 —  Derek Warwick Ret 10 9 8 7 Ret DNS Ret Ret Ret Ret 0 —  Jonathan Palmer Ret Ret Ret 12 13 Ret 8 Ret 9 Ret 10 Ret Ret 12 10† 9 0 —  Huub Rothengatter Ret DNQ Ret 12 DNS Ret Ret Ret Ret 8 Ret Ret DNS Ret 0 —  Andrea de Cesaris Ret Ret Ret DNQ Ret Ret Ret Ret Ret Ret Ret Ret Ret Ret 8 Ret 0 —  Elio de Angelis 8 Ret Ret Ret 0 —  Marc Surer Ret Ret 9 9 9 0 —  Piercarlo Ghinzani Ret Ret Ret DNQ Ret Ret Ret Ret Ret Ret Ret 11 Ret Ret Ret Ret 0 —  Allen Berg Ret Ret Ret 12 Ret Ret 13 16 NC 0 —  Alessandro Nannini Ret DNS Ret DNQ Ret Ret Ret Ret Ret Ret Ret Ret Ret Ret 14 Ret 0 —  Alex Caffi NC 0 —  Ivan Capelli Ret Ret 0 —  Eddie Cheever Ret 0 Pos Driver BRA ESP SMR MON BEL CAN DET FRA GBR GER HUN AUT ITA POR MEX AUS Points,"Key Colour Result Gold Winner Silver Second place Bronze Third place Green Other points position Blue Other classified position Not classified, finished (NC) Purple Not classified, retired (Ret) Red Did not qualify (DNQ) Black Disqualified (DSQ) White Did not start (DNS) Race cancelled (C) Blank Did not practice (DNP) Excluded (EX) Did not arrive (DNA) Withdrawn (WD) Did not enter (empty cell) Annotation Meaning P Pole position F Fastest lap",,,,,,,,,,,,,,,,,
+Pos,Driver,BRA,ESP,SMR,MON,BEL,CAN,DET,FRA,GBR,GER,HUN,AUT,ITA,POR,MEX,AUS,Points[24]
+1,Alain Prost,Ret,3,1,1PF,(6)F,2,3,2,3,(6)†,Ret,1,DSQ,2,2,1,72 (74)
+2,Nigel Mansell,Ret,2F,Ret,4,1,1P,5,1F,1F,3,3,Ret,2,1F,(5),RetP,70 (72)
+3,Nelson Piquet,1F,Ret,2F,7,RetP,3F,RetF,3,2P,1,1F,Ret,1,3,4F,2F,69
+4,Ayrton Senna,2P,1P,RetP,3,2,5,1P,RetP,Ret,2,2P,Ret,Ret,4P†,3P,Ret,55
+5,Stefan Johansson,Ret,Ret,4,10,3,Ret,Ret,Ret,Ret,11†,4,3,3,6,12†,3,23
+6,Keke Rosberg,Ret,4,5†,2,Ret,4,Ret,4,Ret,5P†,Ret,9†,4,Ret,Ret,Ret,22
+7,Gerhard Berger,6,6,3,Ret,10,Ret,Ret,Ret,Ret,10F,Ret,7F,5,Ret,1,Ret,17
+8,Jacques Laffite,3,Ret,Ret,6,5,7,2,6,Ret,,,,,,,,14
+9,Michele Alboreto,Ret,Ret,10†,Ret,4,8,4,8,Ret,Ret,Ret,2,Ret,5,Ret,Ret,14
+10,René Arnoux,4,Ret,Ret,5,Ret,6,Ret,5,4,4,Ret,10,Ret,7,15†,7,14
+11,Martin Brundle,5,Ret,8,Ret,Ret,9,Ret,10,5,Ret,6,Ret,10,Ret,11,4,8
+12,Alan Jones,Ret,Ret,Ret,Ret,11†,10,Ret,Ret,Ret,9,Ret,4,6,Ret,Ret,Ret,4
+13,Johnny Dumfries,9,Ret,Ret,DNQ,Ret,Ret,7,Ret,7,Ret,5,Ret,Ret,9,Ret,6,3
+14,Philippe Streiff,7,Ret,Ret,11,12,11,9,Ret,6,Ret,8,Ret,9,Ret,Ret,5†,3
+15,Patrick Tambay,Ret,8,Ret,Ret,Ret,DNS,,Ret,Ret,8,7,5,Ret,NC,Ret,NC,2
+16,Teo Fabi,10,5,Ret,Ret,7,Ret,Ret,Ret,Ret,Ret,Ret,RetP,RetPF,8,Ret,10,2
+17,Riccardo Patrese,Ret,Ret,6†,Ret,8,Ret,6,7,Ret,Ret,Ret,Ret,Ret,Ret,13†,Ret,2
+18,Christian Danner,Ret,Ret,Ret,DNQ,Ret,Ret,Ret,11,Ret,Ret,Ret,6,8,11,9,Ret,1
+19,Philippe Alliot,,,,,,,,,,Ret,9,Ret,Ret,Ret,6,8,1
+—,Thierry Boutsen,Ret,7,7,8,Ret,Ret,Ret,NC,NC,Ret,Ret,Ret,7,10,7,Ret,0
+—,Derek Warwick,,,,,,Ret,10,9,8,7,Ret,DNS,Ret,Ret,Ret,Ret,0
+—,Jonathan Palmer,Ret,Ret,Ret,12,13,Ret,8,Ret,9,Ret,10,Ret,Ret,12,10†,9,0
+—,Huub Rothengatter,,,Ret,DNQ,Ret,12,DNS,Ret,Ret,Ret,Ret,8,Ret,Ret,DNS,Ret,0
+—,Andrea de Cesaris,Ret,Ret,Ret,DNQ,Ret,Ret,Ret,Ret,Ret,Ret,Ret,Ret,Ret,Ret,8,Ret,0
+—,Elio de Angelis,8,Ret,Ret,Ret,,,,,,,,,,,,,0
+—,Marc Surer,Ret,Ret,9,9,9,,,,,,,,,,,,0
+—,Piercarlo Ghinzani,Ret,Ret,Ret,DNQ,Ret,Ret,Ret,Ret,Ret,Ret,Ret,11,Ret,Ret,Ret,Ret,0
+—,Allen Berg,,,,,,,Ret,Ret,Ret,12,Ret,Ret,,13,16,NC,0
+—,Alessandro Nannini,Ret,DNS,Ret,DNQ,Ret,Ret,Ret,Ret,Ret,Ret,Ret,Ret,Ret,Ret,14,Ret,0
+—,Alex Caffi,,,,,,,,,,,,,NC,,,,0
+—,Ivan Capelli,,,,,,,,,,,,,Ret,Ret,,,0
+—,Eddie Cheever,,,,,,,Ret,,,,,,,,,,0
+Pos,Driver,BRA,ESP,SMR,MON,BEL,CAN,DET,FRA,GBR,GER,HUN,AUT,ITA,POR,MEX,AUS,Points
+Key,Key,,,,,,,,,,,,,,,,,
+Colour,Result,,,,,,,,,,,,,,,,,
+Gold,Winner,,,,,,,,,,,,,,,,,
+Silver,Second place,,,,,,,,,,,,,,,,,
+Bronze,Third place,,,,,,,,,,,,,,,,,
+Green,Other points position,,,,,,,,,,,,,,,,,
+Blue,Other classified position,,,,,,,,,,,,,,,,,
+Blue,"Not classified, finished (NC)",,,,,,,,,,,,,,,,,
+Purple,"Not classified, retired (Ret)",,,,,,,,,,,,,,,,,
+Red,Did not qualify (DNQ),,,,,,,,,,,,,,,,,
+Black,Disqualified (DSQ),,,,,,,,,,,,,,,,,
+White,Did not start (DNS),,,,,,,,,,,,,,,,,
+White,Race cancelled (C),,,,,,,,,,,,,,,,,
+Blank,Did not practice (DNP),,,,,,,,,,,,,,,,,
+Blank,Excluded (EX),,,,,,,,,,,,,,,,,
+Blank,Did not arrive (DNA),,,,,,,,,,,,,,,,,
+Blank,Withdrawn (WD),,,,,,,,,,,,,,,,,
+Blank,Did not enter (empty cell),,,,,,,,,,,,,,,,,
+Annotation,Meaning,,,,,,,,,,,,,,,,,
+P,Pole position,,,,,,,,,,,,,,,,,
+F,Fastest lap,,,,,,,,,,,,,,,,,

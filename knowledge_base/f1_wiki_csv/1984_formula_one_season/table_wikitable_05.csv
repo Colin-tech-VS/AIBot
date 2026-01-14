@@ -1,0 +1,35 @@
+Pos,Constructor,Car no.,BRA,RSA,BEL,SMR,FRA,MON†,CAN,DET,DAL,GBR,GER,AUT,NED,ITA,EUR,POR,Pts
+1,McLaren-TAG,7,1,2,Ret,1,7,1,3,4,Ret,Ret,1,Ret,1,Ret,1,1,143.5
+1,McLaren-TAG,8,Ret,1,Ret,Ret,1,Ret,2,Ret,Ret,1,2,1,2,1,4,2,143.5
+2,Ferrari,27,Ret,11,1,Ret,Ret,6,Ret,Ret,Ret,5,Ret,3,Ret,2,2,4,57.5
+2,Ferrari,28,Ret,Ret,3,2,4,3,5,Ret,2,6,6,7,11,Ret,5,9,57.5
+3,Lotus-Renault,11,3,7,5,3,5,5,4,2,3,4,Ret,Ret,4,Ret,Ret,5,47
+3,Lotus-Renault,12,Ret,Ret,Ret,Ret,3,Ret,6,Ret,6,Ret,4,Ret,3,Ret,Ret,Ret,47
+4,Brabham-BMW,1,Ret,Ret,9,Ret,Ret,Ret,1,1,Ret,7,Ret,2,Ret,Ret,3,6,38
+4,Brabham-BMW,2,Ret,Ret,Ret,Ret,9,Ret,Ret,3,7,Ret,Ret,4,5,Ret,Ret,10,38
+5,Renault,15,5,Ret,7,Ret,2,Ret,WD,Ret,Ret,8,5,Ret,6,Ret,Ret,7,34
+5,Renault,16,Ret,3,2,4,Ret,Ret,Ret,Ret,Ret,2,3,Ret,Ret,Ret,11,Ret,34
+5,Renault,33,,,,,,,,,,,,,,,,Ret,34
+6,Williams-Honda,5,Ret,Ret,Ret,Ret,8,8,Ret,5,4,Ret,Ret,Ret,Ret,Ret,Ret,14,25.5
+6,Williams-Honda,6,2,Ret,4,Ret,6,4,Ret,Ret,1,Ret,Ret,Ret,8,Ret,Ret,Ret,25.5
+7,Toleman-Hart,19,Ret,6,6,DNQ,Ret,2,7,Ret,Ret,3,Ret,Ret,Ret,4,Ret,3,16
+7,Toleman-Hart,20,Ret,Ret,Ret,NC,Ret,Ret,9,Ret,Ret,DNQ,,,,DNQ,Ret,11,16
+8,Alfa Romeo,22,Ret,4,Ret,Ret,Ret,Ret,Ret,Ret,Ret,12,Ret,10,Ret,3,6,8,11
+8,Alfa Romeo,23,4,Ret,Ret,7,Ret,DNQ,11,Ret,Ret,Ret,Ret,Ret,13,9,Ret,17,11
+9,Ligier-Renault,25,Ret,10,Ret,Ret,DNS,Ret,Ret,Ret,Ret,Ret,8,8,7,Ret,10,Ret,3
+9,Ligier-Renault,26,Ret,5,Ret,6,10,Ret,Ret,Ret,Ret,10,7,Ret,Ret,Ret,7,12,3
+10,Arrows-Ford,17,7,9,8,,Ret,DNQ,Ret,Ret,,,,,,,,,3
+10,Arrows-Ford,18,6,12,,5,,,,,,,,,,,,,3
+11,Arrows-BMW,17,,,,Ret,,,,,Ret,11,Ret,6,Ret,Ret,Ret,Ret,3
+11,Arrows-BMW,18,,,Ret,,11,DNQ,Ret,Ret,Ret,Ret,Ret,5,Ret,10,9,Ret,3
+12,Osella-Alfa Romeo,24,Ret,DNS,Ret,DNQ,12,7,Ret,Ret,5,9,Ret,Ret,Ret,7,Ret,Ret,2
+12,Osella-Alfa Romeo,30,,,,Ret,,,,,,Ret,Ret,Ret,12,5,Ret,16,2
+—,ATS-BMW,14,EX,Ret,Ret,Ret,Ret,Ret,8,Ret,8,Ret,Ret,DNS,Ret,DNS,,13,0
+—,ATS-BMW,31,,,,,,,,,,,,12,,6,Ret,,0
+—,Spirit-Hart,21,Ret,8,Ret,8,Ret,DNQ,NC,,Ret,NC,9,NC,Ret,8,8,15,0
+—,RAM-Hart,9,Ret,Ret,DNQ,Ret,Ret,DNQ,10,Ret,DNS,Ret,Ret,11,10,Ret,Ret,Ret,0
+—,RAM-Hart,10,8,Ret,10,9,13,DNQ,Ret,Ret,Ret,Ret,Ret,9,9,Ret,Ret,Ret,0
+—,Spirit-Ford,21,,,,,,,,DNQ,,,,,,,,,0
+DSQ,Tyrrell-Ford,3,DSQ,DSQ,DSQ,DSQ,DSQ,DNQ,DSQ,DSQ,DNQ,DSQ,DSQ,DNQ,DSQ,,,,0[b]
+DSQ,Tyrrell-Ford,4,DSQ,DSQ,DSQ,DSQ,DSQ,DSQ,DSQ,DSQ,DSQ,DSQ,DNQ,EX,DSQ,,,,0[b]
+Pos,Constructor,Car no.,BRA,RSA,BEL,SMR,FRA,MON†,CAN,DET,DAL,GBR,GER,AUT,NED,ITA,EUR,POR,Pts

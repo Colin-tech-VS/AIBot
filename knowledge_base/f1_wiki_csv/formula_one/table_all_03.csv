@@ -1,0 +1,13 @@
+Flag,Name,Meaning
+,SC Board (Safety Car),Shown in conjunction with a yellow flag to indicate that the Safety Car is on track. Drivers must hold position and slow down.
+,VSC Board (Virtual Safety Car),"Shown in conjunction with a yellow flag to indicate that the virtual safety car is in use. During this time, the drivers are given minimum sector times that they must stay above, otherwise they will be penalised.[136]"
+,Yellow,"Indicates a hazard on or near the track. Double waved yellows inform drivers that they must slow down, and be prepared to stop, as marshals are working on or near the track."
+,Green,Normal racing conditions apply. This is usually shown following a yellow flag or a safety car to indicate that the hazard has been passed. A green flag is also shown at the start of a session.
+,Yellow and red striped,"Slippery track, due to oil, water, or loose debris. It is also 'rocked' from side to side to indicate a small animal on track."
+,Blue,"Indicates that the driver must let faster cars behind them pass because they are being lapped. If a driver misses the flag three times, they can be penalised."
+,White,Indicates that there is a slow car ahead. Often waved at the end of the pit lane when a car is about to leave the pits.
+,Black and orange circle,"Car is damaged or has a mechanical problem, must return to the pit lane immediately."
+,Black and white,Warns a driver about poor sportsmanship or dangerous behaviour. Can be followed by a Black flag upon further infringement.
+,Black,Indicates that a driver is disqualified. It can be issued after a black and white flag.
+,Red,Immediately halts the race or session when the conditions become too dangerous to continue.
+,Chequered flag,"End of the practice, qualifying, or racing session."

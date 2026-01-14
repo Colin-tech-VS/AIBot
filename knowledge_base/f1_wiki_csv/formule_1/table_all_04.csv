@@ -1,0 +1,11 @@
+Couleur,Signification
+Jaune,"Indique un danger et l'interdiction de dépasser sur la zone concernée. Quand il est agité, il faut ralentir."
+Vert,Indique la fin de l'incident signalé par un drapeau jaune.
+Bleu,Indique l'obligation pour un pilote de laisser passer un concurrent quand il lui prend un tour ou que le pilote concerné par le drapeau sort des stands.
+Rouge rayé de jaune,Indique un changement d'adhérence sur une partie de la piste lié par exemple à un dépôt d'huile ou à la pluie.
+Rouge,"Indique que le Grand prix est interrompu pour cause d'accident grave et/ou de piste impraticable (à cause d'une pluie torrentielle par exemple) si la poursuite de la séance d'essais libres, des qualifications ou de la course s'avèrerait dangereuse."
+Blanc,"Conseille au pilote de ralentir en signifiant la présence d'un véhicule de type lent, comme la safety car."
+Noir à rond orange,Ordonne au pilote concerné de s'arrêter au stand pour cause de problème mécanique présentant un danger.
+Noir et blanc,"Informe le pilote concerné qu'il a un avertissement. À la prochaine incartade, il écopera d'un drapeau noir."
+Noir,Ordonne au pilote concerné de s'arrêter immédiatement car il a été exclu de la course.
+À damier noir et blanc,"Signifie la fin d'une séance d'essais libres, de qualifications, ou la fin d'un Grand Prix."

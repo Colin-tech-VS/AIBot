@@ -1,0 +1,46 @@
+0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21
+Pos. Constructor No. AUS MAL BHR SMR ESP MON EUR CAN USA FRA GBR GER HUN BEL ITA CHN JPN BRA Points 1  Ferrari 1 1PF 1P 1PF 1F 1PF RetF 1PF 1 1 1F 1F 1P 1PF 2 2 12F 1P 7 262 2 2 4 2 6 2 3 2 2F 2PF 3 3 12 2 3 1PF 1P RetF 3P 2  BAR-Honda 9 6 3 3 2P 8 2 3 3 Ret 5 4 2 5 Ret 3 2 3 Ret 119 10 9 15† 5 16† 5 Ret Ret Ret 3 Ret 11 8 6 Ret 4 6 4 6 3  Renault 7 7 5 4 5 3 1P 4 Ret 4 4 Ret 11 Ret 9P 10 11 10 10 105 8 3 7 6 4 4 Ret 5 Ret Ret 2P 10 3 3 Ret Ret 4 5 4 4  Williams-BMW 3 5 2F 13 3 Ret 4 8 DSQ DSQ 8 5 5 4 Ret 5 5 7 1F 88 4 4 Ret 7 7 6 10† Ret DSQP Ret 10 12 7 7 Ret 7 Ret 2 5 5  McLaren-Mercedes 5 8 6 Ret 12 10 Ret Ret 6 7 6 7 4 9 7 6 9 Ret 11 69 6 Ret Ret Ret 8 11 Ret Ret 5 6 7 2P RetF Ret 1F Ret 3 6 2 6  Sauber-Petronas 11 10 11 11 9 7 Ret 6 4 9† 12 6 9 8 5 8 7 8 9 34 12 Ret 8 12 10 9 5 9 Ret Ret 13 9 13 Ret 4 12 8 9 8 7  Jaguar-Cosworth 14 Ret Ret 8 13 12 Ret 7 Ret Ret 9 8 6 10 Ret 9 10 Ret Ret 10 15 11 10 14 14 Ret Ret 12 9 Ret 11 14 10 13 6 13 Ret 12 14 8  Toyota 16 12 9 10 Ret 13 6 Ret DSQ Ret 14 13 Ret Ret 10† 11 Ret 11 12 9 17 13 12 9 11 Ret 8 11 DSQ 5 15 Ret 14 11 8 Ret 14 14 13 9  Jordan-Ford 18 Ret Ret 15 Ret Ret 7 10 8 Ret 16 15 Ret 12 11 14 13 13 Ret 5 19 14 13 16 Ret Ret Ret 13 7 Ret 17 Ret 15 Ret Ret Ret 15 15 15 10  Minardi-Cosworth 20 NC 14 17 Ret Ret Ret 14 Ret Ret 18† 16 17 14 Ret Ret Ret 16 17 1 21 Ret 16 Ret 15 Ret 9 15 10 8 Ret Ret 16 15 Ret 15 16 Ret 16 Pos. Constructor No. AUS MAL BHR SMR ESP MON EUR CAN USA FRA GBR GER HUN BEL ITA CHN JPN BRA Points Sources:[52][53],"Key Colour Result Gold Winner Silver Second place Bronze Third place Green Other points position Blue Other classified position Not classified, finished (NC) Purple Not classified, retired (Ret) Red Did not qualify (DNQ) Black Disqualified (DSQ) White Did not start (DNS) Race cancelled (C) Blank Did not practice (DNP) Excluded (EX) Did not arrive (DNA) Withdrawn (WD) Did not enter (empty cell) Annotation Meaning P Pole position F Fastest lap",,,,,,,,,,,,,,,,,,,,
+Pos.,Constructor,No.,AUS,MAL,BHR,SMR,ESP,MON,EUR,CAN,USA,FRA,GBR,GER,HUN,BEL,ITA,CHN,JPN,BRA,Points
+1,Ferrari,1,1PF,1P,1PF,1F,1PF,RetF,1PF,1,1,1F,1F,1P,1PF,2,2,12F,1P,7,262
+1,Ferrari,2,2,4,2,6,2,3,2,2F,2PF,3,3,12,2,3,1PF,1P,RetF,3P,262
+2,BAR-Honda,9,6,3,3,2P,8,2,3,3,Ret,5,4,2,5,Ret,3,2,3,Ret,119
+2,BAR-Honda,10,9,15†,5,16†,5,Ret,Ret,Ret,3,Ret,11,8,6,Ret,4,6,4,6,119
+3,Renault,7,7,5,4,5,3,1P,4,Ret,4,4,Ret,11,Ret,9P,10,11,10,10,105
+3,Renault,8,3,7,6,4,4,Ret,5,Ret,Ret,2P,10,3,3,Ret,Ret,4,5,4,105
+4,Williams-BMW,3,5,2F,13,3,Ret,4,8,DSQ,DSQ,8,5,5,4,Ret,5,5,7,1F,88
+4,Williams-BMW,4,4,Ret,7,7,6,10†,Ret,DSQP,Ret,10,12,7,7,Ret,7,Ret,2,5,88
+5,McLaren-Mercedes,5,8,6,Ret,12,10,Ret,Ret,6,7,6,7,4,9,7,6,9,Ret,11,69
+5,McLaren-Mercedes,6,Ret,Ret,Ret,8,11,Ret,Ret,5,6,7,2P,RetF,Ret,1F,Ret,3,6,2,69
+6,Sauber-Petronas,11,10,11,11,9,7,Ret,6,4,9†,12,6,9,8,5,8,7,8,9,34
+6,Sauber-Petronas,12,Ret,8,12,10,9,5,9,Ret,Ret,13,9,13,Ret,4,12,8,9,8,34
+7,Jaguar-Cosworth,14,Ret,Ret,8,13,12,Ret,7,Ret,Ret,9,8,6,10,Ret,9,10,Ret,Ret,10
+7,Jaguar-Cosworth,15,11,10,14,14,Ret,Ret,12,9,Ret,11,14,10,13,6,13,Ret,12,14,10
+8,Toyota,16,12,9,10,Ret,13,6,Ret,DSQ,Ret,14,13,Ret,Ret,10†,11,Ret,11,12,9
+8,Toyota,17,13,12,9,11,Ret,8,11,DSQ,5,15,Ret,14,11,8,Ret,14,14,13,9
+9,Jordan-Ford,18,Ret,Ret,15,Ret,Ret,7,10,8,Ret,16,15,Ret,12,11,14,13,13,Ret,5
+9,Jordan-Ford,19,14,13,16,Ret,Ret,Ret,13,7,Ret,17,Ret,15,Ret,Ret,Ret,15,15,15,5
+10,Minardi-Cosworth,20,NC,14,17,Ret,Ret,Ret,14,Ret,Ret,18†,16,17,14,Ret,Ret,Ret,16,17,1
+10,Minardi-Cosworth,21,Ret,16,Ret,15,Ret,9,15,10,8,Ret,Ret,16,15,Ret,15,16,Ret,16,1
+Pos.,Constructor,No.,AUS,MAL,BHR,SMR,ESP,MON,EUR,CAN,USA,FRA,GBR,GER,HUN,BEL,ITA,CHN,JPN,BRA,Points
+Sources:[52][53],Sources:[52][53],Sources:[52][53],Sources:[52][53],Sources:[52][53],Sources:[52][53],Sources:[52][53],Sources:[52][53],Sources:[52][53],Sources:[52][53],Sources:[52][53],Sources:[52][53],Sources:[52][53],Sources:[52][53],Sources:[52][53],Sources:[52][53],Sources:[52][53],Sources:[52][53],Sources:[52][53],Sources:[52][53],Sources:[52][53],Sources:[52][53]
+Key,Key,,,,,,,,,,,,,,,,,,,,
+Colour,Result,,,,,,,,,,,,,,,,,,,,
+Gold,Winner,,,,,,,,,,,,,,,,,,,,
+Silver,Second place,,,,,,,,,,,,,,,,,,,,
+Bronze,Third place,,,,,,,,,,,,,,,,,,,,
+Green,Other points position,,,,,,,,,,,,,,,,,,,,
+Blue,Other classified position,,,,,,,,,,,,,,,,,,,,
+Blue,"Not classified, finished (NC)",,,,,,,,,,,,,,,,,,,,
+Purple,"Not classified, retired (Ret)",,,,,,,,,,,,,,,,,,,,
+Red,Did not qualify (DNQ),,,,,,,,,,,,,,,,,,,,
+Black,Disqualified (DSQ),,,,,,,,,,,,,,,,,,,,
+White,Did not start (DNS),,,,,,,,,,,,,,,,,,,,
+White,Race cancelled (C),,,,,,,,,,,,,,,,,,,,
+Blank,Did not practice (DNP),,,,,,,,,,,,,,,,,,,,
+Blank,Excluded (EX),,,,,,,,,,,,,,,,,,,,
+Blank,Did not arrive (DNA),,,,,,,,,,,,,,,,,,,,
+Blank,Withdrawn (WD),,,,,,,,,,,,,,,,,,,,
+Blank,Did not enter (empty cell),,,,,,,,,,,,,,,,,,,,
+Annotation,Meaning,,,,,,,,,,,,,,,,,,,,
+P,Pole position,,,,,,,,,,,,,,,,,,,,
+F,Fastest lap,,,,,,,,,,,,,,,,,,,,
