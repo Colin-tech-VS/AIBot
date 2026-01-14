@@ -903,18 +903,17 @@ Réponds maintenant (direct et concis):
 
 
 # Appel Ollama
-def call_ollama(prompt: str, min_response_length: int = 15) -> str:
+def call_ollama(prompt: str) -> str:
     """Appel HTTP à Ollama (daemon) avec paramètres ULTRA-RAPIDES. 
     
     Args:
         prompt: Le prompt à envoyer
-        min_response_length: Longueur minimale attendue de la réponse (défaut: 15 chars)
         
     Returns:
         str: Réponse de l'LLM ou message d'erreur
         
     Fallback subprocess si l'API échoue.
-    Valide que la réponse n'est pas trop courte ou vide.
+    Accepte tout réponse non-vide de l'LLM.
     """
     # Payload avec paramètres optimisés pour vitesse <3s
     payload = {
@@ -935,13 +934,10 @@ def call_ollama(prompt: str, min_response_length: int = 15) -> str:
         r.raise_for_status()
         response = (r.json().get("response") or "").strip()
         
-        # Validation: réponse non vide et longueur minimale
+        # Validation: réponse non vide (accepter même les réponses courtes)
         if not response:
             logger.warning("Ollama returned empty response - trying fallback")
             raise Exception("Empty response from Ollama")
-        if len(response) < min_response_length:
-            logger.warning(f"Ollama response too short ({len(response)} chars) - trying fallback")
-            raise Exception(f"Response too short ({len(response)} chars)")
         
         return response
     except httpx.TimeoutException:
@@ -964,9 +960,9 @@ def call_ollama(prompt: str, min_response_length: int = 15) -> str:
             proc = subprocess.run(cmd, **kwargs)
             if proc.returncode == 0:
                 response = proc.stdout.strip()
-                # Validation aussi pour subprocess
-                if not response or len(response) < min_response_length:
-                    logger.warning(f"Subprocess response too short ({len(response)} chars)")
+                # Validation: accepter même les réponses courtes tant qu'elles ne sont pas vides
+                if not response:
+                    logger.warning("Subprocess returned empty response")
                     return "[ERREUR] Réponse incomplète de l'IA"
                 return response
             logger.error(f"Ollama subprocess failed with code {proc.returncode}: {proc.stderr.strip()[:100]}")
