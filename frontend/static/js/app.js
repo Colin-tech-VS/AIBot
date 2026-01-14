@@ -374,9 +374,9 @@ function displayMessage(text, role = "user", opts = {save: true}) {
   if (role === "user") {
     bubble.className = `${baseClass} text-white rounded-br-none user-message-bubble`;
     const isDarkMode = document.documentElement.classList.contains("dark");
-    bubble.style.backgroundColor = isDarkMode ? "#9b473e" : "#0d0737";
+    bubble.style.backgroundColor = isDarkMode ? "#E10600" : "#E10600";
   } else {
-    const roleClass = "bg-[#EEF1F5] dark:bg-[#13263B] text-[#0B1C2D] dark:text-[#E6ECF2] rounded-bl-none";
+    const roleClass = "bg-[#EEF1F5] dark:bg-[#1B2F46] text-[#0B1C2D] dark:text-[#E6ECF2] rounded-bl-none";
     bubble.className = `${baseClass} ${roleClass}`;
   }
   
@@ -713,7 +713,7 @@ function toggleDarkMode() {
   // Mettre à jour la couleur de tous les messages utilisateurs existants
   const userBubbles = document.querySelectorAll('.user-message-bubble');
   userBubbles.forEach(bubble => {
-    bubble.style.backgroundColor = isDarkMode ? "#9b473e" : "#0d0737";
+    bubble.style.backgroundColor = "#E10600";
   });
 }
 
@@ -759,69 +759,184 @@ function initNavbar() {
 // ===== WIDGETS F1 =====
 
 /**
- * Récupère et affiche le prochain GP
+ * Récupère et affiche le prochain GP directement depuis Jolpica API
  */
 async function fetchNextRaceCountdown() {
-  console.log('[Widget GP] Début récupération...');
+  console.log('[Widget GP] Début récupération depuis Jolpica API...');
   try {
-    const response = await fetch('/next_race_countdown');
+    // Utiliser l'API Jolpica (Ergast) directement depuis le frontend
+    const response = await fetch('https://api.jolpi.ca/ergast/f1/current.json');
     if (!response.ok) throw new Error('API Error');
     const data = await response.json();
-    console.log('[Widget GP] Données reçues:', data);
-
-    if (data && data.countdown && data.race_name) {
-      document.getElementById('widget-countdown').textContent = data.countdown;
-      document.getElementById('widget-gp-name').textContent = data.race_name;
-      console.log('[Widget GP] Widgets mis à jour avec succès');
-    } else {
-      // Fallback si pas de données
-      document.getElementById('widget-countdown').textContent = '—';
-      document.getElementById('widget-gp-name').textContent = '—';
-      console.warn('[Widget GP] Données incomplètes');
+    
+    const races = data.MRData.RaceTable.Races;
+    console.log('[Widget GP] Courses trouvées:', races.length);
+    
+    if (!races || races.length === 0) {
+      throw new Error('No races found');
     }
+    
+    // Trouver le prochain GP (date future)
+    const now = new Date();
+    console.log('[Widget GP] Date actuelle:', now.toISOString());
+    let nextRace = null;
+    
+    for (let i = 0; i < races.length; i++) {
+      const race = races[i];
+      const raceDate = new Date(race.date + 'T' + (race.time || '14:00:00') + 'Z');
+      console.log(`[Widget GP] Course ${i}: ${race.raceName} - ${raceDate.toISOString()}`);
+      
+      if (raceDate > now) {
+        nextRace = race;
+        console.log('[Widget GP] ✅ Prochain GP trouvé:', race.raceName);
+        break;
+      }
+    }
+    
+    if (!nextRace) {
+      // Si pas de course future, regarder si on est en saison 2025 ou plus tard
+      console.warn('[Widget GP] Aucune course future trouvée');
+      // Utiliser le fallback local avec calendrier 2026
+      fetchNextRaceCountdownFallback();
+      return;
+    }
+    
+    // Calculer le compte à rebours
+    const raceDate = new Date(nextRace.date + 'T' + (nextRace.time || '14:00:00') + 'Z');
+    const diffMs = raceDate - now;
+    const days = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diffMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    
+    let countdownText;
+    if (days > 0) {
+      countdownText = `Dans ${days}j ${hours}h`;
+    } else if (hours > 0) {
+      const minutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+      countdownText = `Dans ${hours}h ${minutes}min`;
+    } else {
+      const minutes = Math.floor(diffMs / (1000 * 60));
+      countdownText = `Dans ${minutes}min`;
+    }
+    
+    document.getElementById('widget-countdown').textContent = countdownText;
+    document.getElementById('widget-gp-name').textContent = nextRace.raceName;
+    console.log('[Widget GP] ✅ Mis à jour:', nextRace.raceName, '-', countdownText);
+    
   } catch (error) {
-    console.error('[Widget GP] Erreur récupération:', error);
-    // Fallback data
-    document.getElementById('widget-countdown').textContent = '—';
-    document.getElementById('widget-gp-name').textContent = '—';
+    console.error('[Widget GP] ❌ Erreur API Jolpica:', error);
+    // Fallback sur données locales
+    fetchNextRaceCountdownFallback();
   }
 }
 
 /**
- * Récupère et affiche le top 3 des pilotes
+ * Fallback avec calendrier 2026 hardcodé
+ */
+function fetchNextRaceCountdownFallback() {
+  console.log('[Widget GP] Utilisation du fallback calendrier 2026...');
+  const races_2026 = [
+    { name: "GP d'Australie", date: "2026-03-06", time: "05:00:00" },
+    { name: "GP de Bahreïn", date: "2026-03-22", time: "15:00:00" },
+    { name: "GP d'Arabie Saoudite", date: "2026-04-05", time: "18:30:00" },
+    { name: "GP de Chine", date: "2026-04-19", time: "13:00:00" },
+    { name: "GP du Japon", date: "2026-04-26", time: "14:00:00" },
+    { name: "GP de Monaco", date: "2026-05-24", time: "14:00:00" },
+    { name: "GP du Canada", date: "2026-06-14", time: "19:00:00" },
+    { name: "GP de Silverstone", date: "2026-07-05", time: "14:00:00" },
+    { name: "GP de Hongrie", date: "2026-07-19", time: "15:00:00" },
+    { name: "GP de Spa-Francorchamps", date: "2026-08-02", time: "15:00:00" },
+    { name: "GP des Pays-Bas", date: "2026-08-30", time: "15:00:00" },
+    { name: "GP d'Italie", date: "2026-09-06", time: "15:00:00" },
+    { name: "GP de Singapour", date: "2026-09-27", time: "19:00:00" },
+    { name: "GP de Suzuka", date: "2026-10-04", time: "14:00:00" },
+    { name: "GP de Mexico", date: "2026-10-25", time: "20:00:00" },
+    { name: "GP de São Paulo", date: "2026-11-08", time: "17:00:00" },
+    { name: "GP d'Abu Dhabi", date: "2026-11-29", time: "13:00:00" },
+  ];
+  
+  const now = new Date();
+  let nextRace = null;
+  
+  for (const race of races_2026) {
+    const raceDate = new Date(race.date + 'T' + race.time + 'Z');
+    if (raceDate > now) {
+      nextRace = race;
+      break;
+    }
+  }
+  
+  if (!nextRace) {
+    document.getElementById('widget-countdown').textContent = '—';
+    document.getElementById('widget-gp-name').textContent = '—';
+    console.warn('[Widget GP] Aucun GP trouvé');
+    return;
+  }
+  
+  const raceDate = new Date(nextRace.date + 'T' + nextRace.time + 'Z');
+  const diffMs = raceDate - now;
+  const days = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((diffMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  
+  let countdownText = `Dans ${days}j ${hours}h`;
+  
+  document.getElementById('widget-countdown').textContent = countdownText;
+  document.getElementById('widget-gp-name').textContent = nextRace.name;
+  console.log('[Widget GP] ✅ Fallback utilisé:', nextRace.name, '-', countdownText);
+}
+
+/**
+ * Récupère et affiche le top 3 des pilotes directement depuis Jolpica API
  */
 async function fetchTop3Drivers() {
-  console.log('[Widget Drivers] Début récupération...');
+  console.log('[Widget Drivers] Début récupération depuis Jolpica API...');
   try {
-    const response = await fetch('/top_drivers?top_n=3');
+    // Utiliser l'API Jolpica (Ergast) pour le classement actuel
+    const response = await fetch('https://api.jolpi.ca/ergast/f1/current/driverStandings.json');
     if (!response.ok) throw new Error('API Error');
     const data = await response.json();
-    console.log('[Widget Drivers] Données reçues:', data);
-
-    if (data && data.drivers && data.drivers.length > 0) {
-      const medals = ['🥇', '🥈', '🥉'];
-      const topDriversList = document.getElementById('widget-top-drivers');
-      if (topDriversList) {
-        topDriversList.innerHTML = data.drivers.slice(0, 3)
-          .map((driver, i) => `<div>${medals[i]} ${driver.name} · ${driver.points}pts</div>`)
-          .join('');
-        console.log('[Widget Drivers] Widgets mis à jour avec succès');
-      }
-    } else {
-      // Fallback si pas de données
-      const topDriversList = document.getElementById('widget-top-drivers');
-      if (topDriversList) {
-        topDriversList.innerHTML = '<div>🥇 Verstappen · 468pts</div><div>🥈 Hamilton · 468pts</div><div>🥉 Leclerc · 449pts</div>';
-      }
-      console.warn('[Widget Drivers] Données incomplètes');
+    
+    const standings = data.MRData.StandingsTable.StandingsLists[0].DriverStandings;
+    console.log('[Widget Drivers] Standings trouvés:', standings.length);
+    
+    if (!standings || standings.length === 0) {
+      throw new Error('No standings found');
     }
-  } catch (error) {
-    console.error('[Widget Drivers] Erreur récupération:', error);
-    // Fallback data
+    
+    const medals = ['🥇', '🥈', '🥉'];
     const topDriversList = document.getElementById('widget-top-drivers');
+    
     if (topDriversList) {
-      topDriversList.innerHTML = '<div>🥇 Verstappen · 468pts</div><div>🥈 Hamilton · 468pts</div><div>🥉 Leclerc · 449pts</div>';
+      topDriversList.innerHTML = standings.slice(0, 3)
+        .map((driver, i) => {
+          const name = `${driver.Driver.givenName} ${driver.Driver.familyName}`;
+          const points = driver.points;
+          return `<div>${medals[i]} ${name} · ${points}pts</div>`;
+        })
+        .join('');
+      console.log('[Widget Drivers] ✅ Mis à jour avec', standings.length, 'pilotes');
     }
+    
+  } catch (error) {
+    console.error('[Widget Drivers] ❌ Erreur API Jolpica:', error);
+    // Fallback avec classement 2025 final
+    fetchTop3DriversFallback();
+  }
+}
+
+/**
+ * Fallback avec classement 2025 final
+ */
+function fetchTop3DriversFallback() {
+  console.log('[Widget Drivers] Utilisation du fallback classement 2025...');
+  const topDriversList = document.getElementById('widget-top-drivers');
+  if (topDriversList) {
+    // Classement 2025 final selon Aurupteur.com
+    topDriversList.innerHTML = `
+      <div>🥇 Lando Norris · 423pts</div>
+      <div>🥈 Max Verstappen · 421pts</div>
+      <div>🥉 Oscar Piastri · 410pts</div>
+    `;
+    console.log('[Widget Drivers] ✅ Fallback classement 2025 utilisé');
   }
 }
 

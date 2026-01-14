@@ -10,6 +10,7 @@ import warnings
 warnings.filterwarnings("ignore", message=".*Pydantic V1.*", category=UserWarning)
 
 import httpx
+import uvicorn
 from fastapi import FastAPI, Request, BackgroundTasks
 from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles

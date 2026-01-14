@@ -405,7 +405,7 @@
       <!-- Navbar collapsible -->
       <nav id="mainNavbar" class="bg-gradient-to-b from-[#ffffff] to-[#f8f9fa] dark:from-[#0C1A28] dark:to-[#050A10] flex flex-col py-3 shadow-lg overflow-hidden fixed left-0 top-0 h-full z-50">
         <!-- Header avec toggle icon -->
-        <div class="px-4 py-3 flex items-center justify-between bg-gradient-to-r from-[#ffffff] to-[#f8f9fa] dark:from-[#0C1A28] dark:to-[#050A10] relative border-b-4 border-[#E10600]">
+        <div class="px-4 py-3 flex items-center justify-between bg-[#ffffff] dark:bg-[#0C1A28] relative border-b-4 border-[#E10600]">
           <!-- F1 logo - à gauche en ouvert, centré en fermé -->
           <button class="navbar-logo text-2xl hover:scale-110 transition-transform duration-200" title="Logo">🏎️</button>
           
@@ -463,7 +463,7 @@
         </div>
 
         <!-- Bouton paramètres en bas -->
-        <div class="px-3 py-4 border-t border-[#e8e8e8] dark:border-[#1F334A] bg-gradient-to-b from-[#ffffff] to-[#f8f9fa] dark:from-[#0C1A28] dark:to-[#050A10] overflow-hidden" style="width: 15rem;">
+        <div class="px-3 py-4 border-t border-[#e8e8e8] dark:border-[#1F334A] bg-[#f8f9fa] dark:bg-[#050A10] overflow-hidden" style="width: 15rem;">
           <button id="userProfileBtn" class="flex items-center gap-2 p-2 rounded-lg hover:bg-[#f5f5f5] dark:hover:bg-[#1B2F46] transition-all duration-200 active:scale-95 text-[#E10600] dark:text-[#FF3B30] w-full text-left text-sm font-semibold min-w-0" onclick="openUserProfile()">
             <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
             <span class="whitespace-nowrap overflow-hidden" data-navbar-text>Paramètres</span>
@@ -481,11 +481,11 @@
       <div id="chatContainer" class="flex-1 flex flex-col overflow-hidden relative">
 
         <!-- Messages -->
-        <div id="chatBox" class="hidden overflow-y-auto p-6 space-y-4 flex-1 bg-gradient-to-b from-[#f8f9fa] to-[#ffffff] dark:from-[#050A10] dark:to-[#13263B]">
+        <div id="chatBox" class="hidden overflow-y-auto p-6 space-y-4 flex-1 bg-gradient-to-b from-[#f8f9fa] to-[#ffffff] dark:bg-gradient-to-b dark:from-[#0B1C2D] dark:to-[#13263B]">
         </div>
 
         <!-- Zone de saisie - Nouveau design -->
-        <div id="inputContainer" class="flex flex-col items-center justify-center h-full px-4 py-8 bg-gradient-to-b from-[#f8f9fa] via-[#ffffff] to-[#f8f9fa] dark:from-[#050A10] dark:via-[#15192b] dark:to-[#13263B] transition-all duration-300">
+        <div id="inputContainer" class="flex flex-col items-center justify-center h-full px-4 py-8 bg-gradient-to-b from-[#f8f9fa] to-[#ffffff] dark:bg-gradient-to-b dark:from-[#0B1C2D] dark:to-[#13263B] transition-all duration-300">
           <div class="content-center max-w-2xl w-full">
             <div class="main-logo">🏎️</div>
             <h1 class="main-title text-[#1a1d2e] dark:text-[#E6ECF2]">Comment puis-je vous aider ?</h1>
