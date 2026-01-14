@@ -968,9 +968,9 @@ def call_ollama(prompt: str) -> str:
             logger.error(f"Ollama subprocess failed with code {proc.returncode}: {proc.stderr.strip()[:100]}")
             return f"[ERREUR OLLAMA] {proc.stderr.strip() or 'retcode != 0'}"
         except subprocess.TimeoutExpired:
-            logger.error("Ollama subprocess timeout - forcer réponse partielle")
-            # Plutôt que de bloquer, retourner une réponse vague mais rapide
-            return "Je prépare ma réponse... 🤔 Réessaie dans 2-3 secondes!"
+            logger.error("Ollama subprocess timeout - returning error for Web Search fallback")
+            # Retourner un message d'erreur qui déclenche le fallback Web Search
+            return "[ERREUR] Ollama a dépassé le timeout du subprocess"
         except FileNotFoundError:
             logger.error(f"Ollama not found at {OLLAMA_PATH}")
             return f"[ERREUR] Ollama introuvable à {OLLAMA_PATH}"
@@ -1465,13 +1465,17 @@ def _answer_f1_question_internal(user_question: str, history=None, rag_only: Opt
                 # Chercher Wikipedia (timeout TRÈS réduit pour respecter <3s)
                 wiki_content = []
                 try:
-                    search_queries = [f"F1 {user_question}"]
-                    for search_q in search_queries[:1]:  # Limité à 1 seule requête
-                        wiki_params = {"list": "search", "srsearch": search_q, "srlimit": 1}  # 1 seul résultat
+                    # Essayer d'abord avec "F1" puis sans si aucun résultat
+                    search_queries = [f"F1 {user_question}", user_question]  # Fallback: chercher directement la question
+                    for search_q in search_queries[:2]:  # Essayer 2 variantes max
+                        wiki_params = {"list": "search", "srsearch": search_q, "srlimit": 2}  # 2 résultats pour avoir plus de chances
                         data = fetch_wikimedia_api("query", params=wiki_params)
                         if data and "query" in data and "search" in data["query"]:
-                            for r in data["query"]["search"][:1]:  # Max 1 résultat
+                            for r in data["query"]["search"][:1]:  # Max 1 résultat utilisé
                                 wiki_content.append(f"{r['title']}: {r['snippet'][:200]}")
+                                break  # Sort après avoir trouvé 1 résultat
+                        if wiki_content:  # Si on a trouvé quelque chose, pas besoin de chercher la 2ème variante
+                            break
                     wiki_data = " | ".join(wiki_content[:1])  # Max 1 snippet
                 except Exception as e:
                     logger.warning(f"Web Search échoué: {e}")
@@ -1530,6 +1534,39 @@ def _answer_f1_question_internal(user_question: str, history=None, rag_only: Opt
         )
 
         response = call_ollama(prompt)
+        
+        # Fallback Web Search pour les questions générales si Ollama échoue
+        if not response or response.startswith("[ERREUR") or "désolé" in response.lower() or "je n'ai pas" in response.lower():
+            logger.info("⚠️ LLM général incertain, tentative Web Search...")
+            wiki_content = []
+            try:
+                # Chercher la question directement (pas de préfixe F1 pour les questions générales)
+                search_queries = [user_question]
+                for search_q in search_queries:
+                    wiki_params = {"list": "search", "srsearch": search_q, "srlimit": 2}
+                    data = fetch_wikimedia_api("query", params=wiki_params)
+                    if data and "query" in data and "search" in data["query"]:
+                        for r in data["query"]["search"][:1]:
+                            wiki_content.append(f"{r['title']}: {r['snippet'][:200]}")
+                            break
+                    if wiki_content:
+                        break
+                wiki_data = " | ".join(wiki_content[:1])
+            except Exception as e:
+                logger.warning(f"Web Search général échoué: {e}")
+                wiki_data = None
+            
+            if wiki_data:
+                prompt = OptimizedPromptBuilder.build_f1_question(
+                    question=user_question,
+                    news_summary=wiki_data,  # Utiliser les résultats Wikipedia comme contexte
+                    conversation_history=history_text,
+                    long_term_context=lt_context
+                )
+                response = call_ollama(prompt)
+                sources.append("Recherche web (Wikipedia)")
+                logger.info("✅ Web Search utilisé en fallback pour question générale")
+        
         if response and not response.startswith("[ERREUR"):
             return response, sources
 
