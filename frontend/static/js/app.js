@@ -12,7 +12,6 @@ function clearAllHistory() {
     conversations = [];
     currentConversationId = null;
     saveConversations();
-    renderConversationList();
     renderNavbarHistory();
     chatBox.innerHTML = '';
     const chatContainer = document.getElementById('chatContainer');
@@ -39,8 +38,10 @@ const chatForm = document.getElementById("chatForm");
 const sendBtn = document.getElementById("sendBtn");
 const mainNavbar = document.getElementById("mainNavbar");
 const navOverlay = document.getElementById("navOverlay");
+
 // État
 let isWaiting = false;
+let isNavbarCollapsed = false;
 
 // Conversations store (frontend only, ChatGPT-like)
 let conversations = [];
@@ -95,7 +96,6 @@ function createConversation(fromHistory) {
   console.log('[createConversation] Created:', {id: conv.id, title: conv.title});
   
   saveConversations();
-  renderConversationList();
   renderNavbarHistory();
   loadConversationIntoChat(conv.id);
   
@@ -119,7 +119,6 @@ function deleteConversation(id, silent = false) {
     else currentConversationId = null;
   }
   saveConversations();
-  renderConversationList();
   renderNavbarHistory();
   if (currentConversationId) loadConversationIntoChat(currentConversationId);
   else chatBox.innerHTML = `<div class="message-info"><p class="muted">Aucune conversation. Créez-en une.</p></div>`;
@@ -137,7 +136,6 @@ function renameConversation(id) {
   if (!newTitle) return;
   conv.title = newTitle;
   saveConversations();
-  renderConversationList();
   renderNavbarHistory();
 }
 
@@ -160,7 +158,6 @@ function addMessageToCurrentConversation(role, content) {
   
   conv.messages.push({role, content, ts: Date.now()});
   saveConversations();
-  renderConversationList();
 }
 
 function loadConversationIntoChat(id) {
@@ -206,10 +203,7 @@ function setConversationTitle(title) {
   }
 }
 
-// Legacy function - no longer used (history is managed via navbar only)
-function renderConversationList() {
-  // This function is now handled by renderNavbarHistory()
-}
+
 
 // Remplir l'historique dans la navbar
 function renderNavbarHistory() {
@@ -441,7 +435,6 @@ function doDeleteConversation() {
           }
           
           saveConversations();
-          renderConversationList();
         }
       }
 
@@ -465,7 +458,6 @@ document.addEventListener("DOMContentLoaded", () => {
   
   // Always create a new conversation on page load
   createConversation();
-  renderConversationList();
   renderNavbarHistory();
   
   messageInput.focus();
@@ -476,27 +468,18 @@ document.addEventListener("DOMContentLoaded", () => {
       sendMessage(e);
     }
   });
-  
-  const closeBtn = document.getElementById("closeHistoryBtn");
-  const newConvBtn = document.getElementById("newConversationBtn");
-  
-  if (closeBtn) {
-    closeBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      console.log('[closeBtn] clicked');
-    });
-  }
-  
-  if (newConvBtn) {
-    newConvBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      console.log('[newConvBtn in panel] clicked');
-      createConversation();
-    });
-  }
 
-  // Initialiser le dark mode
+
+  // Initialiser le dark mode et les infos utilisateur
   initDarkMode();
+  initUserInfo();
+  
+  // Initialiser l'état de collapse de la navbar
+  const savedNavbarCollapsed = localStorage.getItem('navbarCollapsed') === 'true';
+  if (savedNavbarCollapsed && window.innerWidth >= 1024) {
+    mainNavbar.classList.add("collapsed");
+    isNavbarCollapsed = true;
+  }
 });
 
 chatForm.addEventListener("submit", sendMessage);
@@ -512,7 +495,65 @@ function closeNavbar() {
 
 
 
+/**
+ * Ouvre le panneau profil utilisateur
+ */
+function openUserProfile() {
+  const userProfilePanel = document.getElementById("userProfilePanel");
+  const userProfileOverlay = document.getElementById("userProfileOverlay");
+  if (!userProfilePanel) return;
+  userProfileOverlay.classList.remove("hidden");
+  userProfilePanel.classList.remove("translate-x-full");
+  userProfilePanel.setAttribute("aria-hidden", "false");
+}
 
+/**
+ * Ferme le panneau profil utilisateur
+ */
+function closeUserProfile() {
+  const userProfilePanel = document.getElementById("userProfilePanel");
+  const userProfileOverlay = document.getElementById("userProfileOverlay");
+  if (!userProfilePanel) return;
+  userProfilePanel.classList.add("translate-x-full");
+  userProfileOverlay.classList.add("hidden");
+  userProfilePanel.setAttribute("aria-hidden", "true");
+}
+
+/**
+ * Gère la connexion utilisateur
+ */
+function handleLogin() {
+  const username = prompt("Entrez votre nom d'utilisateur :");
+  if (username && username.trim()) {
+    localStorage.setItem("username", username.trim());
+    updateUserInfo(username.trim());
+  }
+}
+
+/**
+ * Met à jour l'affichage des infos utilisateur
+ */
+function updateUserInfo(username) {
+  const userInfo = document.getElementById("userInfo");
+  if (!userInfo) return;
+  userInfo.innerHTML = `
+    <p class="text-sm">Connecté en tant que <strong>${username}</strong></p>
+    <button class="w-full px-4 py-2 rounded-lg bg-[#E10600] hover:bg-[#FF3B30] text-white transition text-sm font-medium" onclick="handleLogout()">Se déconnecter</button>
+  `;
+}
+
+/**
+ * Gère la déconnexion utilisateur
+ */
+function handleLogout() {
+  localStorage.removeItem("username");
+  const userInfo = document.getElementById("userInfo");
+  if (!userInfo) return;
+  userInfo.innerHTML = `
+    <p class="text-sm text-[#8A97A8] dark:text-[#6F8197]">Non connecté</p>
+    <button class="w-full px-4 py-2 rounded-lg bg-[#E10600] hover:bg-[#FF3B30] text-white transition text-sm font-medium mt-2" onclick="handleLogin()">Se connecter</button>
+  `;
+}
 
 /**
  * Active/désactive le dark mode avec Tailwind
@@ -549,7 +590,15 @@ function initDarkMode() {
   }
 }
 
-
+/**
+ * Initialise les infos utilisateur au chargement
+ */
+function initUserInfo() {
+  const username = localStorage.getItem("username");
+  if (username) {
+    updateUserInfo(username);
+  }
+}
 
 /**
  * Initialise la navbar
@@ -686,7 +735,7 @@ async function fetchTop3Drivers() {
 document.addEventListener("DOMContentLoaded", () => {
   initNavbar();
   initDarkMode();
-  renderConversationList();
+  initUserInfo();
   renderNavbarHistory();
 
   // Charger les widgets F1
