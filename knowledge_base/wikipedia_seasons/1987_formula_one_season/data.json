@@ -1,0 +1,506 @@
+{
+  "year": 1987,
+  "timestamp": "2026-01-14T21:45:43.047143",
+  "drivers": [
+    [
+      "Entrant",
+      "Constructor",
+      "Chassis",
+      "Engine",
+      "No",
+      "Driver",
+      "Rounds"
+    ],
+    [
+      "MarlboroMcLarenTAG Turbo",
+      "McLaren-TAG",
+      "MP4/3",
+      "TAG/PorscheTTE PO1 1.5V6t",
+      "1",
+      "Alain Prost",
+      "All"
+    ],
+    [
+      "2",
+      "Stefan Johansson",
+      "All"
+    ],
+    [
+      "Data GeneralTeam Tyrrell",
+      "Tyrrell-Ford",
+      "DG016",
+      "Ford Cosworth DFZ3.5V8",
+      "3",
+      "Jonathan Palmer",
+      "All"
+    ],
+    [
+      "4",
+      "Philippe Streiff",
+      "All"
+    ],
+    [
+      "CanonWilliamsHondaTeam",
+      "Williams-Honda",
+      "FW11B",
+      "Honda RA167E1.5V6t",
+      "5",
+      "Nigel Mansell",
+      "1–15"
+    ],
+    [
+      "Riccardo Patrese",
+      "16"
+    ],
+    [
+      "6",
+      "Nelson Piquet",
+      "All"
+    ],
+    [
+      "Brabham",
+      "Brabham-BMW",
+      "BT56",
+      "BMW M12/13 1.5L4t",
+      "7",
+      "Riccardo Patrese",
+      "1–15"
+    ],
+    [
+      "Stefano Modena",
+      "16"
+    ],
+    [
+      "8",
+      "Andrea de Cesaris",
+      "All"
+    ],
+    [
+      "WestZakspeed Racing",
+      "Zakspeed",
+      "861871",
+      "Zakspeed 1500/41.5L4t",
+      "9",
+      "Martin Brundle",
+      "All"
+    ],
+    [
+      "10",
+      "Christian Danner",
+      "All"
+    ],
+    [
+      "CamelTeam LotusHonda",
+      "Lotus-Honda",
+      "99T",
+      "Honda RA166E1.5V6t",
+      "11",
+      "Satoru Nakajima",
+      "All"
+    ],
+    [
+      "12",
+      "Ayrton Senna",
+      "All"
+    ],
+    [
+      "El Charro",
+      "AGS-Ford",
+      "JH22",
+      "Ford Cosworth DFZ3.5V8",
+      "14",
+      "Pascal Fabre",
+      "1–14"
+    ],
+    [
+      "Roberto Moreno",
+      "15–16"
+    ],
+    [
+      "Leyton HouseMarch Racing Team",
+      "March-Ford",
+      "87P871",
+      "Ford Cosworth DFZ3.5V8",
+      "16",
+      "Ivan Capelli",
+      "All"
+    ],
+    [
+      "USF&GArrowsMegatron",
+      "Arrows-Megatron",
+      "A10",
+      "Megatron M12/131.5L4t",
+      "17",
+      "Derek Warwick",
+      "All"
+    ],
+    [
+      "18",
+      "Eddie Cheever",
+      "All"
+    ],
+    [
+      "Benetton Formula",
+      "Benetton-Ford",
+      "B187",
+      "Ford TEC1.5V6t",
+      "19",
+      "Teo Fabi",
+      "All"
+    ],
+    [
+      "20",
+      "Thierry Boutsen",
+      "All"
+    ],
+    [
+      "Landis & GyrOsella",
+      "Osella-Alfa Romeo",
+      "FA1IFA1G",
+      "Alfa Romeo 890T1.5V8t",
+      "21",
+      "Alex Caffi",
+      "All"
+    ],
+    [
+      "22",
+      "Gabriele Tarquini",
+      "2"
+    ],
+    [
+      "Franco Forini",
+      "11–13"
+    ],
+    [
+      "Minardi Team",
+      "Minardi-Motori Moderni",
+      "M187",
+      "Motori ModerniTipo 615-90 1.5V6t",
+      "23",
+      "Adrián Campos",
+      "All"
+    ],
+    [
+      "24",
+      "Alessandro Nannini",
+      "All"
+    ],
+    [
+      "LigierLoto",
+      "Ligier-Megatron",
+      "JS29BJS29C",
+      "Megatron M12/131.5L4t",
+      "25",
+      "René Arnoux",
+      "2–16"
+    ],
+    [
+      "26",
+      "Piercarlo Ghinzani",
+      "2–16"
+    ],
+    [
+      "Ferrari",
+      "Ferrari",
+      "F1/87",
+      "Ferrari Tipo 033D1.5V6t",
+      "27",
+      "Michele Alboreto",
+      "All"
+    ],
+    [
+      "28",
+      "Gerhard Berger",
+      "All"
+    ],
+    [
+      "Larrousse & Calmels",
+      "Lola-Ford",
+      "LC87",
+      "Ford Cosworth DFZ3.5V8",
+      "29",
+      "Yannick Dalmas",
+      "14–16"
+    ],
+    [
+      "30",
+      "Philippe Alliot",
+      "2–16"
+    ],
+    [
+      "Enzo Coloni Racing Car System",
+      "Coloni-Ford",
+      "FC187",
+      "Ford Cosworth DFZ3.5V8",
+      "32",
+      "Nicola Larini",
+      "11, 13"
+    ],
+    [
+      "Sources:[citation needed]"
+    ]
+  ],
+  "teams": [],
+  "races": [
+    [
+      "Round",
+      "Grand Prix",
+      "Circuit",
+      "Date"
+    ],
+    [
+      "1",
+      "Brazilian Grand Prix",
+      "Autodromo Jacarepaguá,Rio de Janeiro",
+      "12 April"
+    ],
+    [
+      "2",
+      "San Marino Grand Prix",
+      "Autodromo Dino Ferrari,Imola",
+      "3 May"
+    ],
+    [
+      "3",
+      "Belgian Grand Prix",
+      "Circuit de Spa-Francorchamps,Stavelot",
+      "17 May"
+    ],
+    [
+      "4",
+      "Monaco Grand Prix",
+      "Circuit de Monaco,Monte Carlo",
+      "31 May"
+    ],
+    [
+      "5",
+      "Detroit Grand Prix",
+      "Detroit Street Circuit,Detroit,Michigan",
+      "21 June"
+    ],
+    [
+      "6",
+      "French Grand Prix",
+      "Paul Ricard Circuit,Le Castellet",
+      "5 July"
+    ],
+    [
+      "7",
+      "British Grand Prix",
+      "Silverstone Circuit,Silverstone",
+      "12 July"
+    ],
+    [
+      "8",
+      "German Grand Prix",
+      "Hockenheimring,Hockenheim",
+      "26 July"
+    ],
+    [
+      "9",
+      "Hungarian Grand Prix",
+      "Hungaroring,Mogyoród",
+      "9 August"
+    ],
+    [
+      "10",
+      "Austrian Grand Prix",
+      "Österreichring,Spielberg",
+      "16 August"
+    ],
+    [
+      "11",
+      "Italian Grand Prix",
+      "Autodromo Nazionale di Monza,Monza",
+      "6 September"
+    ],
+    [
+      "12",
+      "Portuguese Grand Prix",
+      "Autódromo do Estoril,Estoril",
+      "20 September"
+    ],
+    [
+      "13",
+      "Spanish Grand Prix",
+      "Circuito de Jerez,Jerez de la Frontera",
+      "27 September"
+    ],
+    [
+      "14",
+      "Mexican Grand Prix",
+      "Autódromo Hermanos Rodríguez,Mexico City",
+      "18 October"
+    ],
+    [
+      "15",
+      "Japanese Grand Prix",
+      "Suzuka International Racing Course,Suzuka",
+      "1 November"
+    ],
+    [
+      "16",
+      "Australian Grand Prix",
+      "Adelaide Street Circuit,Adelaide",
+      "15 November"
+    ]
+  ],
+  "standings": [
+    [
+      "Round",
+      "Grand Prix",
+      "Pole position",
+      "Fastest lap",
+      "Winning driver",
+      "Winning constructor",
+      "Report"
+    ],
+    [
+      "1",
+      "Brazilian Grand Prix",
+      "Nigel Mansell",
+      "Nelson Piquet",
+      "Alain Prost",
+      "McLaren-TAG",
+      "Report"
+    ],
+    [
+      "2",
+      "San Marino Grand Prix",
+      "Ayrton Senna",
+      "Teo Fabi",
+      "Nigel Mansell",
+      "Williams-Honda",
+      "Report"
+    ],
+    [
+      "3",
+      "Belgian Grand Prix",
+      "Nigel Mansell",
+      "Alain Prost",
+      "Alain Prost",
+      "McLaren-TAG",
+      "Report"
+    ],
+    [
+      "4",
+      "Monaco Grand Prix",
+      "Nigel Mansell",
+      "Ayrton Senna",
+      "Ayrton Senna",
+      "Lotus-Honda",
+      "Report"
+    ],
+    [
+      "5",
+      "Detroit Grand Prix",
+      "Nigel Mansell",
+      "Ayrton Senna",
+      "Ayrton Senna",
+      "Lotus-Honda",
+      "Report"
+    ],
+    [
+      "6",
+      "French Grand Prix",
+      "Nigel Mansell",
+      "Nelson Piquet",
+      "Nigel Mansell",
+      "Williams-Honda",
+      "Report"
+    ],
+    [
+      "7",
+      "British Grand Prix",
+      "Nelson Piquet",
+      "Nigel Mansell",
+      "Nigel Mansell",
+      "Williams-Honda",
+      "Report"
+    ],
+    [
+      "8",
+      "German Grand Prix",
+      "Nigel Mansell",
+      "Nigel Mansell",
+      "Nelson Piquet",
+      "Williams-Honda",
+      "Report"
+    ],
+    [
+      "9",
+      "Hungarian Grand Prix",
+      "Nigel Mansell",
+      "Nelson Piquet",
+      "Nelson Piquet",
+      "Williams-Honda",
+      "Report"
+    ],
+    [
+      "10",
+      "Austrian Grand Prix",
+      "Nelson Piquet",
+      "Nigel Mansell",
+      "Nigel Mansell",
+      "Williams-Honda",
+      "Report"
+    ],
+    [
+      "11",
+      "Italian Grand Prix",
+      "Nelson Piquet",
+      "Ayrton Senna",
+      "Nelson Piquet",
+      "Williams-Honda",
+      "Report"
+    ],
+    [
+      "12",
+      "Portuguese Grand Prix",
+      "Gerhard Berger",
+      "Gerhard Berger",
+      "Alain Prost",
+      "McLaren-TAG",
+      "Report"
+    ],
+    [
+      "13",
+      "Spanish Grand Prix",
+      "Nelson Piquet",
+      "Gerhard Berger",
+      "Nigel Mansell",
+      "Williams-Honda",
+      "Report"
+    ],
+    [
+      "14",
+      "Mexican Grand Prix",
+      "Nigel Mansell",
+      "Nelson Piquet",
+      "Nigel Mansell",
+      "Williams-Honda",
+      "Report"
+    ],
+    [
+      "15",
+      "Japanese Grand Prix",
+      "Gerhard Berger",
+      "Alain Prost",
+      "Gerhard Berger",
+      "Ferrari",
+      "Report"
+    ],
+    [
+      "16",
+      "Australian Grand Prix",
+      "Gerhard Berger",
+      "Gerhard Berger",
+      "Gerhard Berger",
+      "Ferrari",
+      "Report"
+    ]
+  ],
+  "title": "1987 Formula One World Championship",
+  "description": "",
+  "sections": {}
+}

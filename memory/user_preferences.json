@@ -1,6 +1,20 @@
 {
   "langue": "français",
   "thème": "Formule 1",
-  "last_updated": "2026-01-13T01:22:19.915221",
-  "personne": "non spécifiée"
+  "last_updated": "2026-01-15T09:45:31.255481",
+  "personne": "non spécifiée",
+  "sujet_f1": "oui",
+  "context": "liste de pilotes de Formule 1",
+  "marque": "BMW",
+  "pilote_formule_1": "Ayrton Senna",
+  "saison_preferée": "2025",
+  "pilote_de_formule_1": "Jean-Pierre Prost",
+  "saison": "2025",
+  "sport": "Formule 1",
+  "domain": "Formule 1",
+  "pilote_preferent": "Lewis Hamilton",
+  "domaine": "voitures de Formule 1",
+  "sujet_préféré": "Formule 1",
+  "pilote_préféré": "Lewis Hamilton",
+  "sujet": "F1"
 }

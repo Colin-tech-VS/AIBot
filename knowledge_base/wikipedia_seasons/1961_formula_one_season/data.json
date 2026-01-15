@@ -1,0 +1,445 @@
+{
+  "year": 1961,
+  "timestamp": "2026-01-14T21:44:50.121764",
+  "drivers": [
+    [
+      "Entrant",
+      "Constructor",
+      "Chassis",
+      "Engine",
+      "Driver",
+      "Rounds"
+    ],
+    [
+      "Porsche System Engineering",
+      "Porsche",
+      "787718/2",
+      "Porsche547/3 1.5F4",
+      "Jo Bonnier",
+      "All"
+    ],
+    [
+      "Dan Gurney",
+      "All"
+    ],
+    [
+      "Hans Herrmann",
+      "1, 6"
+    ],
+    [
+      "Scuderia Colonia",
+      "Lotus-Climax",
+      "18",
+      "Climax FPF 1.5 L4",
+      "Michael May",
+      "1, 4, 6"
+    ],
+    [
+      "Wolfgang Seidel",
+      "3, 5–7"
+    ],
+    [
+      "Equipe Nationale Belge",
+      "Emeryson-Maserati",
+      "61",
+      "MaseratiTipo 6 1.5L4",
+      "Olivier Gendebien",
+      "1"
+    ],
+    [
+      "Lucien Bianchi",
+      "1"
+    ],
+    [
+      "Lotus-Climax",
+      "18",
+      "Climax FPF 1.5 L4",
+      "3"
+    ],
+    [
+      "Willy Mairesse",
+      "3"
+    ],
+    [
+      "Emeryson-Climax",
+      "61",
+      "André Pilette",
+      "7"
+    ],
+    [
+      "Camoradi International",
+      "Cooper-Climax",
+      "T53",
+      "Climax FPF 1.5 L4",
+      "Masten Gregory",
+      "1–5"
+    ],
+    [
+      "Ian Burgess",
+      "6"
+    ],
+    [
+      "Lotus-Climax",
+      "18",
+      "2–5"
+    ],
+    [
+      "Owen Racing Organisation",
+      "BRM-Climax",
+      "P48/57",
+      "Climax FPF 1.5 L4",
+      "Tony Brooks",
+      "All"
+    ],
+    [
+      "Graham Hill",
+      "All"
+    ],
+    [
+      "R.R.C. Walker Racing Team",
+      "Lotus-Climax",
+      "1818/2121",
+      "Climax FPF 1.5 L4",
+      "Stirling Moss",
+      "All"
+    ],
+    [
+      "Ferguson-Climax",
+      "P99",
+      "5"
+    ],
+    [
+      "Jack Fairman",
+      "5"
+    ],
+    [
+      "Yeoman Credit Racing Team",
+      "Cooper-Climax",
+      "T53",
+      "Climax FPF 1.5 L4",
+      "John Surtees",
+      "All"
+    ],
+    [
+      "Roy Salvadori",
+      "4–8"
+    ],
+    [
+      "Cooper Car Company",
+      "Cooper-Climax",
+      "T55T58",
+      "Climax FPF 1.5 L4Climax FWMV 1.5 V8",
+      "Jack Brabham",
+      "All"
+    ],
+    [
+      "Bruce McLaren",
+      "All"
+    ],
+    [
+      "Team Lotus",
+      "Lotus-Climax",
+      "211818/21",
+      "Climax FPF 1.5 L4",
+      "Jim Clark",
+      "All"
+    ],
+    [
+      "Innes Ireland",
+      "1, 3–8"
+    ],
+    [
+      "Trevor Taylor",
+      "2"
+    ],
+    [
+      "Willy Mairesse",
+      "4"
+    ],
+    [
+      "UDT Laystall Racing Team",
+      "Lotus-Climax",
+      "1818/21",
+      "Climax FPF 1.5 L4",
+      "Cliff Allison",
+      "1, 3"
+    ],
+    [
+      "Henry Taylor",
+      "1, 3–5, 7"
+    ],
+    [
+      "Lucien Bianchi",
+      "4–5"
+    ],
+    [
+      "Juan Manuel Bordeu",
+      "4"
+    ],
+    [
+      "Masten Gregory",
+      "7–8"
+    ],
+    [
+      "Olivier Gendebien",
+      "8"
+    ],
+    [
+      "Scuderia FerrariSpA SEFAC",
+      "Ferrari",
+      "156",
+      "Ferrari178 1.5V6Ferrari188 1.5V6",
+      "Richie Ginther",
+      "1–7"
+    ],
+    [
+      "Phil Hill",
+      "1–7"
+    ],
+    [
+      "Wolfgang von Trips",
+      "1–7"
+    ],
+    [
+      "Olivier Gendebien",
+      "3"
+    ],
+    [
+      "Willy Mairesse",
+      "6"
+    ],
+    [
+      "Ricardo Rodríguez",
+      "7"
+    ],
+    [
+      "Scuderia Serenissima",
+      "Cooper-Maserati",
+      "T51",
+      "MaseratiTipo 6 1.5L4",
+      "Maurice Trintignant",
+      "1, 3–4, 6–7"
+    ],
+    [
+      "De Tomaso-OSCA",
+      "F1",
+      "OSCA372 1.5L4",
+      "Giorgio Scarlatti",
+      "4"
+    ],
+    [
+      "De Tomaso-Alfa Romeo",
+      "Alfa RomeoGiulietta 1.5L4",
+      "Nino Vaccarella",
+      "7"
+    ],
+    [
+      "Ecurie Maarsbergen",
+      "Porsche",
+      "718",
+      "Porsche547/3 1.5F4",
+      "Carel Godin de Beaufort",
+      "2–7"
+    ],
+    [
+      "Hans Herrmann",
+      "2"
+    ],
+    [
+      "H&L Motors",
+      "Cooper-Climax",
+      "T53",
+      "Climax FPF 1.5 L4",
+      "Jackie Lewis",
+      "3–7"
+    ],
+    [
+      "Tony Marsh",
+      "Lotus-Climax",
+      "18",
+      "Climax FPF 1.5 L4",
+      "Tony Marsh",
+      "3, 5–6"
+    ],
+    [
+      "Scuderia Centro Sud",
+      "Cooper-Maserati",
+      "T53T51",
+      "MaseratiTipo 6 1.5L4",
+      "Lorenzo Bandini",
+      "3, 5–7"
+    ],
+    [
+      "Massimo Natili",
+      "5, 7"
+    ],
+    [
+      "Bernard Collomb",
+      "Cooper-Climax",
+      "T53",
+      "Climax FPF 1.5 L4",
+      "Bernard Collomb",
+      "4, 6"
+    ],
+    [
+      "Tim Parnell",
+      "Lotus-Climax",
+      "18",
+      "Climax FPF 1.5 L4",
+      "Tim Parnell",
+      "5, 7"
+    ]
+  ],
+  "teams": [],
+  "races": [
+    [
+      "Round",
+      "Grand Prix",
+      "Circuit",
+      "Date"
+    ],
+    [
+      "1",
+      "Monaco Grand Prix",
+      "Circuit de Monaco,Monte Carlo",
+      "14 May"
+    ],
+    [
+      "2",
+      "Dutch Grand Prix",
+      "Circuit Zandvoort,Zandvoort",
+      "22 May"
+    ],
+    [
+      "3",
+      "Belgian Grand Prix",
+      "Circuit de Spa-Francorchamps,Stavelot",
+      "18 June"
+    ],
+    [
+      "4",
+      "French Grand Prix",
+      "Reims-Gueux,Gueux",
+      "2 July"
+    ],
+    [
+      "5",
+      "British Grand Prix",
+      "Aintree Motor Racing Circuit,Merseyside",
+      "15 July"
+    ],
+    [
+      "6",
+      "German Grand Prix",
+      "Nürburgring,Nürburg",
+      "6 August"
+    ],
+    [
+      "7",
+      "Italian Grand Prix",
+      "Autodromo Nazionale di Monza,Monza",
+      "10 September"
+    ],
+    [
+      "8",
+      "United States Grand Prix",
+      "Watkins Glen International,New York",
+      "8 October"
+    ]
+  ],
+  "standings": [
+    [
+      "Round",
+      "Grand Prix",
+      "Pole position",
+      "Fastest lap",
+      "Winning driver",
+      "Winning constructor",
+      "Tyre",
+      "Report"
+    ],
+    [
+      "1",
+      "Monaco Grand Prix",
+      "Stirling Moss",
+      "Richie GintherStirling Moss",
+      "Stirling Moss",
+      "Lotus-Climax",
+      "D",
+      "Report"
+    ],
+    [
+      "2",
+      "Dutch Grand Prix",
+      "Phil Hill",
+      "Jim Clark",
+      "Wolfgang von Trips",
+      "Ferrari",
+      "D",
+      "Report"
+    ],
+    [
+      "3",
+      "Belgian Grand Prix",
+      "Phil Hill",
+      "Richie Ginther",
+      "Phil Hill",
+      "Ferrari",
+      "D",
+      "Report"
+    ],
+    [
+      "4",
+      "French Grand Prix",
+      "Phil Hill",
+      "Phil Hill",
+      "Giancarlo Baghetti",
+      "Ferrari",
+      "D",
+      "Report"
+    ],
+    [
+      "5",
+      "British Grand Prix",
+      "Phil Hill",
+      "Tony Brooks",
+      "Wolfgang von Trips",
+      "Ferrari",
+      "D",
+      "Report"
+    ],
+    [
+      "6",
+      "German Grand Prix",
+      "Phil Hill",
+      "Phil Hill",
+      "Stirling Moss",
+      "Lotus-Climax",
+      "D",
+      "Report"
+    ],
+    [
+      "7",
+      "Italian Grand Prix",
+      "Wolfgang von Trips",
+      "Giancarlo Baghetti",
+      "Phil Hill",
+      "Ferrari",
+      "D",
+      "Report"
+    ],
+    [
+      "8",
+      "United States Grand Prix",
+      "Jack Brabham",
+      "Jack Brabham",
+      "Innes Ireland",
+      "Lotus-Climax",
+      "D",
+      "Report"
+    ]
+  ],
+  "title": "1961 Formula One season",
+  "description": "",
+  "sections": {}
+}

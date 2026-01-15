@@ -1,0 +1,21 @@
+OK Ollama trouve : C:\Users\lebre\AppData\Local\Programs\Ollama\ollama.exe
+============================================================
+Chatbot F1 - FASTAPI
+URL: http://127.0.0.1:8001
+Modele : qwen2.5:7b
+============================================================
+Reload enabled: False
+OK Ollama trouve : C:\Users\lebre\AppData\Local\Programs\Ollama\ollama.exe
+INFO:     127.0.0.1:50851 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50851 - "GET /image/favicon.png?v=3593 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50851 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50851 - "GET /image/favicon.png?v=49993 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50854 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50854 - "GET /image/favicon.png?v=77631 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51485 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51493 - "GET /image/favicon.png?v=43901 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51493 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51493 - "GET /image/favicon.png?v=22394 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51508 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53017 - "GET /static/js/app.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:62390 - "GET / HTTP/1.1" 200 OK

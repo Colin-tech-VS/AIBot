@@ -16,9 +16,10 @@ BANNED_PATTERNS = [
     r"assistant\s*:",
     r"<\|im_start\|>",
     r"<\|im_end\|>",
-    r"répète.*prompt",
-    r"show.*prompt",
-    r"reveal.*prompt",
+    r"(répète|montre|affiche|donne|expose|révèle|cite|recite|afficher|montrer).*(prompt|instructions?|règles|system|système)",  # FIX: Bug #1 - Mots clés étendus
+    r"show.*(prompt|instructions?)",
+    r"reveal.*(prompt|instructions?)",
+    r"display.*(instructions?|prompt)",  # FIX: Nouveau
     r"previous.*instructions?",
     r"\[SYSTEM\]",
     r"\[ADMIN\]",

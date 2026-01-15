@@ -417,6 +417,10 @@ class KnowledgeBase:
                             logger.info(f"Fichier CSV (fallback) indexé: {rel} (1 document)")
             except Exception as e:
                 logger.warning(f"Échec chargement CSV {csv_file.name}: {e}")
+        
+        # 3) Charger les articles crawlés (news)
+        self.load_crawled_articles(kb_dir)
+        
         # Résumé global
         if not KB_LOG_VERBOSE:
             try:
@@ -432,6 +436,47 @@ class KnowledgeBase:
         # Sauvegarder index FAISS pour prochaine utilisation
         if self.use_faiss:
             self._save_faiss_index()
+
+    def load_crawled_articles(self, kb_dir: Path = KB_DIR):
+        """Charge les articles crawlés depuis knowledge_base/crawled/*.json"""
+        crawled_dir = kb_dir / "crawled"
+        if not crawled_dir.exists():
+            return
+        
+        total_articles = 0
+        
+        for json_file in crawled_dir.glob("news_*.json"):
+            try:
+                with open(json_file, "r", encoding="utf-8") as f:
+                    data = json.load(f)
+                
+                site_name = data.get("site", "unknown")
+                items = data.get("items", [])
+                
+                # Ajouter chaque article comme document
+                for idx, item in enumerate(items):
+                    title = item.get("title", "")
+                    url = item.get("url", "")
+                    
+                    if not title:
+                        continue
+                    
+                    # Créer contenu riche pour indexing
+                    content = f"Source: {site_name.upper()}\nTitle: {title}\nURL: {url}"
+                    doc_id = f"crawled_{site_name}_{idx}"
+                    
+                    doc = KnowledgeDoc(doc_id, title, content, "news")
+                    self.add_document(doc)
+                    total_articles += 1
+                
+                if KB_LOG_VERBOSE:
+                    logger.info(f"Articles crawlés chargés: {json_file.name} ({len(items)} items)")
+            
+            except Exception as e:
+                logger.warning(f"Erreur lecture articles crawlés {json_file.name}: {e}")
+        
+        if total_articles > 0:
+            logger.info(f"✅ {total_articles} articles crawlés indexés dans FAISS")
 
     def ensure_loaded(self, kb_dir: Path = KB_DIR):
         """Assure que la KB est chargée (chargement paresseux)."""

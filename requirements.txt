@@ -1,4 +1,4 @@
-fastapi
+﻿fastapi
 uvicorn
 jinja2
 httpx
@@ -13,3 +13,6 @@ PyJWT
 python-docx
 faiss-cpu
 transformers>=4.39.0
+schedule
+ollama
+playwright

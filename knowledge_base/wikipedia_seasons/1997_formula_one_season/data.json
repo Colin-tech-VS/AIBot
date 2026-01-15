@@ -1,0 +1,503 @@
+{
+  "year": 1997,
+  "timestamp": "2026-01-14T21:46:03.584938",
+  "drivers": [
+    [
+      "Entrant",
+      "Constructor",
+      "Chassis",
+      "Engine",
+      "Tyre",
+      "No.",
+      "Driver",
+      "Rounds"
+    ],
+    [
+      "Danka Arrows Yamaha",
+      "Arrows-Yamaha",
+      "A18",
+      "Yamaha OX11C/D3.0V10",
+      "B",
+      "1",
+      "Damon Hill",
+      "All"
+    ],
+    [
+      "2",
+      "Pedro Diniz",
+      "All"
+    ],
+    [
+      "RothmansWilliams Renault",
+      "Williams-Renault",
+      "FW19",
+      "Renault RS93.0V10Renault RS9B3.0V10",
+      "G",
+      "3",
+      "Jacques Villeneuve",
+      "All"
+    ],
+    [
+      "4",
+      "Heinz-Harald Frentzen",
+      "All"
+    ],
+    [
+      "Scuderia FerrariMarlboro",
+      "Ferrari",
+      "F310B",
+      "Ferrari Tipo 046/23.0V10",
+      "G",
+      "5",
+      "Michael Schumacher",
+      "All"
+    ],
+    [
+      "6",
+      "Eddie Irvine",
+      "All"
+    ],
+    [
+      "Mild SevenBenetton Renault",
+      "Benetton-Renault",
+      "B197",
+      "Renault RS93.0V10Renault RS9B3.0V10",
+      "G",
+      "7",
+      "Jean Alesi",
+      "All"
+    ],
+    [
+      "8",
+      "Gerhard Berger",
+      "1–6, 10–17"
+    ],
+    [
+      "Alexander Wurz",
+      "7–9"
+    ],
+    [
+      "WestMcLaren Mercedes",
+      "McLaren-Mercedes",
+      "MP4/12",
+      "Mercedes FO110E3.0V10Mercedes FO110F3.0V10",
+      "G",
+      "9",
+      "Mika Häkkinen",
+      "All"
+    ],
+    [
+      "10",
+      "David Coulthard",
+      "All"
+    ],
+    [
+      "Benson & HedgesJordan Peugeot",
+      "Jordan-Peugeot",
+      "197",
+      "Peugeot A143.0V10",
+      "G",
+      "11",
+      "Ralf Schumacher",
+      "All"
+    ],
+    [
+      "12",
+      "Giancarlo Fisichella",
+      "All"
+    ],
+    [
+      "ProstGauloises Blondes",
+      "Prost-Mugen-Honda",
+      "JS45",
+      "Mugen-Honda MF-301HB3.0V10",
+      "B",
+      "14",
+      "Olivier Panis",
+      "1–7, 15–17"
+    ],
+    [
+      "Jarno Trulli",
+      "8–14"
+    ],
+    [
+      "15",
+      "Shinji Nakano",
+      "All"
+    ],
+    [
+      "Red BullSauberPetronas",
+      "Sauber-Petronas",
+      "C16",
+      "Petronas SPE-013.0V10",
+      "G",
+      "16",
+      "Johnny Herbert",
+      "All"
+    ],
+    [
+      "17",
+      "Nicola Larini",
+      "1–5"
+    ],
+    [
+      "Gianni Morbidelli",
+      "6–7, 11–16"
+    ],
+    [
+      "Norberto Fontana",
+      "8–10, 17"
+    ],
+    [
+      "PIAATyrrell Ford",
+      "Tyrrell-Ford",
+      "025",
+      "Ford-Cosworth ED43.0V8Ford-Cosworth ED53.0V8",
+      "G",
+      "18",
+      "Jos Verstappen",
+      "All"
+    ],
+    [
+      "19",
+      "Mika Salo",
+      "All"
+    ],
+    [
+      "Minardi Team",
+      "Minardi-Hart",
+      "M197",
+      "Hart 8303.0V8",
+      "B",
+      "20",
+      "Ukyo Katayama",
+      "All"
+    ],
+    [
+      "21",
+      "Jarno Trulli",
+      "1–7"
+    ],
+    [
+      "Tarso Marques",
+      "8–17"
+    ],
+    [
+      "HSBCMalaysiaStewart Ford",
+      "Stewart-Ford",
+      "SF01",
+      "Ford VJ Zetec-R3.0V10",
+      "B",
+      "22",
+      "Rubens Barrichello",
+      "All"
+    ],
+    [
+      "23",
+      "Jan Magnussen",
+      "All"
+    ],
+    [
+      "MasterCardLola Formula One Racing Team",
+      "Lola-Ford",
+      "T97/30",
+      "Ford ECA Zetec-R3.0V8",
+      "B",
+      "24",
+      "Vincenzo Sospiri",
+      "1"
+    ],
+    [
+      "25",
+      "Ricardo Rosset",
+      "1"
+    ],
+    [
+      "Sources:[2][3][4]"
+    ]
+  ],
+  "teams": [],
+  "races": [
+    [
+      "Round",
+      "Grand Prix",
+      "Circuit",
+      "Date"
+    ],
+    [
+      "1",
+      "Australian Grand Prix",
+      "Albert Park Circuit,Melbourne",
+      "9 March"
+    ],
+    [
+      "2",
+      "Brazilian Grand Prix",
+      "Autódromo José Carlos Pace,São Paulo",
+      "30 March"
+    ],
+    [
+      "3",
+      "Argentine Grand Prix",
+      "Autódromo Oscar Alfredo Gálvez,Buenos Aires",
+      "13 April"
+    ],
+    [
+      "4",
+      "San Marino Grand Prix",
+      "Autodromo Enzo e Dino Ferrari,Imola",
+      "27 April"
+    ],
+    [
+      "5",
+      "Monaco Grand Prix",
+      "Circuit de Monaco,Monte Carlo",
+      "11 May"
+    ],
+    [
+      "6",
+      "Spanish Grand Prix",
+      "Circuit de Catalunya,Montmeló",
+      "25 May"
+    ],
+    [
+      "7",
+      "Canadian Grand Prix",
+      "Circuit Gilles Villeneuve,Montreal",
+      "15 June"
+    ],
+    [
+      "8",
+      "French Grand Prix",
+      "Circuit de Nevers Magny-Cours,Magny-Cours",
+      "29 June"
+    ],
+    [
+      "9",
+      "British Grand Prix",
+      "Silverstone Circuit,Silverstone",
+      "13 July"
+    ],
+    [
+      "10",
+      "German Grand Prix",
+      "Hockenheimring,Hockenheim",
+      "27 July"
+    ],
+    [
+      "11",
+      "Hungarian Grand Prix",
+      "Hungaroring,Mogyoród",
+      "10 August"
+    ],
+    [
+      "12",
+      "Belgian Grand Prix",
+      "Circuit de Spa-Francorchamps,Stavelot",
+      "24 August"
+    ],
+    [
+      "13",
+      "Italian Grand Prix",
+      "Autodromo Nazionale di Monza,Monza",
+      "7 September"
+    ],
+    [
+      "14",
+      "Austrian Grand Prix",
+      "A1-Ring,Spielberg",
+      "21 September"
+    ],
+    [
+      "15",
+      "Luxembourg Grand Prix",
+      "Nürburgring,Nürburg",
+      "28 September"
+    ],
+    [
+      "16",
+      "Japanese Grand Prix",
+      "Suzuka Circuit,Suzuka",
+      "12 October"
+    ],
+    [
+      "17",
+      "European Grand Prix",
+      "Circuito Permanente de Jerez,Jerez de la Frontera",
+      "26 October[a]"
+    ],
+    [
+      "Sources:[6][7]"
+    ]
+  ],
+  "standings": [
+    [
+      "Round",
+      "Grand Prix",
+      "Pole position",
+      "Fastest lap",
+      "Winning driver",
+      "Constructor",
+      "Report"
+    ],
+    [
+      "1",
+      "Australian Grand Prix",
+      "Jacques Villeneuve",
+      "Heinz-Harald Frentzen",
+      "David Coulthard",
+      "McLaren-Mercedes",
+      "Report"
+    ],
+    [
+      "2",
+      "Brazilian Grand Prix",
+      "Jacques Villeneuve",
+      "Jacques Villeneuve",
+      "Jacques Villeneuve",
+      "Williams-Renault",
+      "Report"
+    ],
+    [
+      "3",
+      "Argentine Grand Prix",
+      "Jacques Villeneuve",
+      "Gerhard Berger",
+      "Jacques Villeneuve",
+      "Williams-Renault",
+      "Report"
+    ],
+    [
+      "4",
+      "San Marino Grand Prix",
+      "Jacques Villeneuve",
+      "Heinz-Harald Frentzen",
+      "Heinz-Harald Frentzen",
+      "Williams-Renault",
+      "Report"
+    ],
+    [
+      "5",
+      "Monaco Grand Prix",
+      "Heinz-Harald Frentzen",
+      "Michael Schumacher",
+      "Michael Schumacher",
+      "Ferrari",
+      "Report"
+    ],
+    [
+      "6",
+      "Spanish Grand Prix",
+      "Jacques Villeneuve",
+      "Giancarlo Fisichella",
+      "Jacques Villeneuve",
+      "Williams-Renault",
+      "Report"
+    ],
+    [
+      "7",
+      "Canadian Grand Prix",
+      "Michael Schumacher",
+      "David Coulthard",
+      "Michael Schumacher",
+      "Ferrari",
+      "Report"
+    ],
+    [
+      "8",
+      "French Grand Prix",
+      "Michael Schumacher",
+      "Michael Schumacher",
+      "Michael Schumacher",
+      "Ferrari",
+      "Report"
+    ],
+    [
+      "9",
+      "British Grand Prix",
+      "Jacques Villeneuve",
+      "Michael Schumacher",
+      "Jacques Villeneuve",
+      "Williams-Renault",
+      "Report"
+    ],
+    [
+      "10",
+      "German Grand Prix",
+      "Gerhard Berger",
+      "Gerhard Berger",
+      "Gerhard Berger",
+      "Benetton-Renault",
+      "Report"
+    ],
+    [
+      "11",
+      "Hungarian Grand Prix",
+      "Michael Schumacher",
+      "Heinz-Harald Frentzen",
+      "Jacques Villeneuve",
+      "Williams-Renault",
+      "Report"
+    ],
+    [
+      "12",
+      "Belgian Grand Prix",
+      "Jacques Villeneuve",
+      "Jacques Villeneuve",
+      "Michael Schumacher",
+      "Ferrari",
+      "Report"
+    ],
+    [
+      "13",
+      "Italian Grand Prix",
+      "Jean Alesi",
+      "Mika Häkkinen",
+      "David Coulthard",
+      "McLaren-Mercedes",
+      "Report"
+    ],
+    [
+      "14",
+      "Austrian Grand Prix",
+      "Jacques Villeneuve",
+      "Jacques Villeneuve",
+      "Jacques Villeneuve",
+      "Williams-Renault",
+      "Report"
+    ],
+    [
+      "15",
+      "Luxembourg Grand Prix",
+      "Mika Häkkinen",
+      "Heinz-Harald Frentzen",
+      "Jacques Villeneuve",
+      "Williams-Renault",
+      "Report"
+    ],
+    [
+      "16",
+      "Japanese Grand Prix",
+      "Jacques Villeneuve",
+      "Heinz-Harald Frentzen",
+      "Michael Schumacher",
+      "Ferrari",
+      "Report"
+    ],
+    [
+      "17",
+      "European Grand Prix",
+      "Jacques Villeneuve",
+      "Heinz-Harald Frentzen",
+      "Mika Häkkinen",
+      "McLaren-Mercedes",
+      "Report"
+    ],
+    [
+      "Source:[17]"
+    ]
+  ],
+  "title": "1997 Formula One World Championship",
+  "description": "",
+  "sections": {}
+}

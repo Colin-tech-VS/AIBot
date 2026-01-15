@@ -1,0 +1,487 @@
+{
+  "year": 1971,
+  "timestamp": "2026-01-14T21:45:09.674150",
+  "drivers": [
+    [
+      "Entrant",
+      "Constructor",
+      "Chassis",
+      "Engine",
+      "Tyre",
+      "Driver",
+      "Rounds"
+    ],
+    [
+      "Gold Leaf Team LotusWorld Wide Racing",
+      "Lotus-Ford",
+      "72C72D",
+      "Ford Cosworth DFV3.0V8",
+      "F",
+      "Emerson Fittipaldi",
+      "1–3, 5–8, 10–11"
+    ],
+    [
+      "Reine Wisell",
+      "1–5, 7–8, 10–11"
+    ],
+    [
+      "South AfricaDave Charlton",
+      "4, 6"
+    ],
+    [
+      "Lotus-Pratt & Whitney",
+      "56B",
+      "Pratt & WhitneySTN76tbn",
+      "David Walker",
+      "4"
+    ],
+    [
+      "Reine Wisell",
+      "6"
+    ],
+    [
+      "Emerson Fittipaldi",
+      "9"
+    ],
+    [
+      "Scuderia Ferrari SpA SEFAC",
+      "Ferrari",
+      "312B312B2",
+      "Ferrari001 3.0F12Ferrari001/1 3.0F12",
+      "F",
+      "Jacky Ickx",
+      "All"
+    ],
+    [
+      "Clay Regazzoni",
+      "All"
+    ],
+    [
+      "Mario Andretti",
+      "1–4, 7, 10–11"
+    ],
+    [
+      "STP March Racing Team",
+      "March-Ford",
+      "711",
+      "Ford Cosworth DFV3.0V8",
+      "F",
+      "Ronnie Peterson",
+      "1–4, 6–11"
+    ],
+    [
+      "Alex Soler-Roig",
+      "1–5"
+    ],
+    [
+      "Nanni Galli",
+      "5–6, 9–11"
+    ],
+    [
+      "Niki Lauda",
+      "8"
+    ],
+    [
+      "Mike Beuttler",
+      "10"
+    ],
+    [
+      "March-Alfa Romeo",
+      "711",
+      "Alfa RomeoT33 3.0V8",
+      "Andrea de Adamich",
+      "1–2, 5–7, 9, 11"
+    ],
+    [
+      "Nanni Galli",
+      "3–4, 7–8"
+    ],
+    [
+      "Ronnie Peterson",
+      "5"
+    ],
+    [
+      "Elf Team Tyrrell",
+      "ElfTyrrell-Ford",
+      "001002003",
+      "Ford Cosworth DFV3.0V8",
+      "G",
+      "Jackie Stewart",
+      "All"
+    ],
+    [
+      "François Cevert",
+      "All"
+    ],
+    [
+      "Peter Revson",
+      "11"
+    ],
+    [
+      "Bruce McLaren Motor Racing",
+      "McLaren-Ford",
+      "M19AM14A",
+      "Ford Cosworth DFV3.0V8",
+      "G",
+      "Denny Hulme",
+      "1–8, 10–11"
+    ],
+    [
+      "Peter Gethin",
+      "1–7"
+    ],
+    [
+      "Jackie Oliver",
+      "6, 8–9"
+    ],
+    [
+      "Penske/K.F. White Racing",
+      "McLaren-Ford",
+      "M19A",
+      "Ford Cosworth DFV3.0V8",
+      "G",
+      "Mark Donohue",
+      "10–11"
+    ],
+    [
+      "David Hobbs",
+      "11"
+    ],
+    [
+      "Motor Racing Developments",
+      "Brabham-Ford",
+      "BT33BT34",
+      "Ford Cosworth DFV3.0V8",
+      "G",
+      "Graham Hill",
+      "All"
+    ],
+    [
+      "Tim Schenken",
+      "2–11"
+    ],
+    [
+      "Ecurie Evergreen",
+      "Brabham-Ford",
+      "BT33",
+      "Ford Cosworth DFV3.0V8",
+      "G",
+      "Chris Craft",
+      "10–11"
+    ],
+    [
+      "South AfricaScribanteLucky Strike Racing",
+      "Brabham-Ford",
+      "BT33",
+      "Ford Cosworth DFV3.0V8",
+      "G",
+      "South AfricaDave Charlton",
+      "1"
+    ],
+    [
+      "YardleyTeam BRM",
+      "BRM",
+      "P160P153",
+      "BRMP142 3.0V12",
+      "F",
+      "Pedro Rodríguez",
+      "1–5"
+    ],
+    [
+      "Jo Siffert",
+      "All"
+    ],
+    [
+      "Howden Ganley",
+      "All"
+    ],
+    [
+      "Vic Elford",
+      "7"
+    ],
+    [
+      "Helmut Marko",
+      "8–11"
+    ],
+    [
+      "Peter Gethin",
+      "8–11"
+    ],
+    [
+      "George Eaton",
+      "10"
+    ],
+    [
+      "John Cannon",
+      "11"
+    ],
+    [
+      "Équipe Matra Sports",
+      "Matra",
+      "MS120B",
+      "MatraMS71 3.0V12",
+      "G",
+      "Chris Amon",
+      "1–7, 9–11"
+    ],
+    [
+      "Jean-Pierre Beltoise",
+      "2–6, 10–11"
+    ],
+    [
+      "Brooke Bond Oxo - Rob WalkerAuto Motor und Sport Eifelland Team SurteesTeam Surtees",
+      "Surtees-Ford",
+      "TS9TS7",
+      "Ford Cosworth DFV3.0V8",
+      "F",
+      "John Surtees",
+      "All"
+    ],
+    [
+      "Rolf Stommelen",
+      "1–10"
+    ],
+    [
+      "Brian Redman",
+      "1"
+    ],
+    [
+      "Derek Bell",
+      "6"
+    ],
+    [
+      "Mike Hailwood",
+      "9, 11"
+    ],
+    [
+      "Sam Posey",
+      "11"
+    ],
+    [
+      "Gijs van Lennep",
+      "11"
+    ],
+    [
+      "Frank Williams Racing Cars",
+      "March-Ford",
+      "701711",
+      "Ford Cosworth DFV3.0V8",
+      "G",
+      "Henri Pescarolo",
+      "All"
+    ],
+    [
+      "Max Jean",
+      "5"
+    ],
+    [
+      "Ecurie Bonnier",
+      "McLaren-Ford",
+      "M7C",
+      "Ford Cosworth DFV3.0V8",
+      "G",
+      "Jo Bonnier",
+      "1, 7–9, 11"
+    ]
+  ],
+  "teams": [],
+  "races": [
+    [
+      "Round",
+      "Grand Prix",
+      "Circuit",
+      "Date"
+    ],
+    [
+      "1",
+      "South African Grand Prix",
+      "South AfricaKyalami Grand Prix Circuit,Midrand",
+      "6 March"
+    ],
+    [
+      "2",
+      "Spanish Grand Prix",
+      "Montjuïc circuit,Barcelona",
+      "18 April"
+    ],
+    [
+      "3",
+      "Monaco Grand Prix",
+      "Circuit de Monaco,Monte Carlo",
+      "23 May"
+    ],
+    [
+      "4",
+      "Dutch Grand Prix",
+      "Circuit Zandvoort,Zandvoort",
+      "20 June"
+    ],
+    [
+      "5",
+      "French Grand Prix",
+      "Paul Ricard Circuit,Le Castellet",
+      "4 July"
+    ],
+    [
+      "6",
+      "British Grand Prix",
+      "Silverstone Circuit,Silverstone",
+      "17 July"
+    ],
+    [
+      "7",
+      "German Grand Prix",
+      "Nürburgring,Nürburg",
+      "1 August"
+    ],
+    [
+      "8",
+      "Austrian Grand Prix",
+      "Österreichring,Spielberg",
+      "15 August"
+    ],
+    [
+      "9",
+      "Italian Grand Prix",
+      "Autodromo Nazionale di Monza,Monza",
+      "5 September"
+    ],
+    [
+      "10",
+      "Canadian Grand Prix",
+      "Mosport Park,Bowmanville",
+      "19 September"
+    ],
+    [
+      "11",
+      "United States Grand Prix",
+      "Watkins Glen International,New York",
+      "3 October"
+    ]
+  ],
+  "standings": [
+    [
+      "Round",
+      "Grand Prix",
+      "Pole position",
+      "Fastest lap",
+      "Winning driver",
+      "Winning constructor",
+      "Tyre",
+      "Report"
+    ],
+    [
+      "1",
+      "South AfricaSouth African Grand Prix",
+      "Jackie Stewart",
+      "Mario Andretti",
+      "Mario Andretti",
+      "Ferrari",
+      "F",
+      "Report"
+    ],
+    [
+      "2",
+      "Spanish Grand Prix",
+      "Jacky Ickx",
+      "Jacky Ickx",
+      "Jackie Stewart",
+      "Tyrrell-Ford",
+      "G",
+      "Report"
+    ],
+    [
+      "3",
+      "Monaco Grand Prix",
+      "Jackie Stewart",
+      "Jackie Stewart",
+      "Jackie Stewart",
+      "Tyrrell-Ford",
+      "G",
+      "Report"
+    ],
+    [
+      "4",
+      "Dutch Grand Prix",
+      "Jacky Ickx",
+      "Jacky Ickx",
+      "Jacky Ickx",
+      "Ferrari",
+      "F",
+      "Report"
+    ],
+    [
+      "5",
+      "French Grand Prix",
+      "Jackie Stewart",
+      "Jackie Stewart",
+      "Jackie Stewart",
+      "Tyrrell-Ford",
+      "G",
+      "Report"
+    ],
+    [
+      "6",
+      "British Grand Prix",
+      "Clay Regazzoni",
+      "Jackie Stewart",
+      "Jackie Stewart",
+      "Tyrrell-Ford",
+      "G",
+      "Report"
+    ],
+    [
+      "7",
+      "German Grand Prix",
+      "Jackie Stewart",
+      "François Cevert",
+      "Jackie Stewart",
+      "Tyrrell-Ford",
+      "G",
+      "Report"
+    ],
+    [
+      "8",
+      "Austrian Grand Prix",
+      "Jo Siffert",
+      "Jo Siffert",
+      "Jo Siffert",
+      "BRM",
+      "F",
+      "Report"
+    ],
+    [
+      "9",
+      "Italian Grand Prix",
+      "Chris Amon",
+      "Henri Pescarolo",
+      "Peter Gethin",
+      "BRM",
+      "F",
+      "Report"
+    ],
+    [
+      "10",
+      "Canadian Grand Prix",
+      "Jackie Stewart",
+      "Denny Hulme",
+      "Jackie Stewart",
+      "Tyrrell-Ford",
+      "G",
+      "Report"
+    ],
+    [
+      "11",
+      "United States Grand Prix",
+      "Jackie Stewart",
+      "Jacky Ickx",
+      "François Cevert",
+      "Tyrrell-Ford",
+      "G",
+      "Report"
+    ]
+  ],
+  "title": "1971 Formula One season",
+  "description": "",
+  "sections": {}
+}

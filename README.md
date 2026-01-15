@@ -1,19 +1,20 @@
 # 🏎️ F1 Chatbot - Assistant Conversationnel Formule 1
 
-Chatbot intelligent sur la Formule 1 utilisant **Ollama** (LLaMA 3.2 3B) localement, avec Knowledge Base vectorielle et routage d'intention optimisé pour des réponses rapides et précises.
+Chatbot intelligent sur la Formule 1 utilisant **Ollama Qwen 2.5 7B** localement, avec Knowledge Base vectorielle et routage d'intention optimisé pour des réponses rapides et précises.
 
 ## ✨ Fonctionnalités
 
 ### 🚀 **Performance Hybride**
 - **Routage d'intention** (regex) → Réponses <100ms pour questions simples
-- **LLM local** (Ollama) → Analyses complexes et conversations naturelles
-- **Cache intelligent** → TTL adaptatif (600-1800s selon type de données)
+- **LLM local** (Ollama Qwen 2.5 7B) → Analyses complexes et conversations naturelles
+- **Cache intelligent** → TTL adaptatif (300-1800s selon type)
+- **Temperature variable** → 0.15 FAQ / 0.35 Actualités
 
 ### 📚 **Knowledge Base Avancée**
-- **5551 vecteurs FAISS** indexés (2233 documents)
-- **Recherche sémantique** via sentence-transformers
+- **7983 chunks FAISS** indexés (2233 documents, 2010 base + 223 crawled)
+- **Recherche sémantique** → min_score: 0.45 (précision industrie)
 - **Sources** : Markdown, CSV, données Wikipedia historiques F1 (1950-2024)
-- **Chunking** : RecursiveCharacterTextSplitter (LangChain)
+- **Chunking** : RecursiveCharacterTextSplitter (600 tokens, overlap=100)
 
 ### 🔒 **Sécurité 2 Niveaux**
 - **Niveau 1** : Validation input (23 patterns regex anti-injection)
@@ -26,9 +27,11 @@ Chatbot intelligent sur la Formule 1 utilisant **Ollama** (LLaMA 3.2 3B) localem
 - **Apprentissage automatique** : Extraction LLM des faits pertinents
 
 ### 📰 **Données Temps Réel**
-- **Scrapers multi-sources** : motorsport.com, autosport.com, actuf1.com, standf1.com
+- **Crawlers optimisés** : 2x par jour (06:00 + 18:00 UTC) → articles max 12h
+- **Sources** : motorsport.com, autosport.com, actuf1.com, standf1.com
 - **API Ergast** : Résultats officiels, classements, calendrier
-- **News caching** : 10 minutes TTL
+- **Web Search proactif** : Automatique pour questions actualités
+- **News caching** : TTL variable (1800s pour news)
 
 ### 🔐 **Authentification**
 - **JWT tokens** (bcrypt + PyJWT)
@@ -45,7 +48,7 @@ Chatbot intelligent sur la Formule 1 utilisant **Ollama** (LLaMA 3.2 3B) localem
 2. **Ollama** installé ([ollama.com](https://ollama.com))
    ```bash
    # Installer Ollama puis télécharger le modèle
-   ollama pull llama3.2:3b
+   ollama pull qwen2.5:7b
    ```
 
 ### Installation Rapide
@@ -172,7 +175,7 @@ curl "http://localhost:8001/kb/search?q=DRS"
 
 ```bash
 # .env (optionnel)
-OLLAMA_MODEL=llama3.2:3b
+OLLAMA_MODEL=qwen2.5:7b
 LOG_LEVEL=INFO          # DEBUG, INFO, WARNING, ERROR
 AUTO_TRAIN=0            # Désactiver auto-learning
 ```
@@ -190,7 +193,7 @@ CACHE_TTL = {
 
 **Modèle LLM** (`backend/f1_bot.py`)
 ```python
-OLLAMA_MODEL = "llama3.2:3b"  # Changer modèle ici
+OLLAMA_MODEL = "qwen2.5:7b"  # Changer modèle ici
 ```
 
 **Sécurité Niveau 1** (`backend/input_validator.py`)
@@ -245,7 +248,7 @@ Question utilisateur
 | Composant | Technologie | Rôle |
 |-----------|-------------|------|
 | **Backend** | FastAPI + Uvicorn | API REST |
-| **LLM** | Ollama (LLaMA 3.2 3B) | Génération réponses |
+| **LLM** | Ollama Qwen 2.5 7B | Génération réponses |
 | **Embeddings** | sentence-transformers | Vectorisation sémantique |
 | **Vector DB** | FAISS (CPU) | Recherche similarité |
 | **Chunking** | LangChain RecursiveTextSplitter | Découpage documents |

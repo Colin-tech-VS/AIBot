@@ -1,0 +1,505 @@
+{
+  "year": 1993,
+  "timestamp": "2026-01-14T21:45:55.593119",
+  "drivers": [
+    [
+      "Entrant",
+      "Constructor",
+      "Chassis",
+      "Engine",
+      "No",
+      "Driver",
+      "Rounds"
+    ],
+    [
+      "CanonWilliamsRenault",
+      "Williams-Renault",
+      "FW15C",
+      "Renault RS53.5V10",
+      "0[a]",
+      "Damon Hill",
+      "All"
+    ],
+    [
+      "2",
+      "Alain Prost",
+      "All"
+    ],
+    [
+      "Tyrrell",
+      "Tyrrell-Yamaha",
+      "020C021",
+      "Yamaha OX10A3.5V10",
+      "3",
+      "Ukyo Katayama",
+      "All"
+    ],
+    [
+      "4",
+      "Andrea de Cesaris",
+      "All"
+    ],
+    [
+      "CamelBenettonFord",
+      "Benetton-Ford",
+      "B193B193B",
+      "Ford HBA73.5V8Ford HBA83.5V8",
+      "5",
+      "Michael Schumacher",
+      "All"
+    ],
+    [
+      "6",
+      "Riccardo Patrese",
+      "All"
+    ],
+    [
+      "MarlboroMcLaren",
+      "McLaren-Ford",
+      "MP4/8",
+      "Ford HBE73.5V8Ford HBA83.5V8",
+      "7",
+      "Michael Andretti",
+      "1–13"
+    ],
+    [
+      "Mika Häkkinen",
+      "14–16"
+    ],
+    [
+      "8",
+      "Ayrton Senna",
+      "All"
+    ],
+    [
+      "FootworkMugen Honda",
+      "Footwork-Mugen-Honda",
+      "FA13BFA14",
+      "Mugen-Honda MF-351HB3.5V10",
+      "9",
+      "Derek Warwick",
+      "All"
+    ],
+    [
+      "10",
+      "Aguri Suzuki",
+      "All"
+    ],
+    [
+      "TeamCastrolLotus",
+      "Lotus-Ford",
+      "107B",
+      "Ford HBD63.5V8",
+      "11",
+      "Alessandro Zanardi",
+      "1–12"
+    ],
+    [
+      "Pedro Lamy",
+      "13–16"
+    ],
+    [
+      "12",
+      "Johnny Herbert",
+      "All"
+    ],
+    [
+      "SasolJordan",
+      "Jordan-Hart",
+      "193",
+      "Hart 10353.5V10",
+      "14",
+      "Rubens Barrichello",
+      "All"
+    ],
+    [
+      "15",
+      "Ivan Capelli",
+      "1–2"
+    ],
+    [
+      "Thierry Boutsen",
+      "3–12"
+    ],
+    [
+      "Marco Apicella",
+      "13"
+    ],
+    [
+      "Emanuele Naspetti",
+      "14"
+    ],
+    [
+      "Eddie Irvine",
+      "15–16"
+    ],
+    [
+      "Larrousse F1",
+      "Larrousse-Lamborghini",
+      "LH93",
+      "Lamborghini LE35123.5V12",
+      "19",
+      "Philippe Alliot",
+      "1–14"
+    ],
+    [
+      "Toshio Suzuki",
+      "15–16"
+    ],
+    [
+      "20",
+      "Érik Comas",
+      "All"
+    ],
+    [
+      "LolaBMS Scuderia Italia",
+      "Lola-Ferrari",
+      "T93/30",
+      "Ferrari Tipo 0383.5V12",
+      "21",
+      "Michele Alboreto",
+      "1–14"
+    ],
+    [
+      "22",
+      "Luca Badoer",
+      "1–14"
+    ],
+    [
+      "Minardi Team",
+      "Minardi-Ford",
+      "M193",
+      "Ford HBD63.5V8",
+      "23",
+      "Christian Fittipaldi",
+      "1–14"
+    ],
+    [
+      "Jean-Marc Gounon",
+      "15–16"
+    ],
+    [
+      "24",
+      "Fabrizio Barbazza",
+      "1–8"
+    ],
+    [
+      "Pierluigi Martini",
+      "9–16"
+    ],
+    [
+      "LigierGitanes Blondes",
+      "Ligier-Renault",
+      "JS39",
+      "Renault RS53.5V10",
+      "25",
+      "Martin Brundle",
+      "All"
+    ],
+    [
+      "26",
+      "Mark Blundell",
+      "All"
+    ],
+    [
+      "Scuderia Ferrari",
+      "Ferrari",
+      "F93A",
+      "Ferrari Tipo 0413.5V12",
+      "27",
+      "Jean Alesi",
+      "All"
+    ],
+    [
+      "28",
+      "Gerhard Berger",
+      "All"
+    ],
+    [
+      "Team Sauber Formula 1",
+      "Sauber",
+      "C12",
+      "Ilmor 2175A3.5V10Ilmor 2175B3.5V10",
+      "29",
+      "Karl Wendlinger",
+      "All"
+    ],
+    [
+      "30",
+      "JJ Lehto",
+      "All"
+    ],
+    [
+      "Sources:[citation needed]"
+    ]
+  ],
+  "teams": [],
+  "races": [
+    [
+      "Round",
+      "Grand Prix",
+      "Circuit",
+      "Date"
+    ],
+    [
+      "1",
+      "South African Grand Prix",
+      "Kyalami Grand Prix Circuit,Midrand",
+      "14 March"
+    ],
+    [
+      "2",
+      "Brazilian Grand Prix",
+      "Autódromo José Carlos Pace,São Paulo",
+      "28 March"
+    ],
+    [
+      "3",
+      "European Grand Prix",
+      "Donington Park,Castle Donington",
+      "11 April"
+    ],
+    [
+      "4",
+      "San Marino Grand Prix",
+      "Autodromo Internazionale Enzo e Dino Ferrari,Imola",
+      "25 April"
+    ],
+    [
+      "5",
+      "Spanish Grand Prix",
+      "Circuit de Barcelona-Catalunya,Montmeló",
+      "9 May"
+    ],
+    [
+      "6",
+      "Monaco Grand Prix",
+      "Circuit de Monaco,Monte Carlo",
+      "23 May"
+    ],
+    [
+      "7",
+      "Canadian Grand Prix",
+      "Circuit Gilles Villeneuve,Montréal",
+      "13 June"
+    ],
+    [
+      "8",
+      "French Grand Prix",
+      "Circuit de Nevers Magny-Cours,Magny-Cours",
+      "4 July"
+    ],
+    [
+      "9",
+      "British Grand Prix",
+      "Silverstone Circuit,Silverstone",
+      "11 July"
+    ],
+    [
+      "10",
+      "German Grand Prix",
+      "Hockenheimring,Hockenheim",
+      "25 July"
+    ],
+    [
+      "11",
+      "Hungarian Grand Prix",
+      "Hungaroring,Mogyoród",
+      "15 August"
+    ],
+    [
+      "12",
+      "Belgian Grand Prix",
+      "Circuit de Spa-Francorchamps,Stavelot",
+      "29 August"
+    ],
+    [
+      "13",
+      "Italian Grand Prix",
+      "Autodromo Nazionale di Monza,Monza",
+      "12 September"
+    ],
+    [
+      "14",
+      "Portuguese Grand Prix",
+      "Autódromo do Estoril,Estoril",
+      "26 September"
+    ],
+    [
+      "15",
+      "Japanese Grand Prix",
+      "Suzuka International Racing Course,Suzuka",
+      "24 October"
+    ],
+    [
+      "16",
+      "Australian Grand Prix",
+      "Adelaide Street Circuit,Adelaide",
+      "7 November"
+    ],
+    [
+      "Sources:[2][3]"
+    ]
+  ],
+  "standings": [
+    [
+      "Round",
+      "Grand Prix",
+      "Pole position",
+      "Fastest lap",
+      "Winning driver",
+      "Winning constructor",
+      "Report"
+    ],
+    [
+      "1",
+      "South African Grand Prix",
+      "Alain Prost",
+      "Alain Prost",
+      "Alain Prost",
+      "Williams-Renault",
+      "Report"
+    ],
+    [
+      "2",
+      "Brazilian Grand Prix",
+      "Alain Prost",
+      "Michael Schumacher",
+      "Ayrton Senna",
+      "McLaren-Ford",
+      "Report"
+    ],
+    [
+      "3",
+      "European Grand Prix",
+      "Alain Prost",
+      "Ayrton Senna",
+      "Ayrton Senna",
+      "McLaren-Ford",
+      "Report"
+    ],
+    [
+      "4",
+      "San Marino Grand Prix",
+      "Alain Prost",
+      "Alain Prost",
+      "Alain Prost",
+      "Williams-Renault",
+      "Report"
+    ],
+    [
+      "5",
+      "Spanish Grand Prix",
+      "Alain Prost",
+      "Michael Schumacher",
+      "Alain Prost",
+      "Williams-Renault",
+      "Report"
+    ],
+    [
+      "6",
+      "Monaco Grand Prix",
+      "Alain Prost",
+      "Alain Prost",
+      "Ayrton Senna",
+      "McLaren-Ford",
+      "Report"
+    ],
+    [
+      "7",
+      "Canadian Grand Prix",
+      "Alain Prost",
+      "Michael Schumacher",
+      "Alain Prost",
+      "Williams-Renault",
+      "Report"
+    ],
+    [
+      "8",
+      "French Grand Prix",
+      "Damon Hill",
+      "Michael Schumacher",
+      "Alain Prost",
+      "Williams-Renault",
+      "Report"
+    ],
+    [
+      "9",
+      "British Grand Prix",
+      "Alain Prost",
+      "Damon Hill",
+      "Alain Prost",
+      "Williams-Renault",
+      "Report"
+    ],
+    [
+      "10",
+      "German Grand Prix",
+      "Alain Prost",
+      "Michael Schumacher",
+      "Alain Prost",
+      "Williams-Renault",
+      "Report"
+    ],
+    [
+      "11",
+      "Hungarian Grand Prix",
+      "Alain Prost",
+      "Alain Prost",
+      "Damon Hill",
+      "Williams-Renault",
+      "Report"
+    ],
+    [
+      "12",
+      "Belgian Grand Prix",
+      "Alain Prost",
+      "Alain Prost",
+      "Damon Hill",
+      "Williams-Renault",
+      "Report"
+    ],
+    [
+      "13",
+      "Italian Grand Prix",
+      "Alain Prost",
+      "Damon Hill",
+      "Damon Hill",
+      "Williams-Renault",
+      "Report"
+    ],
+    [
+      "14",
+      "Portuguese Grand Prix",
+      "Damon Hill",
+      "Damon Hill",
+      "Michael Schumacher",
+      "Benetton-Ford",
+      "Report"
+    ],
+    [
+      "15",
+      "Japanese Grand Prix",
+      "Alain Prost",
+      "Alain Prost",
+      "Ayrton Senna",
+      "McLaren-Ford",
+      "Report"
+    ],
+    [
+      "16",
+      "Australian Grand Prix",
+      "Ayrton Senna",
+      "Damon Hill",
+      "Ayrton Senna",
+      "McLaren-Ford",
+      "Report"
+    ],
+    [
+      "Source:[12]"
+    ]
+  ],
+  "title": "1993 Formula One World Championship",
+  "description": "",
+  "sections": {}
+}

@@ -1,0 +1,9 @@
+[2026-01-15 08:29:19] [INFO] [__main__:524] auto_train désactivé (AUTO_TRAIN=0).
+[2026-01-15 08:29:19] [INFO] [__main__:670] \u2705 MondayScheduler démarré (refresh widgets le lundi)
+INFO:     Started server process [23092]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8001 (Press CTRL+C to quit)
+[2026-01-15 08:31:24] [INFO] [backend.knowledge_base:126] Chargement modèle embeddings: sentence-transformers/all-MiniLM-L6-v2...
+[2026-01-15 08:31:28] [INFO] [backend.knowledge_base:196] \u2705 FAISS index validé: 7983 vecteurs, 2233 documents, dim=384
+[2026-01-15 08:31:28] [INFO] [backend.knowledge_base:136] FAISS index chargé: 7983 vecteurs

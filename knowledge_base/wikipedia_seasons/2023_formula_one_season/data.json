@@ -1,0 +1,332 @@
+{
+  "year": 2023,
+  "timestamp": "2026-01-14T21:47:06.998680",
+  "drivers": [
+    [
+      "Entrant",
+      "Constructor",
+      "Chassis",
+      "Power unit",
+      "Race drivers"
+    ],
+    [
+      "No.",
+      "Driver name",
+      "Rounds"
+    ],
+    [
+      "Alfa Romeo F1 TeamStake[a]",
+      "Alfa Romeo-Ferrari",
+      "C43[11]",
+      "Ferrari 066/10",
+      "2477",
+      "Zhou GuanyuValtteri Bottas",
+      "AllAll"
+    ],
+    [
+      "Scuderia AlphaTauri",
+      "AlphaTauri-Honda RBPT",
+      "AT04[12]",
+      "Honda RBPTH001",
+      "2134022",
+      "Nyck de VriesDaniel RicciardoLiam LawsonYuki Tsunoda",
+      "1–1011–13, 18–22[b]13–17All"
+    ],
+    [
+      "BWTAlpine F1 Team",
+      "Alpine-Renault",
+      "A523[14]",
+      "Renault E-Tech RE23",
+      "1031",
+      "Pierre GaslyEsteban Ocon",
+      "AllAll"
+    ],
+    [
+      "Aston MartinAramcoCognizantF1 Team",
+      "Aston Martin Aramco-Mercedes",
+      "AMR23[15]",
+      "Mercedes-AMG F1 M14",
+      "1418",
+      "Fernando AlonsoLance Stroll",
+      "AllAll[c]"
+    ],
+    [
+      "Scuderia Ferrari",
+      "Ferrari",
+      "SF-23[17]",
+      "Ferrari 066/10[18]",
+      "1655",
+      "Charles LeclercCarlos Sainz Jr.",
+      "AllAll"
+    ],
+    [
+      "MoneyGramHaas F1 Team",
+      "Haas-Ferrari",
+      "VF-23[19]",
+      "Ferrari 066/10",
+      "2027",
+      "Kevin MagnussenNico Hülkenberg",
+      "AllAll"
+    ],
+    [
+      "McLaren Formula 1 Team",
+      "McLaren-Mercedes",
+      "MCL60[20]",
+      "Mercedes-AMG F1 M14[21]",
+      "481",
+      "Lando NorrisOscar Piastri",
+      "AllAll"
+    ],
+    [
+      "Mercedes-AMGPetronasF1 Team",
+      "Mercedes",
+      "F1 W14[22]",
+      "Mercedes-AMG F1 M14",
+      "4463",
+      "Lewis HamiltonGeorge Russell",
+      "AllAll"
+    ],
+    [
+      "OracleRed Bull Racing",
+      "Red Bull Racing-Honda RBPT",
+      "RB19[23]",
+      "Honda RBPTH001[24]",
+      "111",
+      "Max VerstappenSergio Pérez",
+      "AllAll"
+    ],
+    [
+      "Williams Racing",
+      "Williams-Mercedes",
+      "FW45[25]",
+      "Mercedes-AMG F1 M14[26]",
+      "223",
+      "Logan SargeantAlexander Albon",
+      "AllAll"
+    ],
+    [
+      "Sources:[3][4][27]"
+    ]
+  ],
+  "teams": [],
+  "races": [
+    [
+      "Constructor",
+      "Practice drivers"
+    ],
+    [
+      "No.",
+      "Driver name",
+      "Rounds"
+    ],
+    [
+      "Alfa Romeo-Ferrari",
+      "98",
+      "Théo Pourchaire",
+      "19, 22"
+    ],
+    [
+      "AlphaTauri-Honda RBPT",
+      "41",
+      "Isack Hadjar",
+      "19"
+    ],
+    [
+      "Alpine-Renault",
+      "61",
+      "Jack Doohan",
+      "19, 22"
+    ],
+    [
+      "Aston MartinAramco-Mercedes",
+      "34",
+      "Felipe Drugovich",
+      "14, 22"
+    ],
+    [
+      "Ferrari",
+      "39",
+      "Robert Shwartzman",
+      "13, 22"
+    ],
+    [
+      "Haas-Ferrari",
+      "50",
+      "Oliver Bearman",
+      "19, 22"
+    ],
+    [
+      "McLaren-Mercedes",
+      "29",
+      "Patricio O'Ward",
+      "22"
+    ],
+    [
+      "Mercedes",
+      "42",
+      "Frederik Vesti",
+      "19, 22"
+    ],
+    [
+      "Red Bull Racing-Honda RBPT",
+      "3637",
+      "Jake DennisIsack Hadjar",
+      "2222"
+    ],
+    [
+      "Williams-Mercedes",
+      "45",
+      "Zak O'Sullivan",
+      "22"
+    ],
+    [
+      "Source:[4]"
+    ]
+  ],
+  "standings": [
+    [
+      "Round",
+      "Grand Prix",
+      "Circuit",
+      "Race date"
+    ],
+    [
+      "1",
+      "Bahrain Grand Prix",
+      "Bahrain International Circuit,Sakhir",
+      "5 March"
+    ],
+    [
+      "2",
+      "Saudi Arabian Grand Prix",
+      "Jeddah Corniche Circuit,Jeddah",
+      "19 March"
+    ],
+    [
+      "3",
+      "Australian Grand Prix",
+      "Albert Park Circuit,Melbourne",
+      "2 April"
+    ],
+    [
+      "4",
+      "Azerbaijan Grand Prix",
+      "Baku City Circuit,Baku",
+      "30 April"
+    ],
+    [
+      "5",
+      "Miami Grand Prix",
+      "Miami International Autodrome,Miami Gardens, Florida",
+      "7 May"
+    ],
+    [
+      "6",
+      "Monaco Grand Prix",
+      "Circuit de Monaco,Monaco",
+      "28 May"
+    ],
+    [
+      "7",
+      "Spanish Grand Prix",
+      "Circuit de Barcelona-Catalunya,Montmeló",
+      "4 June"
+    ],
+    [
+      "8",
+      "Canadian Grand Prix",
+      "Circuit Gilles Villeneuve,Montreal",
+      "18 June"
+    ],
+    [
+      "9",
+      "Austrian Grand Prix",
+      "Red Bull Ring,Spielberg",
+      "2 July"
+    ],
+    [
+      "10",
+      "British Grand Prix",
+      "Silverstone Circuit,Silverstone",
+      "9 July"
+    ],
+    [
+      "11",
+      "Hungarian Grand Prix",
+      "Hungaroring,Mogyoród",
+      "23 July"
+    ],
+    [
+      "12",
+      "Belgian Grand Prix",
+      "Circuit de Spa-Francorchamps,Stavelot",
+      "30 July"
+    ],
+    [
+      "13",
+      "Dutch Grand Prix",
+      "Circuit Zandvoort,Zandvoort",
+      "27 August"
+    ],
+    [
+      "14",
+      "Italian Grand Prix",
+      "Monza Circuit,Monza",
+      "3 September"
+    ],
+    [
+      "15",
+      "Singapore Grand Prix",
+      "Marina Bay Street Circuit,Singapore",
+      "17 September"
+    ],
+    [
+      "16",
+      "Japanese Grand Prix",
+      "Suzuka International Racing Course,Suzuka",
+      "24 September"
+    ],
+    [
+      "17",
+      "Qatar Grand Prix",
+      "Lusail International Circuit,Lusail",
+      "8 October"
+    ],
+    [
+      "18",
+      "United States Grand Prix",
+      "Circuit of the Americas,Austin, Texas",
+      "22 October"
+    ],
+    [
+      "19",
+      "Mexico City Grand Prix",
+      "Autódromo Hermanos Rodríguez,Mexico City",
+      "29 October"
+    ],
+    [
+      "20",
+      "São Paulo Grand Prix",
+      "Interlagos Circuit,São Paulo",
+      "5 November"
+    ],
+    [
+      "21",
+      "Las Vegas Grand Prix",
+      "Las Vegas Strip Circuit,Paradise, Nevada",
+      "18 November[d]"
+    ],
+    [
+      "22",
+      "Abu Dhabi Grand Prix",
+      "Yas Marina Circuit,Abu Dhabi",
+      "26 November"
+    ],
+    [
+      "Sources:[53][54]"
+    ]
+  ],
+  "title": "2023 Formula One World Championship",
+  "description": "",
+  "sections": {}
+}

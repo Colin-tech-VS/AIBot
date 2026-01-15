@@ -1,0 +1,484 @@
+{
+  "year": 1959,
+  "timestamp": "2026-01-14T21:44:46.180068",
+  "drivers": [
+    [
+      "Entrant",
+      "Constructor",
+      "Chassis",
+      "Engine",
+      "Tyre",
+      "Driver",
+      "Rounds"
+    ],
+    [
+      "Dr Ing F. Porsche KG",
+      "Behra-Porsche-Porsche",
+      "RSK",
+      "Porsche547/3 1.5F4",
+      "D",
+      "Maria Teresa de Filippis",
+      "1"
+    ],
+    [
+      "Porsche",
+      "718 RSK718/2",
+      "Wolfgang von Trips",
+      "1, 6"
+    ],
+    [
+      "Equipe Nationale Belge",
+      "Cooper-Climax",
+      "T51",
+      "Climax FPF 1.5 L4",
+      "D",
+      "Lucien Bianchi",
+      "1"
+    ],
+    [
+      "Alain de Changy",
+      "1"
+    ],
+    [
+      "Jean Lucienbonnet",
+      "Cooper-Climax",
+      "T45",
+      "Climax FPF 1.5 L4",
+      "D",
+      "Jean Lucienbonnet",
+      "1"
+    ],
+    [
+      "Owen Racing Organisation",
+      "BRM",
+      "P25",
+      "BRMP25 2.5L4",
+      "D",
+      "Harry Schell",
+      "1, 3–8"
+    ],
+    [
+      "Jo Bonnier",
+      "1, 3–8"
+    ],
+    [
+      "Ron Flockhart",
+      "1, 4–5, 7–8"
+    ],
+    [
+      "Cooper Car Company",
+      "Cooper-Climax",
+      "T51",
+      "Climax FPF 2.5 L4",
+      "D",
+      "Bruce McLaren",
+      "1, 4–9"
+    ],
+    [
+      "Jack Brabham",
+      "1, 3–9"
+    ],
+    [
+      "Masten Gregory",
+      "1, 3–7"
+    ],
+    [
+      "Giorgio Scarlatti",
+      "8"
+    ],
+    [
+      "R.R.C. Walker Racing Team",
+      "Cooper-Climax",
+      "T51",
+      "Climax FPF 2.5 L4",
+      "D",
+      "Stirling Moss",
+      "1, 3, 6–9"
+    ],
+    [
+      "Maurice Trintignant",
+      "1, 3–9"
+    ],
+    [
+      "British Racing Partnership",
+      "BRM",
+      "P25",
+      "BRMP25 2.5L4",
+      "D",
+      "Stirling Moss",
+      "4–5"
+    ],
+    [
+      "Hans Herrmann",
+      "6"
+    ],
+    [
+      "Cooper-Climax",
+      "T51",
+      "Climax FPF 1.5 L4",
+      "Ivor Bueb",
+      "1"
+    ],
+    [
+      "Cooper-Borgward",
+      "Borgward1500 RS 1.5L4",
+      "5"
+    ],
+    [
+      "Chris Bristow",
+      "5"
+    ],
+    [
+      "High Efficiency Motors",
+      "Cooper-Maserati",
+      "T45",
+      "Maserati250S 2.5L4",
+      "D",
+      "Roy Salvadori",
+      "1, 4, 9"
+    ],
+    [
+      "Jack Fairman",
+      "8"
+    ],
+    [
+      "Cooper-Climax",
+      "T45",
+      "Climax FPF 2.5 L4",
+      "5"
+    ],
+    [
+      "Team Lotus",
+      "Lotus-Climax",
+      "16",
+      "Climax FPF 2.5 L4",
+      "D",
+      "Graham Hill",
+      "1, 3–8"
+    ],
+    [
+      "Pete Lovely",
+      "1"
+    ],
+    [
+      "Innes Ireland",
+      "3–4, 6–9"
+    ],
+    [
+      "Alan Stacey",
+      "5, 9"
+    ],
+    [
+      "John Fisher",
+      "Lotus-Climax",
+      "16",
+      "Climax FPF 1.5 L4",
+      "D",
+      "Bruce Halford",
+      "1"
+    ],
+    [
+      "Scuderia Ferrari",
+      "Ferrari",
+      "246156",
+      "Ferrari155 2.4V6FerrariD156 1.5V6",
+      "D",
+      "Jean Behra",
+      "1, 3–4"
+    ],
+    [
+      "Phil Hill",
+      "1, 3–4, 6–9"
+    ],
+    [
+      "Tony Brooks"
+    ],
+    [
+      "Cliff Allison",
+      "1, 3, 6, 8–9"
+    ],
+    [
+      "Olivier Gendebien",
+      "4, 8"
+    ],
+    [
+      "Dan Gurney",
+      "4, 6–8"
+    ],
+    [
+      "Wolfgang von Trips",
+      "9"
+    ],
+    [
+      "Scuderia Ugolini",
+      "Maserati",
+      "250F",
+      "Maserati250F1 2.5L6",
+      "D",
+      "Giorgio Scarlatti",
+      "1, 4"
+    ],
+    [
+      "Carel Godin de Beaufort",
+      "4"
+    ],
+    [
+      "Monte Carlo Auto Sport",
+      "Maserati",
+      "250F",
+      "Maserati250F1 2.5L6",
+      "D",
+      "André Testut",
+      "1"
+    ],
+    [
+      "David Brown Corporation",
+      "Aston Martin",
+      "DBR4",
+      "Aston MartinRB6 2.5L6",
+      "A",
+      "Roy Salvadori",
+      "3, 5, 7–8"
+    ],
+    [
+      "Carroll Shelby",
+      "3, 5, 7–8"
+    ],
+    [
+      "Ecurie Maarsbergen",
+      "Porsche",
+      "718 RSK",
+      "Porsche547/3 1.5F4",
+      "D",
+      "Carel Godin de Beaufort",
+      "3"
+    ],
+    [
+      "Scuderia Centro Sud",
+      "Cooper-Maserati",
+      "T51",
+      "Maserati250S 2.5L4",
+      "D",
+      "Ian Burgess",
+      "4–6, 8"
+    ],
+    [
+      "Colin Davis",
+      "4, 8"
+    ],
+    [
+      "Hans Herrmann",
+      "5"
+    ],
+    [
+      "Mario Araujo de Cabral",
+      "7"
+    ],
+    [
+      "Maserati",
+      "250F",
+      "Maserati250F1 2.5L6",
+      "Asdrúbal Fontes Bayardo",
+      "4"
+    ],
+    [
+      "Fritz d'Orey",
+      "4–5"
+    ],
+    [
+      "Vandervell Products",
+      "Vanwall",
+      "VW 59",
+      "Vanwall254 2.5L4",
+      "D",
+      "Tony Brooks",
+      "5"
+    ],
+    [
+      "J.B. Naylor",
+      "JBW-Maserati",
+      "59",
+      "Maserati250S 2.5L4",
+      "D",
+      "Brian Naylor",
+      "5"
+    ],
+    [
+      "Ace Garage – Rotherham",
+      "Cooper-Climax",
+      "T51",
+      "Climax FPF 1.5 L4",
+      "D",
+      "Trevor Taylor",
+      "5"
+    ]
+  ],
+  "teams": [],
+  "races": [
+    [
+      "Round",
+      "Grand Prix",
+      "Circuit",
+      "Date"
+    ],
+    [
+      "1",
+      "Monaco Grand Prix",
+      "Circuit de Monaco,Monte Carlo",
+      "10 May"
+    ],
+    [
+      "2",
+      "Indianapolis 500",
+      "Indianapolis Motor Speedway,Speedway",
+      "30 May[a]"
+    ],
+    [
+      "3",
+      "Dutch Grand Prix",
+      "Circuit Zandvoort,Zandvoort",
+      "31 May"
+    ],
+    [
+      "4",
+      "French Grand Prix",
+      "Reims-Gueux,Gueux",
+      "5 July"
+    ],
+    [
+      "5",
+      "British Grand Prix",
+      "Aintree Motor Racing Circuit,Merseyside",
+      "18 July"
+    ],
+    [
+      "6",
+      "German Grand Prix",
+      "AVUS,Berlin",
+      "2 August"
+    ],
+    [
+      "7",
+      "Portuguese Grand Prix",
+      "Monsanto Park Circuit,Lisbon",
+      "23 August"
+    ],
+    [
+      "8",
+      "Italian Grand Prix",
+      "Autodromo Nazionale di Monza,Monza",
+      "13 September"
+    ],
+    [
+      "9",
+      "United States Grand Prix",
+      "Sebring International Raceway,Highlands County,Florida",
+      "12 December"
+    ]
+  ],
+  "standings": [
+    [
+      "Round",
+      "Grand Prix",
+      "Pole position",
+      "Fastest lap",
+      "Winning driver",
+      "Winning constructor",
+      "Tyre",
+      "Report"
+    ],
+    [
+      "1",
+      "Monaco Grand Prix",
+      "Stirling Moss",
+      "Jack Brabham",
+      "Jack Brabham",
+      "Cooper-Climax",
+      "D",
+      "Report"
+    ],
+    [
+      "2",
+      "Indianapolis 500",
+      "Johnny Thomson",
+      "Johnny Thomson",
+      "Rodger Ward",
+      "Watson-Offenhauser",
+      "F",
+      "Report"
+    ],
+    [
+      "3",
+      "Dutch Grand Prix",
+      "Jo Bonnier",
+      "Stirling Moss",
+      "Jo Bonnier",
+      "BRM",
+      "D",
+      "Report"
+    ],
+    [
+      "4",
+      "French Grand Prix",
+      "Tony Brooks",
+      "Stirling Moss",
+      "Tony Brooks",
+      "Ferrari",
+      "D",
+      "Report"
+    ],
+    [
+      "5",
+      "British Grand Prix",
+      "Jack Brabham",
+      "Stirling MossBruce McLaren",
+      "Jack Brabham",
+      "Cooper-Climax",
+      "D",
+      "Report"
+    ],
+    [
+      "6",
+      "German Grand Prix",
+      "Tony Brooks",
+      "Tony Brooks",
+      "Tony Brooks",
+      "Ferrari",
+      "D",
+      "Report"
+    ],
+    [
+      "7",
+      "Portuguese Grand Prix",
+      "Stirling Moss",
+      "Stirling Moss",
+      "Stirling Moss",
+      "Cooper-Climax",
+      "D",
+      "Report"
+    ],
+    [
+      "8",
+      "Italian Grand Prix",
+      "Stirling Moss",
+      "Phil Hill",
+      "Stirling Moss",
+      "Cooper-Climax",
+      "D",
+      "Report"
+    ],
+    [
+      "9",
+      "United States Grand Prix",
+      "Stirling Moss",
+      "Maurice Trintignant",
+      "Bruce McLaren",
+      "Cooper-Climax",
+      "D",
+      "Report"
+    ]
+  ],
+  "title": "1959 Formula One season",
+  "description": "",
+  "sections": {}
+}

@@ -1,0 +1,412 @@
+{
+  "year": 1994,
+  "timestamp": "2026-01-14T21:45:57.750500",
+  "drivers": [
+    [
+      "Entrant",
+      "Constructor",
+      "Chassis",
+      "Engine",
+      "No",
+      "Driver",
+      "Rounds"
+    ],
+    [
+      "RothmansWilliamsRenault",
+      "Williams-Renault",
+      "FW16FW16B",
+      "Renault RS63.5V10",
+      "0[a]",
+      "Damon Hill",
+      "All"
+    ],
+    [
+      "2",
+      "Ayrton Senna",
+      "1–3"
+    ],
+    [
+      "David Coulthard",
+      "5–6, 8–13"
+    ],
+    [
+      "Nigel Mansell",
+      "7, 14–16"
+    ],
+    [
+      "Tyrrell",
+      "Tyrrell-Yamaha",
+      "022",
+      "Yamaha OX10B3.5V10",
+      "3",
+      "Ukyo Katayama",
+      "All"
+    ],
+    [
+      "4",
+      "Mark Blundell",
+      "All"
+    ],
+    [
+      "Mild SevenBenetton Ford",
+      "Benetton-Ford",
+      "B194",
+      "Ford EC Zetec-R3.5V8",
+      "5",
+      "Michael Schumacher",
+      "1–11, 14–16"
+    ],
+    [
+      "JJ Lehto",
+      "12–13"
+    ],
+    [
+      "6",
+      "Jos Verstappen",
+      "1–2, 7–14"
+    ],
+    [
+      "JJ Lehto",
+      "3–6"
+    ],
+    [
+      "Johnny Herbert",
+      "15–16"
+    ],
+    [
+      "MarlboroMcLarenPeugeot",
+      "McLaren-Peugeot",
+      "MP4/9",
+      "Peugeot A63.5V10",
+      "7",
+      "Mika Häkkinen",
+      "1–9, 11–16"
+    ],
+    [
+      "Philippe Alliot",
+      "10"
+    ],
+    [
+      "8",
+      "Martin Brundle",
+      "All"
+    ],
+    [
+      "FootworkFord",
+      "Footwork-Ford",
+      "FA15",
+      "Ford HBE7/Ford HBE83.5V8",
+      "9",
+      "Christian Fittipaldi",
+      "All"
+    ],
+    [
+      "10",
+      "Gianni Morbidelli",
+      "All"
+    ],
+    [
+      "Team Lotus",
+      "Lotus-Mugen-Honda",
+      "107C109",
+      "Mugen Honda MF-351HC3.5V10Mugen Honda MF-351HD3.5V10",
+      "11",
+      "Pedro Lamy",
+      "1–4"
+    ],
+    [
+      "Alessandro Zanardi",
+      "5–10, 12"
+    ],
+    [
+      "Philippe Adams",
+      "11, 13"
+    ],
+    [
+      "Éric Bernard",
+      "14"
+    ],
+    [
+      "Mika Salo",
+      "15–16"
+    ],
+    [
+      "12",
+      "Johnny Herbert",
+      "1–13"
+    ],
+    [
+      "Alessandro Zanardi",
+      "14–16"
+    ],
+    [
+      "SasolJordan",
+      "Jordan-Hart",
+      "194",
+      "Hart 10353.5V10",
+      "14",
+      "Rubens Barrichello",
+      "All"
+    ],
+    [
+      "15",
+      "Eddie Irvine",
+      "1, 5–16"
+    ],
+    [
+      "Aguri Suzuki",
+      "2"
+    ],
+    [
+      "Andrea de Cesaris",
+      "3–4"
+    ],
+    [
+      "TourtelLarrousse F1",
+      "Larrousse-Ford",
+      "LH94",
+      "Ford HBF7/Ford HBF83.5V8",
+      "19",
+      "Olivier Beretta",
+      "1–10"
+    ],
+    [
+      "Philippe Alliot",
+      "11"
+    ],
+    [
+      "Yannick Dalmas",
+      "12–13"
+    ],
+    [
+      "Hideki Noda",
+      "14–16"
+    ],
+    [
+      "20",
+      "Érik Comas",
+      "1–15"
+    ],
+    [
+      "Jean-Denis Delétraz",
+      "16"
+    ],
+    [
+      "MinardiScuderia Italia",
+      "Minardi-Ford",
+      "M193BM194",
+      "Ford HBC7/Ford HBC83.5V8",
+      "23",
+      "Pierluigi Martini",
+      "All"
+    ],
+    [
+      "24",
+      "Michele Alboreto",
+      "All"
+    ],
+    [
+      "LigierGitanes Blondes",
+      "Ligier-Renault",
+      "JS39B",
+      "Renault RS63.5V10",
+      "25",
+      "Éric Bernard",
+      "1–13"
+    ],
+    [
+      "Johnny Herbert",
+      "14"
+    ],
+    [
+      "Franck Lagorce",
+      "15–16"
+    ],
+    [
+      "26",
+      "Olivier Panis",
+      "All"
+    ],
+    [
+      "Scuderia Ferrari",
+      "Ferrari",
+      "412T1412T1B",
+      "Ferrari Tipo 0413.5V12Ferrari Tipo 0433.5V12",
+      "27",
+      "Jean Alesi",
+      "1, 4–16"
+    ],
+    [
+      "Nicola Larini",
+      "2–3"
+    ],
+    [
+      "28",
+      "Gerhard Berger",
+      "All"
+    ],
+    [
+      "BrokerSauberMercedesSauberMercedes",
+      "Sauber-Mercedes",
+      "C13",
+      "Mercedes-Benz 2175B3.5V10",
+      "29",
+      "Karl Wendlinger",
+      "1–4"
+    ],
+    [
+      "Andrea de Cesaris",
+      "6–14"
+    ],
+    [
+      "JJ Lehto",
+      "15–16"
+    ],
+    [
+      "30",
+      "Heinz-Harald Frentzen[b]",
+      "All"
+    ],
+    [
+      "MTVSimtekFord",
+      "Simtek-Ford",
+      "S941",
+      "Ford HBD63.5V8",
+      "31",
+      "David Brabham",
+      "All"
+    ],
+    [
+      "32",
+      "Roland Ratzenberger",
+      "1–3"
+    ],
+    [
+      "Andrea Montermini",
+      "5"
+    ]
+  ],
+  "teams": [],
+  "races": [
+    [
+      "Round",
+      "Grand Prix",
+      "Circuit",
+      "Date"
+    ],
+    [
+      "1",
+      "Brazilian Grand Prix",
+      "Autódromo José Carlos Pace,São Paulo",
+      "27 March"
+    ],
+    [
+      "2",
+      "Pacific Grand Prix",
+      "TI Circuit,Aida",
+      "17 April"
+    ],
+    [
+      "3",
+      "San Marino Grand Prix",
+      "Autodromo Enzo e Dino Ferrari,Imola",
+      "1 May"
+    ],
+    [
+      "4",
+      "Monaco Grand Prix",
+      "Circuit de Monaco,Monte Carlo",
+      "15 May"
+    ],
+    [
+      "5",
+      "Spanish Grand Prix",
+      "Circuit de Barcelona-Catalunya,Montmeló",
+      "29 May"
+    ],
+    [
+      "6",
+      "Canadian Grand Prix",
+      "Circuit Gilles Villeneuve,Montreal",
+      "12 June"
+    ],
+    [
+      "7",
+      "French Grand Prix",
+      "Circuit de Nevers Magny-Cours,Magny-Cours",
+      "3 July"
+    ],
+    [
+      "8",
+      "British Grand Prix",
+      "Silverstone Circuit,Silverstone",
+      "10 July"
+    ],
+    [
+      "9",
+      "German Grand Prix",
+      "Hockenheimring,Hockenheim",
+      "31 July"
+    ],
+    [
+      "10",
+      "Hungarian Grand Prix",
+      "Hungaroring,Mogyoród",
+      "14 August"
+    ],
+    [
+      "11",
+      "Belgian Grand Prix",
+      "Circuit de Spa-Francorchamps,Stavelot",
+      "28 August"
+    ],
+    [
+      "12",
+      "Italian Grand Prix",
+      "Autodromo Nazionale di Monza,Monza",
+      "11 September"
+    ],
+    [
+      "13",
+      "Portuguese Grand Prix",
+      "Autódromo do Estoril,Estoril",
+      "25 September"
+    ],
+    [
+      "14",
+      "European Grand Prix",
+      "Circuito Permanente de Jerez,Jerez de la Frontera",
+      "16 October[c]"
+    ],
+    [
+      "15",
+      "Japanese Grand Prix",
+      "Suzuka Circuit,Suzuka",
+      "6 November"
+    ],
+    [
+      "16",
+      "Australian Grand Prix",
+      "Adelaide Street Circuit,Adelaide",
+      "13 November"
+    ],
+    [
+      "Source:[9]"
+    ]
+  ],
+  "standings": [
+    [
+      "Grand Prix",
+      "Circuit",
+      "Original date"
+    ],
+    [
+      "Argentine Grand Prix",
+      "Autódromo Juan y Oscar Gálvez,Buenos Aires",
+      "16 October"
+    ]
+  ],
+  "title": "1994 Formula One World Championship",
+  "description": "",
+  "sections": {}
+}

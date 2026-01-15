@@ -1,0 +1,554 @@
+{
+  "year": 1979,
+  "timestamp": "2026-01-14T21:45:25.732391",
+  "drivers": [
+    [
+      "Entrant",
+      "Constructor",
+      "Chassis",
+      "Engine",
+      "Tyres",
+      "No",
+      "Driver",
+      "Rounds"
+    ],
+    [
+      "Martini RacingTeam Lotus",
+      "Lotus-Ford",
+      "7980",
+      "Ford Cosworth DFV3.0V8",
+      "G",
+      "1",
+      "Mario Andretti",
+      "All"
+    ],
+    [
+      "2",
+      "Carlos Reutemann",
+      "All"
+    ],
+    [
+      "Team TyrrellCandyTyrrell Team",
+      "Tyrrell-Ford",
+      "009",
+      "Ford Cosworth DFV3.0V8",
+      "G",
+      "3",
+      "Didier Pironi",
+      "All"
+    ],
+    [
+      "4",
+      "Jean-Pierre Jarier",
+      "1–9, 12–15"
+    ],
+    [
+      "Geoff Lees",
+      "10"
+    ],
+    [
+      "Derek Daly",
+      "11"
+    ],
+    [
+      "33",
+      "14–15"
+    ],
+    [
+      "ParmalatRacing",
+      "Brabham-Alfa Romeo",
+      "BT46BT48",
+      "Alfa Romeo115-123.0F12Alfa Romeo12603.0V12",
+      "G",
+      "5",
+      "Niki Lauda",
+      "1–13"
+    ],
+    [
+      "6",
+      "Nelson Piquet",
+      "1–13"
+    ],
+    [
+      "Brabham-Ford",
+      "BT49",
+      "Ford Cosworth DFV3.0V8",
+      "5",
+      "Ricardo Zunino",
+      "14–15"
+    ],
+    [
+      "6",
+      "Nelson Piquet",
+      "14–15"
+    ],
+    [
+      "MarlboroTeam McLarenLöwenbräuTeam McLaren",
+      "McLaren-Ford",
+      "M26M28M28BM28CM29",
+      "Ford Cosworth DFV3.0V8",
+      "G",
+      "7",
+      "John Watson",
+      "All"
+    ],
+    [
+      "8",
+      "Patrick Tambay",
+      "All"
+    ],
+    [
+      "ATS Wheels",
+      "ATS-Ford",
+      "D2D3",
+      "Ford Cosworth DFV3.0V8",
+      "G",
+      "9",
+      "Hans-Joachim Stuck",
+      "All"
+    ],
+    [
+      "SEFAC Ferrari",
+      "Ferrari",
+      "312T3312T4312T4B",
+      "Ferrari015 3.0F12",
+      "M",
+      "11",
+      "South AfricaJody Scheckter",
+      "All"
+    ],
+    [
+      "12",
+      "Gilles Villeneuve",
+      "All"
+    ],
+    [
+      "Fittipaldi Automotive",
+      "Fittipaldi-Ford[3]",
+      "F5AF6F6A",
+      "Ford Cosworth DFV3.0V8",
+      "G",
+      "14",
+      "Emerson Fittipaldi",
+      "All"
+    ],
+    [
+      "19",
+      "Alex Ribeiro",
+      "14–15"
+    ],
+    [
+      "Équipe RenaultElf",
+      "Renault",
+      "RS01RS10",
+      "Renault-GordiniEF1 1.5V6t",
+      "M",
+      "15",
+      "Jean-Pierre Jabouille",
+      "All"
+    ],
+    [
+      "16",
+      "René Arnoux",
+      "All"
+    ],
+    [
+      "SamsonShadow RacingInterscopeShadow RacingShadow Racing",
+      "Shadow-Ford",
+      "DN9",
+      "Ford Cosworth DFV3.0V8",
+      "G",
+      "17",
+      "Jan Lammers",
+      "All"
+    ],
+    [
+      "18",
+      "Elio de Angelis",
+      "All"
+    ],
+    [
+      "Olympus CamerasWolf RacingMichelobWolf Racing",
+      "Wolf-Ford",
+      "WR7WR8WR9",
+      "Ford Cosworth DFV3.0V8",
+      "G",
+      "20",
+      "James Hunt",
+      "1–7"
+    ],
+    [
+      "Keke Rosberg",
+      "8–15"
+    ],
+    [
+      "Team Ensign",
+      "Ensign-Ford",
+      "N177N179",
+      "Ford Cosworth DFV3.0V8",
+      "G",
+      "22",
+      "Derek Daly",
+      "1–7"
+    ],
+    [
+      "Patrick Gaillard",
+      "8–12"
+    ],
+    [
+      "Marc Surer",
+      "13–15"
+    ],
+    [
+      "Team Merzario",
+      "Merzario-Ford",
+      "A1BA2A4",
+      "Ford Cosworth DFV3.0V8",
+      "G",
+      "24",
+      "Arturo Merzario",
+      "1–6, 8–15"
+    ],
+    [
+      "Gianfranco Brancatelli",
+      "7"
+    ],
+    [
+      "LigierGitanes",
+      "Ligier-Ford",
+      "JS11",
+      "Ford Cosworth DFV3.0V8",
+      "G",
+      "25",
+      "Patrick Depailler",
+      "1–7"
+    ],
+    [
+      "Jacky Ickx",
+      "8–15"
+    ],
+    [
+      "26",
+      "Jacques Laffite",
+      "All"
+    ],
+    [
+      "Albilad-SaudiaRacing Team",
+      "Williams-Ford",
+      "FW06FW07",
+      "Ford Cosworth DFV3.0V8",
+      "G",
+      "27",
+      "Alan Jones",
+      "All"
+    ],
+    [
+      "28",
+      "Clay Regazzoni",
+      "All"
+    ],
+    [
+      "WarsteinerArrows Racing Team",
+      "Arrows-Ford",
+      "A1A2",
+      "Ford Cosworth DFV3.0V8",
+      "G",
+      "29",
+      "Riccardo Patrese",
+      "All"
+    ],
+    [
+      "30",
+      "Jochen Mass",
+      "All"
+    ],
+    [
+      "Team Rebaque",
+      "Lotus-Ford",
+      "79",
+      "Ford Cosworth DFV3.0V8",
+      "G",
+      "31",
+      "Héctor Rebaque",
+      "1–6, 8–12"
+    ],
+    [
+      "Rebaque-Ford",
+      "HR100",
+      "13–15"
+    ],
+    [
+      "Autodelta",
+      "Alfa Romeo",
+      "177179",
+      "Alfa Romeo115-123.0F12Alfa Romeo12603.0V12",
+      "G",
+      "35",
+      "Bruno Giacomelli",
+      "6, 8, 13, 15"
+    ],
+    [
+      "36",
+      "Vittorio Brambilla",
+      "13–15"
+    ],
+    [
+      "Willi Kauhsen Racing Team",
+      "Kauhsen-Ford",
+      "WK",
+      "Ford Cosworth DFV3.0V8",
+      "G",
+      "36",
+      "Gianfranco Brancatelli",
+      "5–6"
+    ]
+  ],
+  "teams": [],
+  "races": [
+    [
+      "Round",
+      "Grand Prix",
+      "Circuit",
+      "Date"
+    ],
+    [
+      "1",
+      "Argentine Grand Prix",
+      "Autódromo Oscar Alfredo Gálvez,Buenos Aires",
+      "21 January"
+    ],
+    [
+      "2",
+      "Brazilian Grand Prix",
+      "Autodromo de Interlagos,São Paulo",
+      "4 February"
+    ],
+    [
+      "3",
+      "South African Grand Prix",
+      "South AfricaKyalami Grand Prix Circuit,Midrand",
+      "3 March"
+    ],
+    [
+      "4",
+      "United States Grand Prix West",
+      "Long Beach Street Circuit,California",
+      "8 April"
+    ],
+    [
+      "5",
+      "Spanish Grand Prix",
+      "Circuito Permanente Del Jarama,Madrid",
+      "29 April"
+    ],
+    [
+      "6",
+      "Belgian Grand Prix",
+      "Circuit Zolder,Heusden-Zolder",
+      "13 May"
+    ],
+    [
+      "7",
+      "Monaco Grand Prix",
+      "Circuit de Monaco,Monte Carlo",
+      "27 May"
+    ],
+    [
+      "8",
+      "French Grand Prix",
+      "Dijon-Prenois,Prenois",
+      "1 July"
+    ],
+    [
+      "9",
+      "British Grand Prix",
+      "Silverstone Circuit,Silverstone",
+      "14 July"
+    ],
+    [
+      "10",
+      "German Grand Prix",
+      "Hockenheimring,Hockenheim",
+      "29 July"
+    ],
+    [
+      "11",
+      "Austrian Grand Prix",
+      "Österreichring,Spielberg",
+      "12 August"
+    ],
+    [
+      "12",
+      "Dutch Grand Prix",
+      "Circuit Zandvoort,Zandvoort",
+      "26 August"
+    ],
+    [
+      "13",
+      "Italian Grand Prix",
+      "Autodromo Nazionale di Monza,Monza",
+      "9 September"
+    ],
+    [
+      "14",
+      "Canadian Grand Prix",
+      "Île Notre-Dame Circuit,Montréal",
+      "30 September"
+    ],
+    [
+      "15",
+      "United States Grand Prix",
+      "Watkins Glen Grand Prix Course,New York",
+      "7 October"
+    ]
+  ],
+  "standings": [
+    [
+      "Round",
+      "Grand Prix",
+      "Pole position",
+      "Fastest lap",
+      "Winning driver",
+      "Winning constructor",
+      "Report"
+    ],
+    [
+      "1",
+      "Argentine Grand Prix",
+      "Jacques Laffite",
+      "Jacques Laffite",
+      "Jacques Laffite",
+      "Ligier-Ford",
+      "Report"
+    ],
+    [
+      "2",
+      "Brazilian Grand Prix",
+      "Jacques Laffite",
+      "Jacques Laffite",
+      "Jacques Laffite",
+      "Ligier-Ford",
+      "Report"
+    ],
+    [
+      "3",
+      "South AfricaSouth African Grand Prix",
+      "Jean-Pierre Jabouille",
+      "Gilles Villeneuve",
+      "Gilles Villeneuve",
+      "Ferrari",
+      "Report"
+    ],
+    [
+      "4",
+      "United States Grand Prix West",
+      "Gilles Villeneuve",
+      "Gilles Villeneuve",
+      "Gilles Villeneuve",
+      "Ferrari",
+      "Report"
+    ],
+    [
+      "5",
+      "Spanish Grand Prix",
+      "Jacques Laffite",
+      "Gilles Villeneuve",
+      "Patrick Depailler",
+      "Ligier-Ford",
+      "Report"
+    ],
+    [
+      "6",
+      "Belgian Grand Prix",
+      "Jacques Laffite",
+      "Gilles Villeneuve",
+      "South AfricaJody Scheckter",
+      "Ferrari",
+      "Report"
+    ],
+    [
+      "7",
+      "Monaco Grand Prix",
+      "South AfricaJody Scheckter",
+      "Patrick Depailler",
+      "South AfricaJody Scheckter",
+      "Ferrari",
+      "Report"
+    ],
+    [
+      "8",
+      "French Grand Prix",
+      "Jean-Pierre Jabouille",
+      "René Arnoux",
+      "Jean-Pierre Jabouille",
+      "Renault",
+      "Report"
+    ],
+    [
+      "9",
+      "British Grand Prix",
+      "Alan Jones",
+      "Clay Regazzoni",
+      "Clay Regazzoni",
+      "Williams-Ford",
+      "Report"
+    ],
+    [
+      "10",
+      "German Grand Prix",
+      "Jean-Pierre Jabouille",
+      "Gilles Villeneuve",
+      "Alan Jones",
+      "Williams-Ford",
+      "Report"
+    ],
+    [
+      "11",
+      "Austrian Grand Prix",
+      "René Arnoux",
+      "René Arnoux",
+      "Alan Jones",
+      "Williams-Ford",
+      "Report"
+    ],
+    [
+      "12",
+      "Dutch Grand Prix",
+      "René Arnoux",
+      "Gilles Villeneuve",
+      "Alan Jones",
+      "Williams-Ford",
+      "Report"
+    ],
+    [
+      "13",
+      "Italian Grand Prix",
+      "Jean-Pierre Jabouille",
+      "Clay Regazzoni",
+      "South AfricaJody Scheckter",
+      "Ferrari",
+      "Report"
+    ],
+    [
+      "14",
+      "Canadian Grand Prix",
+      "Alan Jones",
+      "Alan Jones",
+      "Alan Jones",
+      "Williams-Ford",
+      "Report"
+    ],
+    [
+      "15",
+      "United States Grand Prix",
+      "Alan Jones",
+      "Nelson Piquet",
+      "Gilles Villeneuve",
+      "Ferrari",
+      "Report"
+    ]
+  ],
+  "title": "1979 Formula One season",
+  "description": "",
+  "sections": {}
+}

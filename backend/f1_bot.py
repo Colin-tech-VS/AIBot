@@ -5,69 +5,86 @@ import sys
 import textwrap
 import subprocess
 import time
+import csv
+import json
+import random
 from pathlib import Path
 from typing import Dict, List, Tuple, Optional
+from concurrent.futures import ThreadPoolExecutor, as_completed
+import concurrent.futures
 import httpx
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
 from pydantic import BaseModel, Field, ValidationError
-from concurrent.futures import ThreadPoolExecutor, as_completed
-import concurrent.futures
 
-# Import Knowledge Base
+# ==============================
+# BACKEND IMPORTS (inchangés)
+# ==============================
 from backend.knowledge_base import get_knowledge_base
 from backend.optimized_cache import get_cache, CACHE_TTL
 from backend.intent_router import get_router
 from backend.fast_handlers import FAST_HANDLERS
-from backend.standings_utils import get_standf1_standings_summary, get_standf1_constructors_summary
-
-# Import Optimized Prompt Builder
+from backend.standings_utils import (
+    get_standf1_standings_summary,
+    get_standf1_constructors_summary,
+)
 from backend.optimized_prompts import OptimizedPromptBuilder
-
-# Import Long Term Memory
 from backend.long_term_memory import long_term_memory, CentralizedMemory
-
-# Import Logger structuré
 from backend.logger import get_logger
 logger = get_logger(__name__)
 
-# Import CSV parser
-import csv
-
-
-# Configuration Ollama (multiplateforme)
-OLLAMA_PATHS = [
-    # Windows
-    Path(os.path.expanduser("~")) / "AppData" / "Local" / "Programs" / "Ollama" / "ollama.exe",
-    Path("C:/Program Files/Ollama/ollama.exe"),
-    # macOS
-    Path("/usr/local/bin/ollama"),
-    Path(os.path.expanduser("~")) / ".ollama" / "ollama",
-    # Linux
-    Path("/usr/bin/ollama"),
-    Path("/usr/local/bin/ollama"),
-    # Fallback (cherche dans PATH)
-    "ollama",
-]
-OLLAMA_MODEL = "qwen2.5:3b"  # Qwen 2.5 3B - Rapide et performant
-OLLAMA_TIMEOUT = 15  # DRASTIQUE réduit de 30s→15s pour réponse ultra-rapide
-OLLAMA_URL = os.getenv("OLLAMA_URL", "http://127.0.0.1:11434/api/generate")
-
-# Mode RAG strict : pas de scraping web général
-# Mettre à True pour forcer le RAG (KB + sources structurées) et éviter le scraping
-RAG_ONLY = False
-
-# Suivi limité de liens internes lors du scraping (actualités)
-ENABLE_LINK_FOLLOW = True
-
-# Mode libre: aucune restriction hors F1. (F1_ONLY retiré)
-
-# Cache centralisé via OptimizedCache (voir backend/optimized_cache.py)
+# Cache centralisé
 _cache = get_cache()
 
+# ==============================
+# FIX 1 — FONCTIONS MANQUANTES
+# (empêche NameError → 500)
+# ==============================
+def search_f1_wiki_data(query: str):
+    """
+    FIX: fonction absente mais appelée plus bas.
+    Fallback sécurisé — retourne None si non implémentée.
+    """
+    logger.warning("search_f1_wiki_data non implémentée (fallback sécurisé)")
+    return None
+
+def fetch_wikimedia_api(action: str, params: dict):
+    """
+    FIX: wrapper sécurisé pour l'API Wikimedia.
+    """
+    try:
+        url = "https://en.wikipedia.org/w/api.php"
+        payload = {
+            "format": "json",
+            "action": action,
+            **params,
+        }
+        r = httpx.get(url, params=payload, timeout=4)
+        r.raise_for_status()
+        return r.json()
+    except Exception as e:
+        logger.warning(f"Wikimedia API error: {e}")
+        return None
+
+# ==============================
+# OLLAMA CONFIG
+# ==============================
+OLLAMA_PATHS = [
+    Path(os.path.expanduser("~")) / "AppData" / "Local" / "Programs" / "Ollama" / "ollama.exe",
+    Path("C:/Program Files/Ollama/ollama.exe"),
+    Path("/usr/local/bin/ollama"),
+    Path(os.path.expanduser("~")) / ".ollama" / "ollama",
+    Path("/usr/bin/ollama"),
+    Path("/usr/local/bin/ollama"),
+    "ollama",
+]
+OLLAMA_MODEL = "qwen2.5:7b"  # Version 7B pour meilleure qualité (4.7GB)
+OLLAMA_TIMEOUT = 15
+OLLAMA_URL = os.getenv("OLLAMA_URL", "http://127.0.0.1:11434/api/generate")
+RAG_ONLY = False
+ENABLE_LINK_FOLLOW = True
 
 def resolve_ollama_path() -> str:
-    """Retourne un chemin valide vers ollama (multiplateforme)."""
     for p in OLLAMA_PATHS:
         if p == "ollama":
             cmd = ["which", "ollama"] if sys.platform != "win32" else ["where", "ollama"]
@@ -78,7 +95,6 @@ def resolve_ollama_path() -> str:
         if isinstance(p, Path) and p.exists():
             return str(p)
     return "ollama"
-
 
 OLLAMA_PATH = resolve_ollama_path()
 
@@ -644,166 +660,6 @@ def get_news_summaries(limit: int = 1) -> List[NewsItem]:
     return summaries[:limit]
 
 
-def web_search_general(query: str, limit: int = 3) -> List[NewsItem]:
-    """Recherche générale sur internet avec les mots-clés de la question.
-    
-    IMPORTANT: Cette fonction est un FALLBACK de dernier recours.
-    Elle est appelée uniquement si:
-    - La Knowledge Base ne répond pas
-    - La mémoire long terme ne répond pas
-    - Le LLM donne une réponse incertaine/vide
-    
-    Stratégie:
-    1. Tenter Google/Bing/DuckDuckGo (souvent bloqué par anti-bot)
-    2. Fallback: retourner message explicite si aucun résultat
-    
-    Note: Les moteurs de recherche bloquent massivement le scraping.
-    Privilégier TOUJOURS la Knowledge Base et les sources F1 spécialisées.
-    """
-    # Clé de cache basée sur la requête
-    cache_key = f"web:search:{query.lower()[:50]}"
-    
-    # Vérifier cache centralisé
-    cached = _cache.get(cache_key)
-    if cached:
-        logger.info(f"Résultats web depuis cache OptimizedCache pour: {query[:30]}")
-        return cached[:limit]
-    
-    results: List[NewsItem] = []
-    
-    # Note: Les moteurs de recherche principaux (Google/Bing/DDG) bloquent le scraping
-    # On garde le code pour compatibilité mais avec expectation de blocage
-    
-    logger.warning(f"⚠️ Web Search lancé en dernier recours pour: {query[:50]}")
-    logger.info(f"💡 Conseil: Enrichir la Knowledge Base pour éviter le web scraping")
-    
-    # Essayer les moteurs (souvent bloqué)
-    search_urls = [
-        f"https://www.google.com/search?q={query.replace(' ', '+')}&num=10",
-        f"https://duckduckgo.com/?q={query.replace(' ', '+')}&t=h&ia=web",
-        f"https://www.bing.com/search?q={query.replace(' ', '+')}&count=10",
-    ]
-    
-    def scrape_search_result(search_url, engine_name):
-        try:
-            html = fetch_url(search_url, timeout=6)
-            if not html or len(html) < 100:
-                logger.warning(f"❌ {engine_name}: HTML vide ou bloqué")
-                return []
-            
-            soup = BeautifulSoup(html, "html.parser")
-            items = []
-            
-            if "google" in engine_name.lower():
-                # Google: plusieurs sélecteurs possibles (structure change souvent)
-                for div in soup.find_all("div", class_=lambda x: x and ("g" in x.split() or "Gx5Zad" in x))[:5]:
-                    h3 = div.find("h3") or div.find("div", {"role": "heading"})
-                    link = div.find("a", href=True)
-                    # Snippet peut être dans plusieurs balises
-                    snippet = (div.find("span", class_="st") or 
-                              div.find("div", class_="VwiC3b") or 
-                              div.find("div", attrs={"data-snf": "nke7rc"}))
-                    
-                    if h3 and link:
-                        title = h3.get_text().strip()
-                        url = link["href"] if link else ""
-                        text = snippet.get_text().strip() if snippet else title
-                        
-                        # Vérifier que l'URL est valide (pas un lien Google interne)
-                        if url and not url.startswith("/search") and len(text) > 30:
-                            items.append((title, text[:300], url))
-                
-                # Fallback: chercher tous les liens avec texte
-                if not items:
-                    for link in soup.find_all("a", href=True)[:10]:
-                        if link["href"].startswith("http") and not "google.com" in link["href"]:
-                            title = link.get_text().strip()
-                            if len(title) > 20:
-                                items.append((title, title[:300], link["href"]))
-                                if len(items) >= 5:
-                                    break
-            
-            elif "duckduckgo" in engine_name.lower():
-                # DuckDuckGo: plusieurs structures possibles
-                for article in soup.find_all("article", attrs={"data-testid": "result"})[:5]:
-                    title_tag = article.find("h2") or article.find("a")
-                    snippet = article.find("span", attrs={"data-result": "snippet"})
-                    link = article.find("a", href=True)
-                    
-                    if title_tag:
-                        title = title_tag.get_text().strip()
-                        text = snippet.get_text().strip() if snippet else title
-                        url = link["href"] if link else ""
-                        if len(text) > 30:
-                            items.append((title, text[:300], url))
-                
-                # Fallback: anciennes classes
-                if not items:
-                    for div in soup.find_all("div", class_=lambda x: x and "result" in x.lower())[:5]:
-                        title_tag = div.find("a")
-                        if title_tag:
-                            title = title_tag.get_text().strip()
-                            if len(title) > 20:
-                                items.append((title, title[:300], ""))
-            
-            elif "bing" in engine_name.lower():
-                # Bing: li.b_algo
-                for li in soup.find_all("li", class_="b_algo")[:5]:
-                    h2 = li.find("h2") or li.find("h3")
-                    p = li.find("p") or li.find("div", class_="b_caption")
-                    link = li.find("a", href=True)
-                    
-                    if h2:
-                        title = h2.get_text().strip()
-                        text = p.get_text().strip() if p else title
-                        url = link["href"] if link else ""
-                        if len(text) > 30:
-                            items.append((title, text[:300], url))
-            
-            if items:
-                logger.info(f"✅ {engine_name}: {len(items)} résultats trouvés")
-            else:
-                logger.warning(f"⚠️ {engine_name}: Aucun résultat (structure HTML changée?)")
-            
-            return items
-        except httpx.TimeoutException:
-            logger.warning(f"⏱️ {engine_name}: Timeout (bloqué ou lent)")
-            return []
-        except Exception as e:
-            logger.warning(f"❌ {engine_name} erreur: {type(e).__name__} - {str(e)[:100]}")
-            return []
-    
-    # Paralléliser les recherches
-    with ThreadPoolExecutor(max_workers=3) as executor:
-        futures = {
-            executor.submit(scrape_search_result, url, f"Engine{i}"): i
-            for i, url in enumerate(search_urls)
-        }
-        
-        for future in as_completed(futures):
-            items = future.result()
-            for title, text, url in items:
-                if len(results) >= limit * 2:
-                    break
-                source_text = f"{title}" + (f" - {url}" if url else "")
-                try:
-                    results.append(NewsItem(source=source_text[:100], content=text))
-                except:
-                    pass
-    
-    # Fallback si aucun résultat
-    if not results:
-        logger.warning(f"❌ Web Search échoué: moteurs bloquent le scraping (anti-bot)")
-        results.append(NewsItem(
-            source="Web Search indisponible", 
-            content="Les moteurs de recherche bloquent le scraping. Réponse basée sur la Knowledge Base et sources F1 spécialisées uniquement."
-        ))
-    
-    # Mettre en cache centralisé
-    _cache.set(cache_key, results, CACHE_TTL["web_search"])
-    
-    return results[:limit]
-
 
 
 
@@ -838,69 +694,7 @@ def _clamp(text: str, max_len: int) -> str:
     return smart_clamp(text, max_len)
 
 
-def build_prompt(news_summary: str, user_question: str, history_text: str = "") -> str:
-    """Construction prompt avec monitoring overflow et stratégie réduction intelligente
-    
-    DÉPRÉCIÉ: Utiliser OptimizedPromptBuilder.build_f1_question() à la place.
-    Conservé pour compatibilité legacy.
 
-    Qwen 2.5 3B context: 8192 tokens max
-    Target: <3000 tokens (ultra-rapide) pour vitesse maximale
-    """
-    # Limites par défaut - DRASTIQUEMENT RÉDUITES pour vitesse
-    MAX_TOKENS = 3000  # Réduit de 6000→3000 pour inférence 2x plus rapide
-    WARNING_THRESHOLD = 2500  # Réduit de 5000→2500
-    
-    # Utiliser le prompt système centralisé depuis optimized_prompts.py
-    from backend.optimized_prompts import OptimizedPromptBuilder
-    system_template = OptimizedPromptBuilder.SYSTEM_PROMPT
-    
-    # Estimation initiale (concaténer pour compter)
-    combined_text = news_summary + user_question + history_text + system_template
-    total_tokens = estimate_tokens(combined_text)
-    
-    # Stratégie réduction si nécessaire
-    if total_tokens > MAX_TOKENS:
-        logger.warning(f"⚠️ Prompt overflow: {total_tokens} tokens (max {MAX_TOKENS})")
-        logger.info(f"🔧 Application stratégie réduction...")
-        
-        # Priorité: Question > Système > History > KB > News
-        news_summary = smart_clamp(news_summary, 400)   # Réduit 600 → 400 pour ultra-vitesse
-        history_text = smart_clamp(history_text, 300)   # Réduit 500 → 300 pour ultra-vitesse
-        
-        # Recalcul
-        combined_text = news_summary + user_question + history_text + system_template
-        total_tokens = estimate_tokens(combined_text)
-        logger.info(f"✅ Prompt réduit: {total_tokens} tokens")
-    
-    elif total_tokens > WARNING_THRESHOLD:
-        logger.info(f"⚠️ Prompt large: {total_tokens} tokens (seuil warning {WARNING_THRESHOLD})")
-    
-    # Borner les blocs (limites normales si pas overflow) - RÉDUITES pour vitesse
-    news_summary = smart_clamp(news_summary, 600)  # Réduit de 1200→600
-    history_text = smart_clamp(history_text, 400)  # Réduit de 600→400
-    
-    prompt = f"""{system_template}
-
-CONTEXTE CONVERSATION (si utile) :
-{history_text if history_text else "(aucun contexte)"}
-
-SOURCES :
-{news_summary if news_summary else "(aucune actualité)"}
-
-QUESTION : {user_question}
-
-Réponds maintenant (direct et concis):
-"""
-    prompt = textwrap.dedent(prompt).strip()
-    
-    # Sécurité finale
-    final_tokens = estimate_tokens(prompt)
-    if final_tokens > MAX_TOKENS:
-        logger.error(f"❌ Prompt toujours trop long ({final_tokens} tokens), troncature d'urgence")
-        prompt = smart_clamp(prompt, MAX_TOKENS * 4)  # *4 car 1 token ≈ 4 chars
-    
-    return prompt
 
 
 # Appel Ollama
@@ -917,17 +711,22 @@ def call_ollama(prompt: str, min_response_length: int = 15) -> str:
     Fallback subprocess si l'API échoue.
     Valide que la réponse n'est pas trop courte ou vide.
     """
-    # Payload avec paramètres optimisés pour vitesse <2s
+    # Payload avec paramètres optimisés pour qwen2.5:7b (meilleure qualité)
+    # Température VARIABLE: 0.15 (strict/FAQ) vs 0.35 (news/créatif) selon contexte
+    temp_default = 0.15
+    if "news" in prompt.lower() or "récent" in prompt.lower() or "ce week" in prompt.lower():
+        temp_default = 0.35  # News = plus nuancé et créatif
+    
     payload = {
         "model": OLLAMA_MODEL,
         "prompt": prompt,
         "stream": False,
         "options": {
-            "temperature": 0.15,      # TRÈS BAS pour cohérence et vitesse
+            "temperature": temp_default,       # Variable: 0.15 (strict) ou 0.35 (news/créatif)"
             "top_p": 0.85,            # Focus sur meilleurs tokens
-            "num_ctx": 512,           # Context réduit pour vitesse
-            "num_predict": 150,       # DRASTIQUE: max 150 tokens pour <2s
-            "top_k": 10,              # Beam search réduit
+            "num_ctx": 1024,          # Context augmenté (7b supporte plus)
+            "num_predict": 250,       # Augmenté: max 250 tokens (7b peut en générer plus)
+            "top_k": 15,              # Beam search un peu plus large
             "repeat_penalty": 1.1,    # Anti-répétition
         }
     }
@@ -1279,7 +1078,7 @@ def _answer_f1_question_internal(user_question: str, history=None, rag_only: Opt
                 )
                 response = call_ollama(prompt)
                 if response and not response.startswith("[ERREUR"):
-                    return response
+                    return response, sources
 
         # DÉTECTION TYPE DE QUESTION
         rag_mode = RAG_ONLY if rag_only is None else rag_only
@@ -1360,15 +1159,15 @@ def _answer_f1_question_internal(user_question: str, history=None, rag_only: Opt
             # ÉTAPE 1: Knowledge Base (PRIORITAIRE - CHARGEMENT MAXIMAL)
             try:
                 kb = get_knowledge_base()
-                # OPTIMISÉ: top_k=15 pour récupérer BEAUCOUP plus de docs, min_score=0.35 (plus permissif)
-                kb_results = kb.search(user_question, top_k=15, min_score=0.35)
+                # OPTIMISÉ: top_k=15 + min_score=0.45 (normes industrie pour meilleure précision)
+                kb_results = kb.search(user_question, top_k=15, min_score=0.45)
                 if kb_results:
                     # Prendre TOUS les résultats pertinents (pas de limite à 3000 chars)
                     kb_content = "\n\n".join(kb_results)[:5000]  # Augmenté de 3000→5000
-                    logger.info(f"✅ KB PRIORITAIRE: {len(kb_results)} chunks utilisés (score ≥0.35)")
+                    logger.info(f"✅ KB PRIORITAIRE: {len(kb_results)} chunks utilisés (score ≥0.45)")
                     sources.append("Knowledge Base F1 (base de connaissances locale)")
                 else:
-                    logger.info(f"KB: Aucun résultat (score <0.35)")
+                    logger.info(f"KB: Aucun résultat (score <0.45)")
             except Exception as e:
                 logger.warning(f"KB search failed: {e}")
 
@@ -1447,6 +1246,28 @@ def _answer_f1_question_internal(user_question: str, history=None, rag_only: Opt
                     sources.append("StandF1.com - Classements en temps réel")
                 else:
                     logger.info("Impossible de récupérer les standings via StandF1")
+
+            # ÉTAPE 3.5: Web Search PROACTIF pour questions "news" (PRIORITÉ 4)
+            # Si la question contient des mots-clés temporels → Ajouter Web Search automatiquement
+            news_keywords = ["news", "récent", "dimanche", "samedi", "ce week-end", "hier", "aujourd'hui", 
+                            "dernière", "dernières", "gagn", "remport", "victoire", "crash", "accident"]
+            if any(kw in q_lower for kw in news_keywords):
+                logger.info("📰 Question actualité détectée, Web Search proactif...")
+                try:
+                    wiki_content = []
+                    search_q = f"F1 {user_question}"
+                    wiki_params = {"list": "search", "srsearch": search_q, "srlimit": 3}
+                    data = fetch_wikimedia_api("query", params=wiki_params)
+                    if data and "query" in data and "search" in data["query"]:
+                        for r in data["query"]["search"][:3]:
+                            wiki_content.append(f"{r['title']}: {r['snippet'][:150]}")
+                    wiki_data_proactive = " | ".join(wiki_content[:3]) if wiki_content else None
+                    if wiki_data_proactive:
+                        season_csv_summary = (season_csv_summary or "") + "\n[Web Proactif] " + wiki_data_proactive
+                        sources.append("Recherche web proactive (actualités)")
+                        logger.info("✅ Web Search proactif ajouté")
+                except Exception as e:
+                    logger.warning(f"Web Search proactif échoué: {e}")
 
             # ÉTAPE 4: Appel LLM avec PRIORITÉ KB + Memory (PAS de Web Search sauf échec)
             # Construire prompt avec KB + Memory en PRIORITÉ

@@ -1,0 +1,257 @@
+{
+  "year": 2020,
+  "timestamp": "2026-01-14T21:46:59.529975",
+  "drivers": [
+    [
+      "Entrant",
+      "Constructor",
+      "Chassis",
+      "Power unit",
+      "Race drivers"
+    ],
+    [
+      "No.",
+      "Driver name",
+      "Rounds"
+    ],
+    [
+      "Alfa Romeo RacingOrlen[7]",
+      "Alfa Romeo Racing-Ferrari",
+      "C39[7]",
+      "Ferrari 065",
+      "799",
+      "Kimi RäikkönenAntonio Giovinazzi",
+      "AllAll"
+    ],
+    [
+      "Scuderia AlphaTauri Honda",
+      "AlphaTauri-Honda",
+      "AT01[8]",
+      "Honda RA620H[9]",
+      "1026",
+      "Pierre GaslyDaniil Kvyat",
+      "AllAll"
+    ],
+    [
+      "Scuderia Ferrari",
+      "Ferrari",
+      "SF1000[10]",
+      "Ferrari 065[11]",
+      "516",
+      "Sebastian VettelCharles Leclerc",
+      "AllAll"
+    ],
+    [
+      "Haas F1 Team",
+      "Haas-Ferrari",
+      "VF-20[12]",
+      "Ferrari 065",
+      "85120",
+      "Romain GrosjeanPietro FittipaldiKevin Magnussen",
+      "1–1516–17All"
+    ],
+    [
+      "McLaren F1 Team",
+      "McLaren-Renault",
+      "MCL35[13]",
+      "Renault E-Tech 20[14]",
+      "455",
+      "Lando NorrisCarlos Sainz Jr.",
+      "AllAll"
+    ],
+    [
+      "Mercedes-AMGPetronasF1 Team",
+      "Mercedes",
+      "F1 W11[15]",
+      "Mercedes-AMG F1 M11[16]",
+      "446377",
+      "Lewis HamiltonGeorge RussellValtteri Bottas",
+      "1–15, 1716All"
+    ],
+    [
+      "BWTRacing Point F1 Team[17]",
+      "Racing Point-BWTMercedes",
+      "RP20[18]",
+      "BWT Mercedes[a]",
+      "11271827",
+      "Sergio PérezNico HülkenbergLance StrollNico Hülkenberg[b]",
+      "1–4, 6–17[c]4–5All[d]11"
+    ],
+    [
+      "Aston MartinRed Bull Racing Honda",
+      "Red Bull Racing-Honda",
+      "RB16[21]",
+      "Honda RA620H",
+      "2333",
+      "Alexander AlbonMax Verstappen",
+      "AllAll"
+    ],
+    [
+      "RenaultDP WorldF1 Team[22]",
+      "Renault",
+      "R.S.20[23]",
+      "Renault E-Tech 20[24]",
+      "331",
+      "Daniel RicciardoEsteban Ocon",
+      "AllAll"
+    ],
+    [
+      "Williams Racing[25][e]",
+      "Williams-Mercedes",
+      "FW43[27]",
+      "Mercedes-AMG F1 M11[28]",
+      "66389",
+      "Nicholas LatifiGeorge RussellJack Aitken",
+      "All1–15, 1716"
+    ],
+    [
+      "Sources:[23][29]"
+    ]
+  ],
+  "teams": [],
+  "races": [
+    [
+      "Constructor",
+      "Practice drivers"
+    ],
+    [
+      "No.",
+      "Driver name",
+      "Rounds"
+    ],
+    [
+      "Alfa Romeo Racing-Ferrari",
+      "8837",
+      "Robert KubicaMick Schumacher",
+      "2–3, 5, 15, 1711"
+    ],
+    [
+      "Haas-Ferrari",
+      "50",
+      "Callum IlottMick Schumacher",
+      "1117"
+    ],
+    [
+      "Williams-Mercedes",
+      "40",
+      "Jack AitkenRoy Nissany",
+      "26, 8, 15"
+    ],
+    [
+      "Source:[29]"
+    ]
+  ],
+  "standings": [
+    [
+      "Round",
+      "Grand Prix",
+      "Circuit",
+      "Date"
+    ],
+    [
+      "1",
+      "Austrian Grand Prix",
+      "Red Bull Ring,Spielberg",
+      "5 July"
+    ],
+    [
+      "2",
+      "Styrian Grand Prix",
+      "12 July"
+    ],
+    [
+      "3",
+      "Hungarian Grand Prix",
+      "Hungaroring,Mogyoród",
+      "19 July[g]"
+    ],
+    [
+      "4",
+      "British Grand Prix",
+      "Silverstone Circuit,Silverstone",
+      "2 August[h]"
+    ],
+    [
+      "5",
+      "70th Anniversary Grand Prix",
+      "9 August"
+    ],
+    [
+      "6",
+      "Spanish Grand Prix",
+      "Circuit de Barcelona-Catalunya,Montmeló",
+      "16 August[i]"
+    ],
+    [
+      "7",
+      "Belgian Grand Prix",
+      "Circuit de Spa-Francorchamps,Stavelot",
+      "30 August"
+    ],
+    [
+      "8",
+      "Italian Grand Prix",
+      "Autodromo Nazionale di Monza,Monza",
+      "6 September"
+    ],
+    [
+      "9",
+      "Tuscan Grand Prix",
+      "Autodromo Internazionale del Mugello,Scarperia e San Piero",
+      "13 September"
+    ],
+    [
+      "10",
+      "Russian Grand Prix",
+      "Sochi Autodrom,Sochi",
+      "27 September"
+    ],
+    [
+      "11",
+      "Eifel Grand Prix",
+      "Nürburgring,Nürburg",
+      "11 October"
+    ],
+    [
+      "12",
+      "Portuguese Grand Prix",
+      "Autódromo Internacional do Algarve,Portimão",
+      "25 October"
+    ],
+    [
+      "13",
+      "Emilia Romagna Grand Prix",
+      "Autodromo Internazionale Enzo e Dino Ferrari,Imola",
+      "1 November"
+    ],
+    [
+      "14",
+      "Turkish Grand Prix",
+      "Istanbul Park,Tuzla",
+      "15 November"
+    ],
+    [
+      "15",
+      "Bahrain Grand Prix",
+      "Bahrain International Circuit,Sakhir[j]",
+      "29 November[k]"
+    ],
+    [
+      "16",
+      "Sakhir Grand Prix",
+      "6 December"
+    ],
+    [
+      "17",
+      "Abu Dhabi Grand Prix",
+      "Yas Marina Circuit,Abu Dhabi",
+      "13 December[l]"
+    ],
+    [
+      "Sources:[51][52][53][54]"
+    ]
+  ],
+  "title": "2020 Formula One World Championship",
+  "description": "",
+  "sections": {}
+}

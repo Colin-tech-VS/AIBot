@@ -638,3 +638,1306 @@
 [2026-01-13 09:40:11] [INFO] [backend.f1_bot:1232] Pipeline F1 optimisé
 [2026-01-13 09:40:11] [WARNING] [backend.knowledge_base:315] Aucun résultat FAISS > 0.4, fallback recherche simple
 [2026-01-13 09:40:11] [INFO] [backend.f1_bot:1250] KB: Aucun résultat (score <0.4)
+[2026-01-14 12:40:50] [INFO] [__main__:466] auto_train désactivé (AUTO_TRAIN=0).
+[2026-01-14 12:40:50] [INFO] [__main__:495] 🕷️ Aucun crawl précédent détecté, lancement du crawling...
+[2026-01-14 12:40:50] [WARNING] [__main__:541] ⚠️ Script crawler non trouvé: C:\Users\lebre\Documents\_Final\AIBot\scripts\crawler_f1.py
+[2026-01-14 12:40:50] [INFO] [__main__:612] ✅ MondayScheduler démarré (refresh widgets le lundi)
+[2026-01-14 12:41:15] [INFO] [app:163] Input sanitized: safe=True, length=45
+[2026-01-14 12:41:15] [INFO] [backend.f1_bot:1218] Question reçue: Bonjour, cest quoi le dernier GP ? Les scores
+[2026-01-14 12:41:15] [INFO] [backend.f1_bot:1226] Contexte long terme récupéré
+[2026-01-14 12:41:15] [INFO] [backend.f1_bot:1297] F1? True, Générale? False, Circuit? False
+[2026-01-14 12:41:15] [INFO] [backend.f1_bot:1352] Pipeline F1 optimisé
+[2026-01-14 12:41:15] [INFO] [backend.knowledge_base:126] Chargement modèle embeddings: sentence-transformers/all-MiniLM-L6-v2...
+[2026-01-14 12:41:18] [INFO] [backend.knowledge_base:196] ✅ FAISS index validé: 5551 vecteurs, 2233 documents, dim=384
+[2026-01-14 12:41:18] [INFO] [backend.knowledge_base:136] FAISS index chargé: 5551 vecteurs
+[2026-01-14 12:41:18] [INFO] [backend.f1_bot:1368] ✅ KB PRIORITAIRE: 15 chunks utilisés (score ≥0.35)
+[2026-01-14 12:41:18] [INFO] [backend.f1_bot:1430] ✅ MEMORY: Contexte long terme récupéré (3070 chars)
+[2026-01-14 12:41:24] [INFO] [backend.f1_bot:1151] Apprentissage réussi : 0 faits, 0 prefs
+[2026-01-14 12:42:08] [INFO] [app:163] Input sanitized: safe=True, length=15
+[2026-01-14 12:42:08] [INFO] [backend.f1_bot:1218] Question reçue: des suspensions
+[2026-01-14 12:42:08] [INFO] [backend.f1_bot:1226] Contexte long terme récupéré
+[2026-01-14 12:42:08] [INFO] [backend.f1_bot:1297] F1? False, Générale? True, Circuit? False
+[2026-01-14 12:42:08] [INFO] [backend.f1_bot:1302] Relance courte avec historique F1 — persistance sur F1
+[2026-01-14 12:42:08] [INFO] [backend.f1_bot:1352] Pipeline F1 optimisé
+[2026-01-14 12:42:08] [INFO] [backend.f1_bot:1368] ✅ KB PRIORITAIRE: 2 chunks utilisés (score ≥0.35)
+[2026-01-14 12:42:08] [INFO] [backend.f1_bot:1430] ✅ MEMORY: Contexte long terme récupéré (2984 chars)
+[2026-01-14 12:42:17] [INFO] [app:163] Input sanitized: safe=True, length=8
+[2026-01-14 12:42:17] [INFO] [backend.f1_bot:1218] Question reçue: exemples
+[2026-01-14 12:42:17] [INFO] [backend.f1_bot:1226] Contexte long terme récupéré
+[2026-01-14 12:42:17] [INFO] [backend.f1_bot:1297] F1? False, Générale? True, Circuit? False
+[2026-01-14 12:42:17] [INFO] [backend.f1_bot:1302] Relance courte avec historique F1 — persistance sur F1
+[2026-01-14 12:42:17] [INFO] [backend.f1_bot:1352] Pipeline F1 optimisé
+[2026-01-14 12:42:17] [INFO] [backend.f1_bot:1368] ✅ KB PRIORITAIRE: 12 chunks utilisés (score ≥0.35)
+[2026-01-14 12:42:17] [INFO] [backend.f1_bot:1430] ✅ MEMORY: Contexte long terme récupéré (1176 chars)
+[2026-01-14 12:42:18] [WARNING] [backend.f1_bot:944] Ollama response too short (4 chars): RIEN
+[2026-01-14 12:42:28] [INFO] [app:163] Input sanitized: safe=True, length=5
+[2026-01-14 12:42:28] [INFO] [backend.f1_bot:1218] Question reçue: en f1
+[2026-01-14 12:42:28] [INFO] [backend.f1_bot:1226] Contexte long terme récupéré
+[2026-01-14 12:42:28] [INFO] [backend.f1_bot:1297] F1? True, Générale? False, Circuit? False
+[2026-01-14 12:42:28] [INFO] [backend.f1_bot:1352] Pipeline F1 optimisé
+[2026-01-14 12:42:28] [INFO] [backend.f1_bot:1368] ✅ KB PRIORITAIRE: 15 chunks utilisés (score ≥0.35)
+[2026-01-14 12:42:28] [INFO] [backend.f1_bot:1430] ✅ MEMORY: Contexte long terme récupéré (1176 chars)
+[2026-01-14 12:42:31] [INFO] [backend.f1_bot:1151] Apprentissage réussi : 0 faits, 0 prefs
+[2026-01-14 12:42:40] [INFO] [app:163] Input sanitized: safe=True, length=5
+[2026-01-14 12:42:40] [INFO] [backend.f1_bot:1218] Question reçue: soupe
+[2026-01-14 12:42:40] [INFO] [backend.f1_bot:1226] Contexte long terme récupéré
+[2026-01-14 12:42:40] [INFO] [backend.f1_bot:1297] F1? False, Générale? True, Circuit? False
+[2026-01-14 12:42:40] [INFO] [backend.f1_bot:1302] Relance courte avec historique F1 — persistance sur F1
+[2026-01-14 12:42:40] [INFO] [backend.f1_bot:1352] Pipeline F1 optimisé
+[2026-01-14 12:42:40] [WARNING] [backend.knowledge_base:303] Aucun résultat FAISS > 0.35, fallback recherche simple
+[2026-01-14 12:42:40] [INFO] [backend.f1_bot:1371] KB: Aucun résultat (score <0.35)
+[2026-01-14 12:42:40] [INFO] [backend.f1_bot:1430] ✅ MEMORY: Contexte long terme récupéré (2154 chars)
+[2026-01-14 12:42:41] [INFO] [backend.f1_bot:1467] ⚠️ LLM incertain avec KB+Memory, tentative Web Search (dernier recours)...
+[2026-01-14 12:42:42] [WARNING] [backend.f1_bot:1481] Web Search échoué: Client error '403 Forbidden' for url 'https://en.wikipedia.org/w/api.php?list=search&srsearch=F1+soupe&srlimit=2&action=query&format=json'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+[2026-01-14 12:42:42] [INFO] [backend.f1_bot:1151] Apprentissage réussi : 0 faits, 0 prefs
+[2026-01-14 12:42:59] [INFO] [app:163] Input sanitized: safe=True, length=41
+[2026-01-14 12:42:59] [INFO] [backend.f1_bot:1218] Question reçue: 🏁 Prochain GP Dans 52j 17h GP d'Australie
+[2026-01-14 12:42:59] [INFO] [backend.f1_bot:1226] Contexte long terme récupéré
+[2026-01-14 12:42:59] [INFO] [backend.f1_bot:1237] ⚡ Intent rapide: next_race (conf=0.90)
+[2026-01-14 12:43:08] [INFO] [app:163] Input sanitized: safe=True, length=11
+[2026-01-14 12:43:08] [INFO] [backend.f1_bot:1218] Question reçue: prochain gp
+[2026-01-14 12:43:08] [INFO] [backend.f1_bot:1226] Contexte long terme récupéré
+[2026-01-14 12:43:08] [INFO] [backend.f1_bot:1237] ⚡ Intent rapide: next_race (conf=0.90)
+[2026-01-14 12:50:36] [INFO] [__main__:466] auto_train désactivé (AUTO_TRAIN=0).
+[2026-01-14 12:50:36] [INFO] [__main__:495] 🕷️ Aucun crawl précédent détecté, lancement du crawling...
+[2026-01-14 12:50:36] [WARNING] [__main__:541] ⚠️ Script crawler non trouvé: C:\Users\lebre\Documents\_Final\AIBot\scripts\crawler_f1.py
+[2026-01-14 12:50:36] [INFO] [__main__:612] ✅ MondayScheduler démarré (refresh widgets le lundi)
+[2026-01-14 12:50:53] [INFO] [app:163] Input sanitized: safe=True, length=12
+[2026-01-14 12:50:53] [INFO] [backend.f1_bot:1218] Question reçue: pilotes 2024
+[2026-01-14 12:50:53] [INFO] [backend.f1_bot:1226] Contexte long terme récupéré
+[2026-01-14 12:50:53] [INFO] [backend.f1_bot:1297] F1? True, Générale? False, Circuit? False
+[2026-01-14 12:50:53] [INFO] [backend.f1_bot:1352] Pipeline F1 optimisé
+[2026-01-14 12:50:53] [INFO] [backend.knowledge_base:126] Chargement modèle embeddings: sentence-transformers/all-MiniLM-L6-v2...
+[2026-01-14 12:50:56] [INFO] [backend.knowledge_base:196] ✅ FAISS index validé: 5551 vecteurs, 2233 documents, dim=384
+[2026-01-14 12:50:56] [INFO] [backend.knowledge_base:136] FAISS index chargé: 5551 vecteurs
+[2026-01-14 12:50:56] [INFO] [backend.f1_bot:1368] ✅ KB PRIORITAIRE: 15 chunks utilisés (score ≥0.35)
+[2026-01-14 12:50:56] [INFO] [backend.f1_bot:1430] ✅ MEMORY: Contexte long terme récupéré (2956 chars)
+[2026-01-14 12:50:57] [WARNING] [backend.standings_utils:70] StandF1: No table found in HTML
+[2026-01-14 12:50:57] [INFO] [backend.f1_bot:1449] Impossible de récupérer les standings via StandF1
+[2026-01-14 12:51:16] [INFO] [app:163] Input sanitized: safe=True, length=21
+[2026-01-14 12:51:16] [INFO] [backend.f1_bot:1218] Question reçue: non c est le spneu ca
+[2026-01-14 12:51:16] [INFO] [backend.f1_bot:1226] Contexte long terme récupéré
+[2026-01-14 12:51:16] [INFO] [backend.f1_bot:1297] F1? False, Générale? False, Circuit? False
+[2026-01-14 12:51:16] [INFO] [backend.f1_bot:1534] Question hors F1 — mode libre
+[2026-01-14 12:51:16] [INFO] [backend.f1_bot:1538] Question non catégorisée, utilisation du LLM direct
+[2026-01-14 12:51:17] [INFO] [backend.f1_bot:1151] Apprentissage réussi : 0 faits, 0 prefs
+[2026-01-14 12:51:29] [INFO] [app:163] Input sanitized: safe=True, length=18
+[2026-01-14 12:51:29] [INFO] [backend.f1_bot:1218] Question reçue: pilotes de f1 2024
+[2026-01-14 12:51:29] [INFO] [backend.f1_bot:1226] Contexte long terme récupéré
+[2026-01-14 12:51:29] [INFO] [backend.f1_bot:1297] F1? True, Générale? False, Circuit? False
+[2026-01-14 12:51:29] [INFO] [backend.f1_bot:1352] Pipeline F1 optimisé
+[2026-01-14 12:51:29] [INFO] [backend.f1_bot:1368] ✅ KB PRIORITAIRE: 15 chunks utilisés (score ≥0.35)
+[2026-01-14 12:51:30] [INFO] [backend.f1_bot:1430] ✅ MEMORY: Contexte long terme récupéré (2542 chars)
+[2026-01-14 12:51:31] [WARNING] [backend.standings_utils:70] StandF1: No table found in HTML
+[2026-01-14 12:51:31] [INFO] [backend.f1_bot:1449] Impossible de récupérer les standings via StandF1
+[2026-01-14 12:51:32] [INFO] [backend.f1_bot:1151] Apprentissage réussi : 0 faits, 0 prefs
+[2026-01-14 13:08:19] [INFO] [app:163] Input sanitized: safe=True, length=6
+[2026-01-14 13:08:19] [INFO] [backend.f1_bot:1218] Question reçue: alonso
+[2026-01-14 13:08:19] [INFO] [backend.f1_bot:1226] Contexte long terme récupéré
+[2026-01-14 13:08:19] [INFO] [backend.f1_bot:1297] F1? True, Générale? False, Circuit? False
+[2026-01-14 13:08:19] [INFO] [backend.f1_bot:1352] Pipeline F1 optimisé
+[2026-01-14 13:08:19] [INFO] [backend.f1_bot:1368] ✅ KB PRIORITAIRE: 15 chunks utilisés (score ≥0.35)
+[2026-01-14 13:08:19] [INFO] [backend.f1_bot:1430] ✅ MEMORY: Contexte long terme récupéré (2573 chars)
+[2026-01-14 13:08:58] [INFO] [app:163] Input sanitized: safe=True, length=6
+[2026-01-14 13:08:58] [INFO] [backend.f1_bot:1218] Question reçue: alonso
+[2026-01-14 13:08:58] [INFO] [backend.f1_bot:1226] Contexte long terme récupéré
+[2026-01-14 13:08:58] [INFO] [backend.f1_bot:1297] F1? True, Générale? False, Circuit? False
+[2026-01-14 13:08:58] [INFO] [backend.f1_bot:1352] Pipeline F1 optimisé
+[2026-01-14 13:08:58] [INFO] [backend.f1_bot:1368] ✅ KB PRIORITAIRE: 15 chunks utilisés (score ≥0.35)
+[2026-01-14 13:08:58] [INFO] [backend.f1_bot:1430] ✅ MEMORY: Contexte long terme récupéré (2573 chars)
+[2026-01-14 13:08:59] [INFO] [backend.f1_bot:1151] Apprentissage réussi : 0 faits, 0 prefs
+[2026-01-14 13:13:04] [WARNING] [__main__:459] Port 8001 indisponible. Bascule sur 8002.
+[2026-01-14 13:13:04] [INFO] [__main__:467] auto_train désactivé (AUTO_TRAIN=0).
+[2026-01-14 13:13:04] [INFO] [__main__:496] 🕷️ Aucun crawl précédent détecté, lancement du crawling...
+[2026-01-14 13:13:04] [WARNING] [__main__:542] ⚠️ Script crawler non trouvé: C:\Users\lebre\Documents\_Final\AIBot\scripts\crawler_f1.py
+[2026-01-14 13:13:04] [INFO] [__main__:613] ✅ MondayScheduler démarré (refresh widgets le lundi)
+[2026-01-14 13:14:17] [WARNING] [__main__:459] Port 8001 indisponible. Bascule sur 8002.
+[2026-01-14 13:14:17] [INFO] [__main__:467] auto_train désactivé (AUTO_TRAIN=0).
+[2026-01-14 13:14:17] [INFO] [__main__:496] 🕷️ Aucun crawl précédent détecté, lancement du crawling...
+[2026-01-14 13:14:17] [WARNING] [__main__:542] ⚠️ Script crawler non trouvé: C:\Users\lebre\Documents\_Final\AIBot\scripts\crawler_f1.py
+[2026-01-14 13:14:17] [INFO] [__main__:613] ✅ MondayScheduler démarré (refresh widgets le lundi)
+[2026-01-14 13:14:40] [INFO] [app:163] Input sanitized: safe=True, length=13
+[2026-01-14 13:14:40] [INFO] [backend.f1_bot:1218] Question reçue: qui est shumi
+[2026-01-14 13:14:40] [INFO] [backend.f1_bot:1226] Contexte long terme récupéré
+[2026-01-14 13:14:40] [INFO] [backend.f1_bot:1297] F1? False, Générale? True, Circuit? False
+[2026-01-14 13:14:40] [INFO] [backend.f1_bot:1506] Question générale (non-F1) — mode libre
+[2026-01-14 13:14:40] [INFO] [backend.knowledge_base:126] Chargement modèle embeddings: sentence-transformers/all-MiniLM-L6-v2...
+[2026-01-14 13:14:43] [INFO] [backend.knowledge_base:196] ✅ FAISS index validé: 5551 vecteurs, 2233 documents, dim=384
+[2026-01-14 13:14:43] [INFO] [backend.knowledge_base:136] FAISS index chargé: 5551 vecteurs
+[2026-01-14 13:14:43] [WARNING] [backend.knowledge_base:303] Aucun résultat FAISS > 0.5, fallback recherche simple
+[2026-01-14 13:15:02] [INFO] [app:163] Input sanitized: safe=True, length=13
+[2026-01-14 13:15:02] [INFO] [backend.f1_bot:1218] Question reçue: non shumacher
+[2026-01-14 13:15:02] [INFO] [backend.f1_bot:1226] Contexte long terme récupéré
+[2026-01-14 13:15:03] [ERROR] [app:188] Erreur non gérée pendant /chat
+Traceback (most recent call last):
+  File "C:\Users\lebre\Documents\_Final\AIBot\app.py", line 186, in chat
+    bot_response, sources = answer_f1_question(user_message, history=current_history, rag_only=None, username=None)
+                            ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\lebre\Documents\_Final\AIBot\backend\f1_bot.py", line 1168, in answer_f1_question
+    response, sources = _answer_f1_question_internal(user_question, history, rag_only, username)
+    ^^^^^^^^^^^^^^^^^
+ValueError: too many values to unpack (expected 2)
+[2026-01-14 13:18:00] [WARNING] [__main__:459] Port 8001 indisponible. Bascule sur 8002.
+[2026-01-14 13:18:00] [INFO] [__main__:467] auto_train désactivé (AUTO_TRAIN=0).
+[2026-01-14 13:18:00] [INFO] [__main__:496] 🕷️ Aucun crawl précédent détecté, lancement du crawling...
+[2026-01-14 13:18:00] [INFO] [__main__:528] 🕷️ Crawling en arrière-plan...
+[2026-01-14 13:18:00] [INFO] [__main__:613] ✅ MondayScheduler démarré (refresh widgets le lundi)
+[2026-01-14 13:18:00] [INFO] [__main__:536] ✅ Crawling terminé, rechargement KB...
+[2026-01-14 13:18:00] [INFO] [backend.knowledge_base:126] Chargement modèle embeddings: sentence-transformers/all-MiniLM-L6-v2...
+[2026-01-14 13:18:03] [INFO] [backend.knowledge_base:138] FAISS index initialisé (vide)
+[2026-01-14 13:19:45] [INFO] [backend.knowledge_base:425] Knowledge Base chargée: 2233 documents, 7983 chunks indexés.
+[2026-01-14 13:19:45] [INFO] [backend.knowledge_base:485] Knowledge base rechargée. 2233 documents, 7983 chunks indexés.
+[2026-01-14 13:19:45] [INFO] [__main__:538] ✅ Knowledge Base rechargée avec nouveaux fichiers
+[2026-01-14 13:25:33] [WARNING] [__main__:459] Port 8001 indisponible. Bascule sur 8002.
+[2026-01-14 13:25:33] [INFO] [__main__:467] auto_train désactivé (AUTO_TRAIN=0).
+[2026-01-14 13:25:33] [INFO] [__main__:514] ✅ Crawl récent (0 jours), pas de re-crawl
+[2026-01-14 13:25:33] [INFO] [__main__:613] ✅ MondayScheduler démarré (refresh widgets le lundi)
+[2026-01-14 15:43:41] [INFO] [__main__:467] auto_train désactivé (AUTO_TRAIN=0).
+[2026-01-14 15:43:41] [INFO] [__main__:514] ✅ Crawl récent (0 jours), pas de re-crawl
+[2026-01-14 15:43:41] [INFO] [__main__:613] ✅ MondayScheduler démarré (refresh widgets le lundi)
+[2026-01-14 15:45:32] [INFO] [__main__:467] auto_train désactivé (AUTO_TRAIN=0).
+[2026-01-14 15:45:32] [INFO] [__main__:514] ✅ Crawl récent (0 jours), pas de re-crawl
+[2026-01-14 15:45:32] [INFO] [__main__:613] ✅ MondayScheduler démarré (refresh widgets le lundi)
+[2026-01-14 15:50:19] [INFO] [__main__:466] auto_train désactivé (AUTO_TRAIN=0).
+[2026-01-14 15:50:19] [INFO] [__main__:495] 🕷️ Aucun crawl précédent détecté, lancement du crawling...
+[2026-01-14 15:50:19] [WARNING] [__main__:541] ⚠️ Script crawler non trouvé: C:\Users\lebre\Documents\_Final\AIBot\scripts\crawler_f1.py
+[2026-01-14 15:50:19] [INFO] [__main__:612] ✅ MondayScheduler démarré (refresh widgets le lundi)
+[2026-01-14 15:50:31] [INFO] [app:163] Input sanitized: safe=True, length=4
+[2026-01-14 15:50:31] [INFO] [backend.f1_bot:1218] Question reçue: pneu
+[2026-01-14 15:50:31] [INFO] [backend.f1_bot:1226] Contexte long terme récupéré
+[2026-01-14 15:50:31] [INFO] [backend.f1_bot:1297] F1? False, Générale? True, Circuit? False
+[2026-01-14 15:50:31] [INFO] [backend.f1_bot:1506] Question générale (non-F1) — mode libre
+[2026-01-14 15:50:31] [INFO] [backend.knowledge_base:126] Chargement modèle embeddings: sentence-transformers/all-MiniLM-L6-v2...
+[2026-01-14 15:50:36] [INFO] [backend.knowledge_base:196] ✅ FAISS index validé: 5551 vecteurs, 2233 documents, dim=384
+[2026-01-14 15:50:36] [INFO] [backend.knowledge_base:136] FAISS index chargé: 5551 vecteurs
+[2026-01-14 15:50:37] [WARNING] [backend.knowledge_base:303] Aucun résultat FAISS > 0.5, fallback recherche simple
+[2026-01-14 15:51:58] [INFO] [app:163] Input sanitized: safe=True, length=17
+[2026-01-14 15:51:58] [INFO] [backend.f1_bot:1218] Question reçue: circuit de france
+[2026-01-14 15:51:58] [INFO] [backend.f1_bot:1226] Contexte long terme récupéré
+[2026-01-14 15:51:58] [INFO] [backend.f1_bot:1297] F1? True, Générale? False, Circuit? True
+[2026-01-14 15:51:58] [INFO] [backend.f1_bot:1307] Recherche circuit CSV
+[2026-01-14 15:51:58] [WARNING] [backend.f1_bot:117] Erreur chargement circuits CSV: [Errno 2] No such file or directory: 'C:\\Users\\lebre\\Documents\\_Final\\AIBot\\knowledge_base\\circuits_kb.csv'
+[2026-01-14 15:51:58] [INFO] [backend.f1_bot:1352] Pipeline F1 optimisé
+[2026-01-14 15:51:58] [INFO] [backend.f1_bot:1368] ✅ KB PRIORITAIRE: 15 chunks utilisés (score ≥0.35)
+[2026-01-14 15:51:58] [INFO] [backend.f1_bot:1430] ✅ MEMORY: Contexte long terme récupéré (2087 chars)
+[2026-01-14 15:52:14] [INFO] [app:163] Input sanitized: safe=True, length=21
+[2026-01-14 15:52:14] [INFO] [backend.f1_bot:1218] Question reçue: qd sera le gp despagn
+[2026-01-14 15:52:14] [INFO] [backend.f1_bot:1226] Contexte long terme récupéré
+[2026-01-14 15:52:14] [INFO] [backend.f1_bot:1297] F1? True, Générale? False, Circuit? False
+[2026-01-14 15:52:14] [INFO] [backend.f1_bot:1352] Pipeline F1 optimisé
+[2026-01-14 15:52:14] [INFO] [backend.f1_bot:1368] ✅ KB PRIORITAIRE: 15 chunks utilisés (score ≥0.35)
+[2026-01-14 15:52:14] [INFO] [backend.f1_bot:1430] ✅ MEMORY: Contexte long terme récupéré (1152 chars)
+[2026-01-14 15:52:28] [INFO] [app:163] Input sanitized: safe=True, length=19
+[2026-01-14 15:52:28] [INFO] [backend.f1_bot:1218] Question reçue: quellle date est on
+[2026-01-14 15:52:28] [INFO] [backend.f1_bot:1226] Contexte long terme récupéré
+[2026-01-14 15:53:03] [WARNING] [__main__:458] Port 8001 indisponible. Bascule sur 8002.
+[2026-01-14 15:53:03] [INFO] [__main__:466] auto_train désactivé (AUTO_TRAIN=0).
+[2026-01-14 15:53:03] [INFO] [__main__:495] 🕷️ Aucun crawl précédent détecté, lancement du crawling...
+[2026-01-14 15:53:03] [WARNING] [__main__:541] ⚠️ Script crawler non trouvé: C:\Users\lebre\Documents\_Final\AIBot\scripts\crawler_f1.py
+[2026-01-14 15:53:03] [INFO] [__main__:612] ✅ MondayScheduler démarré (refresh widgets le lundi)
+[2026-01-14 15:57:46] [INFO] [backend.knowledge_base:126] Chargement modèle embeddings: sentence-transformers/all-MiniLM-L6-v2...
+[2026-01-14 15:57:50] [INFO] [backend.knowledge_base:138] FAISS index initialisé (vide)
+[2026-01-14 16:00:02] [INFO] [backend.knowledge_base:425] Knowledge Base chargée: 2233 documents, 7983 chunks indexés.
+[2026-01-14 16:00:02] [INFO] [backend.knowledge_base:485] Knowledge base rechargée. 2233 documents, 7983 chunks indexés.
+[2026-01-14 16:04:30] [WARNING] [__main__:458] Port 8001 indisponible. Bascule sur 8002.
+[2026-01-14 16:04:30] [INFO] [__main__:466] auto_train désactivé (AUTO_TRAIN=0).
+[2026-01-14 16:04:30] [WARNING] [__main__:551] ⚠️ Erreur vérification crawl: can't subtract offset-naive and offset-aware datetimes
+[2026-01-14 16:04:30] [INFO] [__main__:612] ✅ MondayScheduler démarré (refresh widgets le lundi)
+[2026-01-14 16:04:43] [INFO] [app:163] Input sanitized: safe=True, length=1
+[2026-01-14 16:04:43] [INFO] [backend.f1_bot:1218] Question reçue: s
+[2026-01-14 16:04:43] [INFO] [backend.f1_bot:1226] Contexte long terme récupéré
+[2026-01-14 16:04:43] [INFO] [backend.f1_bot:1297] F1? False, Générale? True, Circuit? False
+[2026-01-14 16:04:43] [INFO] [backend.f1_bot:1302] Relance courte avec historique F1 — persistance sur F1
+[2026-01-14 16:04:43] [INFO] [backend.f1_bot:1352] Pipeline F1 optimisé
+[2026-01-14 16:04:43] [INFO] [backend.f1_bot:1368] ✅ KB PRIORITAIRE: 2 chunks utilisés (score ≥0.35)
+[2026-01-14 16:04:43] [INFO] [backend.f1_bot:1430] ✅ MEMORY: Contexte long terme récupéré (1152 chars)
+[2026-01-14 16:04:52] [INFO] [backend.f1_bot:1151] Apprentissage réussi : 0 faits, 0 prefs
+[2026-01-14 16:05:05] [INFO] [app:163] Input sanitized: safe=True, length=6
+[2026-01-14 16:05:05] [INFO] [backend.f1_bot:1218] Question reçue: source
+[2026-01-14 16:05:05] [INFO] [backend.f1_bot:1226] Contexte long terme récupéré
+[2026-01-14 16:05:05] [INFO] [backend.f1_bot:1297] F1? False, Générale? True, Circuit? False
+[2026-01-14 16:05:05] [INFO] [backend.f1_bot:1302] Relance courte avec historique F1 — persistance sur F1
+[2026-01-14 16:05:05] [INFO] [backend.f1_bot:1352] Pipeline F1 optimisé
+[2026-01-14 16:05:05] [INFO] [backend.f1_bot:1368] ✅ KB PRIORITAIRE: 15 chunks utilisés (score ≥0.35)
+[2026-01-14 16:05:05] [INFO] [backend.f1_bot:1430] ✅ MEMORY: Contexte long terme récupéré (2221 chars)
+[2026-01-14 16:05:07] [INFO] [backend.f1_bot:1467] ⚠️ LLM incertain avec KB+Memory, tentative Web Search (dernier recours)...
+[2026-01-14 16:05:07] [WARNING] [backend.f1_bot:1481] Web Search échoué: Client error '403 Forbidden' for url 'https://en.wikipedia.org/w/api.php?list=search&srsearch=F1+source&srlimit=2&action=query&format=json'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+[2026-01-14 16:05:18] [INFO] [app:163] Input sanitized: safe=True, length=31
+[2026-01-14 16:05:18] [INFO] [backend.f1_bot:1218] Question reçue: tte les osurces que tu consulte
+[2026-01-14 16:05:18] [INFO] [backend.f1_bot:1226] Contexte long terme récupéré
+[2026-01-14 16:05:18] [INFO] [backend.f1_bot:1297] F1? False, Générale? False, Circuit? False
+[2026-01-14 16:05:18] [INFO] [backend.f1_bot:1534] Question hors F1 — mode libre
+[2026-01-14 16:05:18] [INFO] [backend.f1_bot:1538] Question non catégorisée, utilisation du LLM direct
+[2026-01-14 16:05:22] [INFO] [backend.f1_bot:1151] Apprentissage réussi : 0 faits, 0 prefs
+[2026-01-14 16:06:16] [INFO] [__main__:466] auto_train désactivé (AUTO_TRAIN=0).
+[2026-01-14 16:06:16] [WARNING] [__main__:551] ⚠️ Erreur vérification crawl: can't subtract offset-naive and offset-aware datetimes
+[2026-01-14 16:06:16] [INFO] [__main__:612] ✅ MondayScheduler démarré (refresh widgets le lundi)
+[2026-01-14 16:06:35] [INFO] [app:163] Input sanitized: safe=True, length=32
+[2026-01-14 16:06:35] [INFO] [backend.f1_bot:1218] Question reçue: donne le nom du dernier champion
+[2026-01-14 16:06:35] [INFO] [backend.f1_bot:1226] Contexte long terme récupéré
+[2026-01-14 16:06:35] [INFO] [backend.f1_bot:1297] F1? True, Générale? False, Circuit? False
+[2026-01-14 16:06:35] [INFO] [backend.f1_bot:1352] Pipeline F1 optimisé
+[2026-01-14 16:06:35] [INFO] [backend.knowledge_base:126] Chargement modèle embeddings: sentence-transformers/all-MiniLM-L6-v2...
+[2026-01-14 16:06:39] [INFO] [backend.knowledge_base:196] ✅ FAISS index validé: 7983 vecteurs, 2233 documents, dim=384
+[2026-01-14 16:06:39] [INFO] [backend.knowledge_base:136] FAISS index chargé: 7983 vecteurs
+[2026-01-14 16:06:39] [INFO] [backend.f1_bot:1368] ✅ KB PRIORITAIRE: 15 chunks utilisés (score ≥0.35)
+[2026-01-14 16:06:39] [INFO] [backend.f1_bot:1430] ✅ MEMORY: Contexte long terme récupéré (2938 chars)
+[2026-01-14 16:06:40] [WARNING] [backend.standings_utils:70] StandF1: No table found in HTML
+[2026-01-14 16:06:40] [INFO] [backend.f1_bot:1449] Impossible de récupérer les standings via StandF1
+[2026-01-14 16:06:44] [INFO] [backend.f1_bot:1151] Apprentissage réussi : 0 faits, 0 prefs
+[2026-01-14 16:06:52] [INFO] [app:163] Input sanitized: safe=True, length=13
+[2026-01-14 16:06:52] [INFO] [backend.f1_bot:1218] Question reçue: en quoi et qd
+[2026-01-14 16:06:52] [INFO] [backend.f1_bot:1226] Contexte long terme récupéré
+[2026-01-14 16:06:52] [INFO] [backend.f1_bot:1297] F1? False, Générale? False, Circuit? False
+[2026-01-14 16:06:52] [INFO] [backend.f1_bot:1534] Question hors F1 — mode libre
+[2026-01-14 16:06:52] [INFO] [backend.f1_bot:1538] Question non catégorisée, utilisation du LLM direct
+[2026-01-14 16:07:06] [INFO] [app:163] Input sanitized: safe=True, length=8
+[2026-01-14 16:07:06] [INFO] [backend.f1_bot:1218] Question reçue: tu e sur
+[2026-01-14 16:07:06] [INFO] [backend.f1_bot:1226] Contexte long terme récupéré
+[2026-01-14 16:07:06] [INFO] [backend.f1_bot:1297] F1? False, Générale? True, Circuit? False
+[2026-01-14 16:07:06] [INFO] [backend.f1_bot:1302] Relance courte avec historique F1 — persistance sur F1
+[2026-01-14 16:07:06] [INFO] [backend.f1_bot:1352] Pipeline F1 optimisé
+[2026-01-14 16:07:06] [INFO] [backend.f1_bot:1368] ✅ KB PRIORITAIRE: 6 chunks utilisés (score ≥0.35)
+[2026-01-14 16:07:06] [INFO] [backend.f1_bot:1430] ✅ MEMORY: Contexte long terme récupéré (2871 chars)
+[2026-01-14 16:07:09] [WARNING] [backend.f1_bot:944] Ollama response too short (4 chars): RIEN
+[2026-01-14 16:07:15] [INFO] [app:163] Input sanitized: safe=True, length=14
+[2026-01-14 16:07:15] [INFO] [backend.f1_bot:1218] Question reçue: qui est alonso
+[2026-01-14 16:07:15] [INFO] [backend.f1_bot:1226] Contexte long terme récupéré
+[2026-01-14 16:07:26] [INFO] [app:163] Input sanitized: safe=True, length=13
+[2026-01-14 16:07:26] [INFO] [backend.f1_bot:1218] Question reçue: qui est prost
+[2026-01-14 16:07:26] [INFO] [backend.f1_bot:1226] Contexte long terme récupéré
+[2026-01-14 19:36:24] [ERROR] [backend.knowledge_base:28] FAISS ou sentence-transformers manquant: No module named 'faiss'
+[2026-01-14 19:36:24] [ERROR] [backend.knowledge_base:29] Installez: pip install faiss-cpu sentence-transformers numpy langchain-text-splitters
+[2026-01-14 19:44:40] [ERROR] [backend.knowledge_base:28] FAISS ou sentence-transformers manquant: No module named 'faiss'
+[2026-01-14 19:44:40] [ERROR] [backend.knowledge_base:29] Installez: pip install faiss-cpu sentence-transformers numpy langchain-text-splitters
+[2026-01-14 19:46:49] [INFO] [__main__:466] auto_train désactivé (AUTO_TRAIN=0).
+[2026-01-14 19:46:49] [WARNING] [__main__:551] ⚠️ Erreur vérification crawl: can't subtract offset-naive and offset-aware datetimes
+[2026-01-14 19:46:49] [INFO] [__main__:612] ✅ MondayScheduler démarré (refresh widgets le lundi)
+[2026-01-14 19:47:45] [INFO] [app:163] Input sanitized: safe=True, length=5
+[2026-01-14 19:47:45] [INFO] [backend.f1_bot:1234] Question reçue: salut
+[2026-01-14 19:47:45] [INFO] [backend.f1_bot:1242] Contexte long terme récupéré
+[2026-01-14 19:47:45] [INFO] [backend.f1_bot:1313] F1? False, Générale? True, Circuit? False
+[2026-01-14 19:47:45] [INFO] [backend.f1_bot:1522] Question générale (non-F1) — mode libre
+[2026-01-14 19:47:45] [INFO] [backend.knowledge_base:126] Chargement modèle embeddings: sentence-transformers/all-MiniLM-L6-v2...
+[2026-01-14 19:47:48] [INFO] [backend.knowledge_base:196] ✅ FAISS index validé: 7983 vecteurs, 2233 documents, dim=384
+[2026-01-14 19:47:48] [INFO] [backend.knowledge_base:136] FAISS index chargé: 7983 vecteurs
+[2026-01-14 19:47:48] [WARNING] [backend.knowledge_base:303] Aucun résultat FAISS > 0.5, fallback recherche simple
+[2026-01-14 19:48:02] [INFO] [app:163] Input sanitized: safe=True, length=18
+[2026-01-14 19:48:02] [INFO] [backend.f1_bot:1234] Question reçue: parle des pneus f1
+[2026-01-14 19:48:02] [INFO] [backend.f1_bot:1242] Contexte long terme récupéré
+[2026-01-14 19:48:02] [INFO] [backend.f1_bot:1313] F1? True, Générale? False, Circuit? False
+[2026-01-14 19:48:02] [INFO] [backend.f1_bot:1368] Pipeline F1 optimisé
+[2026-01-14 19:48:02] [INFO] [backend.f1_bot:1384] ✅ KB PRIORITAIRE: 15 chunks utilisés (score ≥0.35)
+[2026-01-14 19:48:02] [INFO] [backend.f1_bot:1446] ✅ MEMORY: Contexte long terme récupéré (2940 chars)
+[2026-01-14 19:48:04] [WARNING] [backend.f1_bot:960] Ollama response too short (4 chars): Rien
+[2026-01-14 19:48:18] [INFO] [app:163] Input sanitized: safe=True, length=6
+[2026-01-14 19:48:18] [INFO] [backend.f1_bot:1234] Question reçue: alonso
+[2026-01-14 19:48:18] [INFO] [backend.f1_bot:1242] Contexte long terme récupéré
+[2026-01-14 19:48:18] [INFO] [backend.f1_bot:1313] F1? True, Générale? False, Circuit? False
+[2026-01-14 19:48:18] [INFO] [backend.f1_bot:1368] Pipeline F1 optimisé
+[2026-01-14 19:48:18] [INFO] [backend.f1_bot:1384] ✅ KB PRIORITAIRE: 15 chunks utilisés (score ≥0.35)
+[2026-01-14 19:48:18] [INFO] [backend.f1_bot:1446] ✅ MEMORY: Contexte long terme récupéré (2740 chars)
+[2026-01-14 19:48:20] [INFO] [backend.f1_bot:1167] Apprentissage réussi : 0 faits, 0 prefs
+[2026-01-14 19:48:36] [INFO] [app:163] Input sanitized: safe=True, length=33
+[2026-01-14 19:48:36] [INFO] [backend.f1_bot:1234] Question reçue: parle moi de la carriere d alonso
+[2026-01-14 19:48:36] [INFO] [backend.f1_bot:1242] Contexte long terme récupéré
+[2026-01-14 19:48:36] [INFO] [backend.f1_bot:1313] F1? True, Générale? False, Circuit? False
+[2026-01-14 19:48:36] [INFO] [backend.f1_bot:1368] Pipeline F1 optimisé
+[2026-01-14 19:48:36] [INFO] [backend.f1_bot:1384] ✅ KB PRIORITAIRE: 15 chunks utilisés (score ≥0.35)
+[2026-01-14 19:48:36] [INFO] [backend.f1_bot:1446] ✅ MEMORY: Contexte long terme récupéré (2962 chars)
+[2026-01-14 19:48:39] [INFO] [backend.f1_bot:1167] Apprentissage réussi : 0 faits, 0 prefs
+[2026-01-14 19:51:27] [INFO] [app:163] Input sanitized: safe=True, length=58
+[2026-01-14 19:51:27] [INFO] [backend.f1_bot:1234] Question reçue: qui a gagné le dernier championa et dis moi en quelle anée
+[2026-01-14 19:51:27] [INFO] [backend.f1_bot:1242] Contexte long terme récupéré
+[2026-01-14 19:51:27] [INFO] [backend.f1_bot:1313] F1? True, Générale? False, Circuit? False
+[2026-01-14 19:51:27] [INFO] [backend.f1_bot:1368] Pipeline F1 optimisé
+[2026-01-14 19:51:27] [INFO] [backend.f1_bot:1384] ✅ KB PRIORITAIRE: 15 chunks utilisés (score ≥0.35)
+[2026-01-14 19:51:27] [INFO] [backend.f1_bot:1446] ✅ MEMORY: Contexte long terme récupéré (3012 chars)
+[2026-01-14 19:51:28] [WARNING] [backend.standings_utils:70] StandF1: No table found in HTML
+[2026-01-14 19:51:28] [INFO] [backend.f1_bot:1465] Impossible de récupérer les standings via StandF1
+[2026-01-14 19:51:30] [INFO] [backend.f1_bot:1167] Apprentissage réussi : 1 faits, 0 prefs
+[2026-01-14 19:51:36] [INFO] [app:163] Input sanitized: safe=True, length=8
+[2026-01-14 19:51:36] [INFO] [backend.f1_bot:1234] Question reçue: et apres
+[2026-01-14 19:51:36] [INFO] [backend.f1_bot:1242] Contexte long terme récupéré
+[2026-01-14 19:51:36] [INFO] [backend.f1_bot:1313] F1? False, Générale? True, Circuit? False
+[2026-01-14 19:51:36] [INFO] [backend.f1_bot:1318] Relance courte avec historique F1 — persistance sur F1
+[2026-01-14 19:51:36] [INFO] [backend.f1_bot:1368] Pipeline F1 optimisé
+[2026-01-14 19:51:36] [INFO] [backend.f1_bot:1384] ✅ KB PRIORITAIRE: 15 chunks utilisés (score ≥0.35)
+[2026-01-14 19:51:36] [INFO] [backend.f1_bot:1446] ✅ MEMORY: Contexte long terme récupéré (1547 chars)
+[2026-01-14 19:51:38] [INFO] [backend.f1_bot:1167] Apprentissage réussi : 0 faits, 0 prefs
+[2026-01-14 19:51:49] [INFO] [app:163] Input sanitized: safe=True, length=24
+[2026-01-14 19:51:49] [INFO] [backend.f1_bot:1234] Question reçue: et les championa suivant
+[2026-01-14 19:51:49] [INFO] [backend.f1_bot:1242] Contexte long terme récupéré
+[2026-01-14 19:51:49] [INFO] [backend.f1_bot:1313] F1? True, Générale? False, Circuit? False
+[2026-01-14 19:51:49] [INFO] [backend.f1_bot:1368] Pipeline F1 optimisé
+[2026-01-14 19:51:49] [INFO] [backend.f1_bot:1384] ✅ KB PRIORITAIRE: 15 chunks utilisés (score ≥0.35)
+[2026-01-14 19:51:49] [INFO] [backend.f1_bot:1446] ✅ MEMORY: Contexte long terme récupéré (2999 chars)
+[2026-01-14 19:51:50] [WARNING] [backend.standings_utils:70] StandF1: No table found in HTML
+[2026-01-14 19:51:50] [INFO] [backend.f1_bot:1465] Impossible de récupérer les standings via StandF1
+[2026-01-14 20:23:21] [INFO] [__main__:524] auto_train désactivé (AUTO_TRAIN=0).
+[2026-01-14 20:23:21] [WARNING] [__main__:609] ⚠️ Erreur vérification crawl: can't subtract offset-naive and offset-aware datetimes
+[2026-01-14 20:23:21] [INFO] [__main__:670] ✅ MondayScheduler démarré (refresh widgets le lundi)
+[2026-01-14 20:23:52] [INFO] [__main__:524] auto_train désactivé (AUTO_TRAIN=0).
+[2026-01-14 20:23:52] [WARNING] [__main__:609] ⚠️ Erreur vérification crawl: can't subtract offset-naive and offset-aware datetimes
+[2026-01-14 20:23:52] [INFO] [__main__:670] ✅ MondayScheduler démarré (refresh widgets le lundi)
+[2026-01-14 20:24:08] [INFO] [app:163] Input sanitized: safe=True, length=26
+[2026-01-14 20:24:08] [INFO] [backend.f1_bot:1234] Question reçue: derniere actu sur hamilton
+[2026-01-14 20:24:08] [INFO] [backend.f1_bot:1242] Contexte long terme récupéré
+[2026-01-14 20:24:08] [INFO] [backend.f1_bot:1313] F1? True, Générale? False, Circuit? False
+[2026-01-14 20:24:08] [INFO] [backend.f1_bot:1368] Pipeline F1 optimisé
+[2026-01-14 20:24:08] [INFO] [backend.knowledge_base:126] Chargement modèle embeddings: sentence-transformers/all-MiniLM-L6-v2...
+[2026-01-14 20:24:10] [INFO] [backend.knowledge_base:196] ✅ FAISS index validé: 7983 vecteurs, 2233 documents, dim=384
+[2026-01-14 20:24:10] [INFO] [backend.knowledge_base:136] FAISS index chargé: 7983 vecteurs
+[2026-01-14 20:24:10] [INFO] [backend.f1_bot:1384] ✅ KB PRIORITAIRE: 15 chunks utilisés (score ≥0.35)
+[2026-01-14 20:24:10] [INFO] [backend.f1_bot:1446] ✅ MEMORY: Contexte long terme récupéré (2929 chars)
+[2026-01-14 20:24:33] [INFO] [app:163] Input sanitized: safe=True, length=30
+[2026-01-14 20:24:33] [INFO] [backend.f1_bot:1234] Question reçue: deriere actu pris par crowling
+[2026-01-14 20:24:33] [INFO] [backend.f1_bot:1242] Contexte long terme récupéré
+[2026-01-14 20:24:33] [INFO] [backend.f1_bot:1313] F1? False, Générale? False, Circuit? False
+[2026-01-14 20:24:33] [INFO] [backend.f1_bot:1550] Question hors F1 — mode libre
+[2026-01-14 20:24:33] [INFO] [backend.f1_bot:1554] Question non catégorisée, utilisation du LLM direct
+[2026-01-14 20:27:15] [WARNING] [__main__:516] Port 8001 indisponible. Bascule sur 8002.
+[2026-01-14 20:27:15] [INFO] [__main__:524] auto_train désactivé (AUTO_TRAIN=0).
+[2026-01-14 20:27:15] [WARNING] [__main__:609] ⚠️ Erreur vérification crawl: can't subtract offset-naive and offset-aware datetimes
+[2026-01-14 20:27:15] [INFO] [__main__:670] ✅ MondayScheduler démarré (refresh widgets le lundi)
+[2026-01-14 20:28:47] [WARNING] [__main__:516] Port 8001 indisponible. Bascule sur 8002.
+[2026-01-14 20:28:47] [INFO] [__main__:524] auto_train désactivé (AUTO_TRAIN=0).
+[2026-01-14 20:28:47] [WARNING] [__main__:609] ⚠️ Erreur vérification crawl: can't subtract offset-naive and offset-aware datetimes
+[2026-01-14 20:28:47] [INFO] [__main__:670] ✅ MondayScheduler démarré (refresh widgets le lundi)
+[2026-01-14 20:29:30] [INFO] [app:163] Input sanitized: safe=True, length=23
+[2026-01-14 20:29:30] [INFO] [backend.f1_bot:1234] Question reçue: Qui est Max Verstappen?
+[2026-01-14 20:29:30] [INFO] [backend.f1_bot:1242] Contexte long terme récupéré
+[2026-01-14 20:29:30] [INFO] [backend.f1_bot:1313] F1? True, Générale? False, Circuit? False
+[2026-01-14 20:29:30] [INFO] [backend.f1_bot:1368] Pipeline F1 optimisé
+[2026-01-14 20:29:30] [INFO] [backend.f1_bot:1384] ✅ KB PRIORITAIRE: 15 chunks utilisés (score ≥0.35)
+[2026-01-14 20:29:30] [INFO] [backend.f1_bot:1446] ✅ MEMORY: Contexte long terme récupéré (2547 chars)
+[2026-01-14 20:29:45] [INFO] [backend.knowledge_base:126] Chargement modèle embeddings: sentence-transformers/all-MiniLM-L6-v2...
+[2026-01-14 20:29:47] [INFO] [backend.knowledge_base:196] ✅ FAISS index validé: 7983 vecteurs, 2233 documents, dim=384
+[2026-01-14 20:29:47] [INFO] [backend.knowledge_base:136] FAISS index chargé: 7983 vecteurs
+[2026-01-14 20:30:44] [INFO] [backend.f1_bot:1234] Question reçue: Qui est Max Verstappen?
+[2026-01-14 20:30:44] [INFO] [backend.f1_bot:1242] Contexte long terme récupéré
+[2026-01-14 20:30:44] [INFO] [backend.f1_bot:1313] F1? True, Générale? False, Circuit? False
+[2026-01-14 20:30:44] [INFO] [backend.f1_bot:1368] Pipeline F1 optimisé
+[2026-01-14 20:30:44] [INFO] [backend.knowledge_base:126] Chargement modèle embeddings: sentence-transformers/all-MiniLM-L6-v2...
+[2026-01-14 20:30:46] [INFO] [backend.knowledge_base:196] ✅ FAISS index validé: 7983 vecteurs, 2233 documents, dim=384
+[2026-01-14 20:30:46] [INFO] [backend.knowledge_base:136] FAISS index chargé: 7983 vecteurs
+[2026-01-14 20:30:46] [INFO] [backend.f1_bot:1384] ✅ KB PRIORITAIRE: 15 chunks utilisés (score ≥0.35)
+[2026-01-14 20:30:46] [INFO] [backend.f1_bot:1446] ✅ MEMORY: Contexte long terme récupéré (2491 chars)
+[2026-01-14 20:36:52] [WARNING] [__main__:516] Port 8001 indisponible. Bascule sur 8002.
+[2026-01-14 20:36:52] [INFO] [__main__:524] auto_train désactivé (AUTO_TRAIN=0).
+[2026-01-14 20:36:52] [WARNING] [__main__:609] ⚠️ Erreur vérification crawl: can't subtract offset-naive and offset-aware datetimes
+[2026-01-14 20:36:52] [INFO] [__main__:670] ✅ MondayScheduler démarré (refresh widgets le lundi)
+[2026-01-14 20:37:10] [WARNING] [__main__:516] Port 8001 indisponible. Bascule sur 8002.
+[2026-01-14 20:37:10] [INFO] [__main__:524] auto_train désactivé (AUTO_TRAIN=0).
+[2026-01-14 20:37:10] [WARNING] [__main__:609] ⚠️ Erreur vérification crawl: can't subtract offset-naive and offset-aware datetimes
+[2026-01-14 20:37:10] [INFO] [__main__:670] ✅ MondayScheduler démarré (refresh widgets le lundi)
+[2026-01-14 20:37:20] [INFO] [app:163] Input sanitized: safe=True, length=19
+[2026-01-14 20:37:20] [INFO] [backend.f1_bot:1234] Question reçue: Qui est Verstappen?
+[2026-01-14 20:37:20] [INFO] [backend.f1_bot:1242] Contexte long terme récupéré
+[2026-01-14 20:38:03] [WARNING] [__main__:516] Port 8001 indisponible. Bascule sur 8002.
+[2026-01-14 20:38:03] [INFO] [__main__:524] auto_train désactivé (AUTO_TRAIN=0).
+[2026-01-14 20:38:03] [WARNING] [__main__:609] ⚠️ Erreur vérification crawl: can't subtract offset-naive and offset-aware datetimes
+[2026-01-14 20:38:03] [INFO] [__main__:670] ✅ MondayScheduler démarré (refresh widgets le lundi)
+[2026-01-14 20:38:20] [INFO] [backend.f1_bot:1234] Question reçue: Qui est Verstappen?
+[2026-01-14 20:38:20] [INFO] [backend.f1_bot:1242] Contexte long terme récupéré
+[2026-01-14 20:38:20] [INFO] [backend.f1_bot:1313] F1? True, Générale? False, Circuit? False
+[2026-01-14 20:38:20] [INFO] [backend.f1_bot:1368] Pipeline F1 optimisé
+[2026-01-14 20:38:20] [INFO] [backend.knowledge_base:126] Chargement modèle embeddings: sentence-transformers/all-MiniLM-L6-v2...
+[2026-01-14 20:38:22] [INFO] [backend.knowledge_base:196] ✅ FAISS index validé: 7983 vecteurs, 2233 documents, dim=384
+[2026-01-14 20:38:22] [INFO] [backend.knowledge_base:136] FAISS index chargé: 7983 vecteurs
+[2026-01-14 20:38:22] [INFO] [backend.f1_bot:1384] ✅ KB PRIORITAIRE: 15 chunks utilisés (score ≥0.35)
+[2026-01-14 20:38:22] [INFO] [backend.f1_bot:1446] ✅ MEMORY: Contexte long terme récupéré (2378 chars)
+[2026-01-14 20:42:56] [WARNING] [__main__:516] Port 8001 indisponible. Bascule sur 8002.
+[2026-01-14 20:42:56] [INFO] [__main__:524] auto_train désactivé (AUTO_TRAIN=0).
+[2026-01-14 20:42:56] [WARNING] [__main__:609] ⚠️ Erreur vérification crawl: can't subtract offset-naive and offset-aware datetimes
+[2026-01-14 20:42:56] [INFO] [__main__:670] ✅ MondayScheduler démarré (refresh widgets le lundi)
+[2026-01-14 20:44:19] [INFO] [__main__:524] auto_train désactivé (AUTO_TRAIN=0).
+[2026-01-14 20:44:19] [WARNING] [__main__:609] ⚠️ Erreur vérification crawl: can't subtract offset-naive and offset-aware datetimes
+[2026-01-14 20:44:19] [INFO] [__main__:670] ✅ MondayScheduler démarré (refresh widgets le lundi)
+[2026-01-14 20:44:38] [INFO] [app:163] Input sanitized: safe=True, length=19
+[2026-01-14 20:44:38] [INFO] [backend.f1_bot:1012] Question reçue: derier actu ferrari
+[2026-01-14 20:44:38] [INFO] [backend.f1_bot:1020] Contexte long terme récupéré
+[2026-01-14 20:44:38] [INFO] [backend.f1_bot:1091] F1? True, Générale? False, Circuit? False
+[2026-01-14 20:44:38] [INFO] [backend.f1_bot:1146] Pipeline F1 optimisé
+[2026-01-14 20:44:38] [INFO] [backend.knowledge_base:126] Chargement modèle embeddings: sentence-transformers/all-MiniLM-L6-v2...
+[2026-01-14 20:44:40] [INFO] [backend.knowledge_base:196] ✅ FAISS index validé: 7983 vecteurs, 2233 documents, dim=384
+[2026-01-14 20:44:40] [INFO] [backend.knowledge_base:136] FAISS index chargé: 7983 vecteurs
+[2026-01-14 20:44:40] [INFO] [backend.f1_bot:1162] ✅ KB PRIORITAIRE: 15 chunks utilisés (score ≥0.35)
+[2026-01-14 20:44:40] [INFO] [backend.f1_bot:1224] ✅ MEMORY: Contexte long terme récupéré (2388 chars)
+[2026-01-14 20:44:45] [INFO] [backend.f1_bot:945] Apprentissage réussi : 1 faits, 0 prefs
+[2026-01-14 20:45:00] [INFO] [app:163] Input sanitized: safe=True, length=34
+[2026-01-14 20:45:00] [INFO] [backend.f1_bot:1012] Question reçue: et que se passe t il pour hamilton
+[2026-01-14 20:45:00] [INFO] [backend.f1_bot:1020] Contexte long terme récupéré
+[2026-01-14 20:45:00] [INFO] [backend.f1_bot:1091] F1? True, Générale? False, Circuit? False
+[2026-01-14 20:45:00] [INFO] [backend.f1_bot:1146] Pipeline F1 optimisé
+[2026-01-14 20:45:00] [INFO] [backend.f1_bot:1162] ✅ KB PRIORITAIRE: 15 chunks utilisés (score ≥0.35)
+[2026-01-14 20:45:00] [INFO] [backend.f1_bot:1224] ✅ MEMORY: Contexte long terme récupéré (2809 chars)
+[2026-01-14 20:45:03] [INFO] [backend.f1_bot:945] Apprentissage réussi : 1 faits, 0 prefs
+[2026-01-14 20:45:15] [INFO] [app:163] Input sanitized: safe=True, length=17
+[2026-01-14 20:45:15] [INFO] [backend.f1_bot:1012] Question reçue: et qui est alonso
+[2026-01-14 20:45:15] [INFO] [backend.f1_bot:1020] Contexte long terme récupéré
+[2026-01-14 20:45:15] [INFO] [backend.f1_bot:1091] F1? True, Générale? False, Circuit? False
+[2026-01-14 20:45:15] [INFO] [backend.f1_bot:1146] Pipeline F1 optimisé
+[2026-01-14 20:45:15] [INFO] [backend.f1_bot:1162] ✅ KB PRIORITAIRE: 15 chunks utilisés (score ≥0.35)
+[2026-01-14 20:45:15] [INFO] [backend.f1_bot:1224] ✅ MEMORY: Contexte long terme récupéré (2863 chars)
+[2026-01-14 20:45:19] [INFO] [backend.f1_bot:945] Apprentissage réussi : 2 faits, 0 prefs
+[2026-01-14 20:45:28] [INFO] [app:163] Input sanitized: safe=True, length=19
+[2026-01-14 20:45:28] [INFO] [backend.f1_bot:1012] Question reçue: qui a gagné en 2025
+[2026-01-14 20:45:28] [INFO] [backend.f1_bot:1020] Contexte long terme récupéré
+[2026-01-14 20:45:28] [INFO] [backend.f1_bot:1091] F1? True, Générale? False, Circuit? False
+[2026-01-14 20:45:28] [INFO] [backend.f1_bot:1146] Pipeline F1 optimisé
+[2026-01-14 20:45:28] [INFO] [backend.f1_bot:1162] ✅ KB PRIORITAIRE: 15 chunks utilisés (score ≥0.35)
+[2026-01-14 20:45:30] [INFO] [backend.f1_bot:1224] ✅ MEMORY: Contexte long terme récupéré (2560 chars)
+[2026-01-14 20:45:31] [WARNING] [backend.f1_bot:738] Ollama response too short (11 chars): Royaume-Uni
+[2026-01-14 20:45:32] [INFO] [backend.f1_bot:945] Apprentissage réussi : 0 faits, 0 prefs
+[2026-01-14 20:45:44] [INFO] [app:163] Input sanitized: safe=True, length=22
+[2026-01-14 20:45:44] [INFO] [backend.f1_bot:1012] Question reçue: dernier champion connu
+[2026-01-14 20:45:44] [INFO] [backend.f1_bot:1020] Contexte long terme récupéré
+[2026-01-14 20:45:44] [INFO] [backend.f1_bot:1091] F1? True, Générale? False, Circuit? False
+[2026-01-14 20:45:44] [INFO] [backend.f1_bot:1146] Pipeline F1 optimisé
+[2026-01-14 20:45:44] [INFO] [backend.f1_bot:1162] ✅ KB PRIORITAIRE: 15 chunks utilisés (score ≥0.35)
+[2026-01-14 20:45:44] [INFO] [backend.f1_bot:1224] ✅ MEMORY: Contexte long terme récupéré (2463 chars)
+[2026-01-14 20:45:45] [WARNING] [backend.standings_utils:70] StandF1: No table found in HTML
+[2026-01-14 20:45:45] [INFO] [backend.f1_bot:1243] Impossible de récupérer les standings via StandF1
+[2026-01-14 20:45:47] [INFO] [backend.f1_bot:945] Apprentissage réussi : 1 faits, 0 prefs
+[2026-01-14 20:46:05] [INFO] [app:163] Input sanitized: safe=True, length=22
+[2026-01-14 20:46:05] [INFO] [backend.f1_bot:1012] Question reçue: classement des ecuries
+[2026-01-14 20:46:05] [INFO] [backend.f1_bot:1020] Contexte long terme récupéré
+[2026-01-14 20:46:05] [INFO] [backend.f1_bot:1091] F1? True, Générale? False, Circuit? False
+[2026-01-14 20:46:05] [INFO] [backend.f1_bot:1146] Pipeline F1 optimisé
+[2026-01-14 20:46:05] [INFO] [backend.f1_bot:1162] ✅ KB PRIORITAIRE: 15 chunks utilisés (score ≥0.35)
+[2026-01-14 20:46:06] [INFO] [backend.f1_bot:1224] ✅ MEMORY: Contexte long terme récupéré (2912 chars)
+[2026-01-14 20:46:06] [WARNING] [backend.standings_utils:158] StandF1 constructors: No tables found
+[2026-01-14 20:46:06] [INFO] [backend.f1_bot:1243] Impossible de récupérer les standings via StandF1
+[2026-01-14 20:46:11] [INFO] [backend.f1_bot:945] Apprentissage réussi : 3 faits, 0 prefs
+[2026-01-14 20:46:26] [INFO] [app:163] Input sanitized: safe=True, length=10
+[2026-01-14 20:46:26] [INFO] [backend.f1_bot:1012] Question reçue: tu es  sur
+[2026-01-14 20:46:26] [INFO] [backend.f1_bot:1020] Contexte long terme récupéré
+[2026-01-14 20:46:26] [INFO] [backend.f1_bot:1091] F1? False, Générale? True, Circuit? False
+[2026-01-14 20:46:26] [INFO] [backend.f1_bot:1096] Relance courte avec historique F1 — persistance sur F1
+[2026-01-14 20:46:26] [INFO] [backend.f1_bot:1146] Pipeline F1 optimisé
+[2026-01-14 20:46:26] [INFO] [backend.f1_bot:1162] ✅ KB PRIORITAIRE: 1 chunks utilisés (score ≥0.35)
+[2026-01-14 20:46:26] [INFO] [backend.f1_bot:1224] ✅ MEMORY: Contexte long terme récupéré (2661 chars)
+[2026-01-14 20:46:29] [INFO] [backend.f1_bot:945] Apprentissage réussi : 0 faits, 0 prefs
+[2026-01-14 20:46:39] [INFO] [app:163] Input sanitized: safe=True, length=26
+[2026-01-14 20:46:39] [INFO] [backend.f1_bot:1012] Question reçue: date du premier grand prix
+[2026-01-14 20:46:39] [INFO] [backend.f1_bot:1020] Contexte long terme récupéré
+[2026-01-14 20:46:40] [INFO] [backend.f1_bot:945] Apprentissage réussi : 1 faits, 1 prefs
+[2026-01-14 20:46:45] [INFO] [app:163] Input sanitized: safe=True, length=3
+[2026-01-14 20:46:45] [INFO] [backend.f1_bot:1012] Question reçue: oui
+[2026-01-14 20:46:45] [INFO] [backend.f1_bot:1020] Contexte long terme récupéré
+[2026-01-14 20:46:48] [INFO] [backend.f1_bot:945] Apprentissage réussi : 1 faits, 0 prefs
+[2026-01-14 20:46:54] [INFO] [app:163] Input sanitized: safe=True, length=4
+[2026-01-14 20:46:54] [INFO] [backend.f1_bot:1012] Question reçue: faux
+[2026-01-14 20:46:54] [INFO] [backend.f1_bot:1020] Contexte long terme récupéré
+[2026-01-14 20:46:54] [INFO] [backend.f1_bot:1091] F1? False, Générale? True, Circuit? False
+[2026-01-14 20:46:54] [INFO] [backend.f1_bot:1096] Relance courte avec historique F1 — persistance sur F1
+[2026-01-14 20:46:54] [INFO] [backend.f1_bot:1146] Pipeline F1 optimisé
+[2026-01-14 20:46:54] [WARNING] [backend.knowledge_base:303] Aucun résultat FAISS > 0.35, fallback recherche simple
+[2026-01-14 20:46:54] [INFO] [backend.f1_bot:1165] KB: Aucun résultat (score <0.35)
+[2026-01-14 20:46:54] [INFO] [backend.f1_bot:1224] ✅ MEMORY: Contexte long terme récupéré (1329 chars)
+[2026-01-14 20:46:56] [WARNING] [backend.f1_bot:738] Ollama response too short (4 chars): RIEN
+[2026-01-14 20:54:17] [INFO] [app:163] Input sanitized: safe=True, length=6
+[2026-01-14 20:54:17] [INFO] [backend.f1_bot:1012] Question reçue: top 10
+[2026-01-14 20:54:17] [INFO] [backend.f1_bot:1020] Contexte long terme récupéré
+[2026-01-14 20:54:17] [INFO] [backend.f1_bot:1091] F1? False, Générale? True, Circuit? False
+[2026-01-14 20:54:17] [INFO] [backend.f1_bot:1096] Relance courte avec historique F1 — persistance sur F1
+[2026-01-14 20:54:17] [INFO] [backend.f1_bot:1146] Pipeline F1 optimisé
+[2026-01-14 20:54:17] [INFO] [backend.f1_bot:1162] ✅ KB PRIORITAIRE: 15 chunks utilisés (score ≥0.35)
+[2026-01-14 20:54:17] [INFO] [backend.f1_bot:1224] ✅ MEMORY: Contexte long terme récupéré (917 chars)
+[2026-01-14 20:54:17] [WARNING] [backend.standings_utils:70] StandF1: No table found in HTML
+[2026-01-14 20:54:17] [INFO] [backend.f1_bot:1243] Impossible de récupérer les standings via StandF1
+[2026-01-14 20:54:24] [INFO] [backend.f1_bot:945] Apprentissage réussi : 2 faits, 1 prefs
+[2026-01-14 21:02:17] [INFO] [__main__:524] auto_train désactivé (AUTO_TRAIN=0).
+[2026-01-14 21:02:17] [WARNING] [__main__:609] ⚠️ Erreur vérification crawl: can't subtract offset-naive and offset-aware datetimes
+[2026-01-14 21:02:17] [INFO] [__main__:670] ✅ MondayScheduler démarré (refresh widgets le lundi)
+[2026-01-14 21:02:34] [INFO] [app:163] Input sanitized: safe=True, length=16
+[2026-01-14 21:02:34] [INFO] [backend.f1_bot:1017] Question reçue: qui est hamilton
+[2026-01-14 21:02:34] [INFO] [backend.f1_bot:1025] Contexte long terme récupéré
+[2026-01-14 21:02:34] [INFO] [backend.f1_bot:1096] F1? True, Générale? False, Circuit? False
+[2026-01-14 21:02:34] [INFO] [backend.f1_bot:1151] Pipeline F1 optimisé
+[2026-01-14 21:02:34] [INFO] [backend.knowledge_base:126] Chargement modèle embeddings: sentence-transformers/all-MiniLM-L6-v2...
+[2026-01-14 21:02:37] [INFO] [backend.knowledge_base:196] ✅ FAISS index validé: 7983 vecteurs, 2233 documents, dim=384
+[2026-01-14 21:02:37] [INFO] [backend.knowledge_base:136] FAISS index chargé: 7983 vecteurs
+[2026-01-14 21:02:37] [INFO] [backend.f1_bot:1167] ✅ KB PRIORITAIRE: 1 chunks utilisés (score ≥0.45)
+[2026-01-14 21:02:37] [INFO] [backend.f1_bot:1229] ✅ MEMORY: Contexte long terme récupéré (2582 chars)
+[2026-01-14 21:02:43] [INFO] [backend.f1_bot:950] Apprentissage réussi : 3 faits, 0 prefs
+[2026-01-14 21:02:49] [INFO] [app:163] Input sanitized: safe=True, length=16
+[2026-01-14 21:02:49] [INFO] [backend.f1_bot:1017] Question reçue: deriere victoire
+[2026-01-14 21:02:49] [INFO] [backend.f1_bot:1025] Contexte long terme récupéré
+[2026-01-14 21:02:49] [INFO] [backend.f1_bot:1096] F1? True, Générale? False, Circuit? False
+[2026-01-14 21:02:49] [INFO] [backend.f1_bot:1151] Pipeline F1 optimisé
+[2026-01-14 21:02:49] [WARNING] [backend.knowledge_base:303] Aucun résultat FAISS > 0.45, fallback recherche simple
+[2026-01-14 21:02:49] [INFO] [backend.f1_bot:1170] KB: Aucun résultat (score <0.45)
+[2026-01-14 21:02:49] [INFO] [backend.f1_bot:1229] ✅ MEMORY: Contexte long terme récupéré (1606 chars)
+[2026-01-14 21:02:49] [INFO] [backend.f1_bot:1255] 📰 Question actualité détectée, Web Search proactif...
+[2026-01-14 21:02:49] [WARNING] [backend.f1_bot:1270] Web Search proactif échoué: Client error '403 Forbidden' for url 'https://en.wikipedia.org/w/api.php?list=search&srsearch=F1+deriere+victoire&srlimit=3&action=query&format=json'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+[2026-01-14 21:02:52] [INFO] [backend.f1_bot:950] Apprentissage réussi : 1 faits, 0 prefs
+[2026-01-14 21:02:56] [INFO] [app:163] Input sanitized: safe=True, length=10
+[2026-01-14 21:02:56] [INFO] [backend.f1_bot:1017] Question reçue: et depui s
+[2026-01-14 21:02:56] [INFO] [backend.f1_bot:1025] Contexte long terme récupéré
+[2026-01-14 21:02:56] [INFO] [backend.f1_bot:1096] F1? False, Générale? True, Circuit? False
+[2026-01-14 21:02:56] [INFO] [backend.f1_bot:1101] Relance courte avec historique F1 — persistance sur F1
+[2026-01-14 21:02:56] [INFO] [backend.f1_bot:1151] Pipeline F1 optimisé
+[2026-01-14 21:02:56] [INFO] [backend.f1_bot:1167] ✅ KB PRIORITAIRE: 3 chunks utilisés (score ≥0.45)
+[2026-01-14 21:02:56] [INFO] [backend.f1_bot:1229] ✅ MEMORY: Contexte long terme récupéré (1187 chars)
+[2026-01-14 21:02:59] [INFO] [backend.f1_bot:950] Apprentissage réussi : 1 faits, 0 prefs
+[2026-01-14 21:03:14] [INFO] [app:163] Input sanitized: safe=True, length=33
+[2026-01-14 21:03:14] [INFO] [backend.f1_bot:1017] Question reçue: ok et qui est le meilleur en 2024
+[2026-01-14 21:03:14] [INFO] [backend.f1_bot:1025] Contexte long terme récupéré
+[2026-01-14 21:03:14] [INFO] [backend.f1_bot:1092] Relance référentielle détectée avec contexte F1 — forçage F1
+[2026-01-14 21:03:14] [INFO] [backend.f1_bot:1096] F1? True, Générale? False, Circuit? False
+[2026-01-14 21:03:14] [INFO] [backend.f1_bot:1151] Pipeline F1 optimisé
+[2026-01-14 21:03:14] [INFO] [backend.f1_bot:1167] ✅ KB PRIORITAIRE: 9 chunks utilisés (score ≥0.45)
+[2026-01-14 21:03:14] [INFO] [backend.f1_bot:1229] ✅ MEMORY: Contexte long terme récupéré (2632 chars)
+[2026-01-14 21:03:18] [INFO] [backend.f1_bot:950] Apprentissage réussi : 0 faits, 0 prefs
+[2026-01-14 21:03:30] [INFO] [app:163] Input sanitized: safe=True, length=18
+[2026-01-14 21:03:30] [INFO] [backend.f1_bot:1017] Question reçue: ok alors pour 2025
+[2026-01-14 21:03:30] [INFO] [backend.f1_bot:1025] Contexte long terme récupéré
+[2026-01-14 21:03:30] [INFO] [backend.f1_bot:1096] F1? False, Générale? False, Circuit? False
+[2026-01-14 21:03:30] [INFO] [backend.f1_bot:1355] Question hors F1 — mode libre
+[2026-01-14 21:03:30] [INFO] [backend.f1_bot:1359] Question non catégorisée, utilisation du LLM direct
+[2026-01-14 21:03:35] [WARNING] [backend.f1_bot:743] Ollama response too short (4 chars): RIEN
+[2026-01-14 21:03:52] [INFO] [app:163] Input sanitized: safe=True, length=29
+[2026-01-14 21:03:52] [INFO] [backend.f1_bot:1017] Question reçue: pourqoui tu repond en chinois
+[2026-01-14 21:03:52] [INFO] [backend.f1_bot:1025] Contexte long terme récupéré
+[2026-01-14 21:03:52] [INFO] [backend.f1_bot:1096] F1? False, Générale? False, Circuit? False
+[2026-01-14 21:03:52] [INFO] [backend.f1_bot:1355] Question hors F1 — mode libre
+[2026-01-14 21:03:52] [INFO] [backend.f1_bot:1359] Question non catégorisée, utilisation du LLM direct
+[2026-01-14 21:03:56] [INFO] [backend.f1_bot:950] Apprentissage réussi : 0 faits, 0 prefs
+[2026-01-14 21:04:12] [INFO] [app:163] Input sanitized: safe=True, length=17
+[2026-01-14 21:04:12] [INFO] [backend.f1_bot:1017] Question reçue: parlesd des pneus
+[2026-01-14 21:04:12] [INFO] [backend.f1_bot:1025] Contexte long terme récupéré
+[2026-01-14 21:04:12] [INFO] [backend.f1_bot:1096] F1? False, Générale? True, Circuit? False
+[2026-01-14 21:04:12] [INFO] [backend.f1_bot:1101] Relance courte avec historique F1 — persistance sur F1
+[2026-01-14 21:04:12] [INFO] [backend.f1_bot:1151] Pipeline F1 optimisé
+[2026-01-14 21:04:12] [INFO] [backend.f1_bot:1167] ✅ KB PRIORITAIRE: 2 chunks utilisés (score ≥0.45)
+[2026-01-14 21:04:12] [INFO] [backend.f1_bot:1229] ✅ MEMORY: Contexte long terme récupéré (2869 chars)
+[2026-01-14 21:04:17] [INFO] [backend.f1_bot:950] Apprentissage réussi : 3 faits, 0 prefs
+[2026-01-14 21:04:41] [INFO] [app:163] Input sanitized: safe=True, length=42
+[2026-01-14 21:04:41] [INFO] [backend.f1_bot:1017] Question reçue: ok rt des drapeux utlisé pendant la course
+[2026-01-14 21:04:41] [INFO] [backend.f1_bot:1025] Contexte long terme récupéré
+[2026-01-14 21:04:41] [INFO] [backend.f1_bot:1096] F1? True, Générale? False, Circuit? False
+[2026-01-14 21:04:41] [INFO] [backend.f1_bot:1151] Pipeline F1 optimisé
+[2026-01-14 21:04:41] [INFO] [backend.f1_bot:1167] ✅ KB PRIORITAIRE: 13 chunks utilisés (score ≥0.45)
+[2026-01-14 21:04:41] [INFO] [backend.f1_bot:1229] ✅ MEMORY: Contexte long terme récupéré (2956 chars)
+[2026-01-14 21:04:46] [INFO] [backend.f1_bot:950] Apprentissage réussi : 4 faits, 0 prefs
+[2026-01-14 21:05:08] [INFO] [app:163] Input sanitized: safe=True, length=45
+[2026-01-14 21:05:08] [INFO] [backend.f1_bot:1017] Question reçue: les ecuries qui ont fait l histoire del a f1.
+[2026-01-14 21:05:08] [INFO] [backend.f1_bot:1025] Contexte long terme récupéré
+[2026-01-14 21:05:08] [INFO] [backend.f1_bot:1096] F1? True, Générale? False, Circuit? False
+[2026-01-14 21:05:08] [INFO] [backend.f1_bot:1151] Pipeline F1 optimisé
+[2026-01-14 21:05:08] [INFO] [backend.f1_bot:1167] ✅ KB PRIORITAIRE: 15 chunks utilisés (score ≥0.45)
+[2026-01-14 21:05:08] [INFO] [backend.f1_bot:1229] ✅ MEMORY: Contexte long terme récupéré (2705 chars)
+[2026-01-14 21:05:12] [WARNING] [backend.standings_utils:158] StandF1 constructors: No tables found
+[2026-01-14 21:05:12] [INFO] [backend.f1_bot:1248] Impossible de récupérer les standings via StandF1
+[2026-01-14 21:05:17] [INFO] [backend.f1_bot:950] Apprentissage réussi : 9 faits, 0 prefs
+[2026-01-14 21:05:29] [INFO] [app:163] Input sanitized: safe=True, length=16
+[2026-01-14 21:05:29] [INFO] [backend.f1_bot:1017] Question reçue: parle moi de bmw
+[2026-01-14 21:05:29] [INFO] [backend.f1_bot:1025] Contexte long terme récupéré
+[2026-01-14 21:05:29] [INFO] [backend.f1_bot:1096] F1? False, Générale? False, Circuit? False
+[2026-01-14 21:05:29] [INFO] [backend.f1_bot:1355] Question hors F1 — mode libre
+[2026-01-14 21:05:29] [INFO] [backend.f1_bot:1359] Question non catégorisée, utilisation du LLM direct
+[2026-01-14 21:05:34] [INFO] [backend.f1_bot:950] Apprentissage réussi : 2 faits, 1 prefs
+[2026-01-14 21:05:49] [INFO] [app:163] Input sanitized: safe=True, length=36
+[2026-01-14 21:05:49] [INFO] [backend.f1_bot:1017] Question reçue: timo glock c est qui ila fait quoi $
+[2026-01-14 21:05:49] [INFO] [backend.f1_bot:1025] Contexte long terme récupéré
+[2026-01-14 21:05:49] [INFO] [backend.f1_bot:1092] Relance référentielle détectée avec contexte F1 — forçage F1
+[2026-01-14 21:05:49] [INFO] [backend.f1_bot:1096] F1? True, Générale? False, Circuit? False
+[2026-01-14 21:05:49] [INFO] [backend.f1_bot:1151] Pipeline F1 optimisé
+[2026-01-14 21:05:49] [INFO] [backend.f1_bot:1167] ✅ KB PRIORITAIRE: 1 chunks utilisés (score ≥0.45)
+[2026-01-14 21:05:49] [INFO] [backend.f1_bot:1229] ✅ MEMORY: Contexte long terme récupéré (2419 chars)
+[2026-01-14 21:05:53] [INFO] [backend.f1_bot:950] Apprentissage réussi : 2 faits, 0 prefs
+[2026-01-14 21:06:03] [INFO] [app:163] Input sanitized: safe=True, length=2
+[2026-01-14 21:06:03] [INFO] [backend.f1_bot:1017] Question reçue: ok
+[2026-01-14 21:06:03] [INFO] [backend.f1_bot:1025] Contexte long terme récupéré
+[2026-01-14 21:06:14] [INFO] [app:163] Input sanitized: safe=True, length=10
+[2026-01-14 21:06:14] [INFO] [backend.f1_bot:1017] Question reçue: schumacher
+[2026-01-14 21:06:14] [INFO] [backend.f1_bot:1025] Contexte long terme récupéré
+[2026-01-14 21:06:14] [INFO] [backend.f1_bot:1096] F1? True, Générale? False, Circuit? False
+[2026-01-14 21:06:14] [INFO] [backend.f1_bot:1151] Pipeline F1 optimisé
+[2026-01-14 21:06:14] [INFO] [backend.f1_bot:1167] ✅ KB PRIORITAIRE: 15 chunks utilisés (score ≥0.45)
+[2026-01-14 21:06:14] [INFO] [backend.f1_bot:1229] ✅ MEMORY: Contexte long terme récupéré (1697 chars)
+[2026-01-14 21:06:16] [INFO] [backend.f1_bot:950] Apprentissage réussi : 1 faits, 0 prefs
+[2026-01-14 21:06:22] [INFO] [app:163] Input sanitized: safe=True, length=8
+[2026-01-14 21:06:22] [INFO] [backend.f1_bot:1017] Question reçue: et santé
+[2026-01-14 21:06:22] [INFO] [backend.f1_bot:1025] Contexte long terme récupéré
+[2026-01-14 21:06:22] [INFO] [backend.f1_bot:1092] Relance référentielle détectée avec contexte F1 — forçage F1
+[2026-01-14 21:06:22] [INFO] [backend.f1_bot:1096] F1? True, Générale? False, Circuit? False
+[2026-01-14 21:06:22] [INFO] [backend.f1_bot:1151] Pipeline F1 optimisé
+[2026-01-14 21:06:22] [WARNING] [backend.knowledge_base:303] Aucun résultat FAISS > 0.45, fallback recherche simple
+[2026-01-14 21:06:22] [INFO] [backend.f1_bot:1170] KB: Aucun résultat (score <0.45)
+[2026-01-14 21:06:22] [INFO] [backend.f1_bot:1229] ✅ MEMORY: Contexte long terme récupéré (1109 chars)
+[2026-01-14 21:06:26] [INFO] [backend.f1_bot:950] Apprentissage réussi : 1 faits, 0 prefs
+[2026-01-14 21:06:31] [INFO] [app:163] Input sanitized: safe=True, length=5
+[2026-01-14 21:06:31] [INFO] [backend.f1_bot:1017] Question reçue: ou ca
+[2026-01-14 21:06:31] [INFO] [backend.f1_bot:1025] Contexte long terme récupéré
+[2026-01-14 21:06:31] [INFO] [backend.f1_bot:1096] F1? False, Générale? True, Circuit? False
+[2026-01-14 21:06:31] [INFO] [backend.f1_bot:1101] Relance courte avec historique F1 — persistance sur F1
+[2026-01-14 21:06:31] [INFO] [backend.f1_bot:1151] Pipeline F1 optimisé
+[2026-01-14 21:06:31] [INFO] [backend.f1_bot:1167] ✅ KB PRIORITAIRE: 1 chunks utilisés (score ≥0.45)
+[2026-01-14 21:06:31] [INFO] [backend.f1_bot:1229] ✅ MEMORY: Contexte long terme récupéré (1106 chars)
+[2026-01-14 21:06:33] [INFO] [backend.f1_bot:1288] ⚠️ LLM incertain avec KB+Memory, tentative Web Search (dernier recours)...
+[2026-01-14 21:06:34] [WARNING] [backend.f1_bot:1302] Web Search échoué: Client error '403 Forbidden' for url 'https://en.wikipedia.org/w/api.php?list=search&srsearch=F1+ou+ca&srlimit=2&action=query&format=json'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+[2026-01-14 21:06:36] [INFO] [backend.f1_bot:950] Apprentissage réussi : 1 faits, 0 prefs
+[2026-01-14 21:06:46] [INFO] [app:163] Input sanitized: safe=True, length=20
+[2026-01-14 21:06:46] [INFO] [backend.f1_bot:1017] Question reçue: ou a ti leu accident
+[2026-01-14 21:06:46] [INFO] [backend.f1_bot:1025] Contexte long terme récupéré
+[2026-01-14 21:06:46] [INFO] [backend.f1_bot:1096] F1? False, Générale? False, Circuit? False
+[2026-01-14 21:06:46] [INFO] [backend.f1_bot:1355] Question hors F1 — mode libre
+[2026-01-14 21:06:46] [INFO] [backend.f1_bot:1359] Question non catégorisée, utilisation du LLM direct
+[2026-01-14 21:06:49] [INFO] [backend.f1_bot:950] Apprentissage réussi : 1 faits, 0 prefs
+[2026-01-14 21:06:54] [INFO] [app:163] Input sanitized: safe=True, length=11
+[2026-01-14 21:06:54] [INFO] [backend.f1_bot:1017] Question reçue: a meribel ?
+[2026-01-14 21:06:54] [INFO] [backend.f1_bot:1025] Contexte long terme récupéré
+[2026-01-14 21:06:54] [INFO] [backend.f1_bot:1096] F1? False, Générale? True, Circuit? False
+[2026-01-14 21:06:54] [INFO] [backend.f1_bot:1101] Relance courte avec historique F1 — persistance sur F1
+[2026-01-14 21:06:54] [INFO] [backend.f1_bot:1151] Pipeline F1 optimisé
+[2026-01-14 21:06:54] [WARNING] [backend.knowledge_base:303] Aucun résultat FAISS > 0.45, fallback recherche simple
+[2026-01-14 21:06:54] [INFO] [backend.f1_bot:1167] ✅ KB PRIORITAIRE: 15 chunks utilisés (score ≥0.45)
+[2026-01-14 21:06:54] [INFO] [backend.f1_bot:1229] ✅ MEMORY: Contexte long terme récupéré (1097 chars)
+[2026-01-14 21:06:57] [INFO] [backend.f1_bot:950] Apprentissage réussi : 1 faits, 0 prefs
+[2026-01-14 21:07:05] [INFO] [app:163] Input sanitized: safe=True, length=12
+[2026-01-14 21:07:05] [INFO] [backend.f1_bot:1017] Question reçue: et ou vit il
+[2026-01-14 21:07:05] [INFO] [backend.f1_bot:1025] Contexte long terme récupéré
+[2026-01-14 21:07:05] [INFO] [backend.f1_bot:1092] Relance référentielle détectée avec contexte F1 — forçage F1
+[2026-01-14 21:07:05] [INFO] [backend.f1_bot:1096] F1? True, Générale? False, Circuit? False
+[2026-01-14 21:07:05] [INFO] [backend.f1_bot:1151] Pipeline F1 optimisé
+[2026-01-14 21:07:05] [INFO] [backend.f1_bot:1167] ✅ KB PRIORITAIRE: 4 chunks utilisés (score ≥0.45)
+[2026-01-14 21:07:05] [INFO] [backend.f1_bot:1229] ✅ MEMORY: Contexte long terme récupéré (1143 chars)
+[2026-01-14 21:07:07] [INFO] [backend.f1_bot:950] Apprentissage réussi : 1 faits, 0 prefs
+[2026-01-14 21:07:10] [INFO] [app:163] Input sanitized: safe=True, length=2
+[2026-01-14 21:07:10] [INFO] [backend.f1_bot:1017] Question reçue: ok
+[2026-01-14 21:07:10] [INFO] [backend.f1_bot:1025] Contexte long terme récupéré
+[2026-01-14 21:07:14] [INFO] [backend.f1_bot:950] Apprentissage réussi : 2 faits, 0 prefs
+[2026-01-14 21:07:17] [INFO] [app:163] Input sanitized: safe=True, length=8
+[2026-01-14 21:07:17] [INFO] [backend.f1_bot:1017] Question reçue: et senna
+[2026-01-14 21:07:17] [INFO] [backend.f1_bot:1025] Contexte long terme récupéré
+[2026-01-14 21:07:17] [INFO] [backend.f1_bot:1096] F1? True, Générale? False, Circuit? False
+[2026-01-14 21:07:17] [INFO] [backend.f1_bot:1151] Pipeline F1 optimisé
+[2026-01-14 21:07:17] [WARNING] [backend.knowledge_base:303] Aucun résultat FAISS > 0.45, fallback recherche simple
+[2026-01-14 21:07:17] [INFO] [backend.f1_bot:1170] KB: Aucun résultat (score <0.45)
+[2026-01-14 21:07:17] [INFO] [backend.f1_bot:1229] ✅ MEMORY: Contexte long terme récupéré (2147 chars)
+[2026-01-14 21:07:20] [INFO] [backend.f1_bot:950] Apprentissage réussi : 1 faits, 1 prefs
+[2026-01-14 21:07:27] [INFO] [app:163] Input sanitized: safe=True, length=15
+[2026-01-14 21:07:27] [INFO] [backend.f1_bot:1017] Question reçue: et il vit ou $*
+[2026-01-14 21:07:27] [INFO] [backend.f1_bot:1025] Contexte long terme récupéré
+[2026-01-14 21:07:27] [INFO] [backend.f1_bot:1092] Relance référentielle détectée avec contexte F1 — forçage F1
+[2026-01-14 21:07:27] [INFO] [backend.f1_bot:1096] F1? True, Générale? False, Circuit? False
+[2026-01-14 21:07:27] [INFO] [backend.f1_bot:1151] Pipeline F1 optimisé
+[2026-01-14 21:07:27] [INFO] [backend.f1_bot:1167] ✅ KB PRIORITAIRE: 4 chunks utilisés (score ≥0.45)
+[2026-01-14 21:07:27] [INFO] [backend.f1_bot:1229] ✅ MEMORY: Contexte long terme récupéré (1290 chars)
+[2026-01-14 21:07:30] [INFO] [backend.f1_bot:950] Apprentissage réussi : 1 faits, 0 prefs
+[2026-01-14 21:07:34] [INFO] [app:163] Input sanitized: safe=True, length=13
+[2026-01-14 21:07:34] [INFO] [backend.f1_bot:1017] Question reçue: il est mort ?
+[2026-01-14 21:07:34] [INFO] [backend.f1_bot:1025] Contexte long terme récupéré
+[2026-01-14 21:07:34] [INFO] [backend.f1_bot:1092] Relance référentielle détectée avec contexte F1 — forçage F1
+[2026-01-14 21:07:34] [INFO] [backend.f1_bot:1096] F1? True, Générale? False, Circuit? False
+[2026-01-14 21:07:34] [INFO] [backend.f1_bot:1151] Pipeline F1 optimisé
+[2026-01-14 21:07:34] [INFO] [backend.f1_bot:1167] ✅ KB PRIORITAIRE: 1 chunks utilisés (score ≥0.45)
+[2026-01-14 21:07:34] [INFO] [backend.f1_bot:1229] ✅ MEMORY: Contexte long terme récupéré (2398 chars)
+[2026-01-14 21:07:37] [INFO] [backend.f1_bot:950] Apprentissage réussi : 1 faits, 0 prefs
+[2026-01-14 21:51:20] [INFO] [__main__:524] auto_train désactivé (AUTO_TRAIN=0).
+[2026-01-14 21:51:20] [WARNING] [__main__:609] ⚠️ Erreur vérification crawl: can't subtract offset-naive and offset-aware datetimes
+[2026-01-14 21:51:20] [INFO] [__main__:670] ✅ MondayScheduler démarré (refresh widgets le lundi)
+[2026-01-14 21:52:31] [INFO] [__main__:524] auto_train désactivé (AUTO_TRAIN=0).
+[2026-01-14 21:52:31] [WARNING] [__main__:609] ⚠️ Erreur vérification crawl: can't subtract offset-naive and offset-aware datetimes
+[2026-01-14 21:52:31] [INFO] [__main__:670] ✅ MondayScheduler démarré (refresh widgets le lundi)
+[2026-01-14 21:52:41] [INFO] [app:163] Input sanitized: safe=True, length=5
+[2026-01-14 21:52:41] [INFO] [backend.f1_bot:1017] Question reçue: salut
+[2026-01-14 21:52:41] [INFO] [backend.f1_bot:1025] Contexte long terme récupéré
+[2026-01-14 21:52:41] [INFO] [backend.f1_bot:1096] F1? False, Générale? True, Circuit? False
+[2026-01-14 21:52:41] [INFO] [backend.f1_bot:1327] Question générale (non-F1) — mode libre
+[2026-01-14 21:52:41] [INFO] [backend.knowledge_base:126] Chargement modèle embeddings: sentence-transformers/all-MiniLM-L6-v2...
+[2026-01-14 21:52:43] [INFO] [backend.knowledge_base:196] ✅ FAISS index validé: 7983 vecteurs, 2233 documents, dim=384
+[2026-01-14 21:52:43] [INFO] [backend.knowledge_base:136] FAISS index chargé: 7983 vecteurs
+[2026-01-14 21:52:43] [WARNING] [backend.knowledge_base:303] Aucun résultat FAISS > 0.5, fallback recherche simple
+[2026-01-14 21:52:51] [INFO] [backend.f1_bot:950] Apprentissage réussi : 2 faits, 1 prefs
+[2026-01-14 21:53:19] [INFO] [app:163] Input sanitized: safe=True, length=19
+[2026-01-14 21:53:19] [INFO] [backend.f1_bot:1017] Question reçue: parle moi de hadjar
+[2026-01-14 21:53:19] [INFO] [backend.f1_bot:1025] Contexte long terme récupéré
+[2026-01-14 21:53:19] [INFO] [backend.f1_bot:1096] F1? False, Générale? False, Circuit? False
+[2026-01-14 21:53:19] [INFO] [backend.f1_bot:1355] Question hors F1 — mode libre
+[2026-01-14 21:53:19] [INFO] [backend.f1_bot:1359] Question non catégorisée, utilisation du LLM direct
+[2026-01-14 21:53:22] [INFO] [backend.f1_bot:950] Apprentissage réussi : 0 faits, 0 prefs
+[2026-01-14 21:53:31] [INFO] [app:163] Input sanitized: safe=True, length=19
+[2026-01-14 21:53:31] [INFO] [backend.f1_bot:1017] Question reçue: le pilote francai s
+[2026-01-14 21:53:31] [INFO] [backend.f1_bot:1025] Contexte long terme récupéré
+[2026-01-14 21:53:31] [INFO] [backend.f1_bot:1096] F1? True, Générale? False, Circuit? False
+[2026-01-14 21:53:31] [INFO] [backend.f1_bot:1151] Pipeline F1 optimisé
+[2026-01-14 21:53:31] [INFO] [backend.f1_bot:1167] ✅ KB PRIORITAIRE: 8 chunks utilisés (score ≥0.45)
+[2026-01-14 21:53:31] [INFO] [backend.f1_bot:1229] ✅ MEMORY: Contexte long terme récupéré (1088 chars)
+[2026-01-14 21:53:33] [INFO] [backend.f1_bot:1288] ⚠️ LLM incertain avec KB+Memory, tentative Web Search (dernier recours)...
+[2026-01-14 21:53:33] [WARNING] [backend.f1_bot:1302] Web Search échoué: Client error '403 Forbidden' for url 'https://en.wikipedia.org/w/api.php?list=search&srsearch=F1+le+pilote+francai+s&srlimit=2&action=query&format=json'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+[2026-01-14 21:53:34] [INFO] [backend.f1_bot:950] Apprentissage réussi : 0 faits, 0 prefs
+[2026-01-14 21:53:44] [INFO] [app:163] Input sanitized: safe=True, length=5
+[2026-01-14 21:53:44] [INFO] [backend.f1_bot:1017] Question reçue: prost
+[2026-01-14 21:53:44] [INFO] [backend.f1_bot:1025] Contexte long terme récupéré
+[2026-01-14 21:53:44] [INFO] [backend.f1_bot:1096] F1? True, Générale? False, Circuit? False
+[2026-01-14 21:53:44] [INFO] [backend.f1_bot:1151] Pipeline F1 optimisé
+[2026-01-14 21:53:44] [WARNING] [backend.knowledge_base:303] Aucun résultat FAISS > 0.45, fallback recherche simple
+[2026-01-14 21:53:44] [INFO] [backend.f1_bot:1170] KB: Aucun résultat (score <0.45)
+[2026-01-14 21:53:44] [INFO] [backend.f1_bot:1229] ✅ MEMORY: Contexte long terme récupéré (1088 chars)
+[2026-01-14 21:53:47] [INFO] [backend.f1_bot:950] Apprentissage réussi : 1 faits, 1 prefs
+[2026-01-14 21:54:01] [INFO] [app:163] Input sanitized: safe=True, length=11
+[2026-01-14 21:54:01] [INFO] [backend.f1_bot:1017] Question reçue: alain prost
+[2026-01-14 21:54:01] [INFO] [backend.f1_bot:1025] Contexte long terme récupéré
+[2026-01-14 21:54:01] [INFO] [backend.f1_bot:1096] F1? True, Générale? False, Circuit? False
+[2026-01-14 21:54:01] [INFO] [backend.f1_bot:1151] Pipeline F1 optimisé
+[2026-01-14 21:54:01] [INFO] [backend.f1_bot:1167] ✅ KB PRIORITAIRE: 12 chunks utilisés (score ≥0.45)
+[2026-01-14 21:54:01] [INFO] [backend.f1_bot:1229] ✅ MEMORY: Contexte long terme récupéré (2792 chars)
+[2026-01-14 21:54:06] [INFO] [backend.f1_bot:950] Apprentissage réussi : 4 faits, 0 prefs
+[2026-01-14 21:54:20] [INFO] [app:163] Input sanitized: safe=True, length=19
+[2026-01-14 21:54:20] [INFO] [backend.f1_bot:1017] Question reçue: qui a gagne en 1960
+[2026-01-14 21:54:20] [INFO] [backend.f1_bot:1025] Contexte long terme récupéré
+[2026-01-14 21:54:20] [INFO] [backend.f1_bot:1096] F1? True, Générale? False, Circuit? False
+[2026-01-14 21:54:20] [INFO] [backend.f1_bot:1151] Pipeline F1 optimisé
+[2026-01-14 21:54:20] [INFO] [backend.f1_bot:1167] ✅ KB PRIORITAIRE: 1 chunks utilisés (score ≥0.45)
+[2026-01-14 21:54:21] [INFO] [backend.f1_bot:1229] ✅ MEMORY: Contexte long terme récupéré (2684 chars)
+[2026-01-14 21:54:21] [INFO] [backend.f1_bot:1255] 📰 Question actualité détectée, Web Search proactif...
+[2026-01-14 21:54:21] [WARNING] [backend.f1_bot:1270] Web Search proactif échoué: Client error '403 Forbidden' for url 'https://en.wikipedia.org/w/api.php?list=search&srsearch=F1+qui+a+gagne+en+1960&srlimit=3&action=query&format=json'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+[2026-01-14 21:54:26] [INFO] [backend.f1_bot:950] Apprentissage réussi : 2 faits, 0 prefs
+[2026-01-14 21:54:34] [INFO] [app:163] Input sanitized: safe=True, length=10
+[2026-01-14 21:54:34] [INFO] [backend.f1_bot:1017] Question reçue: et en 1950
+[2026-01-14 21:54:34] [INFO] [backend.f1_bot:1025] Contexte long terme récupéré
+[2026-01-14 21:54:34] [INFO] [backend.f1_bot:1096] F1? False, Générale? True, Circuit? False
+[2026-01-14 21:54:34] [INFO] [backend.f1_bot:1101] Relance courte avec historique F1 — persistance sur F1
+[2026-01-14 21:54:34] [INFO] [backend.f1_bot:1151] Pipeline F1 optimisé
+[2026-01-14 21:54:34] [INFO] [backend.f1_bot:1167] ✅ KB PRIORITAIRE: 4 chunks utilisés (score ≥0.45)
+[2026-01-14 21:54:35] [INFO] [backend.f1_bot:1229] ✅ MEMORY: Contexte long terme récupéré (1292 chars)
+[2026-01-14 21:54:39] [INFO] [backend.f1_bot:950] Apprentissage réussi : 1 faits, 0 prefs
+[2026-01-14 21:55:01] [INFO] [app:163] Input sanitized: safe=True, length=65
+[2026-01-14 21:55:01] [INFO] [backend.f1_bot:1017] Question reçue: et donne la liste de ts les cuircuits ou il y aeudes corses de f1
+[2026-01-14 21:55:01] [INFO] [backend.f1_bot:1025] Contexte long terme récupéré
+[2026-01-14 21:55:01] [INFO] [backend.f1_bot:1096] F1? True, Générale? False, Circuit? False
+[2026-01-14 21:55:01] [INFO] [backend.f1_bot:1151] Pipeline F1 optimisé
+[2026-01-14 21:55:01] [INFO] [backend.f1_bot:1167] ✅ KB PRIORITAIRE: 15 chunks utilisés (score ≥0.45)
+[2026-01-14 21:55:01] [INFO] [backend.f1_bot:1229] ✅ MEMORY: Contexte long terme récupéré (3077 chars)
+[2026-01-14 21:55:06] [INFO] [backend.f1_bot:950] Apprentissage réussi : 1 faits, 0 prefs
+[2026-01-14 21:55:15] [INFO] [app:163] Input sanitized: safe=True, length=16
+[2026-01-14 21:55:15] [INFO] [backend.f1_bot:1017] Question reçue: donne les autres
+[2026-01-14 21:55:16] [INFO] [backend.f1_bot:1025] Contexte long terme récupéré
+[2026-01-14 21:55:16] [INFO] [backend.f1_bot:1096] F1? False, Générale? True, Circuit? False
+[2026-01-14 21:55:16] [INFO] [backend.f1_bot:1101] Relance courte avec historique F1 — persistance sur F1
+[2026-01-14 21:55:16] [INFO] [backend.f1_bot:1151] Pipeline F1 optimisé
+[2026-01-14 21:55:16] [INFO] [backend.f1_bot:1167] ✅ KB PRIORITAIRE: 3 chunks utilisés (score ≥0.45)
+[2026-01-14 21:55:16] [INFO] [backend.f1_bot:1229] ✅ MEMORY: Contexte long terme récupéré (3134 chars)
+[2026-01-14 21:55:20] [INFO] [backend.f1_bot:950] Apprentissage réussi : 1 faits, 0 prefs
+[2026-01-14 21:55:28] [INFO] [app:163] Input sanitized: safe=True, length=20
+[2026-01-14 21:55:28] [INFO] [backend.f1_bot:1017] Question reçue: donne plus et autres
+[2026-01-14 21:55:28] [INFO] [backend.f1_bot:1025] Contexte long terme récupéré
+[2026-01-14 21:55:28] [INFO] [backend.f1_bot:1092] Relance référentielle détectée avec contexte F1 — forçage F1
+[2026-01-14 21:55:28] [INFO] [backend.f1_bot:1096] F1? True, Générale? False, Circuit? False
+[2026-01-14 21:55:28] [INFO] [backend.f1_bot:1151] Pipeline F1 optimisé
+[2026-01-14 21:55:28] [INFO] [backend.f1_bot:1167] ✅ KB PRIORITAIRE: 1 chunks utilisés (score ≥0.45)
+[2026-01-14 21:55:28] [INFO] [backend.f1_bot:1229] ✅ MEMORY: Contexte long terme récupéré (2891 chars)
+[2026-01-14 21:55:33] [INFO] [backend.f1_bot:950] Apprentissage réussi : 1 faits, 2 prefs
+[2026-01-14 21:55:43] [INFO] [app:163] Input sanitized: safe=True, length=11
+[2026-01-14 21:55:43] [INFO] [backend.f1_bot:1017] Question reçue: et australe
+[2026-01-14 21:55:43] [INFO] [backend.f1_bot:1025] Contexte long terme récupéré
+[2026-01-14 21:55:43] [INFO] [backend.f1_bot:1096] F1? False, Générale? True, Circuit? False
+[2026-01-14 21:55:43] [INFO] [backend.f1_bot:1101] Relance courte avec historique F1 — persistance sur F1
+[2026-01-14 21:55:43] [INFO] [backend.f1_bot:1151] Pipeline F1 optimisé
+[2026-01-14 21:55:43] [WARNING] [backend.knowledge_base:303] Aucun résultat FAISS > 0.45, fallback recherche simple
+[2026-01-14 21:55:43] [INFO] [backend.f1_bot:1170] KB: Aucun résultat (score <0.45)
+[2026-01-14 21:55:43] [INFO] [backend.f1_bot:1229] ✅ MEMORY: Contexte long terme récupéré (1374 chars)
+[2026-01-14 21:55:47] [INFO] [backend.f1_bot:950] Apprentissage réussi : 1 faits, 0 prefs
+[2026-01-14 21:56:06] [INFO] [app:163] Input sanitized: safe=True, length=28
+[2026-01-14 21:56:06] [INFO] [backend.f1_bot:1017] Question reçue: ok et quels sont ls drapeaux
+[2026-01-14 21:56:06] [INFO] [backend.f1_bot:1025] Contexte long terme récupéré
+[2026-01-14 21:56:06] [INFO] [backend.f1_bot:1092] Relance référentielle détectée avec contexte F1 — forçage F1
+[2026-01-14 21:56:06] [INFO] [backend.f1_bot:1096] F1? True, Générale? False, Circuit? False
+[2026-01-14 21:56:06] [INFO] [backend.f1_bot:1151] Pipeline F1 optimisé
+[2026-01-14 21:56:06] [INFO] [backend.f1_bot:1167] ✅ KB PRIORITAIRE: 3 chunks utilisés (score ≥0.45)
+[2026-01-14 21:56:06] [INFO] [backend.f1_bot:1229] ✅ MEMORY: Contexte long terme récupéré (2446 chars)
+[2026-01-14 21:56:15] [INFO] [backend.f1_bot:950] Apprentissage réussi : 6 faits, 0 prefs
+[2026-01-14 21:56:43] [INFO] [app:163] Input sanitized: safe=True, length=15
+[2026-01-14 21:56:43] [INFO] [backend.f1_bot:1017] Question reçue: Peter Whitehead
+[2026-01-14 21:56:43] [INFO] [backend.f1_bot:1025] Contexte long terme récupéré
+[2026-01-14 21:56:43] [INFO] [backend.f1_bot:1096] F1? False, Générale? True, Circuit? False
+[2026-01-14 21:56:43] [INFO] [backend.f1_bot:1101] Relance courte avec historique F1 — persistance sur F1
+[2026-01-14 21:56:43] [INFO] [backend.f1_bot:1151] Pipeline F1 optimisé
+[2026-01-14 21:56:43] [INFO] [backend.f1_bot:1167] ✅ KB PRIORITAIRE: 1 chunks utilisés (score ≥0.45)
+[2026-01-14 21:56:43] [INFO] [backend.f1_bot:1229] ✅ MEMORY: Contexte long terme récupéré (1272 chars)
+[2026-01-14 21:56:45] [INFO] [backend.f1_bot:950] Apprentissage réussi : 1 faits, 0 prefs
+[2026-01-14 21:56:48] [INFO] [app:163] Input sanitized: safe=True, length=2
+[2026-01-14 21:56:48] [INFO] [backend.f1_bot:1017] Question reçue: qd
+[2026-01-14 21:56:48] [INFO] [backend.f1_bot:1025] Contexte long terme récupéré
+[2026-01-14 21:56:48] [INFO] [backend.f1_bot:1096] F1? False, Générale? True, Circuit? False
+[2026-01-14 21:56:48] [INFO] [backend.f1_bot:1101] Relance courte avec historique F1 — persistance sur F1
+[2026-01-14 21:56:48] [INFO] [backend.f1_bot:1151] Pipeline F1 optimisé
+[2026-01-14 21:56:48] [WARNING] [backend.knowledge_base:303] Aucun résultat FAISS > 0.45, fallback recherche simple
+[2026-01-14 21:56:48] [INFO] [backend.f1_bot:1170] KB: Aucun résultat (score <0.45)
+[2026-01-14 21:56:48] [INFO] [backend.f1_bot:1229] ✅ MEMORY: Contexte long terme récupéré (1256 chars)
+[2026-01-14 21:56:51] [INFO] [backend.f1_bot:950] Apprentissage réussi : 0 faits, 0 prefs
+[2026-01-14 21:56:58] [INFO] [app:163] Input sanitized: safe=True, length=16
+[2026-01-14 21:56:58] [INFO] [backend.f1_bot:1017] Question reçue: pour quel course
+[2026-01-14 21:56:58] [INFO] [backend.f1_bot:1025] Contexte long terme récupéré
+[2026-01-14 21:56:58] [INFO] [backend.f1_bot:1096] F1? True, Générale? False, Circuit? False
+[2026-01-14 21:56:58] [INFO] [backend.f1_bot:1151] Pipeline F1 optimisé
+[2026-01-14 21:56:58] [WARNING] [backend.knowledge_base:303] Aucun résultat FAISS > 0.45, fallback recherche simple
+[2026-01-14 21:56:58] [INFO] [backend.f1_bot:1170] KB: Aucun résultat (score <0.45)
+[2026-01-14 21:56:58] [INFO] [backend.f1_bot:1229] ✅ MEMORY: Contexte long terme récupéré (2821 chars)
+[2026-01-14 21:57:01] [INFO] [backend.f1_bot:950] Apprentissage réussi : 1 faits, 0 prefs
+[2026-01-14 21:57:07] [INFO] [app:163] Input sanitized: safe=True, length=9
+[2026-01-14 21:57:07] [INFO] [backend.f1_bot:1017] Question reçue: tu es sur
+[2026-01-14 21:57:07] [INFO] [backend.f1_bot:1025] Contexte long terme récupéré
+[2026-01-14 21:57:07] [INFO] [backend.f1_bot:1096] F1? False, Générale? True, Circuit? False
+[2026-01-14 21:57:07] [INFO] [backend.f1_bot:1101] Relance courte avec historique F1 — persistance sur F1
+[2026-01-14 21:57:07] [INFO] [backend.f1_bot:1151] Pipeline F1 optimisé
+[2026-01-14 21:57:07] [WARNING] [backend.knowledge_base:303] Aucun résultat FAISS > 0.45, fallback recherche simple
+[2026-01-14 21:57:07] [INFO] [backend.f1_bot:1167] ✅ KB PRIORITAIRE: 4 chunks utilisés (score ≥0.45)
+[2026-01-14 21:57:07] [INFO] [backend.f1_bot:1229] ✅ MEMORY: Contexte long terme récupéré (2577 chars)
+[2026-01-14 21:57:10] [INFO] [backend.f1_bot:950] Apprentissage réussi : 1 faits, 0 prefs
+[2026-01-14 21:57:15] [INFO] [app:163] Input sanitized: safe=True, length=6
+[2026-01-14 21:57:15] [INFO] [backend.f1_bot:1017] Question reçue: source
+[2026-01-14 21:57:15] [INFO] [backend.f1_bot:1025] Contexte long terme récupéré
+[2026-01-14 21:57:15] [INFO] [backend.f1_bot:1096] F1? False, Générale? True, Circuit? False
+[2026-01-14 21:57:15] [INFO] [backend.f1_bot:1101] Relance courte avec historique F1 — persistance sur F1
+[2026-01-14 21:57:15] [INFO] [backend.f1_bot:1151] Pipeline F1 optimisé
+[2026-01-14 21:57:15] [WARNING] [backend.knowledge_base:303] Aucun résultat FAISS > 0.45, fallback recherche simple
+[2026-01-14 21:57:15] [INFO] [backend.f1_bot:1167] ✅ KB PRIORITAIRE: 1 chunks utilisés (score ≥0.45)
+[2026-01-14 21:57:15] [INFO] [backend.f1_bot:1229] ✅ MEMORY: Contexte long terme récupéré (1786 chars)
+[2026-01-14 21:57:18] [INFO] [backend.f1_bot:950] Apprentissage réussi : 1 faits, 0 prefs
+[2026-01-14 22:01:24] [INFO] [__main__:524] auto_train désactivé (AUTO_TRAIN=0).
+[2026-01-14 22:01:24] [WARNING] [__main__:609] ⚠️ Erreur vérification crawl: can't subtract offset-naive and offset-aware datetimes
+[2026-01-14 22:01:24] [INFO] [__main__:670] ✅ MondayScheduler démarré (refresh widgets le lundi)
+[2026-01-14 22:06:45] [WARNING] [backend.standings_utils:70] StandF1: No table found in HTML
+[2026-01-14 22:11:19] [WARNING] [__main__:571] Port 8001 indisponible. Bascule sur 8002.
+[2026-01-14 22:11:19] [INFO] [__main__:579] auto_train désactivé (AUTO_TRAIN=0).
+[2026-01-14 22:11:19] [WARNING] [__main__:664] ⚠️ Erreur vérification crawl: can't subtract offset-naive and offset-aware datetimes
+[2026-01-14 22:11:19] [INFO] [__main__:725] ✅ MondayScheduler démarré (refresh widgets le lundi)
+[2026-01-14 22:11:43] [INFO] [app:163] Input sanitized: safe=True, length=5
+[2026-01-14 22:11:43] [INFO] [backend.f1_bot:1017] Question reçue: salut
+[2026-01-14 22:11:43] [INFO] [backend.f1_bot:1025] Contexte long terme récupéré
+[2026-01-14 22:11:43] [INFO] [backend.f1_bot:1096] F1? False, Générale? True, Circuit? False
+[2026-01-14 22:11:43] [INFO] [backend.f1_bot:1327] Question générale (non-F1) — mode libre
+[2026-01-14 22:11:43] [INFO] [backend.knowledge_base:126] Chargement modèle embeddings: sentence-transformers/all-MiniLM-L6-v2...
+[2026-01-14 22:11:45] [INFO] [backend.knowledge_base:196] ✅ FAISS index validé: 7983 vecteurs, 2233 documents, dim=384
+[2026-01-14 22:11:45] [INFO] [backend.knowledge_base:136] FAISS index chargé: 7983 vecteurs
+[2026-01-14 22:11:45] [WARNING] [backend.knowledge_base:303] Aucun résultat FAISS > 0.5, fallback recherche simple
+[2026-01-14 22:11:51] [INFO] [backend.f1_bot:950] Apprentissage réussi : 1 faits, 1 prefs
+[2026-01-14 22:12:57] [WARNING] [backend.standings_utils:70] StandF1: No table found in HTML
+[2026-01-14 22:14:40] [WARNING] [__main__:572] Port 8001 indisponible. Bascule sur 8002.
+[2026-01-14 22:14:40] [INFO] [__main__:580] auto_train désactivé (AUTO_TRAIN=0).
+[2026-01-14 22:14:40] [WARNING] [__main__:665] ⚠️ Erreur vérification crawl: can't subtract offset-naive and offset-aware datetimes
+[2026-01-14 22:14:40] [INFO] [__main__:726] ✅ MondayScheduler démarré (refresh widgets le lundi)
+[2026-01-14 22:17:19] [WARNING] [__main__:516] Port 8001 indisponible. Bascule sur 8002.
+[2026-01-14 22:17:19] [INFO] [__main__:524] auto_train désactivé (AUTO_TRAIN=0).
+[2026-01-14 22:17:19] [WARNING] [__main__:609] ⚠️ Erreur vérification crawl: can't subtract offset-naive and offset-aware datetimes
+[2026-01-14 22:17:19] [INFO] [__main__:670] ✅ MondayScheduler démarré (refresh widgets le lundi)
+[2026-01-14 22:18:20] [INFO] [__main__:524] auto_train désactivé (AUTO_TRAIN=0).
+[2026-01-14 22:18:20] [WARNING] [__main__:609] ⚠️ Erreur vérification crawl: can't subtract offset-naive and offset-aware datetimes
+[2026-01-14 22:18:20] [INFO] [__main__:670] ✅ MondayScheduler démarré (refresh widgets le lundi)
+[2026-01-14 22:18:33] [INFO] [app:163] Input sanitized: safe=True, length=5
+[2026-01-14 22:18:33] [INFO] [backend.f1_bot:1017] Question reçue: salut
+[2026-01-14 22:18:33] [INFO] [backend.f1_bot:1025] Contexte long terme récupéré
+[2026-01-14 22:18:33] [INFO] [backend.f1_bot:1096] F1? False, Générale? True, Circuit? False
+[2026-01-14 22:18:33] [INFO] [backend.f1_bot:1327] Question générale (non-F1) — mode libre
+[2026-01-14 22:18:33] [INFO] [backend.knowledge_base:126] Chargement modèle embeddings: sentence-transformers/all-MiniLM-L6-v2...
+[2026-01-14 22:18:35] [INFO] [backend.knowledge_base:196] ✅ FAISS index validé: 7983 vecteurs, 2233 documents, dim=384
+[2026-01-14 22:18:35] [INFO] [backend.knowledge_base:136] FAISS index chargé: 7983 vecteurs
+[2026-01-14 22:18:35] [WARNING] [backend.knowledge_base:303] Aucun résultat FAISS > 0.5, fallback recherche simple
+[2026-01-14 22:18:42] [INFO] [backend.f1_bot:950] Apprentissage réussi : 2 faits, 1 prefs
+[2026-01-14 22:18:55] [INFO] [app:163] Input sanitized: safe=True, length=22
+[2026-01-14 22:18:55] [INFO] [backend.f1_bot:1017] Question reçue: c est quoi les rumeurs
+[2026-01-14 22:18:55] [INFO] [backend.f1_bot:1025] Contexte long terme récupéré
+[2026-01-14 22:18:55] [INFO] [backend.f1_bot:1096] F1? False, Générale? False, Circuit? False
+[2026-01-14 22:18:55] [INFO] [backend.f1_bot:1355] Question hors F1 — mode libre
+[2026-01-14 22:18:55] [INFO] [backend.f1_bot:1359] Question non catégorisée, utilisation du LLM direct
+[2026-01-14 22:19:00] [INFO] [backend.f1_bot:950] Apprentissage réussi : 3 faits, 0 prefs
+[2026-01-14 22:19:08] [INFO] [app:163] Input sanitized: safe=True, length=15
+[2026-01-14 22:19:08] [INFO] [backend.f1_bot:1017] Question reçue: dis moi en plus
+[2026-01-14 22:19:08] [INFO] [backend.f1_bot:1025] Contexte long terme récupéré
+[2026-01-14 22:19:08] [INFO] [backend.f1_bot:1096] F1? False, Générale? False, Circuit? False
+[2026-01-14 22:19:08] [INFO] [backend.f1_bot:1355] Question hors F1 — mode libre
+[2026-01-14 22:19:08] [INFO] [backend.f1_bot:1359] Question non catégorisée, utilisation du LLM direct
+[2026-01-14 22:19:14] [INFO] [backend.f1_bot:950] Apprentissage réussi : 2 faits, 0 prefs
+[2026-01-14 22:19:26] [INFO] [app:163] Input sanitized: safe=True, length=17
+[2026-01-14 22:19:26] [INFO] [backend.f1_bot:1017] Question reçue: on parle de qui ?
+[2026-01-14 22:19:26] [INFO] [backend.f1_bot:1025] Contexte long terme récupéré
+[2026-01-14 22:19:26] [INFO] [backend.f1_bot:1096] F1? False, Générale? False, Circuit? False
+[2026-01-14 22:19:26] [INFO] [backend.f1_bot:1355] Question hors F1 — mode libre
+[2026-01-14 22:19:26] [INFO] [backend.f1_bot:1359] Question non catégorisée, utilisation du LLM direct
+[2026-01-14 22:19:30] [INFO] [backend.f1_bot:950] Apprentissage réussi : 2 faits, 1 prefs
+[2026-01-14 22:19:36] [INFO] [app:163] Input sanitized: safe=True, length=14
+[2026-01-14 22:19:36] [INFO] [backend.f1_bot:1017] Question reçue: et ca dis quoi
+[2026-01-14 22:19:36] [INFO] [backend.f1_bot:1025] Contexte long terme récupéré
+[2026-01-14 22:19:36] [INFO] [backend.f1_bot:1096] F1? False, Générale? False, Circuit? False
+[2026-01-14 22:19:36] [INFO] [backend.f1_bot:1355] Question hors F1 — mode libre
+[2026-01-14 22:19:36] [INFO] [backend.f1_bot:1359] Question non catégorisée, utilisation du LLM direct
+[2026-01-14 22:19:41] [INFO] [backend.f1_bot:950] Apprentissage réussi : 2 faits, 0 prefs
+[2026-01-14 22:19:53] [INFO] [app:163] Input sanitized: safe=True, length=21
+[2026-01-14 22:19:53] [INFO] [backend.f1_bot:1017] Question reçue: hamilton est concerné
+[2026-01-14 22:19:53] [INFO] [backend.f1_bot:1025] Contexte long terme récupéré
+[2026-01-14 22:19:53] [INFO] [backend.f1_bot:1096] F1? True, Générale? False, Circuit? False
+[2026-01-14 22:19:53] [INFO] [backend.f1_bot:1151] Pipeline F1 optimisé
+[2026-01-14 22:19:53] [INFO] [backend.f1_bot:1167] ✅ KB PRIORITAIRE: 2 chunks utilisés (score ≥0.45)
+[2026-01-14 22:19:53] [INFO] [backend.f1_bot:1229] ✅ MEMORY: Contexte long terme récupéré (2682 chars)
+[2026-01-14 22:19:57] [INFO] [backend.f1_bot:950] Apprentissage réussi : 1 faits, 0 prefs
+[2026-01-14 22:20:10] [INFO] [app:163] Input sanitized: safe=True, length=14
+[2026-01-14 22:20:10] [INFO] [backend.f1_bot:1017] Question reçue: et ca dis quoi
+[2026-01-14 22:20:10] [INFO] [backend.f1_bot:1025] Contexte long terme récupéré
+[2026-01-14 22:20:10] [INFO] [backend.f1_bot:1096] F1? False, Générale? False, Circuit? False
+[2026-01-14 22:20:10] [INFO] [backend.f1_bot:1355] Question hors F1 — mode libre
+[2026-01-14 22:20:10] [INFO] [backend.f1_bot:1359] Question non catégorisée, utilisation du LLM direct
+[2026-01-14 22:20:14] [INFO] [backend.f1_bot:950] Apprentissage réussi : 2 faits, 1 prefs
+[2026-01-14 22:20:21] [INFO] [app:163] Input sanitized: safe=True, length=2
+[2026-01-14 22:20:21] [INFO] [backend.f1_bot:1017] Question reçue: ok
+[2026-01-14 22:20:21] [INFO] [backend.f1_bot:1025] Contexte long terme récupéré
+[2026-01-14 22:20:26] [INFO] [backend.f1_bot:950] Apprentissage réussi : 2 faits, 1 prefs
+[2026-01-14 22:29:03] [WARNING] [__main__:516] Port 8001 indisponible. Bascule sur 8002.
+[2026-01-14 22:29:03] [INFO] [__main__:524] auto_train désactivé (AUTO_TRAIN=0).
+[2026-01-14 22:29:03] [WARNING] [__main__:609] ⚠️ Erreur vérification crawl: can't subtract offset-naive and offset-aware datetimes
+[2026-01-14 22:29:03] [INFO] [__main__:670] ✅ MondayScheduler démarré (refresh widgets le lundi)
+[2026-01-14 22:30:16] [INFO] [__main__:524] auto_train désactivé (AUTO_TRAIN=0).
+[2026-01-14 22:30:16] [WARNING] [__main__:609] ⚠️ Erreur vérification crawl: can't subtract offset-naive and offset-aware datetimes
+[2026-01-14 22:30:16] [INFO] [__main__:670] ✅ MondayScheduler démarré (refresh widgets le lundi)
+[2026-01-14 22:30:27] [INFO] [app:163] Input sanitized: safe=True, length=6
+[2026-01-14 22:30:27] [INFO] [backend.f1_bot:1017] Question reçue: salu t
+[2026-01-14 22:30:27] [INFO] [backend.f1_bot:1025] Contexte long terme récupéré
+[2026-01-14 22:30:27] [INFO] [backend.f1_bot:1096] F1? False, Générale? True, Circuit? False
+[2026-01-14 22:30:27] [INFO] [backend.f1_bot:1327] Question générale (non-F1) — mode libre
+[2026-01-14 22:30:27] [INFO] [backend.knowledge_base:126] Chargement modèle embeddings: sentence-transformers/all-MiniLM-L6-v2...
+[2026-01-14 22:30:29] [INFO] [backend.knowledge_base:196] ✅ FAISS index validé: 7983 vecteurs, 2233 documents, dim=384
+[2026-01-14 22:30:29] [INFO] [backend.knowledge_base:136] FAISS index chargé: 7983 vecteurs
+[2026-01-14 22:30:29] [WARNING] [backend.knowledge_base:303] Aucun résultat FAISS > 0.5, fallback recherche simple
+[2026-01-14 22:30:34] [INFO] [backend.f1_bot:950] Apprentissage réussi : 2 faits, 1 prefs
+[2026-01-14 22:30:42] [INFO] [app:163] Input sanitized: safe=True, length=14
+[2026-01-14 22:30:42] [INFO] [backend.f1_bot:1017] Question reçue: non c est quoi
+[2026-01-14 22:30:42] [INFO] [backend.f1_bot:1025] Contexte long terme récupéré
+[2026-01-14 22:30:42] [INFO] [backend.f1_bot:1096] F1? False, Générale? False, Circuit? False
+[2026-01-14 22:30:42] [INFO] [backend.f1_bot:1355] Question hors F1 — mode libre
+[2026-01-14 22:30:42] [INFO] [backend.f1_bot:1359] Question non catégorisée, utilisation du LLM direct
+[2026-01-14 22:30:47] [INFO] [backend.f1_bot:950] Apprentissage réussi : 2 faits, 0 prefs
+[2026-01-14 22:31:03] [INFO] [app:163] Input sanitized: safe=True, length=43
+[2026-01-14 22:31:03] [INFO] [backend.f1_bot:1017] Question reçue: parle moi des caractéristiques de svoitures
+[2026-01-14 22:31:03] [INFO] [backend.f1_bot:1025] Contexte long terme récupéré
+[2026-01-14 22:31:03] [INFO] [backend.f1_bot:1096] F1? False, Générale? False, Circuit? False
+[2026-01-14 22:31:03] [INFO] [backend.f1_bot:1355] Question hors F1 — mode libre
+[2026-01-14 22:31:03] [INFO] [backend.f1_bot:1359] Question non catégorisée, utilisation du LLM direct
+[2026-01-14 22:31:09] [INFO] [backend.f1_bot:950] Apprentissage réussi : 5 faits, 1 prefs
+[2026-01-14 22:31:15] [INFO] [app:163] Input sanitized: safe=True, length=4
+[2026-01-14 22:31:15] [INFO] [backend.f1_bot:1017] Question reçue: poid
+[2026-01-14 22:31:15] [INFO] [backend.f1_bot:1025] Contexte long terme récupéré
+[2026-01-14 22:31:15] [INFO] [backend.f1_bot:1096] F1? False, Générale? True, Circuit? False
+[2026-01-14 22:31:15] [INFO] [backend.f1_bot:1101] Relance courte avec historique F1 — persistance sur F1
+[2026-01-14 22:31:15] [INFO] [backend.f1_bot:1151] Pipeline F1 optimisé
+[2026-01-14 22:31:15] [INFO] [backend.f1_bot:1167] ✅ KB PRIORITAIRE: 15 chunks utilisés (score ≥0.45)
+[2026-01-14 22:31:15] [INFO] [backend.f1_bot:1229] ✅ MEMORY: Contexte long terme récupéré (1364 chars)
+[2026-01-14 22:31:19] [INFO] [backend.f1_bot:950] Apprentissage réussi : 1 faits, 0 prefs
+[2026-01-14 22:31:26] [INFO] [app:163] Input sanitized: safe=True, length=12
+[2026-01-14 22:31:26] [INFO] [backend.f1_bot:1017] Question reçue: et le volant
+[2026-01-14 22:31:26] [INFO] [backend.f1_bot:1025] Contexte long terme récupéré
+[2026-01-14 22:31:26] [INFO] [backend.f1_bot:1096] F1? False, Générale? True, Circuit? False
+[2026-01-14 22:31:26] [INFO] [backend.f1_bot:1101] Relance courte avec historique F1 — persistance sur F1
+[2026-01-14 22:31:26] [INFO] [backend.f1_bot:1151] Pipeline F1 optimisé
+[2026-01-14 22:31:26] [INFO] [backend.f1_bot:1167] ✅ KB PRIORITAIRE: 1 chunks utilisés (score ≥0.45)
+[2026-01-14 22:31:26] [INFO] [backend.f1_bot:1229] ✅ MEMORY: Contexte long terme récupéré (1351 chars)
+[2026-01-14 22:31:30] [INFO] [backend.f1_bot:950] Apprentissage réussi : 2 faits, 0 prefs
+[2026-01-14 22:31:44] [INFO] [app:163] Input sanitized: safe=True, length=22
+[2026-01-14 22:31:44] [INFO] [backend.f1_bot:1017] Question reçue: l equipement du pilote
+[2026-01-14 22:31:44] [INFO] [backend.f1_bot:1025] Contexte long terme récupéré
+[2026-01-14 22:31:44] [INFO] [backend.f1_bot:1096] F1? True, Générale? False, Circuit? False
+[2026-01-14 22:31:44] [INFO] [backend.f1_bot:1151] Pipeline F1 optimisé
+[2026-01-14 22:31:44] [INFO] [backend.f1_bot:1167] ✅ KB PRIORITAIRE: 12 chunks utilisés (score ≥0.45)
+[2026-01-14 22:31:44] [INFO] [backend.f1_bot:1229] ✅ MEMORY: Contexte long terme récupéré (1612 chars)
+[2026-01-14 22:31:49] [INFO] [backend.f1_bot:950] Apprentissage réussi : 2 faits, 0 prefs
+[2026-01-14 22:32:01] [INFO] [app:163] Input sanitized: safe=True, length=16
+[2026-01-14 22:32:01] [INFO] [backend.f1_bot:1017] Question reçue: hadjar c est qui
+[2026-01-14 22:32:01] [INFO] [backend.f1_bot:1025] Contexte long terme récupéré
+[2026-01-14 22:32:01] [INFO] [backend.f1_bot:1096] F1? False, Générale? False, Circuit? False
+[2026-01-14 22:32:01] [INFO] [backend.f1_bot:1355] Question hors F1 — mode libre
+[2026-01-14 22:32:01] [INFO] [backend.f1_bot:1359] Question non catégorisée, utilisation du LLM direct
+[2026-01-14 22:32:05] [INFO] [backend.f1_bot:950] Apprentissage réussi : 2 faits, 0 prefs
+[2026-01-14 22:32:15] [INFO] [app:163] Input sanitized: safe=True, length=23
+[2026-01-14 22:32:15] [INFO] [backend.f1_bot:1017] Question reçue: pilote de la saison 205
+[2026-01-14 22:32:15] [INFO] [backend.f1_bot:1025] Contexte long terme récupéré
+[2026-01-14 22:32:15] [INFO] [backend.f1_bot:1096] F1? True, Générale? False, Circuit? False
+[2026-01-14 22:32:15] [INFO] [backend.f1_bot:1151] Pipeline F1 optimisé
+[2026-01-14 22:32:15] [INFO] [backend.f1_bot:1167] ✅ KB PRIORITAIRE: 15 chunks utilisés (score ≥0.45)
+[2026-01-14 22:32:16] [INFO] [backend.f1_bot:1229] ✅ MEMORY: Contexte long terme récupéré (3232 chars)
+[2026-01-14 22:32:22] [INFO] [backend.f1_bot:950] Apprentissage réussi : 0 faits, 0 prefs
+[2026-01-14 22:32:35] [INFO] [app:163] Input sanitized: safe=True, length=4
+[2026-01-14 22:32:35] [INFO] [backend.f1_bot:1017] Question reçue: 2025
+[2026-01-14 22:32:35] [INFO] [backend.f1_bot:1025] Contexte long terme récupéré
+[2026-01-14 22:32:35] [INFO] [backend.f1_bot:1096] F1? False, Générale? True, Circuit? False
+[2026-01-14 22:32:35] [INFO] [backend.f1_bot:1101] Relance courte avec historique F1 — persistance sur F1
+[2026-01-14 22:32:35] [INFO] [backend.f1_bot:1151] Pipeline F1 optimisé
+[2026-01-14 22:32:35] [INFO] [backend.f1_bot:1167] ✅ KB PRIORITAIRE: 15 chunks utilisés (score ≥0.45)
+[2026-01-14 22:32:37] [INFO] [backend.f1_bot:1220] Saisons CSV: 1503 entrées (résumé 5)
+[2026-01-14 22:32:37] [INFO] [backend.f1_bot:1229] ✅ MEMORY: Contexte long terme récupéré (2269 chars)
+[2026-01-14 22:32:40] [WARNING] [backend.f1_bot:743] Ollama response too short (4 chars): RIEN
+[2026-01-14 22:32:45] [INFO] [app:163] Input sanitized: safe=True, length=4
+[2026-01-14 22:32:45] [INFO] [backend.f1_bot:1017] Question reçue: 2026
+[2026-01-14 22:32:45] [INFO] [backend.f1_bot:1025] Contexte long terme récupéré
+[2026-01-14 22:32:45] [INFO] [backend.f1_bot:1096] F1? False, Générale? True, Circuit? False
+[2026-01-14 22:32:45] [INFO] [backend.f1_bot:1101] Relance courte avec historique F1 — persistance sur F1
+[2026-01-14 22:32:45] [INFO] [backend.f1_bot:1151] Pipeline F1 optimisé
+[2026-01-14 22:32:45] [INFO] [backend.f1_bot:1167] ✅ KB PRIORITAIRE: 13 chunks utilisés (score ≥0.45)
+[2026-01-14 22:32:46] [INFO] [backend.f1_bot:1220] Saisons CSV: 712 entrées (résumé 5)
+[2026-01-14 22:32:46] [INFO] [backend.f1_bot:1229] ✅ MEMORY: Contexte long terme récupéré (1519 chars)
+[2026-01-14 22:32:52] [INFO] [backend.f1_bot:950] Apprentissage réussi : 1 faits, 0 prefs
+[2026-01-14 22:33:06] [INFO] [app:163] Input sanitized: safe=True, length=15
+[2026-01-14 22:33:06] [INFO] [backend.f1_bot:1017] Question reçue: tu as les dates
+[2026-01-14 22:33:06] [INFO] [backend.f1_bot:1025] Contexte long terme récupéré
+[2026-01-14 22:33:06] [INFO] [backend.f1_bot:1036] ⚡ Intent rapide: calendar (conf=0.90)
+[2026-01-14 22:36:58] [INFO] [app:163] Input sanitized: safe=True, length=4
+[2026-01-14 22:36:58] [INFO] [backend.f1_bot:1017] Question reçue: test
+[2026-01-14 22:36:58] [INFO] [backend.f1_bot:1025] Contexte long terme récupéré
+[2026-01-14 22:36:58] [INFO] [backend.f1_bot:1096] F1? False, Générale? True, Circuit? False
+[2026-01-14 22:36:58] [INFO] [backend.f1_bot:1327] Question générale (non-F1) — mode libre
+[2026-01-14 22:36:58] [WARNING] [backend.knowledge_base:303] Aucun résultat FAISS > 0.5, fallback recherche simple
+[2026-01-14 22:37:03] [INFO] [backend.f1_bot:950] Apprentissage réussi : 2 faits, 2 prefs
+[2026-01-14 22:39:56] [WARNING] [__main__:516] Port 8001 indisponible. Bascule sur 8002.
+[2026-01-14 22:39:56] [INFO] [__main__:524] auto_train désactivé (AUTO_TRAIN=0).
+[2026-01-14 22:39:56] [WARNING] [__main__:609] ⚠️ Erreur vérification crawl: can't subtract offset-naive and offset-aware datetimes
+[2026-01-14 22:39:56] [INFO] [__main__:670] ✅ MondayScheduler démarré (refresh widgets le lundi)
+[2026-01-14 22:41:23] [INFO] [__main__:524] auto_train désactivé (AUTO_TRAIN=0).
+[2026-01-14 22:41:23] [WARNING] [__main__:609] ⚠️ Erreur vérification crawl: can't subtract offset-naive and offset-aware datetimes
+[2026-01-14 22:41:23] [INFO] [__main__:670] ✅ MondayScheduler démarré (refresh widgets le lundi)
+[2026-01-14 22:41:34] [INFO] [app:163] Input sanitized: safe=True, length=2
+[2026-01-14 22:41:34] [INFO] [backend.f1_bot:1017] Question reçue: yo
+[2026-01-14 22:41:34] [INFO] [backend.f1_bot:1025] Contexte long terme récupéré
+[2026-01-14 22:41:34] [INFO] [backend.f1_bot:1096] F1? False, Générale? True, Circuit? False
+[2026-01-14 22:41:34] [INFO] [backend.f1_bot:1327] Question générale (non-F1) — mode libre
+[2026-01-14 22:41:34] [INFO] [backend.knowledge_base:126] Chargement modèle embeddings: sentence-transformers/all-MiniLM-L6-v2...
+[2026-01-14 22:41:37] [INFO] [backend.knowledge_base:196] ✅ FAISS index validé: 7983 vecteurs, 2233 documents, dim=384
+[2026-01-14 22:41:37] [INFO] [backend.knowledge_base:136] FAISS index chargé: 7983 vecteurs
+[2026-01-14 22:41:37] [WARNING] [backend.knowledge_base:303] Aucun résultat FAISS > 0.5, fallback recherche simple
+[2026-01-14 22:41:40] [INFO] [backend.f1_bot:950] Apprentissage réussi : 2 faits, 1 prefs
+[2026-01-14 22:41:51] [INFO] [app:163] Input sanitized: safe=True, length=7
+[2026-01-14 22:41:51] [INFO] [backend.f1_bot:1017] Question reçue: piastri
+[2026-01-14 22:41:51] [INFO] [backend.f1_bot:1025] Contexte long terme récupéré
+[2026-01-14 22:41:51] [INFO] [backend.f1_bot:1096] F1? True, Générale? False, Circuit? False
+[2026-01-14 22:41:51] [INFO] [backend.f1_bot:1151] Pipeline F1 optimisé
+[2026-01-14 22:41:51] [WARNING] [backend.knowledge_base:303] Aucun résultat FAISS > 0.45, fallback recherche simple
+[2026-01-14 22:41:51] [INFO] [backend.f1_bot:1170] KB: Aucun résultat (score <0.45)
+[2026-01-14 22:41:51] [INFO] [backend.f1_bot:1229] ✅ MEMORY: Contexte long terme récupéré (1720 chars)
+[2026-01-14 22:41:55] [INFO] [backend.f1_bot:950] Apprentissage réussi : 2 faits, 0 prefs
+[2026-01-14 22:42:06] [INFO] [app:163] Input sanitized: safe=True, length=18
+[2026-01-14 22:42:06] [INFO] [backend.f1_bot:1017] Question reçue: ok il a gagné quoi
+[2026-01-14 22:42:06] [INFO] [backend.f1_bot:1025] Contexte long terme récupéré
+[2026-01-14 22:42:06] [INFO] [backend.f1_bot:1096] F1? True, Générale? False, Circuit? False
+[2026-01-14 22:42:06] [INFO] [backend.f1_bot:1151] Pipeline F1 optimisé
+[2026-01-14 22:42:06] [WARNING] [backend.knowledge_base:303] Aucun résultat FAISS > 0.45, fallback recherche simple
+[2026-01-14 22:42:06] [INFO] [backend.f1_bot:1167] ✅ KB PRIORITAIRE: 15 chunks utilisés (score ≥0.45)
+[2026-01-14 22:42:06] [INFO] [backend.f1_bot:1229] ✅ MEMORY: Contexte long terme récupéré (2774 chars)
+[2026-01-14 22:42:06] [INFO] [backend.f1_bot:1255] 📰 Question actualité détectée, Web Search proactif...
+[2026-01-14 22:42:06] [WARNING] [backend.f1_bot:1270] Web Search proactif échoué: Client error '403 Forbidden' for url 'https://en.wikipedia.org/w/api.php?list=search&srsearch=F1+ok+il+a+gagn%C3%A9+quoi&srlimit=3&action=query&format=json'
+For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/403
+[2026-01-14 22:42:08] [WARNING] [backend.f1_bot:743] Ollama response too short (4 chars): RIEN
+[2026-01-14 22:42:18] [INFO] [app:163] Input sanitized: safe=True, length=18
+[2026-01-14 22:42:18] [INFO] [backend.f1_bot:1017] Question reçue: ah mince et norris
+[2026-01-14 22:42:18] [INFO] [backend.f1_bot:1025] Contexte long terme récupéré
+[2026-01-14 22:42:18] [INFO] [backend.f1_bot:1096] F1? True, Générale? False, Circuit? False
+[2026-01-14 22:42:18] [INFO] [backend.f1_bot:1151] Pipeline F1 optimisé
+[2026-01-14 22:42:18] [WARNING] [backend.knowledge_base:303] Aucun résultat FAISS > 0.45, fallback recherche simple
+[2026-01-14 22:42:18] [INFO] [backend.f1_bot:1170] KB: Aucun résultat (score <0.45)
+[2026-01-14 22:42:18] [INFO] [backend.f1_bot:1229] ✅ MEMORY: Contexte long terme récupéré (1436 chars)
+[2026-01-14 22:42:21] [INFO] [backend.f1_bot:950] Apprentissage réussi : 1 faits, 0 prefs
+[2026-01-14 22:42:32] [INFO] [app:163] Input sanitized: safe=True, length=24
+[2026-01-14 22:42:32] [INFO] [backend.f1_bot:1017] Question reçue: ok tu as des infos de qd
+[2026-01-14 22:42:32] [INFO] [backend.f1_bot:1025] Contexte long terme récupéré
+[2026-01-14 22:42:32] [INFO] [backend.f1_bot:1096] F1? False, Générale? False, Circuit? False
+[2026-01-14 22:42:32] [INFO] [backend.f1_bot:1355] Question hors F1 — mode libre
+[2026-01-14 22:42:32] [INFO] [backend.f1_bot:1359] Question non catégorisée, utilisation du LLM direct
+[2026-01-14 22:42:35] [INFO] [backend.f1_bot:950] Apprentissage réussi : 0 faits, 0 prefs
+[2026-01-14 22:42:41] [INFO] [app:163] Input sanitized: safe=True, length=8
+[2026-01-14 22:42:41] [INFO] [backend.f1_bot:1017] Question reçue: hamilton
+[2026-01-14 22:42:41] [INFO] [backend.f1_bot:1025] Contexte long terme récupéré
+[2026-01-14 22:42:41] [INFO] [backend.f1_bot:1096] F1? True, Générale? False, Circuit? False
+[2026-01-14 22:42:41] [INFO] [backend.f1_bot:1151] Pipeline F1 optimisé
+[2026-01-14 22:42:41] [INFO] [backend.f1_bot:1167] ✅ KB PRIORITAIRE: 15 chunks utilisés (score ≥0.45)
+[2026-01-14 22:42:41] [INFO] [backend.f1_bot:1229] ✅ MEMORY: Contexte long terme récupéré (2355 chars)
+[2026-01-14 22:42:44] [INFO] [backend.f1_bot:950] Apprentissage réussi : 1 faits, 1 prefs
+[2026-01-14 22:42:54] [INFO] [app:163] Input sanitized: safe=True, length=11
+[2026-01-14 22:42:54] [INFO] [backend.f1_bot:1017] Question reçue: ok et apres
+[2026-01-14 22:42:54] [INFO] [backend.f1_bot:1025] Contexte long terme récupéré
+[2026-01-14 22:42:56] [WARNING] [backend.f1_bot:743] Ollama response too short (4 chars): RIEN
+[2026-01-14 22:43:02] [INFO] [app:163] Input sanitized: safe=True, length=10
+[2026-01-14 22:43:02] [INFO] [backend.f1_bot:1017] Question reçue: qui il est
+[2026-01-14 22:43:02] [INFO] [backend.f1_bot:1025] Contexte long terme récupéré
+[2026-01-14 22:43:06] [INFO] [backend.f1_bot:950] Apprentissage réussi : 2 faits, 0 prefs
+[2026-01-14 22:43:14] [INFO] [app:163] Input sanitized: safe=True, length=13
+[2026-01-14 22:43:14] [INFO] [backend.f1_bot:1017] Question reçue: et  cetait qd
+[2026-01-14 22:43:14] [INFO] [backend.f1_bot:1025] Contexte long terme récupéré
+[2026-01-14 22:43:14] [INFO] [backend.f1_bot:1096] F1? False, Générale? True, Circuit? False
+[2026-01-14 22:43:14] [INFO] [backend.f1_bot:1101] Relance courte avec historique F1 — persistance sur F1
+[2026-01-14 22:43:14] [INFO] [backend.f1_bot:1151] Pipeline F1 optimisé
+[2026-01-14 22:43:14] [INFO] [backend.f1_bot:1167] ✅ KB PRIORITAIRE: 3 chunks utilisés (score ≥0.45)
+[2026-01-14 22:43:14] [INFO] [backend.f1_bot:1229] ✅ MEMORY: Contexte long terme récupéré (1484 chars)
+[2026-01-14 22:43:17] [INFO] [backend.f1_bot:950] Apprentissage réussi : 1 faits, 0 prefs
+[2026-01-14 22:43:22] [INFO] [app:163] Input sanitized: safe=True, length=10
+[2026-01-14 22:43:22] [INFO] [backend.f1_bot:1017] Question reçue: a suivre ?
+[2026-01-14 22:43:22] [INFO] [backend.f1_bot:1025] Contexte long terme récupéré
+[2026-01-14 22:43:22] [INFO] [backend.f1_bot:1096] F1? False, Générale? True, Circuit? False
+[2026-01-14 22:43:22] [INFO] [backend.f1_bot:1101] Relance courte avec historique F1 — persistance sur F1
+[2026-01-14 22:43:22] [INFO] [backend.f1_bot:1151] Pipeline F1 optimisé
+[2026-01-14 22:43:22] [WARNING] [backend.knowledge_base:303] Aucun résultat FAISS > 0.45, fallback recherche simple
+[2026-01-14 22:43:22] [INFO] [backend.f1_bot:1167] ✅ KB PRIORITAIRE: 15 chunks utilisés (score ≥0.45)
+[2026-01-14 22:43:22] [INFO] [backend.f1_bot:1229] ✅ MEMORY: Contexte long terme récupéré (1419 chars)
+[2026-01-14 22:43:25] [INFO] [backend.f1_bot:950] Apprentissage réussi : 1 faits, 0 prefs
+[2026-01-14 22:43:33] [INFO] [app:163] Input sanitized: safe=True, length=23
+[2026-01-14 22:43:33] [INFO] [backend.f1_bot:1017] Question reçue: qui a fait la mem chise
+[2026-01-14 22:43:33] [INFO] [backend.f1_bot:1025] Contexte long terme récupéré
+[2026-01-14 22:43:33] [INFO] [backend.f1_bot:1096] F1? False, Générale? False, Circuit? False
+[2026-01-14 22:43:33] [INFO] [backend.f1_bot:1355] Question hors F1 — mode libre
+[2026-01-14 22:43:33] [INFO] [backend.f1_bot:1359] Question non catégorisée, utilisation du LLM direct
+[2026-01-14 22:43:37] [INFO] [backend.f1_bot:950] Apprentissage réussi : 2 faits, 0 prefs
+[2026-01-14 22:43:54] [INFO] [app:163] Input sanitized: safe=True, length=12
+[2026-01-14 22:43:54] [INFO] [backend.f1_bot:1017] Question reçue: et shumacher
+[2026-01-14 22:43:54] [INFO] [backend.f1_bot:1025] Contexte long terme récupéré
+[2026-01-14 22:43:54] [INFO] [backend.f1_bot:1096] F1? False, Générale? True, Circuit? False
+[2026-01-14 22:43:54] [INFO] [backend.f1_bot:1101] Relance courte avec historique F1 — persistance sur F1
+[2026-01-14 22:43:54] [INFO] [backend.f1_bot:1151] Pipeline F1 optimisé
+[2026-01-14 22:43:54] [WARNING] [backend.knowledge_base:303] Aucun résultat FAISS > 0.45, fallback recherche simple
+[2026-01-14 22:43:54] [INFO] [backend.f1_bot:1170] KB: Aucun résultat (score <0.45)
+[2026-01-14 22:43:54] [INFO] [backend.f1_bot:1229] ✅ MEMORY: Contexte long terme récupéré (1424 chars)
+[2026-01-14 22:43:58] [INFO] [backend.f1_bot:950] Apprentissage réussi : 1 faits, 0 prefs
+[2026-01-14 22:44:03] [INFO] [app:163] Input sanitized: safe=True, length=15
+[2026-01-14 22:44:03] [INFO] [backend.f1_bot:1017] Question reçue: lui aussi alors
+[2026-01-14 22:44:03] [INFO] [backend.f1_bot:1025] Contexte long terme récupéré
+[2026-01-14 22:44:03] [INFO] [backend.f1_bot:1092] Relance référentielle détectée avec contexte F1 — forçage F1
+[2026-01-14 22:44:03] [INFO] [backend.f1_bot:1096] F1? True, Générale? False, Circuit? False
+[2026-01-14 22:44:03] [INFO] [backend.f1_bot:1151] Pipeline F1 optimisé
+[2026-01-14 22:44:03] [WARNING] [backend.knowledge_base:303] Aucun résultat FAISS > 0.45, fallback recherche simple
+[2026-01-14 22:44:03] [INFO] [backend.f1_bot:1170] KB: Aucun résultat (score <0.45)
+[2026-01-14 22:44:03] [INFO] [backend.f1_bot:1229] ✅ MEMORY: Contexte long terme récupéré (2153 chars)
+[2026-01-14 22:44:06] [INFO] [backend.f1_bot:950] Apprentissage réussi : 1 faits, 0 prefs
+[2026-01-14 22:44:14] [INFO] [app:163] Input sanitized: safe=True, length=22
+[2026-01-14 22:44:14] [INFO] [backend.f1_bot:1017] Question reçue: donc il sont combien ?
+[2026-01-14 22:44:14] [INFO] [backend.f1_bot:1025] Contexte long terme récupéré
+[2026-01-14 22:44:14] [INFO] [backend.f1_bot:1092] Relance référentielle détectée avec contexte F1 — forçage F1
+[2026-01-14 22:44:14] [INFO] [backend.f1_bot:1096] F1? True, Générale? False, Circuit? False
+[2026-01-14 22:44:14] [INFO] [backend.f1_bot:1151] Pipeline F1 optimisé
+[2026-01-14 22:44:14] [WARNING] [backend.knowledge_base:303] Aucun résultat FAISS > 0.45, fallback recherche simple
+[2026-01-14 22:44:14] [INFO] [backend.f1_bot:1170] KB: Aucun résultat (score <0.45)
+[2026-01-14 22:44:14] [INFO] [backend.f1_bot:1229] ✅ MEMORY: Contexte long terme récupéré (2845 chars)
+[2026-01-14 22:44:18] [INFO] [backend.f1_bot:950] Apprentissage réussi : 1 faits, 0 prefs
+[2026-01-14 22:44:31] [INFO] [app:163] Input sanitized: safe=True, length=42
+[2026-01-14 22:44:31] [INFO] [backend.f1_bot:1017] Question reçue: cool et apres c est qui dans le classement
+[2026-01-14 22:44:31] [INFO] [backend.f1_bot:1025] Contexte long terme récupéré
+[2026-01-14 22:44:31] [INFO] [backend.f1_bot:1096] F1? True, Générale? False, Circuit? False
+[2026-01-14 22:44:31] [INFO] [backend.f1_bot:1151] Pipeline F1 optimisé
+[2026-01-14 22:44:31] [INFO] [backend.f1_bot:1167] ✅ KB PRIORITAIRE: 6 chunks utilisés (score ≥0.45)
+[2026-01-14 22:44:31] [INFO] [backend.f1_bot:1229] ✅ MEMORY: Contexte long terme récupéré (2834 chars)
+[2026-01-14 22:44:32] [WARNING] [backend.standings_utils:70] StandF1: No table found in HTML
+[2026-01-14 22:44:32] [INFO] [backend.f1_bot:1248] Impossible de récupérer les standings via StandF1
+[2026-01-14 22:44:35] [INFO] [backend.f1_bot:950] Apprentissage réussi : 1 faits, 0 prefs
+[2026-01-14 22:44:41] [INFO] [app:163] Input sanitized: safe=True, length=9
+[2026-01-14 22:44:41] [INFO] [backend.f1_bot:1017] Question reçue: et 6 ou 5
+[2026-01-14 22:44:41] [INFO] [backend.f1_bot:1025] Contexte long terme récupéré
+[2026-01-14 22:44:41] [INFO] [backend.f1_bot:1096] F1? False, Générale? False, Circuit? False
+[2026-01-14 22:44:41] [INFO] [backend.f1_bot:1355] Question hors F1 — mode libre
+[2026-01-14 22:44:41] [INFO] [backend.f1_bot:1359] Question non catégorisée, utilisation du LLM direct
+[2026-01-14 22:44:44] [INFO] [backend.f1_bot:950] Apprentissage réussi : 2 faits, 0 prefs
+[2026-01-14 22:44:55] [INFO] [app:163] Input sanitized: safe=True, length=24
+[2026-01-14 22:44:55] [INFO] [backend.f1_bot:1017] Question reçue: c pas clair tes reponses
+[2026-01-14 22:44:55] [INFO] [backend.f1_bot:1025] Contexte long terme récupéré
+[2026-01-14 22:44:55] [INFO] [backend.f1_bot:1092] Relance référentielle détectée avec contexte F1 — forçage F1
+[2026-01-14 22:44:55] [INFO] [backend.f1_bot:1096] F1? True, Générale? False, Circuit? False
+[2026-01-14 22:44:55] [INFO] [backend.f1_bot:1151] Pipeline F1 optimisé
+[2026-01-14 22:44:55] [INFO] [backend.f1_bot:1167] ✅ KB PRIORITAIRE: 5 chunks utilisés (score ≥0.45)
+[2026-01-14 22:44:55] [INFO] [backend.f1_bot:1229] ✅ MEMORY: Contexte long terme récupéré (3408 chars)
+[2026-01-14 22:45:02] [INFO] [backend.f1_bot:950] Apprentissage réussi : 3 faits, 0 prefs
+[2026-01-14 22:47:39] [WARNING] [__main__:516] Port 8001 indisponible. Bascule sur 8002.
+[2026-01-14 22:47:39] [INFO] [__main__:524] auto_train désactivé (AUTO_TRAIN=0).
+[2026-01-14 22:47:39] [WARNING] [__main__:609] ⚠️ Erreur vérification crawl: can't subtract offset-naive and offset-aware datetimes
+[2026-01-14 22:47:39] [INFO] [__main__:670] ✅ MondayScheduler démarré (refresh widgets le lundi)
+[2026-01-14 22:47:59] [INFO] [__main__:524] auto_train désactivé (AUTO_TRAIN=0).
+[2026-01-14 22:47:59] [WARNING] [__main__:609] ⚠️ Erreur vérification crawl: can't subtract offset-naive and offset-aware datetimes
+[2026-01-14 22:47:59] [INFO] [__main__:670] ✅ MondayScheduler démarré (refresh widgets le lundi)
+[2026-01-14 23:05:28] [INFO] [__main__:524] auto_train désactivé (AUTO_TRAIN=0).
+[2026-01-14 23:05:28] [WARNING] [__main__:609] ⚠️ Erreur vérification crawl: can't subtract offset-naive and offset-aware datetimes
+[2026-01-14 23:05:28] [INFO] [__main__:670] ✅ MondayScheduler démarré (refresh widgets le lundi)
+[2026-01-14 23:06:31] [INFO] [__main__:524] auto_train désactivé (AUTO_TRAIN=0).
+[2026-01-14 23:06:31] [INFO] [__main__:670] ✅ MondayScheduler démarré (refresh widgets le lundi)
+[2026-01-15 08:12:57] [INFO] [__main__:524] auto_train désactivé (AUTO_TRAIN=0).
+[2026-01-15 08:12:57] [INFO] [__main__:670] ✅ MondayScheduler démarré (refresh widgets le lundi)
+[2026-01-15 08:18:00] [WARNING] [__main__:516] Port 8001 indisponible. Bascule sur 8002.
+[2026-01-15 08:18:00] [INFO] [__main__:524] auto_train désactivé (AUTO_TRAIN=0).
+[2026-01-15 08:18:00] [INFO] [__main__:670] ✅ MondayScheduler démarré (refresh widgets le lundi)
+[2026-01-15 08:18:52] [INFO] [__main__:524] auto_train désactivé (AUTO_TRAIN=0).
+[2026-01-15 08:18:52] [INFO] [__main__:670] ✅ MondayScheduler démarré (refresh widgets le lundi)
+[2026-01-15 08:20:42] [INFO] [__main__:524] auto_train désactivé (AUTO_TRAIN=0).
+[2026-01-15 08:20:42] [INFO] [__main__:670] ✅ MondayScheduler démarré (refresh widgets le lundi)
+[2026-01-15 08:22:09] [WARNING] [__main__:516] Port 8001 indisponible. Bascule sur 8002.
+[2026-01-15 08:22:09] [INFO] [__main__:524] auto_train désactivé (AUTO_TRAIN=0).
+[2026-01-15 08:22:09] [INFO] [__main__:670] ✅ MondayScheduler démarré (refresh widgets le lundi)
+[2026-01-15 08:23:04] [WARNING] [__main__:516] Port 8001 indisponible. Bascule sur 8002.
+[2026-01-15 08:23:04] [INFO] [__main__:524] auto_train désactivé (AUTO_TRAIN=0).
+[2026-01-15 08:23:04] [INFO] [__main__:670] ✅ MondayScheduler démarré (refresh widgets le lundi)
+[2026-01-15 08:23:40] [INFO] [__main__:524] auto_train désactivé (AUTO_TRAIN=0).
+[2026-01-15 08:23:40] [INFO] [__main__:670] ✅ MondayScheduler démarré (refresh widgets le lundi)
+[2026-01-15 08:24:21] [INFO] [__main__:524] auto_train désactivé (AUTO_TRAIN=0).
+[2026-01-15 08:24:21] [INFO] [__main__:670] ✅ MondayScheduler démarré (refresh widgets le lundi)
+[2026-01-15 08:25:50] [INFO] [__main__:524] auto_train désactivé (AUTO_TRAIN=0).
+[2026-01-15 08:25:50] [INFO] [__main__:670] ✅ MondayScheduler démarré (refresh widgets le lundi)
+[2026-01-15 08:27:09] [WARNING] [__main__:516] Port 8001 indisponible. Bascule sur 8002.
+[2026-01-15 08:27:09] [INFO] [__main__:524] auto_train désactivé (AUTO_TRAIN=0).
+[2026-01-15 08:27:09] [INFO] [__main__:670] ✅ MondayScheduler démarré (refresh widgets le lundi)
+[2026-01-15 08:29:02] [INFO] [__main__:524] auto_train désactivé (AUTO_TRAIN=0).
+[2026-01-15 08:29:02] [INFO] [__main__:670] ✅ MondayScheduler démarré (refresh widgets le lundi)
+[2026-01-15 08:29:19] [INFO] [__main__:524] auto_train désactivé (AUTO_TRAIN=0).
+[2026-01-15 08:29:19] [INFO] [__main__:670] ✅ MondayScheduler démarré (refresh widgets le lundi)
+[2026-01-15 08:31:24] [INFO] [backend.knowledge_base:126] Chargement modèle embeddings: sentence-transformers/all-MiniLM-L6-v2...
+[2026-01-15 08:31:28] [INFO] [backend.knowledge_base:196] ✅ FAISS index validé: 7983 vecteurs, 2233 documents, dim=384
+[2026-01-15 08:31:28] [INFO] [backend.knowledge_base:136] FAISS index chargé: 7983 vecteurs
+[2026-01-15 08:34:46] [INFO] [__main__:524] auto_train désactivé (AUTO_TRAIN=0).
+[2026-01-15 08:34:46] [INFO] [__main__:670] ✅ MondayScheduler démarré (refresh widgets le lundi)
+[2026-01-15 08:35:15] [INFO] [__main__:524] auto_train désactivé (AUTO_TRAIN=0).
+[2026-01-15 08:35:15] [INFO] [__main__:670] ✅ MondayScheduler démarré (refresh widgets le lundi)
+[2026-01-15 08:37:17] [INFO] [__main__:524] auto_train désactivé (AUTO_TRAIN=0).
+[2026-01-15 08:37:17] [INFO] [__main__:670] ✅ MondayScheduler démarré (refresh widgets le lundi)
+[2026-01-15 08:37:33] [INFO] [app:163] Input sanitized: safe=True, length=23
+[2026-01-15 08:37:33] [INFO] [backend.f1_bot:1017] Question reçue: Qui est Max Verstappen?
+[2026-01-15 08:37:33] [INFO] [backend.f1_bot:1025] Contexte long terme récupéré
+[2026-01-15 08:37:33] [INFO] [backend.f1_bot:1096] F1? True, Générale? False, Circuit? False
+[2026-01-15 08:37:33] [INFO] [backend.f1_bot:1151] Pipeline F1 optimisé
+[2026-01-15 08:37:33] [INFO] [backend.knowledge_base:126] Chargement modèle embeddings: sentence-transformers/all-MiniLM-L6-v2...
+[2026-01-15 08:37:36] [INFO] [backend.knowledge_base:196] ✅ FAISS index validé: 7983 vecteurs, 2233 documents, dim=384
+[2026-01-15 08:37:36] [INFO] [backend.knowledge_base:136] FAISS index chargé: 7983 vecteurs
+[2026-01-15 08:37:37] [INFO] [backend.f1_bot:1167] ✅ KB PRIORITAIRE: 5 chunks utilisés (score ≥0.45)
+[2026-01-15 08:37:37] [INFO] [backend.f1_bot:1229] ✅ MEMORY: Contexte long terme récupéré (2808 chars)
+[2026-01-15 08:37:47] [INFO] [backend.f1_bot:950] Apprentissage réussi : 3 faits, 0 prefs
+[2026-01-15 08:39:51] [INFO] [__main__:524] auto_train désactivé (AUTO_TRAIN=0).
+[2026-01-15 08:39:51] [INFO] [__main__:670] ✅ MondayScheduler démarré (refresh widgets le lundi)
+[2026-01-15 08:41:02] [WARNING] [__main__:516] Port 8001 indisponible. Bascule sur 8002.
+[2026-01-15 08:41:02] [INFO] [__main__:524] auto_train désactivé (AUTO_TRAIN=0).
+[2026-01-15 08:41:02] [INFO] [__main__:670] ✅ MondayScheduler démarré (refresh widgets le lundi)
+[2026-01-15 09:42:06] [INFO] [app:163] Input sanitized: safe=True, length=5
+[2026-01-15 09:42:06] [INFO] [backend.f1_bot:1017] Question reçue: salut
+[2026-01-15 09:42:06] [INFO] [backend.f1_bot:1025] Contexte long terme récupéré
+[2026-01-15 09:42:06] [INFO] [backend.f1_bot:1096] F1? False, Générale? True, Circuit? False
+[2026-01-15 09:42:06] [INFO] [backend.f1_bot:1327] Question générale (non-F1) — mode libre
+[2026-01-15 09:42:06] [INFO] [backend.knowledge_base:126] Chargement modèle embeddings: sentence-transformers/all-MiniLM-L6-v2...
+[2026-01-15 09:42:10] [INFO] [backend.knowledge_base:196] ✅ FAISS index validé: 7983 vecteurs, 2233 documents, dim=384
+[2026-01-15 09:42:10] [INFO] [backend.knowledge_base:136] FAISS index chargé: 7983 vecteurs
+[2026-01-15 09:42:10] [WARNING] [backend.knowledge_base:303] Aucun résultat FAISS > 0.5, fallback recherche simple
+[2026-01-15 09:42:20] [INFO] [backend.f1_bot:950] Apprentissage réussi : 1 faits, 1 prefs
+[2026-01-15 09:43:30] [INFO] [app:163] Input sanitized: safe=True, length=17
+[2026-01-15 09:43:30] [INFO] [backend.f1_bot:1017] Question reçue: parle moi de pneu
+[2026-01-15 09:43:30] [INFO] [backend.f1_bot:1025] Contexte long terme récupéré
+[2026-01-15 09:43:30] [INFO] [backend.f1_bot:1096] F1? False, Générale? False, Circuit? False
+[2026-01-15 09:43:30] [INFO] [backend.f1_bot:1355] Question hors F1 — mode libre
+[2026-01-15 09:43:30] [INFO] [backend.f1_bot:1359] Question non catégorisée, utilisation du LLM direct
+[2026-01-15 09:44:18] [WARNING] [__main__:516] Port 8001 indisponible. Bascule sur 8002.
+[2026-01-15 09:44:18] [INFO] [__main__:524] auto_train désactivé (AUTO_TRAIN=0).
+[2026-01-15 09:44:18] [INFO] [__main__:670] ✅ MondayScheduler démarré (refresh widgets le lundi)
+[2026-01-15 09:44:53] [INFO] [app:163] Input sanitized: safe=True, length=5
+[2026-01-15 09:44:53] [INFO] [backend.f1_bot:1017] Question reçue: salut
+[2026-01-15 09:44:53] [INFO] [backend.f1_bot:1025] Contexte long terme récupéré
+[2026-01-15 09:44:53] [INFO] [backend.f1_bot:1096] F1? False, Générale? True, Circuit? False
+[2026-01-15 09:44:53] [INFO] [backend.f1_bot:1327] Question générale (non-F1) — mode libre
+[2026-01-15 09:44:53] [INFO] [backend.knowledge_base:126] Chargement modèle embeddings: sentence-transformers/all-MiniLM-L6-v2...
+[2026-01-15 09:45:21] [INFO] [backend.knowledge_base:196] ✅ FAISS index validé: 7983 vecteurs, 2233 documents, dim=384
+[2026-01-15 09:45:21] [INFO] [backend.knowledge_base:136] FAISS index chargé: 7983 vecteurs
+[2026-01-15 09:45:21] [WARNING] [backend.knowledge_base:303] Aucun résultat FAISS > 0.5, fallback recherche simple
+[2026-01-15 09:45:31] [INFO] [backend.f1_bot:950] Apprentissage réussi : 1 faits, 1 prefs

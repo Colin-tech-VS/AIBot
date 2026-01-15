@@ -1,0 +1,534 @@
+{
+  "year": 1975,
+  "timestamp": "2026-01-14T21:45:17.557506",
+  "drivers": [
+    [
+      "Entrant",
+      "Constructor",
+      "Chassis",
+      "Engine",
+      "Tyre",
+      "No",
+      "Driver",
+      "Rounds"
+    ],
+    [
+      "MarlboroTeamTexaco",
+      "McLaren-Ford",
+      "M23",
+      "Ford Cosworth DFV3.0V8",
+      "G",
+      "1",
+      "Emerson Fittipaldi",
+      "All"
+    ],
+    [
+      "2",
+      "Jochen Mass",
+      "All"
+    ],
+    [
+      "ElfTeam Tyrrell",
+      "Tyrrell-Ford",
+      "007",
+      "Ford Cosworth DFV3.0V8",
+      "G",
+      "3",
+      "South AfricaJody Scheckter",
+      "All"
+    ],
+    [
+      "4",
+      "Patrick Depailler",
+      "All"
+    ],
+    [
+      "15",
+      "Jean-Pierre Jabouille",
+      "9"
+    ],
+    [
+      "Michel Leclère",
+      "14"
+    ],
+    [
+      "John PlayerTeam Lotus",
+      "Lotus-Ford",
+      "72E",
+      "Ford Cosworth DFV3.0V8",
+      "G",
+      "5",
+      "Ronnie Peterson",
+      "All"
+    ],
+    [
+      "6",
+      "Jacky Ickx",
+      "1–9"
+    ],
+    [
+      "Jim Crawford",
+      "10, 13"
+    ],
+    [
+      "John Watson",
+      "11"
+    ],
+    [
+      "Brian Henton",
+      "12, 14"
+    ],
+    [
+      "15",
+      "10"
+    ],
+    [
+      "Martini Racing",
+      "Brabham-Ford",
+      "BT44B",
+      "Ford Cosworth DFV3.0V8",
+      "G",
+      "7",
+      "Carlos Reutemann",
+      "All"
+    ],
+    [
+      "8",
+      "Carlos Pace",
+      "All"
+    ],
+    [
+      "BetaTeam MarchLavazzaMarch",
+      "March-Ford",
+      "741751",
+      "Ford Cosworth DFV3.0V8",
+      "G",
+      "9",
+      "Vittorio Brambilla",
+      "All"
+    ],
+    [
+      "10",
+      "Lella Lombardi",
+      "3–9"
+    ],
+    [
+      "Hans-Joachim Stuck",
+      "10–14"
+    ],
+    [
+      "29",
+      "Lella Lombardi",
+      "10–13"
+    ],
+    [
+      "SEFAC Ferrari",
+      "Ferrari",
+      "312B3-74312T",
+      "Ferrari001/11 3.0F12Ferrari015 3.0F12",
+      "G",
+      "11",
+      "Clay Regazzoni",
+      "All"
+    ],
+    [
+      "12",
+      "Niki Lauda",
+      "All"
+    ],
+    [
+      "Stanley-BRM",
+      "BRM",
+      "P201",
+      "BRMP200 3.0V12",
+      "G",
+      "14",
+      "Mike Wilds",
+      "1–2"
+    ],
+    [
+      "Bob Evans",
+      "3–9, 12–13"
+    ],
+    [
+      "UOPShadow Racing",
+      "Shadow-Ford",
+      "DN3BDN5",
+      "Ford Cosworth DFV3.0V8",
+      "G",
+      "16",
+      "Tom Pryce",
+      "All"
+    ],
+    [
+      "17",
+      "Jean-Pierre Jarier",
+      "1–11, 14"
+    ],
+    [
+      "Shadow-Matra",
+      "DN7",
+      "MatraMS73 3.0V12",
+      "12–13"
+    ],
+    [
+      "MatchboxTeam SurteesNational OrgansTeam Surtees",
+      "Surtees-Ford",
+      "TS16",
+      "Ford Cosworth DFV3.0V8",
+      "G",
+      "18",
+      "John Watson",
+      "1–10, 12"
+    ],
+    [
+      "19",
+      "Dave Morgan",
+      "10"
+    ],
+    [
+      "HB Bewaking Team Ensign",
+      "Ensign-Ford",
+      "N174N175",
+      "Ford Cosworth DFV3.0V8",
+      "G",
+      "19",
+      "Gijs van Lennep",
+      "11"
+    ],
+    [
+      "31",
+      "8–9"
+    ],
+    [
+      "Roelof Wunderink",
+      "4–5, 10, 13–14"
+    ],
+    [
+      "Chris Amon",
+      "12"
+    ],
+    [
+      "32",
+      "13"
+    ],
+    [
+      "33",
+      "Roelof Wunderink",
+      "12"
+    ],
+    [
+      "Frank Williams Racing CarsWilliamsAmbrozium H7 Racing",
+      "Williams-Ford",
+      "FWFW04",
+      "Ford Cosworth DFV3.0V8",
+      "G",
+      "20",
+      "Arturo Merzario",
+      "1–6"
+    ],
+    [
+      "Damien Magee",
+      "7"
+    ],
+    [
+      "South AfricaIan Scheckter",
+      "8"
+    ],
+    [
+      "François Migault",
+      "9"
+    ],
+    [
+      "Ian Ashley",
+      "11"
+    ],
+    [
+      "Jo Vonlanthen",
+      "12"
+    ],
+    [
+      "Renzo Zorzi",
+      "13"
+    ],
+    [
+      "Lella Lombardi",
+      "14"
+    ],
+    [
+      "21",
+      "South AfricaIan Scheckter",
+      "7"
+    ],
+    [
+      "Jacques Laffite",
+      "1–3, 5–6, 8–14"
+    ],
+    [
+      "Tony Brise",
+      "4"
+    ],
+    [
+      "Embassy Racing with Graham Hill",
+      "Lola-Ford",
+      "T370T371",
+      "Ford Cosworth DFV3.0V8",
+      "G",
+      "22",
+      "Graham Hill",
+      "1–3"
+    ],
+    [
+      "23",
+      "Rolf Stommelen",
+      "1–3"
+    ],
+    [
+      "Hill-Ford",
+      "GH1",
+      "22",
+      "4, 12–13"
+    ],
+    [
+      "François Migault",
+      "6"
+    ],
+    [
+      "Vern Schuppan",
+      "7"
+    ]
+  ],
+  "teams": [],
+  "races": [
+    [
+      "Round",
+      "Grand Prix",
+      "Circuit",
+      "Date"
+    ],
+    [
+      "1",
+      "Argentine Grand Prix",
+      "Autódromo Oscar Alfredo Gálvez,Buenos Aires",
+      "12 January"
+    ],
+    [
+      "2",
+      "Brazilian Grand Prix",
+      "Autodromo de Interlagos,São Paulo",
+      "26 January"
+    ],
+    [
+      "3",
+      "South African Grand Prix",
+      "South AfricaKyalami Grand Prix Circuit,Midrand",
+      "1 March"
+    ],
+    [
+      "4",
+      "Spanish Grand Prix",
+      "Montjuïc circuit,Barcelona",
+      "27 April"
+    ],
+    [
+      "5",
+      "Monaco Grand Prix",
+      "Circuit de Monaco,Monte Carlo",
+      "11 May"
+    ],
+    [
+      "6",
+      "Belgian Grand Prix",
+      "Circuit Zolder,Heusden-Zolder",
+      "25 May"
+    ],
+    [
+      "7",
+      "Swedish Grand Prix",
+      "Scandinavian Raceway,Anderstorp",
+      "8 June"
+    ],
+    [
+      "8",
+      "Dutch Grand Prix",
+      "Circuit Zandvoort,Zandvoort",
+      "22 June"
+    ],
+    [
+      "9",
+      "French Grand Prix",
+      "Paul Ricard Circuit,Le Castellet",
+      "6 July"
+    ],
+    [
+      "10",
+      "British Grand Prix",
+      "Silverstone Circuit,Silverstone",
+      "19 July"
+    ],
+    [
+      "11",
+      "German Grand Prix",
+      "Nürburgring,Nürburg",
+      "3 August"
+    ],
+    [
+      "12",
+      "Austrian Grand Prix",
+      "Österreichring,Spielberg",
+      "17 August"
+    ],
+    [
+      "13",
+      "Italian Grand Prix",
+      "Autodromo Nazionale di Monza,Monza",
+      "7 September"
+    ],
+    [
+      "14",
+      "United States Grand Prix",
+      "Watkins Glen Grand Prix Course,New York",
+      "5 October"
+    ]
+  ],
+  "standings": [
+    [
+      "Round",
+      "Grand Prix",
+      "Pole position",
+      "Fastest lap",
+      "Winning driver",
+      "Winning constructor",
+      "Report"
+    ],
+    [
+      "1",
+      "Argentine Grand Prix",
+      "Jean-Pierre Jarier[a]",
+      "James Hunt",
+      "Emerson Fittipaldi",
+      "McLaren-Ford",
+      "Report"
+    ],
+    [
+      "2",
+      "Brazilian Grand Prix",
+      "Jean-Pierre Jarier",
+      "Jean-Pierre Jarier",
+      "Carlos Pace",
+      "Brabham-Ford",
+      "Report"
+    ],
+    [
+      "3",
+      "South AfricaSouth African Grand Prix",
+      "Carlos Pace",
+      "Carlos Pace",
+      "South AfricaJody Scheckter",
+      "Tyrrell-Ford",
+      "Report"
+    ],
+    [
+      "4",
+      "Spanish Grand Prix",
+      "Niki Lauda",
+      "Mario Andretti",
+      "Jochen Mass",
+      "McLaren-Ford",
+      "Report"
+    ],
+    [
+      "5",
+      "Monaco Grand Prix",
+      "Niki Lauda",
+      "Patrick Depailler",
+      "Niki Lauda",
+      "Ferrari",
+      "Report"
+    ],
+    [
+      "6",
+      "Belgian Grand Prix",
+      "Niki Lauda",
+      "Clay Regazzoni",
+      "Niki Lauda",
+      "Ferrari",
+      "Report"
+    ],
+    [
+      "7",
+      "Swedish Grand Prix",
+      "Vittorio Brambilla",
+      "Niki Lauda",
+      "Niki Lauda",
+      "Ferrari",
+      "Report"
+    ],
+    [
+      "8",
+      "Dutch Grand Prix",
+      "Niki Lauda",
+      "Niki Lauda",
+      "James Hunt",
+      "Hesketh-Ford",
+      "Report"
+    ],
+    [
+      "9",
+      "French Grand Prix",
+      "Niki Lauda",
+      "Jochen Mass",
+      "Niki Lauda",
+      "Ferrari",
+      "Report"
+    ],
+    [
+      "10",
+      "British Grand Prix",
+      "Tom Pryce",
+      "Clay Regazzoni",
+      "Emerson Fittipaldi",
+      "McLaren-Ford",
+      "Report"
+    ],
+    [
+      "11",
+      "German Grand Prix",
+      "Niki Lauda",
+      "Clay Regazzoni",
+      "Carlos Reutemann",
+      "Brabham-Ford",
+      "Report"
+    ],
+    [
+      "12",
+      "Austrian Grand Prix",
+      "Niki Lauda",
+      "Vittorio Brambilla",
+      "Vittorio Brambilla",
+      "March-Ford",
+      "Report"
+    ],
+    [
+      "13",
+      "Italian Grand Prix",
+      "Niki Lauda",
+      "Clay Regazzoni",
+      "Clay Regazzoni",
+      "Ferrari",
+      "Report"
+    ],
+    [
+      "14",
+      "United States Grand Prix",
+      "Niki Lauda",
+      "Emerson Fittipaldi",
+      "Niki Lauda",
+      "Ferrari",
+      "Report"
+    ]
+  ],
+  "title": "1975 Formula One season",
+  "description": "",
+  "sections": {}
+}

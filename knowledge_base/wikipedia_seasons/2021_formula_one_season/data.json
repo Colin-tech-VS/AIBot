@@ -1,0 +1,289 @@
+{
+  "year": 2021,
+  "timestamp": "2026-01-14T21:47:01.632960",
+  "drivers": [
+    [
+      "Entrant",
+      "Constructor",
+      "Chassis",
+      "Power unit",
+      "Race drivers"
+    ],
+    [
+      "No.",
+      "Driver name",
+      "Rounds"
+    ],
+    [
+      "Alfa Romeo RacingOrlen",
+      "Alfa Romeo Racing-Ferrari",
+      "C41[15]",
+      "Ferrari 065/6[16]",
+      "78899",
+      "Kimi RäikkönenRobert KubicaAntonio Giovinazzi",
+      "1–13, 15–22[a]13–14All"
+    ],
+    [
+      "Scuderia AlphaTauri Honda",
+      "AlphaTauri-Honda",
+      "AT02[17]",
+      "Honda RA621H[18]",
+      "1022",
+      "Pierre GaslyYuki Tsunoda",
+      "AllAll"
+    ],
+    [
+      "Alpine F1 Team[19]",
+      "Alpine-Renault",
+      "A521[20]",
+      "Renault E-Tech 20B[21]",
+      "1431",
+      "Fernando AlonsoEsteban Ocon",
+      "AllAll"
+    ],
+    [
+      "Aston MartinCognizantF1 Team[22]",
+      "Aston Martin-Mercedes",
+      "AMR21[23]",
+      "Mercedes-AMG F1 M12[24]",
+      "518",
+      "Sebastian VettelLance Stroll",
+      "AllAll"
+    ],
+    [
+      "Scuderia FerrariMission Winnow[b]",
+      "Ferrari",
+      "SF21[26]",
+      "Ferrari 065/6[27]",
+      "1655",
+      "Charles LeclercCarlos Sainz Jr.",
+      "AllAll"
+    ],
+    [
+      "UralkaliHaas F1 Team[28]",
+      "Haas-Ferrari",
+      "VF-21[29]",
+      "Ferrari 065/6[30]",
+      "947",
+      "Nikita Mazepin[c]Mick Schumacher",
+      "All[d]All"
+    ],
+    [
+      "McLaren F1 Team",
+      "McLaren-Mercedes",
+      "MCL35M[32]",
+      "Mercedes-AMG F1 M12[33]",
+      "34",
+      "Daniel RicciardoLando Norris",
+      "AllAll"
+    ],
+    [
+      "Mercedes-AMGPetronasF1 Team",
+      "Mercedes",
+      "F1 W12[34]",
+      "Mercedes-AMG F1 M12[35]",
+      "4477",
+      "Lewis HamiltonValtteri Bottas",
+      "AllAll"
+    ],
+    [
+      "Red Bull Racing Honda",
+      "Red Bull Racing-Honda",
+      "RB16B[36]",
+      "Honda RA621H[37]",
+      "1133",
+      "Sergio PérezMax Verstappen",
+      "AllAll"
+    ],
+    [
+      "Williams Racing",
+      "Williams-Mercedes",
+      "FW43B[38]",
+      "Mercedes-AMG F1 M12[39]",
+      "663",
+      "Nicholas LatifiGeorge Russell",
+      "AllAll"
+    ],
+    [
+      "Sources:[40][25][41]"
+    ]
+  ],
+  "teams": [],
+  "races": [
+    [
+      "Constructor",
+      "Practice drivers"
+    ],
+    [
+      "No.",
+      "Driver name",
+      "Rounds"
+    ],
+    [
+      "Alfa Romeo-Ferrari",
+      "9888",
+      "Callum IlottRobert Kubica",
+      "3, 94, 8, 11"
+    ],
+    [
+      "Alpine-Renault",
+      "37",
+      "Zhou Guanyu",
+      "9"
+    ],
+    [
+      "Williams-Mercedes",
+      "4589",
+      "Roy NissanyJack Aitken",
+      "4, 7, 922"
+    ],
+    [
+      "Source:[25]"
+    ]
+  ],
+  "standings": [
+    [
+      "Round",
+      "Grand Prix",
+      "Circuit",
+      "Race date"
+    ],
+    [
+      "1",
+      "Bahrain Grand Prix",
+      "Bahrain International Circuit,Sakhir",
+      "28 March"
+    ],
+    [
+      "2",
+      "Emilia Romagna Grand Prix",
+      "Imola Circuit,Imola",
+      "18 April"
+    ],
+    [
+      "3",
+      "Portuguese Grand Prix",
+      "Algarve International Circuit,Portimão",
+      "2 May"
+    ],
+    [
+      "4",
+      "Spanish Grand Prix",
+      "Circuit de Barcelona-Catalunya,Montmeló",
+      "9 May"
+    ],
+    [
+      "5",
+      "Monaco Grand Prix",
+      "Circuit de Monaco,Monte Carlo",
+      "23 May"
+    ],
+    [
+      "6",
+      "Azerbaijan Grand Prix",
+      "Baku City Circuit,Baku",
+      "6 June"
+    ],
+    [
+      "7",
+      "French Grand Prix",
+      "Circuit Paul Ricard,Le Castellet",
+      "20 June[e]"
+    ],
+    [
+      "8",
+      "Styrian Grand Prix",
+      "Red Bull Ring,Spielberg",
+      "27 June"
+    ],
+    [
+      "9",
+      "Austrian Grand Prix",
+      "4 July"
+    ],
+    [
+      "10",
+      "British Grand Prix",
+      "Silverstone Circuit,Silverstone",
+      "18 July"
+    ],
+    [
+      "11",
+      "Hungarian Grand Prix",
+      "Hungaroring,Mogyoród",
+      "1 August"
+    ],
+    [
+      "12",
+      "Belgian Grand Prix",
+      "Circuit de Spa-Francorchamps,Stavelot",
+      "29 August"
+    ],
+    [
+      "13",
+      "Dutch Grand Prix",
+      "Circuit Zandvoort,Zandvoort",
+      "5 September"
+    ],
+    [
+      "14",
+      "Italian Grand Prix",
+      "Monza Circuit,Monza",
+      "12 September"
+    ],
+    [
+      "15",
+      "Russian Grand Prix",
+      "Sochi Autodrom,Sochi",
+      "26 September"
+    ],
+    [
+      "16",
+      "Turkish Grand Prix",
+      "Istanbul Park,Tuzla",
+      "10 October[f]"
+    ],
+    [
+      "17",
+      "United States Grand Prix",
+      "Circuit of the Americas,Austin, Texas",
+      "24 October"
+    ],
+    [
+      "18",
+      "Mexico City Grand Prix",
+      "Autódromo Hermanos Rodríguez,Mexico City",
+      "7 November[g]"
+    ],
+    [
+      "19",
+      "São Paulo Grand Prix",
+      "Interlagos Circuit,São Paulo",
+      "14 November[h]"
+    ],
+    [
+      "20",
+      "Qatar Grand Prix",
+      "Lusail International Circuit,Lusail",
+      "21 November"
+    ],
+    [
+      "21",
+      "Saudi Arabian Grand Prix",
+      "Jeddah Corniche Circuit,Jeddah",
+      "5 December[i]"
+    ],
+    [
+      "22",
+      "Abu Dhabi Grand Prix",
+      "Yas Marina Circuit,Abu Dhabi",
+      "12 December[j]"
+    ],
+    [
+      "Sources:[65][66][67][68][69][70][71][72][73][74]"
+    ]
+  ],
+  "title": "2021 Formula One World Championship",
+  "description": "",
+  "sections": {}
+}

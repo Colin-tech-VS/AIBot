@@ -18,7 +18,7 @@ class OllamaConfig:
     model: str = "llama3.2:3b"
     temperature: float = 0.15         # ENCORE PLUS BAS pour cohérence/vitesse (0.2→0.15)
     top_p: float = 0.85               # Réduit 0.9→0.85 pour plus de focus
-    num_ctx: int = 512                # Context DRASTIQUE 1024→512 pour vitesse
+    num_ctx: int = 2048               # Context augmenté 512→2048 pour questions complexes (+50% capacité)
     num_predict: int = 150            # DRASTIQUE 256→150 tokens pour <2s
     top_k: int = 10                   # Réduit 20→10 pour plus de focus
     repeat_penalty: float = 1.1       # Éviter les répétitions

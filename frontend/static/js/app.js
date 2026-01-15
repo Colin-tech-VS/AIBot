@@ -900,6 +900,22 @@ function initNavbar() {
 
 // ===== WIDGETS F1 =====
 
+// Exposer les fonctions globalement pour les onclick inline
+window.sendMessage = sendMessage;
+window.toggleNavbar = toggleNavbar;
+window.closeNavbar = closeNavbar;
+window.toggleHistoryPanel = toggleHistoryPanel;
+window.openHistoryPanel = openHistoryPanel;
+window.closeHistoryPanel = closeHistoryPanel;
+window.createConversation = createConversation;
+window.loadConversationIntoChat = loadConversationIntoChat;
+window.deleteConversation = deleteConversation;
+window.clearAllHistory = clearAllHistory;
+window.toggleHistoryList = toggleHistoryList;
+window.openUserProfile = openUserProfile;
+window.closeUserProfile = closeUserProfile;
+window.toggleDarkMode = toggleDarkMode;
+
 // Initialisation
 document.addEventListener("DOMContentLoaded", () => {
   initNavbar();

@@ -1,0 +1,567 @@
+{
+  "year": 1984,
+  "timestamp": "2026-01-14T21:45:36.850236",
+  "drivers": [
+    [
+      "Entrant",
+      "Constructor",
+      "Chassis",
+      "Engine",
+      "Tyres",
+      "No",
+      "Driver",
+      "Rounds"
+    ],
+    [
+      "MRD International",
+      "Brabham-BMW",
+      "BT53",
+      "BMW M12/13 1.5L4t",
+      "M",
+      "1",
+      "Nelson Piquet",
+      "All"
+    ],
+    [
+      "2",
+      "Teo Fabi",
+      "1–5, 8, 10–15"
+    ],
+    [
+      "Corrado Fabi",
+      "6–7, 9"
+    ],
+    [
+      "Manfred Winkelhock",
+      "16"
+    ],
+    [
+      "Tyrrell Racing Organisation",
+      "Tyrrell-Ford",
+      "012",
+      "Ford-CosworthDFY3.0V8",
+      "G",
+      "3",
+      "Martin Brundle",
+      "1–9"
+    ],
+    [
+      "Stefan Johansson",
+      "10–13"
+    ],
+    [
+      "4",
+      "Stefan Bellof",
+      "1–10, 12–13"
+    ],
+    [
+      "Mike Thackwell",
+      "11"
+    ],
+    [
+      "Williams Grand Prix Engineering",
+      "Williams-Honda",
+      "FW09FW09B",
+      "Honda RA163E1.5V6tHonda RA164E1.5V6t",
+      "G",
+      "5",
+      "Jacques Laffite",
+      "All"
+    ],
+    [
+      "6",
+      "Keke Rosberg",
+      "All"
+    ],
+    [
+      "MarlboroMcLarenTAG Turbo",
+      "McLaren-TAG",
+      "MP4/2",
+      "TAG-PorscheTTE PO1 1.5V6t",
+      "M",
+      "7",
+      "Alain Prost",
+      "All"
+    ],
+    [
+      "8",
+      "Niki Lauda",
+      "All"
+    ],
+    [
+      "Skoal BanditFormula 1 Team",
+      "RAM-Hart",
+      "0102",
+      "Hart 415T1.5L4t",
+      "P",
+      "9",
+      "Philippe Alliot",
+      "All"
+    ],
+    [
+      "10",
+      "Jonathan Palmer",
+      "1–6, 8–16"
+    ],
+    [
+      "Mike Thackwell",
+      "7"
+    ],
+    [
+      "John Player SpecialTeam Lotus",
+      "Lotus-Renault",
+      "95T",
+      "Renault EF4B1.5V6t",
+      "G",
+      "11",
+      "Elio de Angelis",
+      "All"
+    ],
+    [
+      "12",
+      "Nigel Mansell",
+      "All"
+    ],
+    [
+      "Team ATS",
+      "ATS-BMW",
+      "D7",
+      "BMW M12/13 1.5L4t",
+      "P",
+      "14",
+      "Manfred Winkelhock",
+      "1–14"
+    ],
+    [
+      "Gerhard Berger",
+      "16"
+    ],
+    [
+      "31",
+      "12, 14–15"
+    ],
+    [
+      "Équipe RenaultElf",
+      "RenaultElf",
+      "RE50",
+      "Renault EF4B1.5V6t",
+      "M",
+      "15",
+      "Patrick Tambay",
+      "All"
+    ],
+    [
+      "16",
+      "Derek Warwick",
+      "All"
+    ],
+    [
+      "33",
+      "Philippe Streiff",
+      "16"
+    ],
+    [
+      "BarclayNordicaArrows",
+      "Arrows-Ford",
+      "A6",
+      "Ford-CosworthDFV3.0V8",
+      "G",
+      "17",
+      "Marc Surer",
+      "1–3, 5, 7–8"
+    ],
+    [
+      "18",
+      "Thierry Boutsen",
+      "1–2, 4"
+    ],
+    [
+      "Arrows-BMW",
+      "A7",
+      "BMW M12/13 1.5L4t",
+      "17",
+      "Marc Surer",
+      "4, 6, 9–16"
+    ],
+    [
+      "18",
+      "Thierry Boutsen",
+      "3, 5–16"
+    ],
+    [
+      "Toleman Group Motorsport",
+      "Toleman-Hart",
+      "TG183BTG184",
+      "Hart 415T1.5L4t",
+      "PM",
+      "19",
+      "Ayrton Senna",
+      "1–13, 15–16"
+    ],
+    [
+      "Stefan Johansson",
+      "14"
+    ],
+    [
+      "20",
+      "Johnny Cecotto",
+      "1–10"
+    ],
+    [
+      "Pierluigi Martini",
+      "14"
+    ],
+    [
+      "Stefan Johansson",
+      "15–16"
+    ],
+    [
+      "Spirit Racing",
+      "Spirit-Hart",
+      "101",
+      "Hart 415T1.5L4t",
+      "P",
+      "21",
+      "Mauro Baldi",
+      "1–6, 15–16"
+    ],
+    [
+      "Huub Rothengatter",
+      "7, 9–14"
+    ],
+    [
+      "Spirit-Ford",
+      "101C",
+      "Ford-CosworthDFV3.0V8",
+      "8"
+    ],
+    [
+      "BenettonTeam Alfa Romeo",
+      "Alfa Romeo",
+      "184T",
+      "Alfa Romeo 890T1.5V8t",
+      "G",
+      "22",
+      "Riccardo Patrese",
+      "All"
+    ],
+    [
+      "23",
+      "Eddie Cheever",
+      "All"
+    ],
+    [
+      "Osella Squadra Corse",
+      "Osella-Alfa Romeo",
+      "FA1F",
+      "Alfa Romeo 890T1.5V8t",
+      "P",
+      "24",
+      "Piercarlo Ghinzani",
+      "All"
+    ],
+    [
+      "30",
+      "Jo Gartner",
+      "10–16"
+    ],
+    [
+      "FA1E",
+      "Alfa Romeo12603.0V12",
+      "4"
+    ],
+    [
+      "LigierLoto",
+      "Ligier-Renault",
+      "JS23JS23B",
+      "Renault EF41.5V6t",
+      "M",
+      "25",
+      "François Hesnault",
+      "All"
+    ],
+    [
+      "26",
+      "Andrea de Cesaris",
+      "All"
+    ],
+    [
+      "Ferrari",
+      "Ferrari",
+      "126C4",
+      "Ferrari 0311.5V6t",
+      "G",
+      "27",
+      "Michele Alboreto",
+      "All"
+    ],
+    [
+      "28",
+      "René Arnoux",
+      "All"
+    ]
+  ],
+  "teams": [],
+  "races": [
+    [
+      "Round",
+      "Grand Prix",
+      "Circuit",
+      "Date"
+    ],
+    [
+      "1",
+      "Brazilian Grand Prix",
+      "Jacarepaguá,Rio de Janeiro",
+      "25 March"
+    ],
+    [
+      "2",
+      "South African Grand Prix",
+      "South AfricaKyalami Grand Prix Circuit,Midrand",
+      "7 April"
+    ],
+    [
+      "3",
+      "Belgian Grand Prix",
+      "Circuit Zolder,Heusden-Zolder",
+      "29 April"
+    ],
+    [
+      "4",
+      "San Marino Grand Prix",
+      "Autodromo Dino Ferrari,Imola",
+      "6 May"
+    ],
+    [
+      "5",
+      "French Grand Prix",
+      "Dijon-Prenois,Dijon",
+      "20 May"
+    ],
+    [
+      "6",
+      "Monaco Grand Prix",
+      "Circuit de Monaco,Monte Carlo",
+      "3 June"
+    ],
+    [
+      "7",
+      "Canadian Grand Prix",
+      "Circuit Gilles Villeneuve,Montreal",
+      "17 June"
+    ],
+    [
+      "8",
+      "Detroit Grand Prix",
+      "Detroit Street Circuit,Michigan",
+      "24 June"
+    ],
+    [
+      "9",
+      "Dallas Grand Prix",
+      "Fair Park Street Circuit,Dallas",
+      "8 July"
+    ],
+    [
+      "10",
+      "British Grand Prix",
+      "Brands Hatch,West Kingsdown",
+      "22 July"
+    ],
+    [
+      "11",
+      "German Grand Prix",
+      "Hockenheimring,Hockenheim",
+      "5 August"
+    ],
+    [
+      "12",
+      "Austrian Grand Prix",
+      "Österreichring,Spielberg",
+      "19 August"
+    ],
+    [
+      "13",
+      "Dutch Grand Prix",
+      "Circuit Park Zandvoort,Zandvoort",
+      "26 August"
+    ],
+    [
+      "14",
+      "Italian Grand Prix",
+      "Autodromo Nazionale di Monza,Monza",
+      "9 September"
+    ],
+    [
+      "15",
+      "European Grand Prix",
+      "Nürburgring,Nürburg",
+      "7 October"
+    ],
+    [
+      "16",
+      "Portuguese Grand Prix",
+      "Autodromo do Estoril,Estoril",
+      "21 October"
+    ]
+  ],
+  "standings": [
+    [
+      "Round",
+      "Grand Prix",
+      "Pole position",
+      "Fastest lap",
+      "Winning driver",
+      "Winning constructor",
+      "Report"
+    ],
+    [
+      "1",
+      "Brazilian Grand Prix",
+      "Elio de Angelis",
+      "Alain Prost",
+      "Alain Prost",
+      "McLaren-TAG",
+      "Report"
+    ],
+    [
+      "2",
+      "South African Grand Prix",
+      "Nelson Piquet",
+      "Patrick Tambay",
+      "Niki Lauda",
+      "McLaren-TAG",
+      "Report"
+    ],
+    [
+      "3",
+      "Belgian Grand Prix",
+      "Michele Alboreto",
+      "René Arnoux",
+      "Michele Alboreto",
+      "Ferrari",
+      "Report"
+    ],
+    [
+      "4",
+      "San Marino Grand Prix",
+      "Nelson Piquet",
+      "Nelson Piquet",
+      "Alain Prost",
+      "McLaren-TAG",
+      "Report"
+    ],
+    [
+      "5",
+      "French Grand Prix",
+      "Patrick Tambay",
+      "Alain Prost",
+      "Niki Lauda",
+      "McLaren-TAG",
+      "Report"
+    ],
+    [
+      "6",
+      "Monaco Grand Prix1",
+      "Alain Prost",
+      "Ayrton Senna",
+      "Alain Prost",
+      "McLaren-TAG",
+      "Report"
+    ],
+    [
+      "7",
+      "Canadian Grand Prix",
+      "Nelson Piquet",
+      "Nelson Piquet",
+      "Nelson Piquet",
+      "Brabham-BMW",
+      "Report"
+    ],
+    [
+      "8",
+      "Detroit Grand Prix",
+      "Nelson Piquet",
+      "Derek Warwick",
+      "Nelson Piquet",
+      "Brabham-BMW",
+      "Report"
+    ],
+    [
+      "9",
+      "Dallas Grand Prix",
+      "Nigel Mansell",
+      "Niki Lauda",
+      "Keke Rosberg",
+      "Williams-Honda",
+      "Report"
+    ],
+    [
+      "10",
+      "British Grand Prix",
+      "Nelson Piquet",
+      "Niki Lauda",
+      "Niki Lauda",
+      "McLaren-TAG",
+      "Report"
+    ],
+    [
+      "11",
+      "German Grand Prix",
+      "Alain Prost",
+      "Alain Prost",
+      "Alain Prost",
+      "McLaren-TAG",
+      "Report"
+    ],
+    [
+      "12",
+      "Austrian Grand Prix",
+      "Nelson Piquet",
+      "Niki Lauda",
+      "Niki Lauda",
+      "McLaren-TAG",
+      "Report"
+    ],
+    [
+      "13",
+      "Dutch Grand Prix",
+      "Alain Prost",
+      "René Arnoux",
+      "Alain Prost",
+      "McLaren-TAG",
+      "Report"
+    ],
+    [
+      "14",
+      "Italian Grand Prix",
+      "Nelson Piquet",
+      "Niki Lauda",
+      "Niki Lauda",
+      "McLaren-TAG",
+      "Report"
+    ],
+    [
+      "15",
+      "European Grand Prix",
+      "Nelson Piquet",
+      "Nelson PiquetMichele Alboreto",
+      "Alain Prost",
+      "McLaren-TAG",
+      "Report"
+    ],
+    [
+      "16",
+      "Portuguese Grand Prix",
+      "Nelson Piquet",
+      "Niki Lauda",
+      "Alain Prost",
+      "McLaren-TAG",
+      "Report"
+    ]
+  ],
+  "title": "1984 Formula One World Championship",
+  "description": "",
+  "sections": {}
+}

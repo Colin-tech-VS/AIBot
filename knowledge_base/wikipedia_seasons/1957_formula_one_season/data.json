@@ -1,0 +1,443 @@
+{
+  "year": 1957,
+  "timestamp": "2026-01-14T21:44:42.262265",
+  "drivers": [
+    [
+      "Entrant",
+      "Constructor",
+      "Chassis",
+      "Engine",
+      "Tyre",
+      "Driver",
+      "Rounds"
+    ],
+    [
+      "Officine Alfieri Maserati",
+      "Maserati",
+      "250F",
+      "Maserati250F1 2.5L6Maserati250F1 2.5V12",
+      "P",
+      "Juan Manuel Fangio",
+      "1–2, 4–8"
+    ],
+    [
+      "Stirling Moss",
+      "1"
+    ],
+    [
+      "Jean Behra",
+      "1, 4–8"
+    ],
+    [
+      "Carlos Menditeguy",
+      "1–2, 4–5"
+    ],
+    [
+      "Giorgio Scarlatti",
+      "2, 6–8"
+    ],
+    [
+      "Harry Schell",
+      "2, 4–8"
+    ],
+    [
+      "Hans Herrmann",
+      "2"
+    ],
+    [
+      "Scuderia Ferrari",
+      "Ferrari",
+      "801",
+      "FerrariDS50 2.5V8",
+      "EP",
+      "Peter Collins",
+      "1–2, 4–6, 8"
+    ],
+    [
+      "Luigi Musso",
+      "1, 4–8"
+    ],
+    [
+      "Eugenio Castellotti",
+      "1"
+    ],
+    [
+      "Mike Hawthorn",
+      "1–2, 4–6, 8"
+    ],
+    [
+      "Wolfgang von Trips",
+      "1–2, 8"
+    ],
+    [
+      "Cesare Perdisa",
+      "1"
+    ],
+    [
+      "Alfonso de Portago",
+      "1"
+    ],
+    [
+      "José Froilán González",
+      "1"
+    ],
+    [
+      "Maurice Trintignant",
+      "2, 4–5"
+    ],
+    [
+      "Scuderia Centro Sud",
+      "Maserati",
+      "250F",
+      "Maserati250F1 2.5L6",
+      "P",
+      "Harry Schell",
+      "1"
+    ],
+    [
+      "Jo Bonnier",
+      "1, 7–8"
+    ],
+    [
+      "Masten Gregory",
+      "2, 6–8"
+    ],
+    [
+      "André Simon",
+      "2"
+    ],
+    [
+      "Hans Herrmann",
+      "6"
+    ],
+    [
+      "Ferrari",
+      "500",
+      "Ferrari625 2.5L4",
+      "Alejandro de Tomaso",
+      "1"
+    ],
+    [
+      "Luigi Piotti",
+      "Maserati",
+      "250F",
+      "Maserati250F1 2.5L6",
+      "P",
+      "Luigi Piotti",
+      "1–2, 7–8"
+    ],
+    [
+      "Owen Racing Organisation",
+      "BRM",
+      "P25",
+      "BRMP25 2.5L4",
+      "D",
+      "Ron Flockhart",
+      "2, 4"
+    ],
+    [
+      "Roy Salvadori",
+      "2"
+    ],
+    [
+      "Herbert MacKay-Fraser",
+      "4"
+    ],
+    [
+      "Jack Fairman",
+      "5"
+    ],
+    [
+      "Les Leston",
+      "5"
+    ],
+    [
+      "Connaught Engineering",
+      "Connaught-Alta",
+      "B",
+      "AltaGP 2.5L4",
+      "D",
+      "Stuart Lewis-Evans",
+      "2"
+    ],
+    [
+      "Ivor Bueb",
+      "2"
+    ],
+    [
+      "Cooper Car Company",
+      "Cooper-Climax",
+      "T43",
+      "Climax FPF 2.0 L4",
+      "AD",
+      "Jack Brabham",
+      "2, 4, 7"
+    ],
+    [
+      "Les Leston",
+      "2"
+    ],
+    [
+      "Mike MacDowel",
+      "4"
+    ],
+    [
+      "Roy Salvadori",
+      "5, 7"
+    ],
+    [
+      "T43",
+      "Climax FPF 1.5 L4",
+      "D",
+      "Roy Salvadori",
+      "6"
+    ],
+    [
+      "Vandervell Products",
+      "Vanwall",
+      "VW 5",
+      "Vanwall254 2.5L4",
+      "P",
+      "Stirling Moss",
+      "2, 5–8"
+    ],
+    [
+      "Tony Brooks",
+      "2, 5–8"
+    ],
+    [
+      "Stuart Lewis-Evans",
+      "4–8"
+    ],
+    [
+      "Roy Salvadori",
+      "4"
+    ],
+    [
+      "H.H. Gould",
+      "Maserati",
+      "250F",
+      "Maserati250F1 2.5L6",
+      "D",
+      "Horace Gould",
+      "2, 4–8"
+    ],
+    [
+      "Jo Bonnier",
+      "Maserati",
+      "250F",
+      "Maserati250F1 2.5L6",
+      "P",
+      "Jo Bonnier",
+      "5"
+    ],
+    [
+      "Gilby Engineering",
+      "Maserati",
+      "250F",
+      "Maserati250F1 2.5L6",
+      "D",
+      "Ivor Bueb",
+      "5"
+    ],
+    [
+      "R.R.C. Walker Racing Team",
+      "Cooper-Climax",
+      "T43",
+      "Climax FPF 2.0 L4",
+      "D",
+      "Jack Brabham",
+      "5"
+    ],
+    [
+      "T43",
+      "Climax FPF 1.5 L4",
+      "D",
+      "Jack Brabham",
+      "6"
+    ],
+    [
+      "Bob Gerard",
+      "Cooper-Bristol",
+      "T44",
+      "BristolBS2 2.2L6",
+      "D",
+      "Bob Gerard",
+      "5"
+    ],
+    [
+      "Bruce Halford",
+      "Maserati",
+      "250F",
+      "Maserati250F1 2.5L6",
+      "D",
+      "Bruce Halford",
+      "6–8"
+    ],
+    [
+      "Dr Ing F. Porsche KG",
+      "Porsche",
+      "RS550",
+      "Porsche547/3 1.5F4",
+      "?",
+      "Umberto Maglioli",
+      "6"
+    ],
+    [
+      "Edgar Barth",
+      "6"
+    ],
+    [
+      "Ridgeway Management",
+      "Cooper-Climax",
+      "T43T41",
+      "Climax FPF 1.5 L4Climax FWB 1.5 L4",
+      "D",
+      "Tony Marsh",
+      "6"
+    ]
+  ],
+  "teams": [],
+  "races": [
+    [
+      "Round",
+      "Grand Prix",
+      "Circuit",
+      "Date"
+    ],
+    [
+      "1",
+      "Argentine Grand Prix",
+      "Autódromo Oscar Alfredo Gálvez,Buenos Aires",
+      "13 January"
+    ],
+    [
+      "2",
+      "Monaco Grand Prix",
+      "Circuit de Monaco,Monte Carlo",
+      "19 May"
+    ],
+    [
+      "3",
+      "Indianapolis 500",
+      "Indianapolis Motor Speedway,Speedway",
+      "30 May[a]"
+    ],
+    [
+      "4",
+      "French Grand Prix",
+      "Rouen-Les-Essarts,Orival",
+      "7 July"
+    ],
+    [
+      "5",
+      "British Grand Prix",
+      "Aintree Motor Racing Circuit,Merseyside",
+      "20 July"
+    ],
+    [
+      "6",
+      "German Grand Prix",
+      "Nürburgring,Nürburg",
+      "4 August"
+    ],
+    [
+      "7",
+      "Pescara Grand Prix",
+      "Pescara Circuit,Pescara",
+      "18 August"
+    ],
+    [
+      "8",
+      "Italian Grand Prix",
+      "Autodromo Nazionale di Monza,Monza",
+      "8 September"
+    ]
+  ],
+  "standings": [
+    [
+      "Round",
+      "Grand Prix",
+      "Pole position",
+      "Fastest lap",
+      "Winning driver",
+      "Winning constructor",
+      "Report"
+    ],
+    [
+      "1",
+      "Argentine Grand Prix",
+      "Stirling Moss",
+      "Stirling Moss",
+      "Juan Manuel Fangio",
+      "Maserati",
+      "Report"
+    ],
+    [
+      "2",
+      "Monaco Grand Prix",
+      "Juan Manuel Fangio",
+      "Juan Manuel Fangio",
+      "Juan Manuel Fangio",
+      "Maserati",
+      "Report"
+    ],
+    [
+      "3",
+      "Indianapolis 500",
+      "Pat O'Connor",
+      "Jim Rathmann",
+      "Sam Hanks",
+      "Salih-Offenhauser",
+      "Report"
+    ],
+    [
+      "4",
+      "French Grand Prix",
+      "Juan Manuel Fangio",
+      "Luigi Musso",
+      "Juan Manuel Fangio",
+      "Maserati",
+      "Report"
+    ],
+    [
+      "5",
+      "British Grand Prix",
+      "Stirling Moss",
+      "Stirling Moss",
+      "Tony BrooksStirling Moss",
+      "Vanwall",
+      "Report"
+    ],
+    [
+      "6",
+      "German Grand Prix",
+      "Juan Manuel Fangio",
+      "Juan Manuel Fangio",
+      "Juan Manuel Fangio",
+      "Maserati",
+      "Report"
+    ],
+    [
+      "7",
+      "Pescara Grand Prix",
+      "Juan Manuel Fangio",
+      "Stirling Moss",
+      "Stirling Moss",
+      "Vanwall",
+      "Report"
+    ],
+    [
+      "8",
+      "Italian Grand Prix",
+      "Stuart Lewis-Evans",
+      "Tony Brooks",
+      "Stirling Moss",
+      "Vanwall",
+      "Report"
+    ]
+  ],
+  "title": "1957 Formula One season",
+  "description": "",
+  "sections": {}
+}

@@ -1,0 +1,595 @@
+{
+  "year": 1990,
+  "timestamp": "2026-01-14T21:45:49.131674",
+  "drivers": [
+    [
+      "Entrant",
+      "Constructor",
+      "Chassis",
+      "Engine",
+      "Tyre",
+      "No",
+      "Driver",
+      "Rounds"
+    ],
+    [
+      "Scuderia Ferrari",
+      "Ferrari",
+      "641",
+      "Ferrari Tipo 0363.5V12Ferrari Tipo 0373.5V12",
+      "G",
+      "1",
+      "Alain Prost",
+      "All"
+    ],
+    [
+      "2",
+      "Nigel Mansell",
+      "All"
+    ],
+    [
+      "Tyrrell Racing Organisation",
+      "Tyrrell-Ford",
+      "018019",
+      "Ford Cosworth DFR3.5V8",
+      "P",
+      "3",
+      "Satoru Nakajima",
+      "All"
+    ],
+    [
+      "4",
+      "Jean Alesi",
+      "All"
+    ],
+    [
+      "CanonWilliams",
+      "Williams-Renault",
+      "FW13B",
+      "Renault RS23.5V10",
+      "G",
+      "5",
+      "Thierry Boutsen",
+      "All"
+    ],
+    [
+      "6",
+      "Riccardo Patrese",
+      "All"
+    ],
+    [
+      "Motor Racing Developments",
+      "Brabham-Judd",
+      "BT58BT59",
+      "Judd EV3.5V8",
+      "P",
+      "7",
+      "Gregor Foitek",
+      "1–2"
+    ],
+    [
+      "David Brabham",
+      "3–16"
+    ],
+    [
+      "8",
+      "Stefano Modena",
+      "All"
+    ],
+    [
+      "FootworkArrowsFord",
+      "Arrows-Ford",
+      "A11A11B",
+      "Ford Cosworth DFR3.5V8",
+      "G",
+      "9",
+      "Michele Alboreto",
+      "All"
+    ],
+    [
+      "10",
+      "Bernd Schneider",
+      "1, 14"
+    ],
+    [
+      "Alex Caffi",
+      "2–13, 15–16"
+    ],
+    [
+      "CamelTeam Lotus",
+      "Lotus-Lamborghini",
+      "102",
+      "Lamborghini LE35123.5V12",
+      "G",
+      "11",
+      "Derek Warwick",
+      "All"
+    ],
+    [
+      "12",
+      "Martin Donnelly",
+      "1–14"
+    ],
+    [
+      "Johnny Herbert",
+      "15–16"
+    ],
+    [
+      "FondmetalOsella",
+      "Osella-Ford",
+      "FA1MFA1ME",
+      "Ford Cosworth DFR3.5V8",
+      "P",
+      "14",
+      "Olivier Grouillard",
+      "All"
+    ],
+    [
+      "Leyton House Racing",
+      "Leyton House-Judd",
+      "CG901",
+      "Judd EV3.5V8",
+      "G",
+      "15",
+      "Maurício Gugelmin",
+      "All"
+    ],
+    [
+      "16",
+      "Ivan Capelli",
+      "All"
+    ],
+    [
+      "AGS",
+      "AGS-Ford",
+      "JH24JH25",
+      "Ford Cosworth DFR3.5V8",
+      "G",
+      "17",
+      "Gabriele Tarquini",
+      "All"
+    ],
+    [
+      "18",
+      "Yannick Dalmas",
+      "All"
+    ],
+    [
+      "Benetton Formula",
+      "Benetton-Ford",
+      "B189BB190",
+      "Ford HBA43.5V8",
+      "G",
+      "19",
+      "Alessandro Nannini",
+      "1–14"
+    ],
+    [
+      "Roberto Moreno",
+      "15–16"
+    ],
+    [
+      "20",
+      "Nelson Piquet",
+      "All"
+    ],
+    [
+      "BMS Scuderia Italia",
+      "Dallara-Ford",
+      "F190",
+      "Ford Cosworth DFR3.5V8",
+      "P",
+      "21",
+      "Gianni Morbidelli",
+      "1–2"
+    ],
+    [
+      "Emanuele Pirro",
+      "3–16"
+    ],
+    [
+      "22",
+      "Andrea de Cesaris",
+      "All"
+    ],
+    [
+      "SCMMinardi Team",
+      "Minardi-Ford",
+      "M189M190",
+      "Ford Cosworth DFR3.5V8",
+      "P",
+      "23",
+      "Pierluigi Martini",
+      "All"
+    ],
+    [
+      "24",
+      "Paolo Barilla",
+      "1–14"
+    ],
+    [
+      "Gianni Morbidelli",
+      "15–16"
+    ],
+    [
+      "Équipe LigierGitanes",
+      "Ligier-Ford",
+      "JS33B",
+      "Ford Cosworth DFR3.5V8",
+      "G",
+      "25",
+      "Nicola Larini",
+      "All"
+    ],
+    [
+      "26",
+      "Philippe Alliot",
+      "All"
+    ],
+    [
+      "HondaMarlboroMcLaren",
+      "McLaren-Honda",
+      "MP4/5B",
+      "Honda RA100E3.5V10",
+      "G",
+      "27",
+      "Ayrton Senna",
+      "All"
+    ],
+    [
+      "28",
+      "Gerhard Berger",
+      "All"
+    ],
+    [
+      "ESPOLarrousse F1",
+      "Lola-Lamborghini",
+      "LC89BLC90",
+      "Lamborghini LE35123.5V12",
+      "G",
+      "29",
+      "Éric Bernard",
+      "All"
+    ],
+    [
+      "30",
+      "Aguri Suzuki",
+      "All"
+    ],
+    [
+      "SubaruColoni RacingColoni Racing",
+      "Subaru Coloni",
+      "C3B",
+      "Subaru 12353.5F12",
+      "G",
+      "31",
+      "Bertrand Gachot",
+      "1–8"
+    ],
+    [
+      "Coloni-Ford",
+      "C3C",
+      "Ford Cosworth DFR3.5V8",
+      "9–16"
+    ],
+    [
+      "EuroBrun Racing",
+      "EuroBrun-Judd",
+      "ER189B",
+      "Judd CV3.5V8",
+      "P",
+      "33",
+      "Roberto Moreno",
+      "1–14"
+    ],
+    [
+      "34",
+      "Claudio Langes",
+      "1–14"
+    ],
+    [
+      "Onyx Grand PrixMonteverdi Formula One",
+      "Onyx-Ford",
+      "ORE-1ORE-1B",
+      "Ford Cosworth DFR3.5V8",
+      "G",
+      "35",
+      "Stefan Johansson",
+      "1–2"
+    ],
+    [
+      "Gregor Foitek",
+      "3–10"
+    ],
+    [
+      "36",
+      "JJ Lehto",
+      "1–10"
+    ],
+    [
+      "Life Racing Engines",
+      "Life",
+      "L190",
+      "Life F353.5W12",
+      "G",
+      "39",
+      "Gary Brabham",
+      "1–2"
+    ],
+    [
+      "Bruno Giacomelli",
+      "3–12"
+    ],
+    [
+      "Life-Judd",
+      "Judd CV3.5V8",
+      "13–14"
+    ],
+    [
+      "Sources:[citation needed]"
+    ]
+  ],
+  "teams": [],
+  "races": [
+    [
+      "Round",
+      "Grand Prix",
+      "Circuit",
+      "Date"
+    ],
+    [
+      "1",
+      "United States Grand Prix",
+      "Phoenix Street Circuit,Phoenix, Arizona",
+      "11 March"
+    ],
+    [
+      "2",
+      "Brazilian Grand Prix",
+      "Autódromo José Carlos Pace,São Paulo",
+      "25 March"
+    ],
+    [
+      "3",
+      "San Marino Grand Prix",
+      "Autodromo Enzo e Dino Ferrari,Imola",
+      "13 May"
+    ],
+    [
+      "4",
+      "Monaco Grand Prix",
+      "Circuit de Monaco,Monte Carlo",
+      "27 May"
+    ],
+    [
+      "5",
+      "Canadian Grand Prix",
+      "Circuit Gilles Villeneuve,Montreal",
+      "10 June"
+    ],
+    [
+      "6",
+      "Mexican Grand Prix",
+      "Autódromo Hermanos Rodríguez,Mexico City",
+      "24 June"
+    ],
+    [
+      "7",
+      "French Grand Prix",
+      "Circuit Paul Ricard,Le Castellet",
+      "8 July"
+    ],
+    [
+      "8",
+      "British Grand Prix",
+      "Silverstone Circuit,Silverstone",
+      "15 July"
+    ],
+    [
+      "9",
+      "German Grand Prix",
+      "Hockenheimring,Hockenheim",
+      "29 July"
+    ],
+    [
+      "10",
+      "Hungarian Grand Prix",
+      "Hungaroring,Mogyoród",
+      "12 August"
+    ],
+    [
+      "11",
+      "Belgian Grand Prix",
+      "Circuit de Spa-Francorchamps,Stavelot",
+      "26 August"
+    ],
+    [
+      "12",
+      "Italian Grand Prix",
+      "Autodromo Nazionale di Monza,Monza",
+      "9 September"
+    ],
+    [
+      "13",
+      "Portuguese Grand Prix",
+      "Autódromo do Estoril,Estoril",
+      "23 September"
+    ],
+    [
+      "14",
+      "Spanish Grand Prix",
+      "Circuito de Jerez,Jerez de la Frontera",
+      "30 September"
+    ],
+    [
+      "15",
+      "Japanese Grand Prix",
+      "Suzuka Circuit,Suzuka",
+      "21 October"
+    ],
+    [
+      "16",
+      "Australian Grand Prix",
+      "Adelaide Street Circuit,Adelaide",
+      "4 November"
+    ]
+  ],
+  "standings": [
+    [
+      "Round",
+      "Grand Prix",
+      "Pole position",
+      "Fastest lap",
+      "Winning driver",
+      "Winning constructor",
+      "Report"
+    ],
+    [
+      "1",
+      "United States Grand Prix",
+      "Gerhard Berger",
+      "Gerhard Berger",
+      "Ayrton Senna",
+      "McLaren-Honda",
+      "Report"
+    ],
+    [
+      "2",
+      "Brazilian Grand Prix",
+      "Ayrton Senna",
+      "Gerhard Berger",
+      "Alain Prost",
+      "Ferrari",
+      "Report"
+    ],
+    [
+      "3",
+      "San Marino Grand Prix",
+      "Ayrton Senna",
+      "Alessandro Nannini",
+      "Riccardo Patrese",
+      "Williams-Renault",
+      "Report"
+    ],
+    [
+      "4",
+      "Monaco Grand Prix",
+      "Ayrton Senna",
+      "Ayrton Senna",
+      "Ayrton Senna",
+      "McLaren-Honda",
+      "Report"
+    ],
+    [
+      "5",
+      "Canadian Grand Prix",
+      "Ayrton Senna",
+      "Gerhard Berger",
+      "Ayrton Senna",
+      "McLaren-Honda",
+      "Report"
+    ],
+    [
+      "6",
+      "Mexican Grand Prix",
+      "Gerhard Berger",
+      "Alain Prost",
+      "Alain Prost",
+      "Ferrari",
+      "Report"
+    ],
+    [
+      "7",
+      "French Grand Prix",
+      "Nigel Mansell",
+      "Nigel Mansell",
+      "Alain Prost",
+      "Ferrari",
+      "Report"
+    ],
+    [
+      "8",
+      "British Grand Prix",
+      "Nigel Mansell",
+      "Nigel Mansell",
+      "Alain Prost",
+      "Ferrari",
+      "Report"
+    ],
+    [
+      "9",
+      "German Grand Prix",
+      "Ayrton Senna",
+      "Thierry Boutsen",
+      "Ayrton Senna",
+      "McLaren-Honda",
+      "Report"
+    ],
+    [
+      "10",
+      "Hungarian Grand Prix",
+      "Thierry Boutsen",
+      "Riccardo Patrese",
+      "Thierry Boutsen",
+      "Williams-Renault",
+      "Report"
+    ],
+    [
+      "11",
+      "Belgian Grand Prix",
+      "Ayrton Senna",
+      "Alain Prost",
+      "Ayrton Senna",
+      "McLaren-Honda",
+      "Report"
+    ],
+    [
+      "12",
+      "Italian Grand Prix",
+      "Ayrton Senna",
+      "Ayrton Senna",
+      "Ayrton Senna",
+      "McLaren-Honda",
+      "Report"
+    ],
+    [
+      "13",
+      "Portuguese Grand Prix",
+      "Nigel Mansell",
+      "Riccardo Patrese",
+      "Nigel Mansell",
+      "Ferrari",
+      "Report"
+    ],
+    [
+      "14",
+      "Spanish Grand Prix",
+      "Ayrton Senna",
+      "Riccardo Patrese",
+      "Alain Prost",
+      "Ferrari",
+      "Report"
+    ],
+    [
+      "15",
+      "Japanese Grand Prix",
+      "Ayrton Senna",
+      "Riccardo Patrese",
+      "Nelson Piquet",
+      "Benetton-Ford",
+      "Report"
+    ],
+    [
+      "16",
+      "Australian Grand Prix",
+      "Ayrton Senna",
+      "Nigel Mansell",
+      "Nelson Piquet",
+      "Benetton-Ford",
+      "Report"
+    ]
+  ],
+  "title": "1990 Formula One World Championship",
+  "description": "",
+  "sections": {}
+}

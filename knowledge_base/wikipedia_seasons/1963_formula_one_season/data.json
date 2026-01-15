@@ -1,0 +1,477 @@
+{
+  "year": 1963,
+  "timestamp": "2026-01-14T21:44:53.989949",
+  "drivers": [
+    [
+      "Entrant",
+      "Constructor",
+      "Chassis",
+      "Engine",
+      "Driver",
+      "Rounds"
+    ],
+    [
+      "Brabham Racing Organisation",
+      "Lotus-Climax",
+      "25",
+      "Climax FWMV 1.5 V8",
+      "Jack Brabham",
+      "1"
+    ],
+    [
+      "Brabham-Climax",
+      "BT7BT3",
+      "2–10"
+    ],
+    [
+      "Dan Gurney",
+      "All"
+    ],
+    [
+      "Owen Racing Organisation",
+      "BRM",
+      "P57P61",
+      "BRMP56 1.5V8",
+      "Richie Ginther",
+      "All"
+    ],
+    [
+      "Graham Hill",
+      "All"
+    ],
+    [
+      "Cooper Car Company",
+      "Cooper-Climax",
+      "T66",
+      "Climax FWMV 1.5 V8",
+      "Bruce McLaren",
+      "All"
+    ],
+    [
+      "South AfricaTony Maggs",
+      "All"
+    ],
+    [
+      "Team Lotus",
+      "Lotus-Climax",
+      "25",
+      "Climax FWMV 1.5 V8",
+      "Jim Clark",
+      "All"
+    ],
+    [
+      "Trevor Taylor",
+      "1–6, 8–10"
+    ],
+    [
+      "Peter Arundell",
+      "4"
+    ],
+    [
+      "Mike Spence",
+      "7"
+    ],
+    [
+      "Pedro Rodríguez",
+      "8–9"
+    ],
+    [
+      "R.R.C. Walker Racing Team",
+      "Cooper-Climax",
+      "T60T66",
+      "Climax FWMV 1.5 V8",
+      "Jo Bonnier",
+      "All"
+    ],
+    [
+      "British Racing Partnership",
+      "Lotus-BRM",
+      "24",
+      "BRMP56 1.5V8",
+      "Jim Hall",
+      "1–9"
+    ],
+    [
+      "Innes Ireland",
+      "1, 6"
+    ],
+    [
+      "BRP-BRM",
+      "Mk 1",
+      "2–5, 7"
+    ],
+    [
+      "Reg Parnell Racing",
+      "Lola-Climax",
+      "Mk4A",
+      "Climax FWMV 1.5 V8",
+      "Chris Amon",
+      "1–7"
+    ],
+    [
+      "Maurice Trintignant",
+      "1"
+    ],
+    [
+      "Lucien Bianchi",
+      "2"
+    ],
+    [
+      "Mike Hailwood",
+      "7"
+    ],
+    [
+      "Masten Gregory",
+      "8–9"
+    ],
+    [
+      "Lotus-Climax",
+      "24",
+      "Climax FWMV 1.5 V8",
+      "Maurice Trintignant",
+      "4"
+    ],
+    [
+      "Mike Hailwood",
+      "5"
+    ],
+    [
+      "Lotus-BRM",
+      "BRMP56 1.5V8",
+      "Masten Gregory",
+      "5"
+    ],
+    [
+      "Rodger Ward",
+      "8"
+    ],
+    [
+      "Hap Sharp",
+      "8–9"
+    ],
+    [
+      "Chris Amon",
+      "9"
+    ],
+    [
+      "Scuderia FerrariSpA SEFAC",
+      "Ferrari",
+      "156",
+      "Ferrari178 1.5V6",
+      "Willy Mairesse",
+      "1–2, 6"
+    ],
+    [
+      "John Surtees",
+      "All"
+    ],
+    [
+      "Ludovico Scarfiotti",
+      "3–4"
+    ],
+    [
+      "Lorenzo Bandini",
+      "7–10"
+    ],
+    [
+      "Bernard Collomb",
+      "Lotus-Climax",
+      "24",
+      "Climax FWMV 1.5 V8",
+      "Bernard Collomb",
+      "1, 6"
+    ],
+    [
+      "Siffert Racing Team",
+      "Lotus-BRM",
+      "24",
+      "BRMP56 1.5V8",
+      "Jo Siffert",
+      "1–9"
+    ],
+    [
+      "Scirocco Powell Racing Cars",
+      "Scirocco-BRM",
+      "SP",
+      "BRMP56 1.5V8",
+      "Tony Settember",
+      "2, 4–7"
+    ],
+    [
+      "Ian Burgess",
+      "5–6"
+    ],
+    [
+      "Automobili Turismo e Sport",
+      "ATS",
+      "100",
+      "ATS100 1.5V8",
+      "Phil Hill",
+      "2–3, 7–9"
+    ],
+    [
+      "Giancarlo Baghetti",
+      "2–3, 7–9"
+    ],
+    [
+      "Ecurie Maarsbergen",
+      "Porsche",
+      "718",
+      "Porsche547/3 1.5F4",
+      "Carel Godin de Beaufort",
+      "2–3, 5–10"
+    ],
+    [
+      "Gerhard Mitter",
+      "3, 6"
+    ],
+    [
+      "Ecurie Filipinetti",
+      "Lotus-BRM",
+      "24",
+      "BRMP56 1.5V8",
+      "Phil Hill",
+      "4"
+    ],
+    [
+      "Scuderia Centro Sud",
+      "BRM",
+      "P57",
+      "BRMP56 1.5V8",
+      "Lorenzo Bandini",
+      "4–6"
+    ],
+    [
+      "Maurice Trintignant",
+      "7"
+    ],
+    [
+      "Moisés Solana",
+      "9"
+    ],
+    [
+      "Cooper-Climax",
+      "T60",
+      "Climax FWMV 1.5 V8",
+      "Mário de Araújo Cabral",
+      "6–7"
+    ],
+    [
+      "Cooper-Maserati",
+      "T53",
+      "Maserati6-1500 1.5L4",
+      "Ernesto Brambilla",
+      "7"
+    ],
+    [
+      "Tim Parnell",
+      "Lotus-BRM",
+      "24",
+      "BRMP56 1.5V8",
+      "Masten Gregory",
+      "4, 7"
+    ],
+    [
+      "Lola-Climax",
+      "Mk4",
+      "Climax FWMV 1.5 V8",
+      "John Campbell-Jones",
+      "5"
+    ],
+    [
+      "Lotus-Climax",
+      "18/21",
+      "Climax FWMV 1.5 V8",
+      "André Pilette",
+      "6"
+    ],
+    [
+      "Tim Parnell",
+      "6"
+    ]
+  ],
+  "teams": [],
+  "races": [
+    [
+      "Round",
+      "Grand Prix",
+      "Circuit",
+      "Date"
+    ],
+    [
+      "1",
+      "Monaco Grand Prix",
+      "Circuit de Monaco,Monte Carlo",
+      "26 May"
+    ],
+    [
+      "2",
+      "Belgian Grand Prix",
+      "Circuit de Spa-Francorchamps,Stavelot",
+      "9 June"
+    ],
+    [
+      "3",
+      "Dutch Grand Prix",
+      "Circuit Zandvoort,Zandvoort",
+      "23 June"
+    ],
+    [
+      "4",
+      "French Grand Prix",
+      "Reims-Gueux,Gueux",
+      "30 June"
+    ],
+    [
+      "5",
+      "British Grand Prix",
+      "Silverstone Circuit,Silverstone",
+      "20 July"
+    ],
+    [
+      "6",
+      "German Grand Prix",
+      "Nürburgring,Nürburg",
+      "4 August"
+    ],
+    [
+      "7",
+      "Italian Grand Prix",
+      "Autodromo Nazionale di Monza,Monza",
+      "8 September"
+    ],
+    [
+      "8",
+      "United States Grand Prix",
+      "Watkins Glen International,New York",
+      "6 October"
+    ],
+    [
+      "9",
+      "Mexican Grand Prix",
+      "Magdalena Mixhuca,Mexico City",
+      "27 October"
+    ],
+    [
+      "10",
+      "South African Grand Prix",
+      "South AfricaPrince George Circuit,East London",
+      "28 December"
+    ]
+  ],
+  "standings": [
+    [
+      "Round",
+      "Grand Prix",
+      "Pole position",
+      "Fastest lap",
+      "Winning driver",
+      "Winning constructor",
+      "Tyre",
+      "Report"
+    ],
+    [
+      "1",
+      "Monaco Grand Prix",
+      "Jim Clark",
+      "John Surtees",
+      "Graham Hill",
+      "BRM",
+      "D",
+      "Report"
+    ],
+    [
+      "2",
+      "Belgian Grand Prix",
+      "Graham Hill",
+      "Jim Clark",
+      "Jim Clark",
+      "Lotus-Climax",
+      "D",
+      "Report"
+    ],
+    [
+      "3",
+      "Dutch Grand Prix",
+      "Jim Clark",
+      "Jim Clark",
+      "Jim Clark",
+      "Lotus-Climax",
+      "D",
+      "Report"
+    ],
+    [
+      "4",
+      "French Grand Prix",
+      "Jim Clark",
+      "Jim Clark",
+      "Jim Clark",
+      "Lotus-Climax",
+      "D",
+      "Report"
+    ],
+    [
+      "5",
+      "British Grand Prix",
+      "Jim Clark",
+      "John Surtees",
+      "Jim Clark",
+      "Lotus-Climax",
+      "D",
+      "Report"
+    ],
+    [
+      "6",
+      "German Grand Prix",
+      "Jim Clark",
+      "John Surtees",
+      "John Surtees",
+      "Ferrari",
+      "D",
+      "Report"
+    ],
+    [
+      "7",
+      "Italian Grand Prix",
+      "John Surtees",
+      "Jim Clark",
+      "Jim Clark",
+      "Lotus-Climax",
+      "D",
+      "Report"
+    ],
+    [
+      "8",
+      "United States Grand Prix",
+      "Graham Hill",
+      "Jim Clark",
+      "Graham Hill",
+      "BRM",
+      "D",
+      "Report"
+    ],
+    [
+      "9",
+      "Mexican Grand Prix",
+      "Jim Clark",
+      "Jim Clark",
+      "Jim Clark",
+      "Lotus-Climax",
+      "D",
+      "Report"
+    ],
+    [
+      "10",
+      "South AfricaSouth African Grand Prix",
+      "Jim Clark",
+      "Dan Gurney",
+      "Jim Clark",
+      "Lotus-Climax",
+      "D",
+      "Report"
+    ]
+  ],
+  "title": "1963 Formula One season",
+  "description": "",
+  "sections": {}
+}

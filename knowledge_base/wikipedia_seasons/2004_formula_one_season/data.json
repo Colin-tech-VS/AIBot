@@ -1,0 +1,361 @@
+{
+  "year": 2004,
+  "timestamp": "2026-01-14T21:46:18.330640",
+  "drivers": [
+    [
+      "Entrant",
+      "Constructor",
+      "Chassis",
+      "Engine†",
+      "Tyre",
+      "No",
+      "Driver",
+      "Rounds"
+    ],
+    [
+      "Scuderia FerrariMarlboro",
+      "Ferrari",
+      "F2004",
+      "Ferrari Tipo 053",
+      "B",
+      "1",
+      "Michael Schumacher",
+      "All"
+    ],
+    [
+      "2",
+      "Rubens Barrichello",
+      "All"
+    ],
+    [
+      "BMW WilliamsF1 Team",
+      "Williams-BMW",
+      "FW26",
+      "BMW P84",
+      "M",
+      "3",
+      "Juan Pablo Montoya",
+      "All"
+    ],
+    [
+      "4",
+      "Ralf Schumacher",
+      "1–9, 16–18"
+    ],
+    [
+      "Marc Gené",
+      "10–11"
+    ],
+    [
+      "Antônio Pizzonia",
+      "12–15"
+    ],
+    [
+      "WestMcLaren Mercedes",
+      "McLaren-Mercedes",
+      "MP4-19MP4-19B",
+      "Mercedes FO 110Q",
+      "M",
+      "5",
+      "David Coulthard",
+      "All"
+    ],
+    [
+      "6",
+      "Kimi Räikkönen",
+      "All"
+    ],
+    [
+      "Mild SevenRenault F1 Team",
+      "Renault",
+      "R24R24B",
+      "Renault RS24",
+      "M",
+      "7",
+      "Jarno Trulli",
+      "1–15"
+    ],
+    [
+      "Jacques Villeneuve",
+      "16–18"
+    ],
+    [
+      "8",
+      "Fernando Alonso",
+      "All"
+    ],
+    [
+      "Lucky StrikeBAR Honda",
+      "BAR-Honda",
+      "006",
+      "Honda RA004E",
+      "M",
+      "9",
+      "Jenson Button",
+      "All"
+    ],
+    [
+      "10",
+      "Takuma Sato",
+      "All"
+    ],
+    [
+      "SauberPetronas",
+      "Sauber-Petronas",
+      "C23",
+      "Petronas 04A",
+      "B",
+      "11",
+      "Giancarlo Fisichella",
+      "All"
+    ],
+    [
+      "12",
+      "Felipe Massa",
+      "All"
+    ],
+    [
+      "Jaguar Racing",
+      "Jaguar-Cosworth",
+      "R5R5B",
+      "Cosworth CR-6",
+      "M",
+      "14",
+      "Mark Webber",
+      "All"
+    ],
+    [
+      "15",
+      "Christian Klien",
+      "All"
+    ],
+    [
+      "PanasonicToyota Racing",
+      "Toyota",
+      "TF104TF104B",
+      "Toyota RVX-04",
+      "M",
+      "16",
+      "Cristiano da Matta",
+      "1–12"
+    ],
+    [
+      "Ricardo Zonta",
+      "13–16"
+    ],
+    [
+      "Jarno Trulli",
+      "17–18"
+    ],
+    [
+      "17",
+      "Olivier Panis",
+      "1–17"
+    ],
+    [
+      "Ricardo Zonta",
+      "18"
+    ],
+    [
+      "Jordan Ford",
+      "Jordan-Ford",
+      "EJ14",
+      "Ford RS2",
+      "B",
+      "18",
+      "Nick Heidfeld",
+      "All"
+    ],
+    [
+      "19",
+      "Giorgio Pantano[a]",
+      "1–15"
+    ],
+    [
+      "Timo Glock",
+      "8, 16–18"
+    ],
+    [
+      "Minardi Cosworth[b]",
+      "Minardi-Cosworth",
+      "PS04B",
+      "Cosworth CR-3L",
+      "B",
+      "20",
+      "Gianmaria Bruni",
+      "All"
+    ],
+    [
+      "21",
+      "Zsolt Baumgartner",
+      "All"
+    ],
+    [
+      "Sources:[5][6]"
+    ]
+  ],
+  "teams": [],
+  "races": [
+    [
+      "Constructor",
+      "Practice drivers"
+    ],
+    [
+      "No.",
+      "Driver name",
+      "Rounds"
+    ],
+    [
+      "BAR–Honda",
+      "35",
+      "Anthony Davidson",
+      "All"
+    ],
+    [
+      "Jaguar–Cosworth",
+      "37",
+      "Björn Wirdheim",
+      "All"
+    ],
+    [
+      "Toyota",
+      "38",
+      "Ricardo ZontaRyan Briscoe",
+      "1–1213–18"
+    ],
+    [
+      "Jordan–Ford",
+      "39",
+      "Timo GlockRobert Doornbos",
+      "1–1516–18"
+    ],
+    [
+      "Minardi–Cosworth",
+      "40",
+      "Bas Leinders",
+      "All1"
+    ]
+  ],
+  "standings": [
+    [
+      "Round",
+      "Grand Prix",
+      "Circuit",
+      "Date"
+    ],
+    [
+      "1",
+      "Australian Grand Prix",
+      "Albert Park Circuit,Melbourne",
+      "7 March"
+    ],
+    [
+      "2",
+      "Malaysian Grand Prix",
+      "Sepang International Circuit,Sepang",
+      "21 March"
+    ],
+    [
+      "3",
+      "Bahrain Grand Prix",
+      "Bahrain International Circuit,Sakhir",
+      "4 April"
+    ],
+    [
+      "4",
+      "San Marino Grand Prix",
+      "Autodromo Enzo e Dino Ferrari,Imola",
+      "25 April"
+    ],
+    [
+      "5",
+      "Spanish Grand Prix",
+      "Circuit de Catalunya,Montmeló",
+      "9 May"
+    ],
+    [
+      "6",
+      "Monaco Grand Prix",
+      "Circuit de Monaco,Monaco",
+      "23 May"
+    ],
+    [
+      "7",
+      "European Grand Prix",
+      "Nürburgring,Nürburg",
+      "30 May"
+    ],
+    [
+      "8",
+      "Canadian Grand Prix",
+      "Circuit Gilles Villeneuve,Montreal",
+      "13 June"
+    ],
+    [
+      "9",
+      "United States Grand Prix",
+      "Indianapolis Motor Speedway,Speedway",
+      "20 June"
+    ],
+    [
+      "10",
+      "French Grand Prix",
+      "Circuit de Nevers Magny-Cours,Magny Cours",
+      "4 July"
+    ],
+    [
+      "11",
+      "British Grand Prix",
+      "Silverstone Circuit,Silverstone",
+      "11 July"
+    ],
+    [
+      "12",
+      "German Grand Prix",
+      "Hockenheimring,Hockenheim",
+      "25 July"
+    ],
+    [
+      "13",
+      "Hungarian Grand Prix",
+      "Hungaroring,Mogyoród",
+      "15 August"
+    ],
+    [
+      "14",
+      "Belgian Grand Prix",
+      "Circuit de Spa-Francorchamps,Stavelot",
+      "29 August"
+    ],
+    [
+      "15",
+      "Italian Grand Prix",
+      "Autodromo Nazionale di Monza,Monza",
+      "12 September"
+    ],
+    [
+      "16",
+      "Chinese Grand Prix",
+      "Shanghai International Circuit,Shanghai",
+      "26 September"
+    ],
+    [
+      "17",
+      "Japanese Grand Prix",
+      "Suzuka Circuit,Suzuka",
+      "10 October"
+    ],
+    [
+      "18",
+      "Brazilian Grand Prix",
+      "Autódromo José Carlos Pace,São Paulo",
+      "24 October"
+    ],
+    [
+      "Sources:[13][14]"
+    ]
+  ],
+  "title": "2004 Formula One World Championship",
+  "description": "",
+  "sections": {}
+}

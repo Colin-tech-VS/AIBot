@@ -1,0 +1,335 @@
+{
+  "year": 2013,
+  "timestamp": "2026-01-14T21:46:41.642597",
+  "drivers": [
+    [
+      "Entrant",
+      "Constructor",
+      "Chassis",
+      "Engine",
+      "No.",
+      "Race drivers",
+      "Rounds"
+    ],
+    [
+      "InfinitiRed Bull Racing Renault",
+      "Red Bull Racing-Renault",
+      "RB9",
+      "Renault RS27-2013",
+      "1",
+      "Sebastian Vettel[13]",
+      "All"
+    ],
+    [
+      "2",
+      "Mark Webber[14]",
+      "All"
+    ],
+    [
+      "Scuderia Ferrari",
+      "Ferrari",
+      "F138",
+      "Ferrari Type 056",
+      "3",
+      "Fernando Alonso[15]",
+      "All"
+    ],
+    [
+      "4",
+      "Felipe Massa[16]",
+      "All"
+    ],
+    [
+      "VodafoneMcLaren Mercedes",
+      "McLaren-Mercedes",
+      "MP4-28",
+      "Mercedes FO 108F",
+      "5",
+      "Jenson Button[17]",
+      "All"
+    ],
+    [
+      "6",
+      "Sergio Pérez[18]",
+      "All"
+    ],
+    [
+      "Lotus F1 Team",
+      "Lotus-Renault",
+      "E21",
+      "Renault RS27-2013",
+      "7",
+      "Kimi Räikkönen[19]",
+      "1–17"
+    ],
+    [
+      "Heikki Kovalainen[20]",
+      "18–19"
+    ],
+    [
+      "8",
+      "Romain Grosjean[21]",
+      "All"
+    ],
+    [
+      "Mercedes AMGPetronasF1 Team",
+      "Mercedes",
+      "F1 W04",
+      "Mercedes FO 108F[22]",
+      "9",
+      "Nico Rosberg[23]",
+      "All"
+    ],
+    [
+      "10",
+      "Lewis Hamilton[24]",
+      "All"
+    ],
+    [
+      "Sauber F1 Team",
+      "Sauber-Ferrari",
+      "C32",
+      "Ferrari Type 056",
+      "11",
+      "Nico Hülkenberg[25]",
+      "All"
+    ],
+    [
+      "12",
+      "Esteban Gutiérrez[26]",
+      "All"
+    ],
+    [
+      "SaharaForce India F1 Team",
+      "Force India-Mercedes",
+      "VJM06",
+      "Mercedes FO 108F",
+      "14",
+      "Paul di Resta[27]",
+      "All"
+    ],
+    [
+      "15",
+      "Adrian Sutil[28]",
+      "All"
+    ],
+    [
+      "Williams F1 Team",
+      "Williams-Renault",
+      "FW35",
+      "Renault RS27-2013",
+      "16",
+      "Pastor Maldonado[29]",
+      "All"
+    ],
+    [
+      "17",
+      "Valtteri Bottas[29]",
+      "All"
+    ],
+    [
+      "Scuderia Toro Rosso",
+      "Toro Rosso-Ferrari",
+      "STR8",
+      "Ferrari Type 056",
+      "18",
+      "Jean-Éric Vergne[30]",
+      "All"
+    ],
+    [
+      "19",
+      "Daniel Ricciardo[30]",
+      "All"
+    ],
+    [
+      "Caterham F1 Team",
+      "Caterham-Renault",
+      "CT03",
+      "Renault RS27-2013",
+      "20",
+      "Charles Pic[31]",
+      "All"
+    ],
+    [
+      "21",
+      "Giedo van der Garde[32]",
+      "All"
+    ],
+    [
+      "Marussia F1 Team",
+      "Marussia-Cosworth",
+      "MR02",
+      "Cosworth CA2013",
+      "22",
+      "Jules Bianchi[33]",
+      "All"
+    ],
+    [
+      "23",
+      "Max Chilton[34]",
+      "All"
+    ]
+  ],
+  "teams": [],
+  "races": [
+    [
+      "Constructor",
+      "Practice drivers"
+    ],
+    [
+      "Driver name",
+      "Rounds"
+    ],
+    [
+      "Caterham-Renault",
+      "Ma QinghuaHeikki KovalainenAlexander Rossi",
+      "34–5, 11–12, 15, 177, 18"
+    ],
+    [
+      "Force India-Mercedes",
+      "James Calado",
+      "12, 14, 16–17, 19"
+    ],
+    [
+      "Marussia-Cosworth",
+      "Rodolfo González",
+      "4–5, 9–10, 12, 14, 17–19"
+    ],
+    [
+      "Toro Rosso-Ferrari",
+      "Daniil Kvyat",
+      "18–19"
+    ],
+    [
+      "Source:[35][36][37][38][39]"
+    ]
+  ],
+  "standings": [
+    [
+      "Round",
+      "Grand Prix",
+      "Circuit",
+      "Date"
+    ],
+    [
+      "1",
+      "Australian Grand Prix",
+      "Albert Park Circuit,Melbourne",
+      "17 March"
+    ],
+    [
+      "2",
+      "Malaysian Grand Prix",
+      "Sepang International Circuit,Kuala Lumpur",
+      "24 March"
+    ],
+    [
+      "3",
+      "Chinese Grand Prix",
+      "Shanghai International Circuit,Shanghai",
+      "14 April"
+    ],
+    [
+      "4",
+      "Bahrain Grand Prix",
+      "Bahrain International Circuit,Sakhir",
+      "21 April"
+    ],
+    [
+      "5",
+      "Spanish Grand Prix",
+      "Circuit de Catalunya,Montmeló",
+      "12 May"
+    ],
+    [
+      "6",
+      "Monaco Grand Prix",
+      "Circuit de Monaco,Monte Carlo",
+      "26 May"
+    ],
+    [
+      "7",
+      "Canadian Grand Prix",
+      "Circuit Gilles Villeneuve,Montreal",
+      "9 June"
+    ],
+    [
+      "8",
+      "British Grand Prix",
+      "Silverstone Circuit,Silverstone",
+      "30 June"
+    ],
+    [
+      "9",
+      "German Grand Prix",
+      "Nürburgring,Nürburg",
+      "7 July"
+    ],
+    [
+      "10",
+      "Hungarian Grand Prix",
+      "Hungaroring,Mogyoród",
+      "28 July"
+    ],
+    [
+      "11",
+      "Belgian Grand Prix",
+      "Circuit de Spa-Francorchamps,Stavelot",
+      "25 August"
+    ],
+    [
+      "12",
+      "Italian Grand Prix",
+      "Autodromo Nazionale Monza,Monza",
+      "8 September"
+    ],
+    [
+      "13",
+      "Singapore Grand Prix",
+      "Marina Bay Street Circuit,Singapore",
+      "22 September"
+    ],
+    [
+      "14",
+      "Korean Grand Prix",
+      "Korea International Circuit,Yeongam",
+      "6 October"
+    ],
+    [
+      "15",
+      "Japanese Grand Prix",
+      "Suzuka Circuit,Suzuka",
+      "13 October"
+    ],
+    [
+      "16",
+      "Indian Grand Prix",
+      "Buddh International Circuit,Greater Noida",
+      "27 October"
+    ],
+    [
+      "17",
+      "Abu Dhabi Grand Prix",
+      "Yas Marina Circuit,Abu Dhabi",
+      "3 November"
+    ],
+    [
+      "18",
+      "United States Grand Prix",
+      "Circuit of the Americas,Austin, Texas",
+      "17 November"
+    ],
+    [
+      "19",
+      "Brazilian Grand Prix",
+      "Autódromo José Carlos Pace,São Paulo",
+      "24 November"
+    ],
+    [
+      "Sources:[85][86][87]"
+    ]
+  ],
+  "title": "2013 Formula One World Championship",
+  "description": "",
+  "sections": {}
+}

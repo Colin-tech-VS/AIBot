@@ -1,0 +1,396 @@
+{
+  "year": 1986,
+  "timestamp": "2026-01-14T21:45:40.954076",
+  "drivers": [
+    [
+      "Entrant",
+      "Constructor",
+      "Chassis",
+      "Engine",
+      "Tyres",
+      "No",
+      "Driver",
+      "Rounds"
+    ],
+    [
+      "MarlboroMcLarenTAG Turbo",
+      "McLaren-TAG",
+      "MP4/2C",
+      "TAG-PorscheTTE PO1 1.5V6t",
+      "G",
+      "1",
+      "Alain Prost",
+      "All"
+    ],
+    [
+      "2",
+      "Keke Rosberg",
+      "All"
+    ],
+    [
+      "Data GeneralTeam Tyrrell",
+      "Tyrrell-Renault",
+      "014015",
+      "Renault EF4B1.5V6t",
+      "G",
+      "3",
+      "Martin Brundle",
+      "All"
+    ],
+    [
+      "4",
+      "Philippe Streiff",
+      "All"
+    ],
+    [
+      "CanonWilliamsHondaTeam",
+      "Williams-Honda",
+      "FW11",
+      "Honda RA166E1.5V6t",
+      "G",
+      "5",
+      "Nigel Mansell",
+      "All"
+    ],
+    [
+      "6",
+      "Nelson Piquet",
+      "All"
+    ],
+    [
+      "OlivettiBrabham",
+      "Brabham-BMW",
+      "BT54BT55",
+      "BMW M12/13/1 1.5L4t",
+      "P",
+      "7",
+      "Riccardo Patrese",
+      "All"
+    ],
+    [
+      "8",
+      "Elio de Angelis",
+      "1–4"
+    ],
+    [
+      "Derek Warwick",
+      "6–16"
+    ],
+    [
+      "John Player SpecialTeam Lotus",
+      "Lotus-Renault",
+      "98T",
+      "Renault EF15B1.5V6t",
+      "G",
+      "11",
+      "Johnny Dumfries",
+      "All"
+    ],
+    [
+      "12",
+      "Ayrton Senna",
+      "All"
+    ],
+    [
+      "WestZakspeed Racing",
+      "Zakspeed",
+      "861",
+      "Zakspeed 1500/41.5L4t",
+      "G",
+      "14",
+      "Jonathan Palmer",
+      "All"
+    ],
+    [
+      "29",
+      "Huub Rothengatter",
+      "3–16"
+    ],
+    [
+      "Team Haas (USA) Ltd.",
+      "Lola-Hart",
+      "THL1",
+      "Hart 415T1.5L4t",
+      "G",
+      "15",
+      "Alan Jones",
+      "1–2"
+    ],
+    [
+      "16",
+      "Patrick Tambay",
+      "1–3"
+    ],
+    [
+      "Lola-Ford",
+      "THL2",
+      "Ford-TEC1.5V6t",
+      "15",
+      "Alan Jones",
+      "3–16"
+    ],
+    [
+      "16",
+      "Patrick Tambay",
+      "4–6, 8–16"
+    ],
+    [
+      "Eddie Cheever",
+      "7"
+    ],
+    [
+      "BarclayArrowsBMW",
+      "Arrows-BMW",
+      "A8A9",
+      "BMW M12/13 1.5L4t",
+      "G",
+      "17",
+      "Marc Surer",
+      "1–5"
+    ],
+    [
+      "Christian Danner",
+      "7–16"
+    ],
+    [
+      "18",
+      "Thierry Boutsen",
+      "All"
+    ],
+    [
+      "BenettonBMWTeam",
+      "Benetton-BMW",
+      "B186",
+      "BMW M12/13 1.5L4t",
+      "P",
+      "19",
+      "Teo Fabi",
+      "All"
+    ],
+    [
+      "20",
+      "Gerhard Berger",
+      "All"
+    ],
+    [
+      "Osella Squadra Corse",
+      "Osella-Alfa Romeo",
+      "FA1GFA1FFA1H",
+      "Alfa Romeo 890T1.5V8t",
+      "P",
+      "21",
+      "Piercarlo Ghinzani",
+      "All"
+    ],
+    [
+      "22",
+      "Christian Danner",
+      "1–6"
+    ],
+    [
+      "Allen Berg",
+      "7–12, 14–16"
+    ],
+    [
+      "Alex Caffi",
+      "13"
+    ],
+    [
+      "Minardi Team",
+      "Minardi-Motori Moderni",
+      "M185BM186",
+      "Motori ModerniTipo 615–90 1.5V6t",
+      "P",
+      "23",
+      "Andrea de Cesaris",
+      "All"
+    ],
+    [
+      "24",
+      "Alessandro Nannini",
+      "All"
+    ],
+    [
+      "Équipe Ligier",
+      "Ligier-Renault",
+      "JS27",
+      "Renault EF4B1.5V6tRenault EF15B1.5V6t",
+      "P",
+      "25",
+      "René Arnoux",
+      "All"
+    ],
+    [
+      "26",
+      "Jacques Laffite",
+      "1–9"
+    ],
+    [
+      "Philippe Alliot",
+      "10–16"
+    ],
+    [
+      "Ferrari",
+      "Ferrari",
+      "F1/86",
+      "Ferrari Tipo 0321.5V6t",
+      "G",
+      "27",
+      "Michele Alboreto",
+      "All"
+    ],
+    [
+      "28",
+      "Stefan Johansson",
+      "All"
+    ],
+    [
+      "Jolly ClubSpA",
+      "AGS-Motori Moderni",
+      "JH21C",
+      "Motori ModerniTipo 615–90 1.5V6t",
+      "P",
+      "31",
+      "Ivan Capelli",
+      "13–14"
+    ],
+    [
+      "Sources:[citation needed]"
+    ]
+  ],
+  "teams": [],
+  "races": [
+    [
+      "Round",
+      "Grand Prix",
+      "Circuit",
+      "Date"
+    ],
+    [
+      "1",
+      "Brazilian Grand Prix",
+      "Autódromo de Jacarepaguá,Rio de Janeiro",
+      "23 March"
+    ],
+    [
+      "2",
+      "Spanish Grand Prix",
+      "Circuito de Jerez,Jerez de la Frontera",
+      "13 April"
+    ],
+    [
+      "3",
+      "San Marino Grand Prix",
+      "Autodromo Dino Ferrari,Imola",
+      "27 April"
+    ],
+    [
+      "4",
+      "Monaco Grand Prix",
+      "Circuit de Monaco,Monte Carlo",
+      "11 May"
+    ],
+    [
+      "5",
+      "Belgian Grand Prix",
+      "Circuit de Spa-Francorchamps,Stavelot",
+      "25 May"
+    ],
+    [
+      "6",
+      "Canadian Grand Prix",
+      "Circuit Gilles Villeneuve,Montréal",
+      "15 June"
+    ],
+    [
+      "7",
+      "Detroit Grand Prix",
+      "Detroit Street Circuit,Downtown Detroit,Michigan",
+      "22 June"
+    ],
+    [
+      "8",
+      "French Grand Prix",
+      "Paul Ricard Circuit,Le Castellet",
+      "6 July"
+    ],
+    [
+      "9",
+      "British Grand Prix",
+      "Brands Hatch,West Kingsdown",
+      "13 July"
+    ],
+    [
+      "10",
+      "German Grand Prix",
+      "Hockenheimring,Hockenheim",
+      "27 July"
+    ],
+    [
+      "11",
+      "Hungarian Grand Prix",
+      "Hungaroring,Mogyoród",
+      "10 August"
+    ],
+    [
+      "12",
+      "Austrian Grand Prix",
+      "Österreichring,Spielberg",
+      "17 August"
+    ],
+    [
+      "13",
+      "Italian Grand Prix",
+      "Autodromo Nazionale di Monza,Monza",
+      "7 September"
+    ],
+    [
+      "14",
+      "Portuguese Grand Prix",
+      "Autódromo do Estoril,Estoril",
+      "21 September"
+    ],
+    [
+      "15",
+      "Mexican Grand Prix",
+      "Autódromo Hermanos Rodríguez,Mexico City",
+      "12 October"
+    ],
+    [
+      "16",
+      "Australian Grand Prix",
+      "Adelaide Street Circuit,Adelaide",
+      "26 October"
+    ]
+  ],
+  "standings": [
+    [
+      "Grand Prix",
+      "Circuit",
+      "Date"
+    ],
+    [
+      "Argentine Grand Prix",
+      "Buenos Aires Autodrome,Buenos Aires",
+      "9 March"
+    ],
+    [
+      "Japanese Grand Prix",
+      "Suzuka Circuit,Suzuka City",
+      "6 April"
+    ],
+    [
+      "Dutch Grand Prix",
+      "Circuit Zandvoort,Zandvoort",
+      "31 August"
+    ],
+    [
+      "South African Grand Prix",
+      "Kyalami Circuit,Midrand",
+      "26 October"
+    ]
+  ],
+  "title": "1986 Formula One World Championship",
+  "description": "",
+  "sections": {}
+}

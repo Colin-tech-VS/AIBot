@@ -1,0 +1,275 @@
+{
+  "year": 2019,
+  "timestamp": "2026-01-14T21:46:57.321535",
+  "drivers": [
+    [
+      "Entrant",
+      "Constructor",
+      "Chassis",
+      "Power unit",
+      "Race drivers"
+    ],
+    [
+      "No.",
+      "Driver name",
+      "Rounds"
+    ],
+    [
+      "Alfa Romeo Racing",
+      "Alfa Romeo Racing-Ferrari",
+      "C38",
+      "Ferrari 064",
+      "799",
+      "Kimi RäikkönenAntonio Giovinazzi",
+      "AllAll"
+    ],
+    [
+      "Scuderia Ferrari[a]",
+      "Ferrari",
+      "SF90",
+      "Ferrari 064",
+      "516",
+      "Sebastian VettelCharles Leclerc",
+      "AllAll"
+    ],
+    [
+      "Haas F1 Team[b]",
+      "Haas-Ferrari",
+      "VF-19",
+      "Ferrari 064",
+      "820",
+      "Romain GrosjeanKevin Magnussen",
+      "AllAll"
+    ],
+    [
+      "McLaren F1 Team",
+      "McLaren-Renault",
+      "MCL34",
+      "Renault E-Tech 19",
+      "455",
+      "Lando NorrisCarlos Sainz Jr.",
+      "AllAll"
+    ],
+    [
+      "Mercedes AMGPetronasMotorsport",
+      "Mercedes",
+      "F1 W10 EQ Power+",
+      "Mercedes M10 EQ Power+",
+      "4477",
+      "Lewis HamiltonValtteri Bottas",
+      "AllAll"
+    ],
+    [
+      "SportPesaRacing Point F1 Team",
+      "Racing Point-BWTMercedes",
+      "RP19",
+      "BWT Mercedes[c]",
+      "1118",
+      "Sergio PérezLance Stroll",
+      "AllAll"
+    ],
+    [
+      "Aston MartinRed Bull Racing",
+      "Red Bull Racing-Honda",
+      "RB15",
+      "Honda RA619H",
+      "102333",
+      "Pierre GaslyAlexander AlbonMax Verstappen",
+      "1–1213–21All"
+    ],
+    [
+      "Renault F1 Team",
+      "Renault",
+      "R.S.19",
+      "Renault E-Tech 19",
+      "327",
+      "Daniel RicciardoNico Hülkenberg",
+      "AllAll"
+    ],
+    [
+      "Red BullToro Rosso Honda",
+      "Scuderia Toro Rosso-Honda",
+      "STR14",
+      "Honda RA619H",
+      "231026",
+      "Alexander AlbonPierre GaslyDaniil Kvyat",
+      "1–1213–21All"
+    ],
+    [
+      "ROKiT Williams Racing",
+      "Williams-Mercedes",
+      "FW42",
+      "Mercedes M10 EQ Power+",
+      "6388",
+      "George RussellRobert Kubica",
+      "AllAll"
+    ],
+    [
+      "Sources:[7][5][8][9][10][11][12][13][14][15]"
+    ]
+  ],
+  "teams": [],
+  "races": [
+    [
+      "Constructor",
+      "No.",
+      "Driver",
+      "Rounds"
+    ],
+    [
+      "Scuderia Toro Rosso-Honda",
+      "38",
+      "Naoki Yamamoto",
+      "17"
+    ],
+    [
+      "Williams-Mercedes",
+      "40",
+      "Nicholas Latifi",
+      "7–8, 13, 18–20"
+    ],
+    [
+      "Source:[16][17]"
+    ]
+  ],
+  "standings": [
+    [
+      "Round",
+      "Grand Prix",
+      "Circuit",
+      "Date"
+    ],
+    [
+      "1",
+      "Australian Grand Prix",
+      "Albert Park Circuit,Melbourne",
+      "17 March"
+    ],
+    [
+      "2",
+      "Bahrain Grand Prix",
+      "Bahrain International Circuit,Sakhir",
+      "31 March"
+    ],
+    [
+      "3",
+      "Chinese Grand Prix",
+      "Shanghai International Circuit,Shanghai",
+      "14 April"
+    ],
+    [
+      "4",
+      "Azerbaijan Grand Prix",
+      "Baku City Circuit,Baku",
+      "28 April"
+    ],
+    [
+      "5",
+      "Spanish Grand Prix",
+      "Circuit de Barcelona-Catalunya,Montmeló",
+      "12 May"
+    ],
+    [
+      "6",
+      "Monaco Grand Prix",
+      "Circuit de Monaco,Monte Carlo",
+      "26 May"
+    ],
+    [
+      "7",
+      "Canadian Grand Prix",
+      "Circuit Gilles Villeneuve,Montréal",
+      "9 June"
+    ],
+    [
+      "8",
+      "French Grand Prix",
+      "Circuit Paul Ricard,Le Castellet",
+      "23 June"
+    ],
+    [
+      "9",
+      "Austrian Grand Prix",
+      "Red Bull Ring,Spielberg",
+      "30 June"
+    ],
+    [
+      "10",
+      "British Grand Prix",
+      "Silverstone Circuit,Silverstone",
+      "14 July"
+    ],
+    [
+      "11",
+      "German Grand Prix",
+      "Hockenheimring,Hockenheim",
+      "28 July"
+    ],
+    [
+      "12",
+      "Hungarian Grand Prix",
+      "Hungaroring,Mogyoród",
+      "4 August"
+    ],
+    [
+      "13",
+      "Belgian Grand Prix",
+      "Circuit de Spa-Francorchamps,Stavelot",
+      "1 September"
+    ],
+    [
+      "14",
+      "Italian Grand Prix",
+      "Autodromo Nazionale di Monza,Monza",
+      "8 September"
+    ],
+    [
+      "15",
+      "Singapore Grand Prix",
+      "Marina Bay Street Circuit,Singapore",
+      "22 September"
+    ],
+    [
+      "16",
+      "Russian Grand Prix",
+      "Sochi Autodrom,Sochi",
+      "29 September"
+    ],
+    [
+      "17",
+      "Japanese Grand Prix",
+      "Suzuka International Racing Course,Suzuka",
+      "13 October"
+    ],
+    [
+      "18",
+      "Mexican Grand Prix",
+      "Autódromo Hermanos Rodríguez,Mexico City",
+      "27 October"
+    ],
+    [
+      "19",
+      "United States Grand Prix",
+      "Circuit of the Americas,Austin, Texas",
+      "3 November"
+    ],
+    [
+      "20",
+      "Brazilian Grand Prix",
+      "Autódromo José Carlos Pace,São Paulo",
+      "17 November"
+    ],
+    [
+      "21",
+      "Abu Dhabi Grand Prix",
+      "Yas Marina Circuit,Abu Dhabi",
+      "1 December"
+    ],
+    [
+      "Sources:[57][58][59]"
+    ]
+  ],
+  "title": "2019 Formula One World Championship",
+  "description": "",
+  "sections": {}
+}

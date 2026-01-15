@@ -1,0 +1,490 @@
+{
+  "year": 1966,
+  "timestamp": "2026-01-14T21:44:59.837174",
+  "drivers": [
+    [
+      "Entrant",
+      "Constructor",
+      "Chassis",
+      "Engine",
+      "Tyre",
+      "Driver",
+      "Rounds"
+    ],
+    [
+      "Bruce McLaren Motor Racing",
+      "McLaren-Ford",
+      "M2B",
+      "Ford406 3.0V8",
+      "F",
+      "Bruce McLaren",
+      "1, 8–9"
+    ],
+    [
+      "McLaren-Serenissima",
+      "SerenissimaM166 3.0V8",
+      "2, 4–5"
+    ],
+    [
+      "Team Lotus",
+      "Lotus-Climax",
+      "33",
+      "Climax FWMV 2.0 V8",
+      "F",
+      "Jim Clark",
+      "1–6"
+    ],
+    [
+      "Geki",
+      "7"
+    ],
+    [
+      "Peter Arundell",
+      "8"
+    ],
+    [
+      "Pedro Rodríguez",
+      "3, 9"
+    ],
+    [
+      "Lotus-BRM",
+      "4333",
+      "BRM P753.0H16BRMP60 2.0V8",
+      "8"
+    ],
+    [
+      "Peter Arundell",
+      "2–7, 9"
+    ],
+    [
+      "Jim Clark",
+      "7–9"
+    ],
+    [
+      "Lotus-Ford",
+      "44",
+      "FordCosworth SCA 1.0 L4",
+      "D",
+      "Gerhard Mitter",
+      "6"
+    ],
+    [
+      "Pedro Rodríguez",
+      "6"
+    ],
+    [
+      "Piers Courage",
+      "6"
+    ],
+    [
+      "Reg Parnell Racing",
+      "Lotus-BRM",
+      "33",
+      "BRMP60 2.0V8",
+      "F",
+      "Mike Spence",
+      "All"
+    ],
+    [
+      "Ferrari",
+      "246",
+      "Ferrari228 2.4V6",
+      "Giancarlo Baghetti",
+      "7"
+    ],
+    [
+      "Brabham Racing Organisation",
+      "Brabham-Repco",
+      "BT19BT20",
+      "Repco620 3.0 V8",
+      "G",
+      "Jack Brabham",
+      "All"
+    ],
+    [
+      "Denny Hulme",
+      "3–9"
+    ],
+    [
+      "Brabham-Climax",
+      "BT22",
+      "Climax FPF 2.8 L4",
+      "1–2"
+    ],
+    [
+      "Chris Irwin",
+      "4"
+    ],
+    [
+      "Cooper Car Company",
+      "Cooper-Maserati",
+      "T81",
+      "Maserati9/F1 3.0V12",
+      "D",
+      "Richie Ginther",
+      "1–2"
+    ],
+    [
+      "Jochen Rindt",
+      "All"
+    ],
+    [
+      "Chris Amon",
+      "3"
+    ],
+    [
+      "John Surtees",
+      "3–9"
+    ],
+    [
+      "Moisés Solana",
+      "9"
+    ],
+    [
+      "Owen Racing Organisation",
+      "BRM",
+      "P261P83",
+      "BRMP60 2.0V8BRM P753.0H16",
+      "D",
+      "Graham Hill",
+      "All"
+    ],
+    [
+      "Jackie Stewart",
+      "1–2, 4–9"
+    ],
+    [
+      "R.R.C. Walker Racing Team",
+      "Brabham-BRM",
+      "BT11",
+      "BRMP60 2.0V8",
+      "D",
+      "Jo Siffert",
+      "1"
+    ],
+    [
+      "Cooper-Maserati",
+      "T81",
+      "Maserati9/F1 3.0V12",
+      "2–5, 7–9"
+    ],
+    [
+      "DW Racing Enterprises",
+      "Brabham-Climax",
+      "BT11",
+      "Climax FPF 2.8 L4",
+      "F",
+      "Bob Anderson",
+      "1, 3–7"
+    ],
+    [
+      "Scuderia FerrariSpA SEFAC",
+      "Ferrari",
+      "246312/66",
+      "Ferrari228 2.4V6Ferrari218 3.0V12",
+      "FD",
+      "Lorenzo Bandini",
+      "1–3, 5–8"
+    ],
+    [
+      "John Surtees",
+      "1–2"
+    ],
+    [
+      "Mike Parkes",
+      "3, 5–7"
+    ],
+    [
+      "Ludovico Scarfiotti",
+      "6–7"
+    ],
+    [
+      "Anglo-Suisse Racing Team",
+      "Cooper-Maserati",
+      "T81",
+      "Maserati9/F1 3.0V12",
+      "F",
+      "Jo Bonnier",
+      "1–2, 5–9"
+    ],
+    [
+      "Brabham-Climax",
+      "BT22",
+      "Climax FPF 2.8 L4",
+      "3"
+    ],
+    [
+      "BT7",
+      "Climax FWMV 1.5 V8",
+      "4"
+    ],
+    [
+      "Team Chamaco Collect",
+      "BRM",
+      "P261",
+      "BRMP60 2.0V8",
+      "G",
+      "Bob Bondurant",
+      "1–2, 4, 6–7"
+    ],
+    [
+      "Vic Wilson",
+      "2"
+    ],
+    [
+      "Phil Hill",
+      "Lotus-Climax",
+      "25",
+      "Climax FWMV 1.5 V8",
+      "F",
+      "Phil Hill",
+      "1"
+    ],
+    [
+      "McLaren-Ford",
+      "M3A[3][4]",
+      "Ford406 3.0V8",
+      "2"
+    ],
+    [
+      "Guy Ligier",
+      "Cooper-Maserati",
+      "T81",
+      "Maserati9/F1 3.0V12",
+      "D",
+      "Guy Ligier",
+      "1–6"
+    ],
+    [
+      "Anglo American Racers",
+      "Eagle-Climax",
+      "Mk1",
+      "Climax FPF 2.8 L4",
+      "G",
+      "Dan Gurney",
+      "2–6, 9"
+    ],
+    [
+      "Phil Hill",
+      "7"
+    ],
+    [
+      "Bob Bondurant",
+      "8"
+    ],
+    [
+      "Eagle-Weslake",
+      "Weslake58 3.0V12",
+      "Dan Gurney",
+      "7–8"
+    ],
+    [
+      "Bob Bondurant",
+      "9"
+    ],
+    [
+      "David Bridges",
+      "Brabham-BRM",
+      "BT11",
+      "BRMP60 2.0V8",
+      "G",
+      "John Taylor",
+      "3–6"
+    ],
+    [
+      "Shannon Racing Cars",
+      "Shannon-Climax",
+      "SH1",
+      "Climax FPE 3.0 V8",
+      "D",
+      "Trevor Taylor",
+      "4"
+    ],
+    [
+      "J.A. Pearce Engineering Ltd",
+      "Cooper-Ferrari",
+      "T73",
+      "FerrariTipo 168 3.0V12",
+      "D",
+      "Chris Lawrence",
+      "4, 6"
+    ],
+    [
+      "Caltex Racing Team",
+      "Brabham-Ford",
+      "BT18",
+      "FordCosworth SCA 1.0 L4",
+      "D",
+      "Kurt Ahrens Jr.",
+      "6"
+    ]
+  ],
+  "teams": [],
+  "races": [
+    [
+      "Round",
+      "Grand Prix",
+      "Circuit",
+      "Date"
+    ],
+    [
+      "1",
+      "Monaco Grand Prix",
+      "Circuit de Monaco,Monte Carlo",
+      "22 May"
+    ],
+    [
+      "2",
+      "Belgian Grand Prix",
+      "Circuit de Spa-Francorchamps,Stavelot",
+      "12 June"
+    ],
+    [
+      "3",
+      "French Grand Prix",
+      "Reims-Gueux,Gueux",
+      "3 July"
+    ],
+    [
+      "4",
+      "British Grand Prix",
+      "Brands Hatch,West Kingsdown",
+      "16 July"
+    ],
+    [
+      "5",
+      "Dutch Grand Prix",
+      "Circuit Park Zandvoort,Zandvoort",
+      "24 July"
+    ],
+    [
+      "6",
+      "German Grand Prix",
+      "Nürburgring,Nürburg",
+      "7 August"
+    ],
+    [
+      "7",
+      "Italian Grand Prix",
+      "Autodromo Nazionale di Monza,Monza",
+      "4 September"
+    ],
+    [
+      "8",
+      "United States Grand Prix",
+      "Watkins Glen International,New York",
+      "2 October"
+    ],
+    [
+      "9",
+      "Mexican Grand Prix",
+      "Magdalena Mixhuca,Mexico City",
+      "23 October"
+    ]
+  ],
+  "standings": [
+    [
+      "Round",
+      "Grand Prix",
+      "Pole position",
+      "Fastest lap",
+      "Winning driver",
+      "Winning constructor",
+      "Tyre",
+      "Report"
+    ],
+    [
+      "1",
+      "Monaco Grand Prix",
+      "Jim Clark",
+      "Lorenzo Bandini",
+      "Jackie Stewart",
+      "BRM",
+      "D",
+      "Report"
+    ],
+    [
+      "2",
+      "Belgian Grand Prix",
+      "John Surtees",
+      "John Surtees",
+      "John Surtees",
+      "Ferrari",
+      "D",
+      "Report"
+    ],
+    [
+      "3",
+      "French Grand Prix",
+      "Lorenzo Bandini",
+      "Lorenzo Bandini",
+      "Jack Brabham",
+      "Brabham-Repco",
+      "G",
+      "Report"
+    ],
+    [
+      "4",
+      "British Grand Prix",
+      "Jack Brabham",
+      "Jack Brabham",
+      "Jack Brabham",
+      "Brabham-Repco",
+      "G",
+      "Report"
+    ],
+    [
+      "5",
+      "Dutch Grand Prix",
+      "Jack Brabham",
+      "Denny Hulme",
+      "Jack Brabham",
+      "Brabham-Repco",
+      "G",
+      "Report"
+    ],
+    [
+      "6",
+      "German Grand Prix",
+      "Jim Clark",
+      "John Surtees",
+      "Jack Brabham",
+      "Brabham-Repco",
+      "G",
+      "Report"
+    ],
+    [
+      "7",
+      "Italian Grand Prix",
+      "Mike Parkes",
+      "Ludovico Scarfiotti",
+      "Ludovico Scarfiotti",
+      "Ferrari",
+      "F",
+      "Report"
+    ],
+    [
+      "8",
+      "United States Grand Prix",
+      "Jack Brabham",
+      "John Surtees",
+      "Jim Clark",
+      "Lotus-BRM",
+      "F",
+      "Report"
+    ],
+    [
+      "9",
+      "Mexican Grand Prix",
+      "John Surtees",
+      "Richie Ginther",
+      "John Surtees",
+      "Cooper-Maserati",
+      "D",
+      "Report"
+    ]
+  ],
+  "title": "1966 Formula One season",
+  "description": "",
+  "sections": {}
+}

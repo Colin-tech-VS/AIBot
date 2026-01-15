@@ -1,0 +1,290 @@
+{
+  "year": 2017,
+  "timestamp": "2026-01-14T21:46:52.140811",
+  "drivers": [
+    [
+      "Entrant",
+      "Constructor",
+      "Chassis",
+      "Power unit",
+      "Race drivers"
+    ],
+    [
+      "No.",
+      "Driver name",
+      "Rounds"
+    ],
+    [
+      "Scuderia Ferrari",
+      "Ferrari",
+      "SF70H[9]",
+      "Ferrari 062[10]",
+      "57",
+      "Sebastian VettelKimi Räikkönen",
+      "AllAll"
+    ],
+    [
+      "SaharaForce India F1 Team",
+      "Force India-Mercedes",
+      "VJM10[11]",
+      "Mercedes M08 EQ Power+[12]",
+      "1131",
+      "Sergio PérezEsteban Ocon",
+      "AllAll"
+    ],
+    [
+      "Haas F1 Team",
+      "Haas-Ferrari",
+      "VF-17[13]",
+      "Ferrari 062[10]",
+      "820",
+      "Romain GrosjeanKevin Magnussen",
+      "AllAll"
+    ],
+    [
+      "McLaren Honda Formula 1 Team",
+      "McLaren-Honda",
+      "MCL32[14]",
+      "Honda RA617H[15]",
+      "21422",
+      "Stoffel VandoorneFernando AlonsoJenson Button",
+      "All1–5, 7–206"
+    ],
+    [
+      "Mercedes AMGPetronasF1 Team",
+      "Mercedes",
+      "F1 W08 EQ Power+[12]",
+      "Mercedes M08 EQ Power+[12]",
+      "4477",
+      "Lewis HamiltonValtteri Bottas",
+      "AllAll"
+    ],
+    [
+      "Red Bull Racing",
+      "Red Bull Racing-TAG Heuer",
+      "RB13[16]",
+      "TAG Heuer F1-2017[17][N 1]",
+      "333",
+      "Daniel RicciardoMax Verstappen",
+      "AllAll"
+    ],
+    [
+      "Renault Sport Formula One Team",
+      "Renault",
+      "R.S.17[19]",
+      "Renault R.E.17[19]",
+      "273055",
+      "Nico HülkenbergJolyon PalmerCarlos Sainz Jr.",
+      "All1–1617–20"
+    ],
+    [
+      "Sauber F1 Team",
+      "Sauber-Ferrari",
+      "C36[20]",
+      "Ferrari 061[21]",
+      "99436",
+      "Marcus EricssonPascal WehrleinAntonio Giovinazzi",
+      "All1, 3–20[N 2]1–2"
+    ],
+    [
+      "Scuderia Toro Rosso",
+      "Toro Rosso",
+      "STR12[23]",
+      "Toro Rosso[17][N 3]",
+      "26102855",
+      "Daniil KvyatPierre GaslyBrendon Hartley[N 4]Carlos Sainz Jr.",
+      "1–14, 1715–16, 18–2017–201–16"
+    ],
+    [
+      "WilliamsMartiniRacing",
+      "Williams-Mercedes",
+      "FW40[25]",
+      "Mercedes M08 EQ Power+[12]",
+      "181940",
+      "Lance StrollFelipe MassaPaul di Resta",
+      "AllAll[N 5]11"
+    ],
+    [
+      "Sources:[27][28][29][30][26][31][32][33][34][35]"
+    ]
+  ],
+  "teams": [],
+  "races": [
+    [
+      "Constructor",
+      "Practice drivers"
+    ],
+    [
+      "No.",
+      "Driver name",
+      "Rounds"
+    ],
+    [
+      "Force India-Mercedes",
+      "3435",
+      "Alfonso Celis Jr.George Russell",
+      "9, 11, 1819–20"
+    ],
+    [
+      "Haas-Ferrari",
+      "50",
+      "Antonio Giovinazzi",
+      "10–11, 14–15, 18–20"
+    ],
+    [
+      "Renault",
+      "46",
+      "Sergey Sirotkin",
+      "4–5, 9, 15"
+    ],
+    [
+      "Sauber-Ferrari",
+      "37",
+      "Charles Leclerc",
+      "15, 17–19"
+    ],
+    [
+      "Toro Rosso-Renault",
+      "38",
+      "Sean Gelael",
+      "14–15, 17–18"
+    ],
+    [
+      "Source:[29]"
+    ]
+  ],
+  "standings": [
+    [
+      "Round",
+      "Grand Prix",
+      "Circuit",
+      "Date"
+    ],
+    [
+      "1",
+      "Australian Grand Prix",
+      "Albert Park Circuit,Melbourne",
+      "26 March"
+    ],
+    [
+      "2",
+      "Chinese Grand Prix",
+      "Shanghai International Circuit,Shanghai",
+      "9 April"
+    ],
+    [
+      "3",
+      "Bahrain Grand Prix",
+      "Bahrain International Circuit,Sakhir",
+      "16 April"
+    ],
+    [
+      "4",
+      "Russian Grand Prix",
+      "Sochi Autodrom,Sochi",
+      "30 April"
+    ],
+    [
+      "5",
+      "Spanish Grand Prix",
+      "Circuit de Barcelona-Catalunya,Montmeló",
+      "14 May"
+    ],
+    [
+      "6",
+      "Monaco Grand Prix",
+      "Circuit de Monaco,Monte Carlo",
+      "28 May"
+    ],
+    [
+      "7",
+      "Canadian Grand Prix",
+      "Circuit Gilles Villeneuve,Montreal",
+      "11 June"
+    ],
+    [
+      "8",
+      "Azerbaijan Grand Prix",
+      "Baku City Circuit,Baku",
+      "25 June"
+    ],
+    [
+      "9",
+      "Austrian Grand Prix",
+      "Red Bull Ring,Spielberg",
+      "9 July"
+    ],
+    [
+      "10",
+      "British Grand Prix",
+      "Silverstone Circuit,Silverstone",
+      "16 July"
+    ],
+    [
+      "11",
+      "Hungarian Grand Prix",
+      "Hungaroring,Mogyoród",
+      "30 July"
+    ],
+    [
+      "12",
+      "Belgian Grand Prix",
+      "Circuit de Spa-Francorchamps,Stavelot",
+      "27 August"
+    ],
+    [
+      "13",
+      "Italian Grand Prix",
+      "Autodromo Nazionale di Monza,Monza",
+      "3 September"
+    ],
+    [
+      "14",
+      "Singapore Grand Prix",
+      "Marina Bay Street Circuit,Singapore",
+      "17 September"
+    ],
+    [
+      "15",
+      "Malaysian Grand Prix",
+      "Sepang International Circuit,Kuala Lumpur",
+      "1 October"
+    ],
+    [
+      "16",
+      "Japanese Grand Prix",
+      "Suzuka International Racing Course,Suzuka",
+      "8 October"
+    ],
+    [
+      "17",
+      "United States Grand Prix",
+      "Circuit of the Americas,Austin, Texas",
+      "22 October"
+    ],
+    [
+      "18",
+      "Mexican Grand Prix",
+      "Autódromo Hermanos Rodríguez,Mexico City",
+      "29 October"
+    ],
+    [
+      "19",
+      "Brazilian Grand Prix",
+      "Autódromo José Carlos Pace,São Paulo",
+      "12 November"
+    ],
+    [
+      "20",
+      "Abu Dhabi Grand Prix",
+      "Yas Marina Circuit,Abu Dhabi",
+      "26 November"
+    ],
+    [
+      "Source:[63]"
+    ]
+  ],
+  "title": "2017 Formula One World Championship",
+  "description": "",
+  "sections": {}
+}

@@ -1,0 +1,365 @@
+{
+  "year": 2012,
+  "timestamp": "2026-01-14T21:46:39.500534",
+  "drivers": [
+    [
+      "Entrant",
+      "Constructor",
+      "Chassis",
+      "Engine",
+      "No.",
+      "Race Drivers",
+      "Rounds"
+    ],
+    [
+      "Red Bull Racing Renault",
+      "Red Bull-Renault",
+      "RB8",
+      "Renault RS27-2012",
+      "1",
+      "Sebastian Vettel[9]",
+      "All"
+    ],
+    [
+      "2",
+      "Mark Webber[10]",
+      "All"
+    ],
+    [
+      "VodafoneMcLaren Mercedes",
+      "McLaren-Mercedes",
+      "MP4-27",
+      "Mercedes FO 108Z",
+      "3",
+      "Jenson Button[11]",
+      "All"
+    ],
+    [
+      "4",
+      "Lewis Hamilton[12]",
+      "All"
+    ],
+    [
+      "Scuderia Ferrari",
+      "Ferrari",
+      "F2012",
+      "Ferrari Type 056",
+      "5",
+      "Fernando Alonso[13]",
+      "All"
+    ],
+    [
+      "6",
+      "Felipe Massa[14]",
+      "All"
+    ],
+    [
+      "Mercedes AMGPetronasF1 Team",
+      "Mercedes",
+      "F1 W03",
+      "Mercedes FO 108Z",
+      "7",
+      "Michael Schumacher[15]",
+      "All"
+    ],
+    [
+      "8",
+      "Nico Rosberg[16]",
+      "All"
+    ],
+    [
+      "Lotus F1 Team",
+      "Lotus-Renault",
+      "E20",
+      "Renault RS27-2012",
+      "9",
+      "Kimi Räikkönen[17]",
+      "All"
+    ],
+    [
+      "10",
+      "Romain Grosjean[18]",
+      "1–12, 14–20"
+    ],
+    [
+      "Jérôme d'Ambrosio[19]",
+      "13"
+    ],
+    [
+      "SaharaForce India F1 Team",
+      "Force India-Mercedes",
+      "VJM05",
+      "Mercedes FO 108Z",
+      "11",
+      "Paul di Resta[20]",
+      "All"
+    ],
+    [
+      "12",
+      "Nico Hülkenberg[20]",
+      "All"
+    ],
+    [
+      "Sauber F1 Team",
+      "Sauber-Ferrari",
+      "C31",
+      "Ferrari Type 056",
+      "14",
+      "Kamui Kobayashi[21]",
+      "All"
+    ],
+    [
+      "15",
+      "Sergio Pérez[21]",
+      "All"
+    ],
+    [
+      "Scuderia Toro Rosso",
+      "Toro Rosso-Ferrari",
+      "STR7",
+      "Ferrari Type 056",
+      "16",
+      "Daniel Ricciardo[22]",
+      "All"
+    ],
+    [
+      "17",
+      "Jean-Éric Vergne[22]",
+      "All"
+    ],
+    [
+      "Williams F1 Team",
+      "Williams-Renault",
+      "FW34",
+      "Renault RS27-2012",
+      "18",
+      "Pastor Maldonado[23]",
+      "All"
+    ],
+    [
+      "19",
+      "Bruno Senna[24]",
+      "All"
+    ],
+    [
+      "Caterham F1 Team",
+      "Caterham-Renault",
+      "CT01",
+      "Renault RS27-2012",
+      "20",
+      "Heikki Kovalainen[25]",
+      "All"
+    ],
+    [
+      "21",
+      "Vitaly Petrov[7]",
+      "All"
+    ],
+    [
+      "HRT Formula 1 Team",
+      "HRT-Cosworth",
+      "F112",
+      "Cosworth CA2012",
+      "22",
+      "Pedro de la Rosa[26]",
+      "All"
+    ],
+    [
+      "23",
+      "Narain Karthikeyan[27]",
+      "All"
+    ],
+    [
+      "Marussia F1 Team",
+      "Marussia-Cosworth",
+      "MR01",
+      "Cosworth CA2012",
+      "24",
+      "Timo Glock[28]",
+      "All"
+    ],
+    [
+      "25",
+      "Charles Pic[29]",
+      "All"
+    ]
+  ],
+  "teams": [],
+  "races": [
+    [
+      "Constructor",
+      "Practice drivers"
+    ],
+    [
+      "Driver name",
+      "Rounds"
+    ],
+    [
+      "Caterham-Renault",
+      "Giedo van der GardeAlexander Rossi",
+      "3, 15–18, 205"
+    ],
+    [
+      "Force India-Mercedes",
+      "Jules Bianchi",
+      "3, 5, 8–11, 13, 16, 18"
+    ],
+    [
+      "Hispania-Cosworth",
+      "Dani ClosMa Qinghua",
+      "5, 9–12, 1613–14, 18–19"
+    ],
+    [
+      "Marussia-Cosworth",
+      "Max Chilton",
+      "18"
+    ],
+    [
+      "Sauber-Ferrari",
+      "Esteban Gutiérrez",
+      "17"
+    ],
+    [
+      "Williams-Renault",
+      "Valtteri Bottas",
+      "2–5, 8–13, 15–18, 20"
+    ],
+    [
+      "Sources:[30][21][23][31][32][33][34]"
+    ]
+  ],
+  "standings": [
+    [
+      "Round",
+      "Grand Prix",
+      "Circuit",
+      "Date"
+    ],
+    [
+      "1",
+      "Australian Grand Prix",
+      "Albert Park Circuit,Melbourne",
+      "18 March"
+    ],
+    [
+      "2",
+      "Malaysian Grand Prix",
+      "Sepang International Circuit,Kuala Lumpur",
+      "25 March"
+    ],
+    [
+      "3",
+      "Chinese Grand Prix",
+      "Shanghai International Circuit,Shanghai",
+      "15 April"
+    ],
+    [
+      "4",
+      "Bahrain Grand Prix",
+      "Bahrain International Circuit,Sakhir",
+      "22 April"
+    ],
+    [
+      "5",
+      "Spanish Grand Prix",
+      "Circuit de Catalunya,Montmeló",
+      "13 May"
+    ],
+    [
+      "6",
+      "Monaco Grand Prix",
+      "Circuit de Monaco,Monte Carlo",
+      "27 May"
+    ],
+    [
+      "7",
+      "Canadian Grand Prix",
+      "Circuit Gilles Villeneuve,Montreal",
+      "10 June"
+    ],
+    [
+      "8",
+      "European Grand Prix",
+      "Valencia Street Circuit,Valencia",
+      "24 June"
+    ],
+    [
+      "9",
+      "British Grand Prix",
+      "Silverstone Circuit,Silverstone",
+      "8 July"
+    ],
+    [
+      "10",
+      "German Grand Prix",
+      "Hockenheimring,Hockenheim",
+      "22 July"
+    ],
+    [
+      "11",
+      "Hungarian Grand Prix",
+      "Hungaroring,Mogyoród",
+      "29 July"
+    ],
+    [
+      "12",
+      "Belgian Grand Prix",
+      "Circuit de Spa-Francorchamps,Stavelot",
+      "2 September"
+    ],
+    [
+      "13",
+      "Italian Grand Prix",
+      "Autodromo Nazionale Monza,Monza",
+      "9 September"
+    ],
+    [
+      "14",
+      "Singapore Grand Prix",
+      "Marina Bay Street Circuit,Singapore",
+      "23 September"
+    ],
+    [
+      "15",
+      "Japanese Grand Prix",
+      "Suzuka Circuit,Suzuka",
+      "7 October"
+    ],
+    [
+      "16",
+      "Korean Grand Prix",
+      "Korea International Circuit,Yeongam",
+      "14 October"
+    ],
+    [
+      "17",
+      "Indian Grand Prix",
+      "Buddh International Circuit,Greater Noida",
+      "28 October"
+    ],
+    [
+      "18",
+      "Abu Dhabi Grand Prix",
+      "Yas Marina Circuit,Abu Dhabi",
+      "4 November"
+    ],
+    [
+      "19",
+      "United States Grand Prix",
+      "Circuit of the Americas,Austin, Texas",
+      "18 November"
+    ],
+    [
+      "20",
+      "Brazilian Grand Prix",
+      "Autódromo José Carlos Pace,São Paulo",
+      "25 November"
+    ],
+    [
+      "Source:[76]"
+    ]
+  ],
+  "title": "2012 Formula One World Championship",
+  "description": "",
+  "sections": {}
+}

@@ -1,0 +1,590 @@
+{
+  "year": 1977,
+  "timestamp": "2026-01-14T21:45:21.535197",
+  "drivers": [
+    [
+      "Entrant",
+      "Constructor",
+      "Chassis",
+      "Engine",
+      "Tyres",
+      "No",
+      "Driver",
+      "Rounds"
+    ],
+    [
+      "Marlboro Team McLaren",
+      "McLaren-Ford",
+      "M23M26",
+      "Ford Cosworth DFV3.0V8",
+      "G",
+      "1",
+      "James Hunt",
+      "All"
+    ],
+    [
+      "2",
+      "Jochen Mass",
+      "All"
+    ],
+    [
+      "14",
+      "Bruno Giacomelli",
+      "14"
+    ],
+    [
+      "40",
+      "Gilles Villeneuve",
+      "10"
+    ],
+    [
+      "First National CIty Travelers ChecksElfTeam Tyrrell",
+      "Tyrrell-Ford",
+      "P34",
+      "Ford Cosworth DFV3.0V8",
+      "G",
+      "3",
+      "Ronnie Peterson",
+      "All"
+    ],
+    [
+      "4",
+      "Patrick Depailler",
+      "All"
+    ],
+    [
+      "John Player Team Lotus",
+      "Lotus-Ford",
+      "78",
+      "Ford Cosworth DFV3.0V8",
+      "G",
+      "5",
+      "Mario Andretti",
+      "All"
+    ],
+    [
+      "6",
+      "Gunnar Nilsson",
+      "All"
+    ],
+    [
+      "Martini Racing",
+      "Brabham-Alfa Romeo",
+      "BT45BT45B",
+      "Alfa Romeo115-123.0F12",
+      "G",
+      "7",
+      "John Watson",
+      "All"
+    ],
+    [
+      "8",
+      "Carlos Pace",
+      "1–3"
+    ],
+    [
+      "Hans-Joachim Stuck",
+      "4–17"
+    ],
+    [
+      "21",
+      "Giorgio Francia",
+      "14"
+    ],
+    [
+      "Hollywood March RacingRothmans International RacingLexington Racing",
+      "March-Ford",
+      "761B771",
+      "Ford Cosworth DFV3.0V8",
+      "G",
+      "9",
+      "Alex Ribeiro",
+      "All"
+    ],
+    [
+      "10",
+      "South AfricaIan Scheckter",
+      "1–2, 5–16"
+    ],
+    [
+      "Hans-Joachim Stuck",
+      "3"
+    ],
+    [
+      "Brian Henton",
+      "4"
+    ],
+    [
+      "SEFAC Ferrari",
+      "Ferrari",
+      "312T2B",
+      "Ferrari015 3.0F12",
+      "G",
+      "11",
+      "Niki Lauda",
+      "1–15"
+    ],
+    [
+      "Gilles Villeneuve",
+      "17"
+    ],
+    [
+      "12",
+      "Carlos Reutemann",
+      "All"
+    ],
+    [
+      "21",
+      "Gilles Villeneuve",
+      "16"
+    ],
+    [
+      "Rotary Watches Stanley-BRMStanley-BRM",
+      "BRM",
+      "P207P201B",
+      "BRMP202 3.0V12BRMP200 3.0V12",
+      "G",
+      "14",
+      "Larry Perkins",
+      "2–3"
+    ],
+    [
+      "29",
+      "Teddy Pilette",
+      "13"
+    ],
+    [
+      "35",
+      "Conny Andersson",
+      "5, 7–9"
+    ],
+    [
+      "Guy Edwards",
+      "10"
+    ],
+    [
+      "Teddy Pilette",
+      "14"
+    ],
+    [
+      "40",
+      "11"
+    ],
+    [
+      "Interscope Racing",
+      "Penske-Ford",
+      "PC4",
+      "Ford Cosworth DFV3.0V8",
+      "G",
+      "14",
+      "Danny Ongais",
+      "15–16"
+    ],
+    [
+      "Équipe Renault Elf",
+      "Renault",
+      "RS01",
+      "Renault-GordiniEF1 1.5V6t",
+      "M",
+      "15",
+      "Jean-Pierre Jabouille",
+      "10, 13–16"
+    ],
+    [
+      "Ambrosio Shadow RacingAmbrosio Tabatip Shadow RacingAmbrosio Villiger Shadow Racing",
+      "Shadow-Ford",
+      "DN5BDN8",
+      "Ford Cosworth DFV3.0V8",
+      "G",
+      "16",
+      "Tom Pryce",
+      "1–3"
+    ],
+    [
+      "Renzo Zorzi",
+      "4–5"
+    ],
+    [
+      "Riccardo Patrese",
+      "6–7, 9–11, 13–14, 16–17"
+    ],
+    [
+      "Jackie Oliver",
+      "8"
+    ],
+    [
+      "Arturo Merzario",
+      "12"
+    ],
+    [
+      "Jean-Pierre Jarier",
+      "15"
+    ],
+    [
+      "17",
+      "Renzo Zorzi",
+      "1–3"
+    ],
+    [
+      "Alan Jones",
+      "4–17"
+    ],
+    [
+      "Durex Team SurteesBeta Team Surtees",
+      "Surtees-Ford",
+      "TS19",
+      "Ford Cosworth DFV3.0V8",
+      "G",
+      "18",
+      "Hans Binder",
+      "1–6, 15–17"
+    ],
+    [
+      "Larry Perkins",
+      "7–9"
+    ],
+    [
+      "Patrick Tambay",
+      "9"
+    ],
+    [
+      "Vern Schuppan",
+      "10–13"
+    ],
+    [
+      "Lamberto Leoni",
+      "14"
+    ],
+    [
+      "19",
+      "Vittorio Brambilla",
+      "All"
+    ],
+    [
+      "Walter Wolf Racing",
+      "Wolf-Ford",
+      "WR1WR2WR3",
+      "Ford Cosworth DFV3.0V8",
+      "G",
+      "20",
+      "South AfricaJody Scheckter",
+      "All"
+    ],
+    [
+      "Team Tissot Ensign with CastrolTheodore Racing Hong Kong",
+      "Ensign-Ford",
+      "N177",
+      "Ford Cosworth DFV3.0V8",
+      "G",
+      "22",
+      "Clay Regazzoni",
+      "All"
+    ],
+    [
+      "Jacky Ickx",
+      "6"
+    ],
+    [
+      "23",
+      "Patrick Tambay",
+      "10–17"
+    ],
+    [
+      "PenthouseRizla+.RacingHesketh Racing",
+      "Hesketh-Ford",
+      "308E",
+      "Ford Cosworth DFV3.0V8",
+      "G",
+      "24",
+      "Rupert Keegan",
+      "5–16"
+    ],
+    [
+      "25",
+      "Harald Ertl",
+      "5–9"
+    ],
+    [
+      "Héctor Rebaque",
+      "11–13"
+    ]
+  ],
+  "teams": [],
+  "races": [
+    [
+      "Round",
+      "Grand Prix",
+      "Circuit",
+      "Date"
+    ],
+    [
+      "1",
+      "Argentine Grand Prix",
+      "Autodromo de Buenos Aires,Buenos Aires",
+      "9 January"
+    ],
+    [
+      "2",
+      "Brazilian Grand Prix",
+      "Autodromo de Interlagos,São Paulo",
+      "23 January"
+    ],
+    [
+      "3",
+      "South African Grand Prix",
+      "South AfricaKyalami Grand Prix Circuit,Midrand",
+      "5 March"
+    ],
+    [
+      "4",
+      "United States Grand Prix West",
+      "Long Beach Street Circuit,California",
+      "3 April"
+    ],
+    [
+      "5",
+      "Spanish Grand Prix",
+      "Circuito Permanente Del Jarama,Madrid",
+      "8 May"
+    ],
+    [
+      "6",
+      "Monaco Grand Prix",
+      "Circuit de Monaco,Monte Carlo",
+      "22 May"
+    ],
+    [
+      "7",
+      "Belgian Grand Prix",
+      "Circuit Zolder,Heusden-Zolder",
+      "5 June"
+    ],
+    [
+      "8",
+      "Swedish Grand Prix",
+      "Scandinavian Raceway,Anderstorp",
+      "19 June"
+    ],
+    [
+      "9",
+      "French Grand Prix",
+      "Dijon-Prenois,Prenois",
+      "3 July"
+    ],
+    [
+      "10",
+      "British Grand Prix",
+      "Silverstone Circuit,Silverstone",
+      "16 July"
+    ],
+    [
+      "11",
+      "German Grand Prix",
+      "Hockenheimring,Hockenheim",
+      "31 July"
+    ],
+    [
+      "12",
+      "Austrian Grand Prix",
+      "Österreichring,Spielberg",
+      "14 August"
+    ],
+    [
+      "13",
+      "Dutch Grand Prix",
+      "Circuit Zandvoort,Zandvoort",
+      "28 August"
+    ],
+    [
+      "14",
+      "Italian Grand Prix",
+      "Autodromo Nazionale di Monza,Monza",
+      "11 September"
+    ],
+    [
+      "15",
+      "United States Grand Prix",
+      "Watkins Glen Grand Prix Course,New York",
+      "2 October"
+    ],
+    [
+      "16",
+      "Canadian Grand Prix",
+      "Mosport Park,Bowmanville,Ontario",
+      "9 October"
+    ],
+    [
+      "17",
+      "Japanese Grand Prix",
+      "Fuji Speedway,Oyama, Shizuoka",
+      "23 October"
+    ]
+  ],
+  "standings": [
+    [
+      "Round",
+      "Grand Prix",
+      "Pole position",
+      "Fastest lap",
+      "Winning driver",
+      "Winning constructor",
+      "Report"
+    ],
+    [
+      "1",
+      "Argentine Grand Prix",
+      "James Hunt",
+      "James Hunt",
+      "South AfricaJody Scheckter",
+      "Wolf-Ford",
+      "Report"
+    ],
+    [
+      "2",
+      "Brazilian Grand Prix",
+      "James Hunt",
+      "James Hunt",
+      "Carlos Reutemann",
+      "Ferrari",
+      "Report"
+    ],
+    [
+      "3",
+      "South AfricaSouth African Grand Prix",
+      "James Hunt",
+      "John Watson",
+      "Niki Lauda",
+      "Ferrari",
+      "Report"
+    ],
+    [
+      "4",
+      "United States Grand Prix West",
+      "Niki Lauda",
+      "Niki Lauda",
+      "Mario Andretti",
+      "Lotus-Ford",
+      "Report"
+    ],
+    [
+      "5",
+      "Spanish Grand Prix",
+      "Mario Andretti",
+      "Jacques Laffite",
+      "Mario Andretti",
+      "Lotus-Ford",
+      "Report"
+    ],
+    [
+      "6",
+      "Monaco Grand Prix",
+      "John Watson",
+      "South AfricaJody Scheckter",
+      "South AfricaJody Scheckter",
+      "Wolf-Ford",
+      "Report"
+    ],
+    [
+      "7",
+      "Belgian Grand Prix",
+      "Mario Andretti",
+      "Gunnar Nilsson",
+      "Gunnar Nilsson",
+      "Lotus-Ford",
+      "Report"
+    ],
+    [
+      "8",
+      "Swedish Grand Prix",
+      "Mario Andretti",
+      "Mario Andretti",
+      "Jacques Laffite",
+      "Ligier-Matra",
+      "Report"
+    ],
+    [
+      "9",
+      "French Grand Prix",
+      "Mario Andretti",
+      "Mario Andretti",
+      "Mario Andretti",
+      "Lotus-Ford",
+      "Report"
+    ],
+    [
+      "10",
+      "British Grand Prix",
+      "James Hunt",
+      "James Hunt",
+      "James Hunt",
+      "McLaren-Ford",
+      "Report"
+    ],
+    [
+      "11",
+      "German Grand Prix",
+      "South AfricaJody Scheckter",
+      "Niki Lauda",
+      "Niki Lauda",
+      "Ferrari",
+      "Report"
+    ],
+    [
+      "12",
+      "Austrian Grand Prix",
+      "Niki Lauda",
+      "John Watson",
+      "Alan Jones",
+      "Shadow-Ford",
+      "Report"
+    ],
+    [
+      "13",
+      "Dutch Grand Prix",
+      "Mario Andretti",
+      "Niki Lauda",
+      "Niki Lauda",
+      "Ferrari",
+      "Report"
+    ],
+    [
+      "14",
+      "Italian Grand Prix",
+      "James Hunt",
+      "Mario Andretti",
+      "Mario Andretti",
+      "Lotus-Ford",
+      "Report"
+    ],
+    [
+      "15",
+      "United States Grand Prix",
+      "James Hunt",
+      "Ronnie Peterson",
+      "James Hunt",
+      "McLaren-Ford",
+      "Report"
+    ],
+    [
+      "16",
+      "Canadian Grand Prix",
+      "Mario Andretti",
+      "Mario Andretti",
+      "South AfricaJody Scheckter",
+      "Wolf-Ford",
+      "Report"
+    ],
+    [
+      "17",
+      "Japanese Grand Prix",
+      "Mario Andretti",
+      "South AfricaJody Scheckter",
+      "James Hunt",
+      "McLaren-Ford",
+      "Report"
+    ]
+  ],
+  "title": "1977 Formula One season",
+  "description": "",
+  "sections": {}
+}

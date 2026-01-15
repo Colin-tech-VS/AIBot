@@ -1,0 +1,499 @@
+{
+  "year": 2001,
+  "timestamp": "2026-01-14T21:46:11.319863",
+  "drivers": [
+    [
+      "Entrant",
+      "Constructor",
+      "Chassis",
+      "Engine†",
+      "Tyre",
+      "No.",
+      "Driver",
+      "Rounds"
+    ],
+    [
+      "Scuderia FerrariMarlboro",
+      "Ferrari",
+      "F2001",
+      "Ferrari Tipo 050",
+      "B",
+      "1",
+      "Michael Schumacher",
+      "All"
+    ],
+    [
+      "2",
+      "Rubens Barrichello",
+      "All"
+    ],
+    [
+      "WestMcLaren Mercedes",
+      "McLaren-Mercedes",
+      "MP4-16",
+      "Mercedes FO110K",
+      "B",
+      "3",
+      "Mika Häkkinen",
+      "All"
+    ],
+    [
+      "4",
+      "David Coulthard",
+      "All"
+    ],
+    [
+      "BMW WilliamsF1 Team",
+      "Williams-BMW",
+      "FW23",
+      "BMW P80",
+      "M",
+      "5",
+      "Ralf Schumacher",
+      "All"
+    ],
+    [
+      "6",
+      "Juan Pablo Montoya",
+      "All"
+    ],
+    [
+      "Mild SevenBenetton Renault",
+      "Benetton-Renault",
+      "B201",
+      "Renault RS21",
+      "M",
+      "7",
+      "Giancarlo Fisichella",
+      "All"
+    ],
+    [
+      "8",
+      "Jenson Button",
+      "All"
+    ],
+    [
+      "Lucky StrikeBAR Honda",
+      "BAR-Honda",
+      "003",
+      "Honda RA001E",
+      "B",
+      "9",
+      "Olivier Panis",
+      "All"
+    ],
+    [
+      "10",
+      "Jacques Villeneuve",
+      "All"
+    ],
+    [
+      "Benson & HedgesJordan Honda",
+      "Jordan-Honda",
+      "EJ11",
+      "Honda RA001E",
+      "B",
+      "11",
+      "Heinz-Harald Frentzen[a]",
+      "1–11"
+    ],
+    [
+      "Ricardo Zonta",
+      "8, 12"
+    ],
+    [
+      "Jarno Trulli",
+      "13–17"
+    ],
+    [
+      "12",
+      "1–12"
+    ],
+    [
+      "Jean Alesi",
+      "13–17"
+    ],
+    [
+      "OrangeArrows Asiatech",
+      "Arrows-Asiatech",
+      "A22",
+      "Asiatech 001",
+      "B",
+      "14",
+      "Jos Verstappen",
+      "All"
+    ],
+    [
+      "15",
+      "Enrique Bernoldi",
+      "All"
+    ],
+    [
+      "Red BullSauber Petronas",
+      "Sauber-Petronas",
+      "C20",
+      "Petronas 01A",
+      "B",
+      "16",
+      "Nick Heidfeld",
+      "All"
+    ],
+    [
+      "17",
+      "Kimi Räikkönen",
+      "All"
+    ],
+    [
+      "Jaguar Racing F1 Team",
+      "Jaguar-Cosworth",
+      "R2",
+      "Cosworth CR-3",
+      "M",
+      "18",
+      "Eddie Irvine",
+      "All"
+    ],
+    [
+      "19",
+      "Luciano Burti",
+      "1–4"
+    ],
+    [
+      "Pedro de la Rosa",
+      "5–17"
+    ],
+    [
+      "EuropeanMinardi F1",
+      "Minardi-European",
+      "PS01PS01B",
+      "European",
+      "M",
+      "20",
+      "Tarso Marques",
+      "1–14"
+    ],
+    [
+      "Alex Yoong",
+      "15–17"
+    ],
+    [
+      "21",
+      "Fernando Alonso",
+      "All"
+    ],
+    [
+      "Prost Acer[3]",
+      "Prost-Acer",
+      "AP04",
+      "Acer 01A",
+      "M",
+      "22",
+      "Jean Alesi",
+      "1–12"
+    ],
+    [
+      "Heinz-Harald Frentzen",
+      "13–17"
+    ],
+    [
+      "23",
+      "Gastón Mazzacane",
+      "1–4"
+    ],
+    [
+      "Luciano Burti",
+      "5–14"
+    ],
+    [
+      "Tomáš Enge",
+      "15–17"
+    ],
+    [
+      "Source:[4]"
+    ]
+  ],
+  "teams": [],
+  "races": [
+    [
+      "Round",
+      "Grand Prix",
+      "Circuit",
+      "Date"
+    ],
+    [
+      "1",
+      "Australian Grand Prix",
+      "Albert Park Circuit,Melbourne",
+      "4 March"
+    ],
+    [
+      "2",
+      "Malaysian Grand Prix",
+      "Sepang International Circuit,Kuala Lumpur",
+      "18 March"
+    ],
+    [
+      "3",
+      "Brazilian Grand Prix",
+      "Autódromo José Carlos Pace,São Paulo",
+      "1 April"
+    ],
+    [
+      "4",
+      "San Marino Grand Prix",
+      "Autodromo Enzo e Dino Ferrari,Imola",
+      "15 April"
+    ],
+    [
+      "5",
+      "Spanish Grand Prix",
+      "Circuit de Catalunya,Montmeló",
+      "29 April"
+    ],
+    [
+      "6",
+      "Austrian Grand Prix",
+      "A1-Ring,Spielberg",
+      "13 May"
+    ],
+    [
+      "7",
+      "Monaco Grand Prix",
+      "Circuit de Monaco,Monte Carlo",
+      "27 May"
+    ],
+    [
+      "8",
+      "Canadian Grand Prix",
+      "Circuit Gilles Villeneuve,Montreal",
+      "10 June"
+    ],
+    [
+      "9",
+      "European Grand Prix",
+      "Nürburgring,Nürburg",
+      "24 June"
+    ],
+    [
+      "10",
+      "French Grand Prix",
+      "Circuit de Nevers Magny-Cours,Magny-Cours",
+      "1 July"
+    ],
+    [
+      "11",
+      "British Grand Prix",
+      "Silverstone Circuit,Silverstone",
+      "15 July"
+    ],
+    [
+      "12",
+      "German Grand Prix",
+      "Hockenheimring,Hockenheim",
+      "29 July"
+    ],
+    [
+      "13",
+      "Hungarian Grand Prix",
+      "Hungaroring,Mogyoród",
+      "19 August"
+    ],
+    [
+      "14",
+      "Belgian Grand Prix",
+      "Circuit de Spa-Francorchamps,Stavelot",
+      "2 September"
+    ],
+    [
+      "15",
+      "Italian Grand Prix",
+      "Autodromo Nazionale di Monza,Monza",
+      "16 September"
+    ],
+    [
+      "16",
+      "United States Grand Prix",
+      "Indianapolis Motor Speedway,Speedway",
+      "30 September"
+    ],
+    [
+      "17",
+      "Japanese Grand Prix",
+      "Suzuka Circuit,Suzuka",
+      "14 October"
+    ],
+    [
+      "Sources:[12][13]"
+    ]
+  ],
+  "standings": [
+    [
+      "Round",
+      "Grand Prix",
+      "Pole position",
+      "Fastest lap",
+      "Winning driver",
+      "Winning constructor",
+      "Report"
+    ],
+    [
+      "1",
+      "Australian Grand Prix",
+      "Michael Schumacher",
+      "Michael Schumacher",
+      "Michael Schumacher",
+      "Ferrari",
+      "Report"
+    ],
+    [
+      "2",
+      "Malaysian Grand Prix",
+      "Michael Schumacher",
+      "Mika Häkkinen",
+      "Michael Schumacher",
+      "Ferrari",
+      "Report"
+    ],
+    [
+      "3",
+      "Brazilian Grand Prix",
+      "Michael Schumacher",
+      "Ralf Schumacher",
+      "David Coulthard",
+      "McLaren-Mercedes",
+      "Report"
+    ],
+    [
+      "4",
+      "San Marino Grand Prix",
+      "David Coulthard",
+      "Ralf Schumacher",
+      "Ralf Schumacher",
+      "Williams-BMW",
+      "Report"
+    ],
+    [
+      "5",
+      "Spanish Grand Prix",
+      "Michael Schumacher",
+      "Michael Schumacher",
+      "Michael Schumacher",
+      "Ferrari",
+      "Report"
+    ],
+    [
+      "6",
+      "Austrian Grand Prix",
+      "Michael Schumacher",
+      "David Coulthard",
+      "David Coulthard",
+      "McLaren-Mercedes",
+      "Report"
+    ],
+    [
+      "7",
+      "Monaco Grand Prix",
+      "David Coulthard[b]",
+      "David Coulthard",
+      "Michael Schumacher",
+      "Ferrari",
+      "Report"
+    ],
+    [
+      "8",
+      "Canadian Grand Prix",
+      "Michael Schumacher",
+      "Ralf Schumacher",
+      "Ralf Schumacher",
+      "Williams-BMW",
+      "Report"
+    ],
+    [
+      "9",
+      "European Grand Prix",
+      "Michael Schumacher",
+      "Juan Pablo Montoya",
+      "Michael Schumacher",
+      "Ferrari",
+      "Report"
+    ],
+    [
+      "10",
+      "French Grand Prix",
+      "Ralf Schumacher",
+      "David Coulthard",
+      "Michael Schumacher",
+      "Ferrari",
+      "Report"
+    ],
+    [
+      "11",
+      "British Grand Prix",
+      "Michael Schumacher",
+      "Mika Häkkinen",
+      "Mika Häkkinen",
+      "McLaren-Mercedes",
+      "Report"
+    ],
+    [
+      "12",
+      "German Grand Prix",
+      "Juan Pablo Montoya",
+      "Juan Pablo Montoya",
+      "Ralf Schumacher",
+      "Williams-BMW",
+      "Report"
+    ],
+    [
+      "13",
+      "Hungarian Grand Prix",
+      "Michael Schumacher",
+      "Mika Häkkinen",
+      "Michael Schumacher",
+      "Ferrari",
+      "Report"
+    ],
+    [
+      "14",
+      "Belgian Grand Prix",
+      "Juan Pablo Montoya[c]",
+      "Michael Schumacher",
+      "Michael Schumacher",
+      "Ferrari",
+      "Report"
+    ],
+    [
+      "15",
+      "Italian Grand Prix",
+      "Juan Pablo Montoya",
+      "Ralf Schumacher",
+      "Juan Pablo Montoya",
+      "Williams-BMW",
+      "Report"
+    ],
+    [
+      "16",
+      "United States Grand Prix",
+      "Michael Schumacher",
+      "Juan Pablo Montoya",
+      "Mika Häkkinen",
+      "McLaren-Mercedes",
+      "Report"
+    ],
+    [
+      "17",
+      "Japanese Grand Prix",
+      "Michael Schumacher",
+      "Ralf Schumacher[d]",
+      "Michael Schumacher",
+      "Ferrari",
+      "Report"
+    ],
+    [
+      "Source:[15]"
+    ]
+  ],
+  "title": "2001 Formula One World Championship",
+  "description": "",
+  "sections": {}
+}

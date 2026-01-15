@@ -12,7 +12,7 @@
                                    ↓
 ┌──────────────────────────────────────────────────────────────────┐
 │                    BACKEND - FastAPI (app.py)                   │
-│                          Port 8001/8002                         │
+│                          Port 8001                              │
 │                                                                  │
 │  ┌────────────────────────────────────────────────────────────┐ │
 │  │         REQUEST HANDLING & ROUTING                        │ │
@@ -60,7 +60,7 @@
         ┌────────────────┐  ┌────────────────┐  ┌──────────────┐
         │  Ergast API    │  │  FAISS Index   │  │ Ollama Local │
         │  (HTTP REST)   │  │  (sentence-    │  │  (GGML/CUDA) │
-        │                │  │  transformers) │  │  Qwen 2.5 3B │
+        │                │  │  transformers) │  │ Qwen 2.5 7B  │
         │ • standings    │  │                │  │              │
         │ • races        │  │ ~/.faiss/      │  │ :11434       │
         │ • drivers      │  │ index.faiss    │  │              │
@@ -89,13 +89,13 @@
         │  │  └─ classements_*.csv   │
         │  │                         │
         │  ├─ Crawled content        │
-        │  │  ├─ standf1/            │
-        │  │  ├─ lequipe/            │
-        │  │  └─ fia/                │
+        │  │  ├─ news_motorsport.json│
+        │  │  ├─ news_autosport.json│
+        │  │  └─ news_actuf1.json   │
         │  │                         │
         │  └─ FAISS index            │
-        │     ├─ chroma.sqlite3      │
-        │     └─ vectors/            │
+        │     ├─ index.faiss         │
+        │     └─ metadata.json       │
         └────────────────────────────┘
 ```
 
@@ -105,7 +105,7 @@
 
 ### Backend
 - **Framework** : FastAPI + Uvicorn (async Python)
-- **LLM Local** : Ollama (GGML runtime) + Qwen 2.5 3B
+- **LLM Local** : Ollama (GGML runtime) + Qwen 2.5 7B
 - **Embeddings** : Sentence-transformers (all-MiniLM-L6-v2)
 - **Vector Store** : FAISS (Facebook AI Similarity Search)
 - **Data** : Ergast API (REST), Web scraping (BeautifulSoup/Selenium)
@@ -287,11 +287,14 @@ class OptimizedCache:
     """
     
     CACHE_TTL = {
-        'ergast_standings': 5 * 60,        # 5 min
-        'ergast_race': 5 * 60,             # 5 min
+        'ergast_standings': 30 * 60,       # 30 min
+        'ergast_race': 30 * 60,            # 30 min
         'ergast_schedule': 1 * 3600,       # 1h
-        'news': 24 * 3600,                 # 24h
-        'kb_search': 12 * 3600,            # 12h
+        'news_articles': 30 * 60,          # 30 min
+        'kb_search': 1 * 3600,             # 1h
+        'standings': 1 * 3600,             # 1h (StandF1)
+        'widget_standings': 7 * 24 * 3600, # 7 jours
+        'widget_race': 7 * 24 * 3600,      # 7 jours
         'conversation': 30 * 24 * 3600,    # 30j
     }
     
@@ -659,7 +662,7 @@ GET /driver_stats?id=hamilton
 
 ### Cache Strategy
 - **Hit rate** : ~70% (questions répétées)
-- **TTL per-type** : Ergast 5min, News 24h, KB 12h
+- **TTL per-type** : Ergast 30min, News 30min, KB 1h, Widgets 7 jours
 - **Size limit** : ~1000 entries max in-memory
 - **Eviction** : LRU quand limit atteint
 
@@ -677,7 +680,7 @@ async def parallel_data_collection():
 ```
 
 ### Ollama Optimization
-- Modèle: **Qwen 2.5 3B** (rapide)
+- Modèle: **Qwen 2.5 7B** (4.7GB, meilleure qualité)
 - Quantization: **Q4 (4-bit)** pour mémoire faible
 - Timeout: **15 secondes** (hardcoded)
 - Batch size: 1 (single query)
@@ -704,9 +707,8 @@ backend/
 ├─ monday_scheduler.py (scheduled tasks)
 ├─ input_validator.py (sanitization)
 ├─ standings_utils.py (F1 data formatting)
-├─ logger.py (structured logging)
-├─ stats_validator.py (validation rules)
-└─ wiki_utils.py (Wikipedia scraping)
+├─ wiki_utils.py (Wikipedia scraping)
+└─ logger.py (structured logging)
 
 frontend/
 ├─ index.html (entry point)
@@ -717,9 +719,8 @@ frontend/
 knowledge_base/
 ├─ *.md (Markdown docs)
 ├─ *.csv (Data tables)
-├─ chroma/ (metadata storage)
-├─ crawled/ (scraped content)
-└─ f1_wiki_csv/ (historical data 1950-2025)
+├─ crawled/ (news JSON files)
+└─ f1_wiki_csv/ (historical data 1950-2024)
 
 memory/
 ├─ all_conversations.jsonl (append-only)
@@ -755,17 +756,18 @@ OLLAMA_PATHS = [
 
 # Server
 SERVER_HOST = "127.0.0.1"
-SERVER_PORT = 8001  # fallback 8002
+SERVER_PORT = 8001  # fallback 8002 si occupé
 OLLAMA_TIMEOUT = 15  # secondes
 
 # Cache
-CACHE_TTL['ergast_standings'] = 300  # 5 min
-CACHE_TTL['news'] = 86400  # 24h
+CACHE_TTL['ergast_standings'] = 1800  # 30 min
+CACHE_TTL['news_articles'] = 1800      # 30 min
+CACHE_TTL['widget_standings'] = 604800 # 7 jours
 ```
 
 ### Variables d'environnement
 ```
-OLLAMA_MODEL=qwen2.5:3b
+OLLAMA_MODEL=qwen2.5:7b
 OLLAMA_HOST=http://127.0.0.1:11434
 KB_REFRESH_SCHEDULE="*/6 * * * *"  # Toutes les 6h
 DEBUG=false
@@ -775,21 +777,6 @@ LOG_LEVEL=INFO
 ---
 
 ## Tests & Validation ✅
-
-### Unit Tests (`tests/`)
-```python
-test_core.py
-├─ test_intent_detection()
-├─ test_cache_ttl()
-├─ test_kb_search()
-└─ test_ollama_inference()
-
-test_api.py
-├─ test_chat_endpoint()
-├─ test_kb_search_endpoint()
-├─ test_health_endpoint()
-└─ test_invalid_input()
-```
 
 ### Manual Testing
 ```bash
@@ -840,7 +827,7 @@ class InputValidator:
 - [ ] Quantization plus agressif (INT4)
 - [ ] Caching distribué (Redis)
 - [ ] Webhooks pour scraping push
-- [ ] Fine-tuning Qwen sur F1 data
+- [ ] Fine-tuning Qwen 2.5 sur F1 data
 - [ ] Multi-modal (images F1)
 - [ ] Rate limiting par user
 - [ ] Authentification OAuth2

@@ -41,25 +41,29 @@ class MondayScheduler:
         logger.info("⏹️ MondayScheduler arrêté")
     
     def _get_next_monday(self) -> datetime:
-        """Calculer le prochain lundi à 00:01 UTC"""
+        """Calculer le prochain crawl quotidien à 06:00 UTC (2x par jour: 06:00 et 18:00)
+        
+        PRIORITÉ 2: Crawl QUOTIDIEN vs hebdo pour news fraîches!
+        Articles jamais plus vieux que 12h (vs 7 jours avant)
+        """
         now = datetime.utcnow()
         
-        # Lundi = 0 (en Python datetime)
-        days_until_monday = (7 - now.weekday()) % 7
+        # Prochaine exécution à 06:00 ou 18:00 UTC (deux fois par jour)
+        current_hour = now.hour
+        current_minute = now.minute
         
-        if days_until_monday == 0:
-            # C'est déjà lundi
-            next_monday = now.replace(hour=0, minute=1, second=0, microsecond=0)
-            if next_monday <= now:
-                # Lundi prochain
-                next_monday += timedelta(days=7)
-        else:
-            # Lundi prochain
-            next_monday = (now + timedelta(days=days_until_monday)).replace(
-                hour=0, minute=1, second=0, microsecond=0
-            )
+        # Vérifier si on a passé 06:00 (matin)
+        next_crawl = now.replace(hour=6, minute=0, second=0, microsecond=0)
         
-        return next_monday
+        if now >= next_crawl and current_hour < 18:
+            # On est entre 6h et 18h → Prochain crawl à 18h
+            next_crawl = now.replace(hour=18, minute=0, second=0, microsecond=0)
+        elif now >= next_crawl.replace(hour=18):
+            # On est après 18h → Prochain crawl à 6h demain
+            next_crawl = (now + timedelta(days=1)).replace(hour=6, minute=0, second=0, microsecond=0)
+        
+        logger.info(f"🕷️ Prochain crawl prévu: {next_crawl.strftime('%Y-%m-%d %H:%M UTC')}")
+        return next_crawl
     
     def _run(self):
         """Boucle du scheduler"""
@@ -80,26 +84,64 @@ class MondayScheduler:
                     self._refresh_widgets()
                     
             except Exception as e:
-                logger.error(f"❌ Erreur scheduler: {e}")
+                logger.debug(f"Erreur scheduler: {e}")
                 time.sleep(60)
     
     def _refresh_widgets(self):
-        """Rafraîchir les widgets en invalidant le cache"""
+        """Rafraîchir les widgets en invalidant le cache + relancer le crawling"""
         try:
             from backend.optimized_cache import get_cache
             cache = get_cache()
             
-            # Invalider les clés de cache des widgets
+            logger.info("🔄 [LUNDI] Début du refresh hebdo : cache + crawling news...")
+            
+            # === ÉTAPE 1 : Invalider le cache des widgets ===
             cache.invalidate("*widget*")
             cache.invalidate("top_drivers*")
             cache.invalidate("next_race*")
             cache.invalidate("standings:standf1*")
             cache.invalidate("standings:lequipe*")
+            logger.info("✅ Cache widgets invalidé")
             
-            logger.info("✅ Cache widgets invalidé (lundi refresh)")
+            # === ÉTAPE 2 : Relancer le crawling des news (lundi matin) ===
+            self._run_crawler()
             
         except Exception as e:
-            logger.error(f"❌ Erreur refresh widgets: {e}")
+            logger.debug(f"Erreur refresh hebdo: {e}")
+    
+    def _run_crawler(self):
+        """Exécuter le script crawler_f1_weekly.py pour actualiser les news"""
+        try:
+            import subprocess
+            import sys
+            from pathlib import Path
+            
+            crawler_path = Path(__file__).resolve().parents[2] / "scripts" / "crawler_f1_weekly.py"
+            
+            logger.info(f"🕷️  Lancement crawling hebdo (page 1 uniquement): {crawler_path}")
+            
+            # Exécuter le crawler en subprocess
+            result = subprocess.run(
+                [sys.executable, str(crawler_path)],
+                capture_output=True,
+                text=True,
+                timeout=120  # Timeout 2 min max pour le crawling
+            )
+            
+            if result.returncode == 0:
+                logger.info(f"✅ Crawling hebdo réussi")
+                # Invalider cache news pour le rechargement
+                from backend.optimized_cache import get_cache
+                cache = get_cache()
+                cache.invalidate("news*")
+                logger.info("✅ Cache news invalidé (nouvelles données crawlées)")
+            else:
+                logger.debug(f"Crawling partiellement échoué: {result.stderr}")
+                
+        except subprocess.TimeoutExpired:
+            logger.debug("Crawling timeout (>120s)")
+        except Exception as e:
+            logger.debug(f"Erreur crawling hebdo: {e}")
 
 
 def get_scheduler() -> MondayScheduler:

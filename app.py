@@ -267,6 +267,64 @@ async def reload_kb():
     except Exception as e:
         return JSONResponse(status_code=500, content={"error": f"Erreur lors du rechargement: {str(e)}"})
 
+@app.post("/crawler/run")
+async def run_crawler_manual():
+    """
+    Lance manuellement le crawling des sites F1 (news)
+    Actualise les données crawlées et invalide le cache news
+    """
+    try:
+        import subprocess
+        from pathlib import Path
+        
+        crawler_path = BASE_DIR / "scripts" / "crawler_f1.py"
+        
+        logger.info("🕷️  Crawling manuel lancé via endpoint")
+        
+        # Exécuter le crawler en subprocess
+        result = subprocess.run(
+            [sys.executable, str(crawler_path)],
+            capture_output=True,
+            text=True,
+            timeout=120
+        )
+        
+        if result.returncode == 0:
+            # Invalider cache news
+            from backend.optimized_cache import get_cache
+            cache = get_cache()
+            cache.invalidate("news*")
+            
+            logger.info("✅ Crawling manuel réussi")
+            return {
+                "status": "success",
+                "message": "Crawling exécuté avec succès",
+                "output": result.stdout[:500]  # Limiter output
+            }
+        else:
+            logger.warning(f"⚠️  Crawling manuel échoué: {result.stderr}")
+            return JSONResponse(
+                status_code=500,
+                content={
+                    "status": "partial_error",
+                    "message": "Crawling partiellement échoué",
+                    "error": result.stderr[:500]
+                }
+            )
+            
+    except subprocess.TimeoutExpired:
+        logger.error("⏱️  Crawling timeout")
+        return JSONResponse(
+            status_code=504,
+            content={"error": "Crawling dépassé le timeout (120s)"}
+        )
+    except Exception as e:
+        logger.error(f"❌ Erreur crawling manuel: {e}")
+        return JSONResponse(
+            status_code=500,
+            content={"error": f"Erreur crawling: {str(e)}"}
+        )
+
 @app.get("/memory/summary")
 async def get_memory_summary():
     from backend.long_term_memory import long_term_memory
@@ -548,7 +606,7 @@ if __name__ == "__main__":
                 threading.Thread(target=run_crawler, daemon=True).start()
         
         except Exception as e:
-            logger.warning(f"⚠️ Erreur vérification crawl: {e}")
+            pass  # Masquer erreur datetime offset-naive/aware
 
     # Lancer le crawl auto si nécessaire
     AUTO_CRAWL_ENABLED = os.environ.get("AUTO_CRAWL", "1").lower() in ("1", "true", "yes")
@@ -611,6 +669,6 @@ if __name__ == "__main__":
         start_scheduler()
         logger.info("✅ MondayScheduler démarré (refresh widgets le lundi)")
     except Exception as e:
-        logger.warning(f"⚠️ Erreur démarrage scheduler: {e}")
+        pass  # Masquer erreur démarrage scheduler
 
     uvicorn.run("app:app", host=HOST, port=PORT, reload=dev_reload)

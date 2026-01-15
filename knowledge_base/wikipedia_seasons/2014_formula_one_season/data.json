@@ -1,0 +1,296 @@
+{
+  "year": 2014,
+  "timestamp": "2026-01-14T21:46:43.776914",
+  "drivers": [
+    [
+      "Entrant",
+      "Constructor",
+      "Chassis",
+      "Power unit",
+      "No.",
+      "Race drivers",
+      "Rounds"
+    ],
+    [
+      "Caterham F1 Team",
+      "Caterham-Renault",
+      "CT05[5]",
+      "Renault EnergyF1-2014[6][7]",
+      "9461045",
+      "Marcus Ericsson[8]Will Stevens[9]Kamui Kobayashi[8][10]André Lotterer[11][12]",
+      "1–16191–11, 13–16, 1912"
+    ],
+    [
+      "Scuderia Ferrari",
+      "Ferrari",
+      "F14 T[13]",
+      "Ferrari 059/3[14]",
+      "714",
+      "Kimi Räikkönen[15]Fernando Alonso[16]",
+      "AllAll"
+    ],
+    [
+      "SaharaForce India F1 Team",
+      "Force India-Mercedes",
+      "VJM07[17]",
+      "Mercedes PU106A Hybrid[18][19]",
+      "1127",
+      "Sergio Pérez[20]Nico Hülkenberg[21]",
+      "AllAll"
+    ],
+    [
+      "Lotus F1 Team",
+      "Lotus-Renault",
+      "E22[22]",
+      "Renault EnergyF1-2014[7][23]",
+      "813",
+      "Romain Grosjean[24]Pastor Maldonado[24]",
+      "AllAll"
+    ],
+    [
+      "Marussia F1 Team",
+      "Marussia-Ferrari",
+      "MR03[25]",
+      "Ferrari 059/3[14][26]",
+      "4421742",
+      "Max Chilton[27]Alexander Rossi[28]Jules Bianchi[29]Alexander Rossi[30]",
+      "1–1612[a]1–1516[b]"
+    ],
+    [
+      "McLaren Mercedes[31]",
+      "McLaren-Mercedes",
+      "MP4-29[32]",
+      "Mercedes PU106A Hybrid[19][33]",
+      "2022",
+      "Kevin Magnussen[34]Jenson Button[35]",
+      "AllAll"
+    ],
+    [
+      "Mercedes AMGPetronasF1 Team",
+      "Mercedes",
+      "F1 W05Hybrid[36]",
+      "Mercedes PU106A Hybrid[19]",
+      "644",
+      "Nico Rosberg[37]Lewis Hamilton[38]",
+      "AllAll"
+    ],
+    [
+      "InfinitiRed Bull Racing Renault",
+      "Red Bull-Renault",
+      "RB10[39]",
+      "Renault EnergyF1-2014[7][40]",
+      "13",
+      "Sebastian Vettel[41]Daniel Ricciardo[42]",
+      "AllAll"
+    ],
+    [
+      "Sauber F1 Team",
+      "Sauber-Ferrari",
+      "C33[43]",
+      "Ferrari 059/3[14][44]",
+      "2199",
+      "Esteban Gutiérrez[45]Adrian Sutil[46]",
+      "AllAll"
+    ],
+    [
+      "Scuderia Toro Rosso",
+      "Toro Rosso-Renault",
+      "STR9[47]",
+      "Renault EnergyF1-2014[7][40]",
+      "2526",
+      "Jean-Éric Vergne[48]Daniil Kvyat[48]",
+      "AllAll"
+    ],
+    [
+      "WilliamsMartiniRacing[49]",
+      "Williams-Mercedes",
+      "FW36[50]",
+      "Mercedes PU106A Hybrid[19][51]",
+      "1977",
+      "Felipe Massa[52]Valtteri Bottas[52]",
+      "AllAll"
+    ],
+    [
+      "Sources:[53][54][55]"
+    ]
+  ],
+  "teams": [],
+  "races": [
+    [
+      "Constructor",
+      "Practice drivers"
+    ],
+    [
+      "No.",
+      "Driver name",
+      "Rounds"
+    ],
+    [
+      "Caterham-Renault",
+      "464545",
+      "Robin FrijnsAlexander RossiRoberto Merhi",
+      "3, 9713, 15–16"
+    ],
+    [
+      "Force India-Mercedes",
+      "34",
+      "Daniel Juncadella",
+      "9, 13, 18"
+    ],
+    [
+      "Lotus–Renault",
+      "3031",
+      "Charles PicEsteban Ocon",
+      "1319"
+    ],
+    [
+      "Sauber-Ferrari",
+      "363737",
+      "Giedo van der GardeSergey SirotkinAdderly Fong",
+      "3–5, 9–10, 12–131619"
+    ],
+    [
+      "Toro Rosso-Renault",
+      "38",
+      "Max Verstappen",
+      "15, 17–18"
+    ],
+    [
+      "Williams-Mercedes",
+      "4041",
+      "Felipe NasrSusie Wolff",
+      "3–5, 17–189–10"
+    ],
+    [
+      "Source:[10][56][57][58][59][60][61][30][62][63][64]"
+    ]
+  ],
+  "standings": [
+    [
+      "Round",
+      "Grand Prix",
+      "Circuit",
+      "Date"
+    ],
+    [
+      "1",
+      "Australian Grand Prix",
+      "Albert Park Circuit,Melbourne",
+      "16 March"
+    ],
+    [
+      "2",
+      "Malaysian Grand Prix",
+      "Sepang International Circuit,Kuala Lumpur",
+      "30 March"
+    ],
+    [
+      "3",
+      "Bahrain Grand Prix",
+      "Bahrain International Circuit,Sakhir",
+      "6 April"
+    ],
+    [
+      "4",
+      "Chinese Grand Prix",
+      "Shanghai International Circuit,Shanghai",
+      "20 April"
+    ],
+    [
+      "5",
+      "Spanish Grand Prix",
+      "Circuit de Barcelona-Catalunya,Montmeló",
+      "11 May"
+    ],
+    [
+      "6",
+      "Monaco Grand Prix",
+      "Circuit de Monaco,Monte Carlo",
+      "25 May"
+    ],
+    [
+      "7",
+      "Canadian Grand Prix",
+      "Circuit Gilles Villeneuve,Montreal",
+      "8 June"
+    ],
+    [
+      "8",
+      "Austrian Grand Prix",
+      "Red Bull Ring,Spielberg",
+      "22 June"
+    ],
+    [
+      "9",
+      "British Grand Prix",
+      "Silverstone Circuit,Silverstone",
+      "6 July"
+    ],
+    [
+      "10",
+      "German Grand Prix",
+      "Hockenheimring,Hockenheim",
+      "20 July"
+    ],
+    [
+      "11",
+      "Hungarian Grand Prix",
+      "Hungaroring,Mogyoród",
+      "27 July"
+    ],
+    [
+      "12",
+      "Belgian Grand Prix",
+      "Circuit de Spa-Francorchamps,Stavelot",
+      "24 August"
+    ],
+    [
+      "13",
+      "Italian Grand Prix",
+      "Autodromo Nazionale di Monza,Monza",
+      "7 September"
+    ],
+    [
+      "14",
+      "Singapore Grand Prix",
+      "Marina Bay Street Circuit,Singapore",
+      "21 September"
+    ],
+    [
+      "15",
+      "Japanese Grand Prix",
+      "Suzuka Circuit,Suzuka",
+      "5 October"
+    ],
+    [
+      "16",
+      "Russian Grand Prix",
+      "Sochi Autodrom,Sochi",
+      "12 October"
+    ],
+    [
+      "17",
+      "United States Grand Prix",
+      "Circuit of the Americas,Austin,Texas",
+      "2 November"
+    ],
+    [
+      "18",
+      "Brazilian Grand Prix",
+      "Autódromo José Carlos Pace,São Paulo",
+      "9 November"
+    ],
+    [
+      "19",
+      "Abu Dhabi Grand Prix",
+      "Yas Marina Circuit,Abu Dhabi",
+      "23 November"
+    ],
+    [
+      "Sources:[90][91][92]"
+    ]
+  ],
+  "title": "2014 Formula One World Championship",
+  "description": "",
+  "sections": {}
+}

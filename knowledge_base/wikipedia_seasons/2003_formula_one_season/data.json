@@ -1,0 +1,334 @@
+{
+  "year": 2003,
+  "timestamp": "2026-01-14T21:46:16.207229",
+  "drivers": [
+    [
+      "Entrant",
+      "Constructor",
+      "Chassis",
+      "Engine†",
+      "Tyre",
+      "No.",
+      "Driver",
+      "Rounds"
+    ],
+    [
+      "Scuderia FerrariMarlboro",
+      "Ferrari",
+      "F2002BF2003-GA",
+      "Ferrari Tipo 051BFerrari Tipo 052",
+      "B",
+      "1",
+      "Michael Schumacher",
+      "All"
+    ],
+    [
+      "2",
+      "Rubens Barrichello",
+      "All"
+    ],
+    [
+      "BMW WilliamsF1 Team",
+      "Williams-BMW",
+      "FW25",
+      "BMW P83",
+      "M",
+      "3",
+      "Juan Pablo Montoya",
+      "All"
+    ],
+    [
+      "4",
+      "Ralf Schumacher[a]",
+      "All"
+    ],
+    [
+      "Marc Gené",
+      "14"
+    ],
+    [
+      "WestMcLaren Mercedes",
+      "McLaren-Mercedes",
+      "MP4-17D",
+      "Mercedes FO110MMercedes FO110P",
+      "M",
+      "5",
+      "David Coulthard",
+      "All"
+    ],
+    [
+      "6",
+      "Kimi Räikkönen",
+      "All"
+    ],
+    [
+      "Mild SevenRenault F1 Team",
+      "Renault",
+      "R23R23B",
+      "Renault RS23",
+      "M",
+      "7",
+      "Jarno Trulli",
+      "All"
+    ],
+    [
+      "8",
+      "Fernando Alonso",
+      "All"
+    ],
+    [
+      "SauberPetronas",
+      "Sauber-Petronas",
+      "C22",
+      "Petronas 03A",
+      "B",
+      "9",
+      "Nick Heidfeld",
+      "All"
+    ],
+    [
+      "10",
+      "Heinz-Harald Frentzen",
+      "All"
+    ],
+    [
+      "Benson & HedgesJordan Ford",
+      "Jordan-Ford",
+      "EJ13",
+      "Ford RS1",
+      "B",
+      "11",
+      "Giancarlo Fisichella",
+      "All"
+    ],
+    [
+      "12",
+      "Ralph Firman[b]",
+      "1–13, 15–16"
+    ],
+    [
+      "Zsolt Baumgartner",
+      "13–14"
+    ],
+    [
+      "HSBCJaguar Racing",
+      "Jaguar-Cosworth",
+      "R4",
+      "Cosworth CR-5",
+      "M",
+      "14",
+      "Mark Webber",
+      "All"
+    ],
+    [
+      "15",
+      "Antônio Pizzonia",
+      "1–11"
+    ],
+    [
+      "Justin Wilson",
+      "12–16"
+    ],
+    [
+      "Lucky StrikeBAR Honda",
+      "BAR-Honda",
+      "005",
+      "Honda RA003E",
+      "B",
+      "16",
+      "Jacques Villeneuve",
+      "1–15"
+    ],
+    [
+      "Takuma Sato",
+      "16"
+    ],
+    [
+      "17",
+      "Jenson Button",
+      "All"
+    ],
+    [
+      "TrustMinardi Cosworth[c]",
+      "Minardi-Cosworth",
+      "PS03",
+      "Cosworth CR-3",
+      "B",
+      "18",
+      "Justin Wilson",
+      "1–11"
+    ],
+    [
+      "Nicolas Kiesa",
+      "12–16"
+    ],
+    [
+      "19",
+      "Jos Verstappen",
+      "All"
+    ],
+    [
+      "PanasonicToyota Racing",
+      "Toyota",
+      "TF103",
+      "Toyota RVX-03",
+      "M",
+      "20",
+      "Olivier Panis",
+      "All"
+    ],
+    [
+      "21",
+      "Cristiano da Matta",
+      "All"
+    ],
+    [
+      "Sources:[3][4][5]"
+    ]
+  ],
+  "teams": [],
+  "races": [
+    [
+      "Constructor",
+      "Friday drivers"
+    ],
+    [
+      "No.",
+      "Driver name",
+      "Rounds"
+    ],
+    [
+      "Renault",
+      "34",
+      "Allan McNish",
+      "1–9, 11–16"
+    ],
+    [
+      "44",
+      "Franck Montagny",
+      "10"
+    ],
+    [
+      "Jordan–Ford",
+      "36",
+      "Zsolt BaumgartnerBjörn WirdheimSatoshi Motoyama",
+      "12–131516"
+    ],
+    [
+      "Minardi–Cosworth",
+      "39",
+      "Matteo BobbiGianmaria Bruni",
+      "412–16"
+    ]
+  ],
+  "standings": [
+    [
+      "Round",
+      "Grand Prix",
+      "Circuit",
+      "Date"
+    ],
+    [
+      "1",
+      "Australian Grand Prix",
+      "Albert Park Circuit,Melbourne",
+      "9 March"
+    ],
+    [
+      "2",
+      "Malaysian Grand Prix",
+      "Sepang International Circuit,Kuala Lumpur",
+      "23 March"
+    ],
+    [
+      "3",
+      "Brazilian Grand Prix",
+      "Autódromo José Carlos Pace,São Paulo",
+      "6 April"
+    ],
+    [
+      "4",
+      "San Marino Grand Prix",
+      "Autodromo Enzo e Dino Ferrari,Imola",
+      "20 April"
+    ],
+    [
+      "5",
+      "Spanish Grand Prix",
+      "Circuit de Catalunya,Montmeló",
+      "4 May"
+    ],
+    [
+      "6",
+      "Austrian Grand Prix",
+      "A1-Ring,Spielberg",
+      "18 May"
+    ],
+    [
+      "7",
+      "Monaco Grand Prix",
+      "Circuit de Monaco,Monte Carlo",
+      "1 June"
+    ],
+    [
+      "8",
+      "Canadian Grand Prix",
+      "Circuit Gilles Villeneuve,Montreal",
+      "15 June"
+    ],
+    [
+      "9",
+      "European Grand Prix",
+      "Nürburgring,Nürburg",
+      "29 June"
+    ],
+    [
+      "10",
+      "French Grand Prix",
+      "Circuit de Nevers Magny-Cours,Magny-Cours",
+      "6 July"
+    ],
+    [
+      "11",
+      "British Grand Prix",
+      "Silverstone Circuit,Silverstone",
+      "20 July"
+    ],
+    [
+      "12",
+      "German Grand Prix",
+      "Hockenheimring,Hockenheim",
+      "3 August"
+    ],
+    [
+      "13",
+      "Hungarian Grand Prix",
+      "Hungaroring,Mogyoród",
+      "24 August"
+    ],
+    [
+      "14",
+      "Italian Grand Prix",
+      "Autodromo Nazionale di Monza,Monza",
+      "14 September"
+    ],
+    [
+      "15",
+      "United States Grand Prix",
+      "Indianapolis Motor Speedway,Speedway",
+      "28 September"
+    ],
+    [
+      "16",
+      "Japanese Grand Prix",
+      "Suzuka Circuit,Suzuka",
+      "12 October"
+    ],
+    [
+      "Sources:[9][10]"
+    ]
+  ],
+  "title": "2003 Formula One World Championship",
+  "description": "",
+  "sections": {}
+}

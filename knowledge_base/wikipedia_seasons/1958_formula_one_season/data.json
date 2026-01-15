@@ -1,0 +1,488 @@
+{
+  "year": 1958,
+  "timestamp": "2026-01-14T21:44:44.241410",
+  "drivers": [
+    [
+      "Entrant",
+      "Constructor",
+      "Chassis",
+      "Engine",
+      "Tyre",
+      "Driver",
+      "Rounds"
+    ],
+    [
+      "Scuderia Sud Americana",
+      "Maserati",
+      "250F",
+      "Maserati250F1 2.5L6",
+      "P",
+      "Juan Manuel Fangio",
+      "1"
+    ],
+    [
+      "Carlos Menditeguy",
+      "1"
+    ],
+    [
+      "Ken Kavanagh",
+      "Maserati",
+      "250F",
+      "Maserati250F1 2.5L6",
+      "P",
+      "Jean Behra",
+      "1"
+    ],
+    [
+      "Luigi Taramazzo",
+      "2"
+    ],
+    [
+      "Ken Kavanagh",
+      "2, 5"
+    ],
+    [
+      "Jo Bonnier",
+      "Maserati",
+      "250F",
+      "Maserati250F1 2.5L6",
+      "P",
+      "Harry Schell",
+      "1"
+    ],
+    [
+      "Jo Bonnier",
+      "2–3, 5, 7, 9"
+    ],
+    [
+      "Phil Hill",
+      "6"
+    ],
+    [
+      "Giulio Cabianca",
+      "10"
+    ],
+    [
+      "Hans Herrmann",
+      "10–11"
+    ],
+    [
+      "Francesco Godia Sales",
+      "Maserati",
+      "250F",
+      "Maserati250F1 2.5L6",
+      "P",
+      "Paco Godia",
+      "1–2, 5–6"
+    ],
+    [
+      "H.H. Gould",
+      "Maserati",
+      "250F",
+      "Maserati250F1 2.5L6",
+      "D",
+      "Horace Gould",
+      "1–3"
+    ],
+    [
+      "Masten Gregory",
+      "3"
+    ],
+    [
+      "R.R.C. Walker Racing Team",
+      "Cooper-Climax",
+      "T43T45",
+      "Climax FPF 2.0 L4",
+      "CD",
+      "Stirling Moss",
+      "1"
+    ],
+    [
+      "Maurice Trintignant",
+      "2–3, 7–11"
+    ],
+    [
+      "Ron Flockhart",
+      "2"
+    ],
+    [
+      "T43",
+      "Climax FPF 1.5 L4",
+      "D",
+      "Wolfgang Seidel",
+      "8"
+    ],
+    [
+      "François Picard",
+      "11"
+    ],
+    [
+      "Scuderia Ferrari",
+      "Ferrari",
+      "246",
+      "Ferrari143 2.4V6",
+      "E",
+      "Luigi Musso",
+      "1–3, 5–6"
+    ],
+    [
+      "Peter Collins",
+      "1–3, 5–8"
+    ],
+    [
+      "Mike Hawthorn",
+      "1–3, 5–11"
+    ],
+    [
+      "Wolfgang von Trips",
+      "2, 6–10"
+    ],
+    [
+      "Olivier Gendebien",
+      "5, 10–11"
+    ],
+    [
+      "Phil Hill",
+      "10–11"
+    ],
+    [
+      "156",
+      "FerrariD156 1.5V6",
+      "E",
+      "Phil Hill",
+      "8"
+    ],
+    [
+      "Owen Racing Organisation",
+      "BRM",
+      "P25",
+      "BRMP25 2.5L4",
+      "D",
+      "Jean Behra",
+      "2–3, 5–11"
+    ],
+    [
+      "Harry Schell",
+      "2–3, 5–11"
+    ],
+    [
+      "Maurice Trintignant",
+      "6"
+    ],
+    [
+      "Jo Bonnier",
+      "10–11"
+    ],
+    [
+      "Ron Flockhart",
+      "11"
+    ],
+    [
+      "Bernie C. Ecclestone",
+      "Connaught-Alta",
+      "B",
+      "AltaGP 2.5L4",
+      "A",
+      "Bernie Ecclestone",
+      "2, 7"
+    ],
+    [
+      "Bruce Kessler",
+      "2"
+    ],
+    [
+      "Paul Emery",
+      "2"
+    ],
+    [
+      "Jack Fairman",
+      "7"
+    ],
+    [
+      "Ivor Bueb",
+      "7"
+    ],
+    [
+      "Cooper Car Company",
+      "Cooper-Climax",
+      "T45T44",
+      "Climax FPF 2.0 L4",
+      "D",
+      "Jack Brabham",
+      "2–3, 5–7, 9–10"
+    ],
+    [
+      "Roy Salvadori",
+      "2–3, 5–11"
+    ],
+    [
+      "Ian Burgess",
+      "7"
+    ],
+    [
+      "Jack Fairman",
+      "11"
+    ],
+    [
+      "T45",
+      "Climax FPF 1.5 L4",
+      "D",
+      "Bruce McLaren",
+      "8, 11"
+    ],
+    [
+      "Jack Brabham",
+      "8, 11"
+    ],
+    [
+      "Team Lotus",
+      "Lotus-Climax",
+      "1216",
+      "Climax FPF 2.0 L4Climax FPF 2.2 L4",
+      "D",
+      "Cliff Allison",
+      "2–3, 5–8, 10–11"
+    ],
+    [
+      "Graham Hill",
+      "2–3, 5–7, 9–11"
+    ],
+    [
+      "Alan Stacey",
+      "7"
+    ],
+    [
+      "16",
+      "Climax FPF 1.5 L4",
+      "D",
+      "Graham Hill",
+      "8"
+    ],
+    [
+      "Vandervell Products",
+      "Vanwall",
+      "VW 5",
+      "Vanwall254 2.5L4",
+      "D",
+      "Stirling Moss",
+      "2–3, 5–11"
+    ],
+    [
+      "Tony Brooks",
+      "2–3, 5–11"
+    ],
+    [
+      "Stuart Lewis-Evans",
+      "2–3, 5–7, 9–11"
+    ],
+    [
+      "Maria Teresa de Filippis",
+      "Maserati",
+      "250F",
+      "Maserati250F1 2.5L6",
+      "P",
+      "Maria Teresa de Filippis",
+      "2, 5, 10"
+    ]
+  ],
+  "teams": [],
+  "races": [
+    [
+      "Round",
+      "Grand Prix",
+      "Circuit",
+      "Date"
+    ],
+    [
+      "1",
+      "Argentine Grand Prix",
+      "Autódromo Oscar Alfredo Gálvez,Buenos Aires",
+      "19 January"
+    ],
+    [
+      "2",
+      "Monaco Grand Prix",
+      "Circuit de Monaco,Monte Carlo",
+      "18 May"
+    ],
+    [
+      "3",
+      "Dutch Grand Prix",
+      "Circuit Zandvoort,Zandvoort",
+      "26 May"
+    ],
+    [
+      "4",
+      "Indianapolis 500",
+      "Indianapolis Motor Speedway,Speedway",
+      "30 May[a]"
+    ],
+    [
+      "5",
+      "Belgian Grand Prix",
+      "Circuit de Spa-Francorchamps,Stavelot",
+      "15 June"
+    ],
+    [
+      "6",
+      "French Grand Prix",
+      "Reims-Gueux,Gueux",
+      "6 July"
+    ],
+    [
+      "7",
+      "British Grand Prix",
+      "Silverstone Circuit,Silverstone",
+      "19 July"
+    ],
+    [
+      "8",
+      "German Grand Prix",
+      "Nürburgring,Nürburg",
+      "3 August"
+    ],
+    [
+      "9",
+      "Portuguese Grand Prix",
+      "Circuito da Boavista,Porto",
+      "24 August"
+    ],
+    [
+      "10",
+      "Italian Grand Prix",
+      "Autodromo Nazionale di Monza,Monza",
+      "7 September"
+    ],
+    [
+      "11",
+      "Moroccan Grand Prix",
+      "Ain-Diab Circuit,Casablanca",
+      "19 October"
+    ]
+  ],
+  "standings": [
+    [
+      "Round",
+      "Grand Prix",
+      "Pole position",
+      "Fastest lap",
+      "Winning driver",
+      "Winning constructor",
+      "Tyre",
+      "Report"
+    ],
+    [
+      "1",
+      "Argentine Grand Prix",
+      "Juan Manuel Fangio",
+      "Juan Manuel Fangio",
+      "Stirling Moss",
+      "Cooper-Climax",
+      "C",
+      "Report"
+    ],
+    [
+      "2",
+      "Monaco Grand Prix",
+      "Tony Brooks",
+      "Mike Hawthorn",
+      "Maurice Trintignant",
+      "Cooper-Climax",
+      "D",
+      "Report"
+    ],
+    [
+      "3",
+      "Dutch Grand Prix",
+      "Stuart Lewis-Evans",
+      "Stirling Moss",
+      "Stirling Moss",
+      "Vanwall",
+      "D",
+      "Report"
+    ],
+    [
+      "4",
+      "Indianapolis 500",
+      "Dick Rathmann",
+      "Tony Bettenhausen",
+      "Jimmy Bryan",
+      "Salih-Offenhauser",
+      "F",
+      "Report"
+    ],
+    [
+      "5",
+      "Belgian Grand Prix",
+      "Mike Hawthorn",
+      "Mike Hawthorn",
+      "Tony Brooks",
+      "Vanwall",
+      "D",
+      "Report"
+    ],
+    [
+      "6",
+      "French Grand Prix",
+      "Mike Hawthorn",
+      "Mike Hawthorn",
+      "Mike Hawthorn",
+      "Ferrari",
+      "E",
+      "Report"
+    ],
+    [
+      "7",
+      "British Grand Prix",
+      "Stirling Moss",
+      "Mike Hawthorn",
+      "Peter Collins",
+      "Ferrari",
+      "E",
+      "Report"
+    ],
+    [
+      "8",
+      "German Grand Prix",
+      "Mike Hawthorn",
+      "Stirling Moss",
+      "Tony Brooks",
+      "Vanwall",
+      "D",
+      "Report"
+    ],
+    [
+      "9",
+      "Portuguese Grand Prix",
+      "Stirling Moss",
+      "Mike Hawthorn",
+      "Stirling Moss",
+      "Vanwall",
+      "D",
+      "Report"
+    ],
+    [
+      "10",
+      "Italian Grand Prix",
+      "Stirling Moss",
+      "Phil Hill",
+      "Tony Brooks",
+      "Vanwall",
+      "D",
+      "Report"
+    ],
+    [
+      "11",
+      "Moroccan Grand Prix",
+      "Mike Hawthorn",
+      "Stirling Moss",
+      "Stirling Moss",
+      "Vanwall",
+      "D",
+      "Report"
+    ]
+  ],
+  "title": "1958 Formula One season",
+  "description": "",
+  "sections": {}
+}

@@ -1,0 +1,308 @@
+{
+  "year": 2018,
+  "timestamp": "2026-01-14T21:46:55.064384",
+  "drivers": [
+    [
+      "Entrant",
+      "Constructor",
+      "Chassis",
+      "Power unit",
+      "Race drivers"
+    ],
+    [
+      "No.",
+      "Driver name",
+      "Rounds"
+    ],
+    [
+      "Scuderia Ferrari[a]",
+      "Ferrari",
+      "SF71H",
+      "Ferrari 062 EVO",
+      "57",
+      "Sebastian VettelKimi Räikkönen",
+      "AllAll"
+    ],
+    [
+      "SaharaForce India F1 Team",
+      "Force India-Mercedes",
+      "VJM11",
+      "Mercedes M09 EQ Power+",
+      "1131",
+      "Sergio PérezEsteban Ocon",
+      "1–121–12"
+    ],
+    [
+      "Racing Point Force India F1 Team[b]",
+      "Force India-Mercedes",
+      "VJM11",
+      "Mercedes M09 EQ Power+",
+      "1131",
+      "Sergio PérezEsteban Ocon",
+      "13–2113–21"
+    ],
+    [
+      "Haas F1 Team",
+      "Haas-Ferrari",
+      "VF-18",
+      "Ferrari 062 EVO",
+      "820",
+      "Romain GrosjeanKevin Magnussen",
+      "AllAll"
+    ],
+    [
+      "McLaren F1 Team",
+      "McLaren-Renault",
+      "MCL33",
+      "Renault R.E.18",
+      "214",
+      "Stoffel VandoorneFernando Alonso",
+      "AllAll"
+    ],
+    [
+      "Mercedes AMGPetronasMotorsport",
+      "Mercedes",
+      "F1 W09 EQ Power+",
+      "Mercedes M09 EQ Power+",
+      "4477",
+      "Lewis HamiltonValtteri Bottas",
+      "AllAll"
+    ],
+    [
+      "Aston MartinRed Bull Racing",
+      "Red Bull Racing-TAG Heuer",
+      "RB14",
+      "TAG Heuer F1-2018[c]",
+      "333",
+      "Daniel RicciardoMax Verstappen",
+      "AllAll"
+    ],
+    [
+      "Renault Sport Formula One Team",
+      "Renault",
+      "R.S.18",
+      "Renault R.E.18",
+      "2755",
+      "Nico HülkenbergCarlos Sainz Jr.",
+      "AllAll"
+    ],
+    [
+      "Alfa RomeoSauber F1 Team",
+      "Sauber-Ferrari",
+      "C37",
+      "Ferrari 062 EVO",
+      "916",
+      "Marcus EricssonCharles Leclerc",
+      "AllAll"
+    ],
+    [
+      "Red BullToro Rosso Honda",
+      "Scuderia Toro Rosso-Honda",
+      "STR13",
+      "Honda RA618H",
+      "1028",
+      "Pierre GaslyBrendon Hartley",
+      "AllAll"
+    ],
+    [
+      "WilliamsMartiniRacing",
+      "Williams-Mercedes",
+      "FW41",
+      "Mercedes M09 EQ Power+",
+      "1835",
+      "Lance StrollSergey Sirotkin",
+      "AllAll"
+    ],
+    [
+      "Sources:[10][11][12]"
+    ]
+  ],
+  "teams": [],
+  "races": [
+    [
+      "Constructor",
+      "No.",
+      "Driver name",
+      "Rounds"
+    ],
+    [
+      "Force India-Mercedes",
+      "34",
+      "Nicholas Latifi",
+      "7, 11116, 18–202"
+    ],
+    [
+      "McLaren-Renault",
+      "47",
+      "Lando Norris",
+      "13–14, 16–20"
+    ],
+    [
+      "Renault",
+      "46",
+      "Artem Markelov",
+      "16"
+    ],
+    [
+      "Sauber-Ferrari",
+      "36",
+      "Antonio Giovinazzi",
+      "11–12, 16, 19–21"
+    ],
+    [
+      "Scuderia Toro Rosso-Honda",
+      "38",
+      "Sean Gelael",
+      "18"
+    ],
+    [
+      "Williams-Mercedes",
+      "40",
+      "Robert Kubica",
+      "5, 9, 21"
+    ],
+    [
+      "Source:[12]"
+    ]
+  ],
+  "standings": [
+    [
+      "Round",
+      "Grand Prix",
+      "Circuit",
+      "Date"
+    ],
+    [
+      "1",
+      "Australian Grand Prix",
+      "Albert Park Circuit,Melbourne",
+      "25 March"
+    ],
+    [
+      "2",
+      "Bahrain Grand Prix",
+      "Bahrain International Circuit,Sakhir",
+      "8 April"
+    ],
+    [
+      "3",
+      "Chinese Grand Prix",
+      "Shanghai International Circuit,Shanghai",
+      "15 April"
+    ],
+    [
+      "4",
+      "Azerbaijan Grand Prix",
+      "Baku City Circuit,Baku",
+      "29 April"
+    ],
+    [
+      "5",
+      "Spanish Grand Prix",
+      "Circuit de Barcelona-Catalunya,Montmeló",
+      "13 May"
+    ],
+    [
+      "6",
+      "Monaco Grand Prix",
+      "Circuit de Monaco,Monte Carlo",
+      "27 May"
+    ],
+    [
+      "7",
+      "Canadian Grand Prix",
+      "Circuit Gilles Villeneuve,Montreal",
+      "10 June"
+    ],
+    [
+      "8",
+      "French Grand Prix",
+      "Circuit Paul Ricard,Le Castellet",
+      "24 June"
+    ],
+    [
+      "9",
+      "Austrian Grand Prix",
+      "Red Bull Ring,Spielberg",
+      "1 July"
+    ],
+    [
+      "10",
+      "British Grand Prix",
+      "Silverstone Circuit,Silverstone",
+      "8 July"
+    ],
+    [
+      "11",
+      "German Grand Prix",
+      "Hockenheimring,Hockenheim",
+      "22 July"
+    ],
+    [
+      "12",
+      "Hungarian Grand Prix",
+      "Hungaroring,Mogyoród",
+      "29 July"
+    ],
+    [
+      "13",
+      "Belgian Grand Prix",
+      "Circuit de Spa-Francorchamps,Stavelot",
+      "26 August"
+    ],
+    [
+      "14",
+      "Italian Grand Prix",
+      "Autodromo Nazionale di Monza,Monza",
+      "2 September"
+    ],
+    [
+      "15",
+      "Singapore Grand Prix",
+      "Marina Bay Street Circuit,Singapore",
+      "16 September"
+    ],
+    [
+      "16",
+      "Russian Grand Prix",
+      "Sochi Autodrom,Sochi",
+      "30 September"
+    ],
+    [
+      "17",
+      "Japanese Grand Prix",
+      "Suzuka International Racing Course,Suzuka",
+      "7 October"
+    ],
+    [
+      "18",
+      "United States Grand Prix",
+      "Circuit of the Americas,Austin, Texas",
+      "21 October"
+    ],
+    [
+      "19",
+      "Mexican Grand Prix",
+      "Autódromo Hermanos Rodríguez,Mexico City",
+      "28 October"
+    ],
+    [
+      "20",
+      "Brazilian Grand Prix",
+      "Autódromo José Carlos Pace,São Paulo",
+      "11 November"
+    ],
+    [
+      "21",
+      "Abu Dhabi Grand Prix",
+      "Yas Marina Circuit,Abu Dhabi",
+      "25 November"
+    ],
+    [
+      "Source:[35]"
+    ]
+  ],
+  "title": "2018 Formula One World Championship",
+  "description": "",
+  "sections": {}
+}

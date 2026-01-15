@@ -1,0 +1,567 @@
+{
+  "year": 1983,
+  "timestamp": "2026-01-14T21:45:34.203676",
+  "drivers": [
+    [
+      "Entrant",
+      "Constructor",
+      "Chassis",
+      "Engine",
+      "Tyres",
+      "No",
+      "Driver",
+      "Rounds"
+    ],
+    [
+      "TAGWilliams Team",
+      "Williams-Ford",
+      "FW08C",
+      "Ford Cosworth DFV3.0V8",
+      "G",
+      "1",
+      "Keke Rosberg",
+      "1–14"
+    ],
+    [
+      "2",
+      "Jacques Laffite",
+      "1–14"
+    ],
+    [
+      "42",
+      "Jonathan Palmer",
+      "14"
+    ],
+    [
+      "Williams-Honda",
+      "FW09",
+      "HondaRA163-E 1.5V6t",
+      "1",
+      "Keke Rosberg",
+      "15"
+    ],
+    [
+      "2",
+      "Jacques Laffite",
+      "15"
+    ],
+    [
+      "BenettonTyrrell Team",
+      "Tyrrell-Ford",
+      "011B012",
+      "Ford Cosworth DFV3.0V8Ford Cosworth DFY3.0V8",
+      "G",
+      "3",
+      "Michele Alboreto",
+      "All"
+    ],
+    [
+      "4",
+      "Danny Sullivan",
+      "All"
+    ],
+    [
+      "Fila Sport",
+      "Brabham-BMW",
+      "BT52BT52B",
+      "BMW M12/13 1.5L4t",
+      "M",
+      "5",
+      "Nelson Piquet",
+      "All"
+    ],
+    [
+      "6",
+      "Riccardo Patrese",
+      "All"
+    ],
+    [
+      "MarlboroMcLaren International Team",
+      "McLaren-Ford",
+      "MP4/1C",
+      "Ford Cosworth DFV3.0V8Ford Cosworth DFY3.0V8",
+      "M",
+      "7",
+      "John Watson",
+      "1–12"
+    ],
+    [
+      "8",
+      "Niki Lauda",
+      "1–11"
+    ],
+    [
+      "McLaren-TAG",
+      "MP4/1E",
+      "TAGTTE PO1 1.5V6t",
+      "7",
+      "John Watson",
+      "13–15"
+    ],
+    [
+      "8",
+      "Niki Lauda",
+      "12–15"
+    ],
+    [
+      "Team ATS",
+      "ATS-BMW",
+      "D6",
+      "BMW M12/13 1.5L4t",
+      "G",
+      "9",
+      "Manfred Winkelhock",
+      "All"
+    ],
+    [
+      "John Player SpecialTeam Lotus",
+      "Lotus-Ford",
+      "92",
+      "Ford Cosworth DFV3.0V8Ford Cosworth DFY3.0V8",
+      "P",
+      "11",
+      "Elio de Angelis",
+      "1"
+    ],
+    [
+      "12",
+      "Nigel Mansell",
+      "1–8"
+    ],
+    [
+      "Lotus-Renault",
+      "93T94T",
+      "Renault-GordiniEF1 1.5V6t",
+      "11",
+      "Elio de Angelis",
+      "2–15"
+    ],
+    [
+      "12",
+      "Nigel Mansell",
+      "9–15"
+    ],
+    [
+      "Équipe RenaultElf",
+      "Renault",
+      "RE30CRE40",
+      "Renault-GordiniEF1 1.5V6t",
+      "M",
+      "15",
+      "Alain Prost",
+      "All"
+    ],
+    [
+      "16",
+      "Eddie Cheever",
+      "All"
+    ],
+    [
+      "RAM RacingTeam March",
+      "RAM-Ford",
+      "01",
+      "Ford Cosworth DFV3.0V8Ford Cosworth DFY3.0V8",
+      "P",
+      "17",
+      "Eliseo Salazar",
+      "1–6"
+    ],
+    [
+      "Jacques Villeneuve Sr.",
+      "8"
+    ],
+    [
+      "Kenny Acheson",
+      "9–15"
+    ],
+    [
+      "18",
+      "Jean-Louis Schlesser",
+      "3"
+    ],
+    [
+      "MarlboroTeam Alfa Romeo",
+      "Alfa Romeo",
+      "183T",
+      "Alfa Romeo890T1.5V8t",
+      "M",
+      "22",
+      "Andrea de Cesaris",
+      "All"
+    ],
+    [
+      "23",
+      "Mauro Baldi",
+      "All"
+    ],
+    [
+      "Équipe LigierGitanes",
+      "Ligier-Ford",
+      "JS21",
+      "Ford Cosworth DFV3.0V8Ford Cosworth DFY3.0V8",
+      "M",
+      "25",
+      "Jean-Pierre Jarier",
+      "All"
+    ],
+    [
+      "26",
+      "Raul Boesel",
+      "All"
+    ],
+    [
+      "Ferrari",
+      "Ferrari",
+      "126C2B126C3",
+      "Ferrari021 1.5V6t",
+      "G",
+      "27",
+      "Patrick Tambay",
+      "All"
+    ],
+    [
+      "28",
+      "René Arnoux",
+      "All"
+    ],
+    [
+      "Arrows Racing Team",
+      "Arrows-Ford",
+      "A6",
+      "Ford Cosworth DFV3.0V8",
+      "G",
+      "29",
+      "Marc Surer",
+      "All"
+    ],
+    [
+      "30",
+      "Chico Serra",
+      "1, 3–5"
+    ],
+    [
+      "Alan Jones",
+      "2"
+    ],
+    [
+      "Thierry Boutsen",
+      "6–15"
+    ],
+    [
+      "KelémataOsella",
+      "Osella-Ford",
+      "FA1D",
+      "Ford Cosworth DFV3.0V8",
+      "M",
+      "31",
+      "Corrado Fabi",
+      "1–8"
+    ],
+    [
+      "32",
+      "Piercarlo Ghinzani",
+      "1–3"
+    ],
+    [
+      "Osella-Alfa Romeo",
+      "FA1E",
+      "Alfa Romeo12603.0V12",
+      "31",
+      "Corrado Fabi",
+      "9–15"
+    ],
+    [
+      "32",
+      "Piercarlo Ghinzani",
+      "4–15"
+    ],
+    [
+      "Theodore Racing Team",
+      "Theodore-Ford",
+      "N183",
+      "Ford Cosworth DFV3.0V8",
+      "G",
+      "33",
+      "Roberto Guerrero",
+      "1–14"
+    ],
+    [
+      "34",
+      "Johnny Cecotto",
+      "1–13"
+    ],
+    [
+      "CandyToleman Motorsport",
+      "Toleman-Hart",
+      "TG183B",
+      "Hart415T 1.5L4t",
+      "P",
+      "35",
+      "Derek Warwick",
+      "All"
+    ],
+    [
+      "36",
+      "Bruno Giacomelli",
+      "All"
+    ],
+    [
+      "Spirit Racing",
+      "Spirit-Honda",
+      "201201C",
+      "HondaRA163-E 1.5V6t",
+      "G",
+      "40",
+      "Stefan Johansson",
+      "9–14"
+    ]
+  ],
+  "teams": [],
+  "races": [
+    [
+      "Round",
+      "Grand Prix",
+      "Circuit",
+      "Date"
+    ],
+    [
+      "1",
+      "Brazilian Grand Prix",
+      "Jacarepaguá,Rio de Janeiro",
+      "13 March"
+    ],
+    [
+      "2",
+      "United States Grand Prix West",
+      "Long Beach Street Circuit,California",
+      "27 March"
+    ],
+    [
+      "3",
+      "French Grand Prix",
+      "Circuit Paul Ricard,Le Castellet",
+      "17 April"
+    ],
+    [
+      "4",
+      "San Marino Grand Prix",
+      "Autodromo Dino Ferrari,Imola",
+      "1 May"
+    ],
+    [
+      "5",
+      "Monaco Grand Prix",
+      "Circuit de Monaco,Monte Carlo",
+      "15 May"
+    ],
+    [
+      "6",
+      "Belgian Grand Prix",
+      "Circuit de Spa-Francorchamps,Stavelot",
+      "22 May"
+    ],
+    [
+      "7",
+      "Detroit Grand Prix",
+      "Detroit Street Circuit,Michigan",
+      "5 June"
+    ],
+    [
+      "8",
+      "Canadian Grand Prix",
+      "Circuit Gilles Villeneuve,Montreal",
+      "12 June"
+    ],
+    [
+      "9",
+      "British Grand Prix",
+      "Silverstone Circuit,Silverstone",
+      "16 July"
+    ],
+    [
+      "10",
+      "German Grand Prix",
+      "Hockenheimring,Hockenheim",
+      "7 August"
+    ],
+    [
+      "11",
+      "Austrian Grand Prix",
+      "Österreichring,Spielberg",
+      "14 August"
+    ],
+    [
+      "12",
+      "Dutch Grand Prix",
+      "Circuit Park Zandvoort,Zandvoort",
+      "28 August"
+    ],
+    [
+      "13",
+      "Italian Grand Prix",
+      "Autodromo Nazionale di Monza,Monza",
+      "11 September"
+    ],
+    [
+      "14",
+      "European Grand Prix",
+      "Brands Hatch,West Kingsdown",
+      "25 September"
+    ],
+    [
+      "15",
+      "South African Grand Prix",
+      "South AfricaKyalami Grand Prix Circuit,Midrand",
+      "15 October"
+    ]
+  ],
+  "standings": [
+    [
+      "Round",
+      "Grand Prix",
+      "Pole position",
+      "Fastest lap",
+      "Winning driver",
+      "Winning constructor",
+      "Report"
+    ],
+    [
+      "1",
+      "Brazilian Grand Prix",
+      "Keke Rosberg",
+      "Nelson Piquet",
+      "Nelson Piquet",
+      "Brabham-BMW",
+      "Report"
+    ],
+    [
+      "2",
+      "United States Grand Prix West",
+      "Patrick Tambay",
+      "Niki Lauda",
+      "John Watson",
+      "McLaren-Ford",
+      "Report"
+    ],
+    [
+      "3",
+      "French Grand Prix",
+      "Alain Prost",
+      "Alain Prost",
+      "Alain Prost",
+      "Renault",
+      "Report"
+    ],
+    [
+      "4",
+      "San Marino Grand Prix",
+      "René Arnoux",
+      "Riccardo Patrese",
+      "Patrick Tambay",
+      "Ferrari",
+      "Report"
+    ],
+    [
+      "5",
+      "Monaco Grand Prix",
+      "Alain Prost",
+      "Nelson Piquet",
+      "Keke Rosberg",
+      "Williams-Ford",
+      "Report"
+    ],
+    [
+      "6",
+      "Belgian Grand Prix",
+      "Alain Prost",
+      "Andrea de Cesaris",
+      "Alain Prost",
+      "Renault",
+      "Report"
+    ],
+    [
+      "7",
+      "Detroit Grand Prix",
+      "René Arnoux",
+      "John Watson",
+      "Michele Alboreto",
+      "Tyrrell-Ford",
+      "Report"
+    ],
+    [
+      "8",
+      "Canadian Grand Prix",
+      "René Arnoux",
+      "Patrick Tambay",
+      "René Arnoux",
+      "Ferrari",
+      "Report"
+    ],
+    [
+      "9",
+      "British Grand Prix",
+      "René Arnoux",
+      "Alain Prost",
+      "Alain Prost",
+      "Renault",
+      "Report"
+    ],
+    [
+      "10",
+      "German Grand Prix",
+      "Patrick Tambay",
+      "René Arnoux",
+      "René Arnoux",
+      "Ferrari",
+      "Report"
+    ],
+    [
+      "11",
+      "Austrian Grand Prix",
+      "Patrick Tambay",
+      "Alain Prost",
+      "Alain Prost",
+      "Renault",
+      "Report"
+    ],
+    [
+      "12",
+      "Dutch Grand Prix",
+      "Nelson Piquet",
+      "René Arnoux",
+      "René Arnoux",
+      "Ferrari",
+      "Report"
+    ],
+    [
+      "13",
+      "Italian Grand Prix",
+      "Riccardo Patrese",
+      "Nelson Piquet",
+      "Nelson Piquet",
+      "Brabham-BMW",
+      "Report"
+    ],
+    [
+      "14",
+      "European Grand Prix",
+      "Elio de Angelis",
+      "Nigel Mansell",
+      "Nelson Piquet",
+      "Brabham-BMW",
+      "Report"
+    ],
+    [
+      "15",
+      "South African Grand Prix",
+      "Patrick Tambay",
+      "Nelson Piquet",
+      "Riccardo Patrese",
+      "Brabham-BMW",
+      "Report"
+    ]
+  ],
+  "title": "1983 Formula One World Championship",
+  "description": "",
+  "sections": {}
+}
