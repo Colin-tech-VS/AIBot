@@ -544,18 +544,11 @@
 
         <!-- Bouton paramètres en bas -->
         <div class="px-3 py-4 border-t border-[#e8e8e8] dark:border-[#1F334A] bg-[#f8f9fa] dark:bg-[#050A10] overflow-hidden" style="width: 15rem;">
-          <button id="userProfileBtn" class="flex items-center gap-2 p-2 rounded-lg hover:bg-[#f5f5f5] dark:hover:bg-[#1B2F46] transition-all duration-200 active:scale-95 text-[#E10600] dark:text-[#FF3B30] w-full text-left text-sm font-semibold min-w-0" onclick="openUserProfile()">
-            <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-            <span class="whitespace-nowrap overflow-hidden" data-navbar-text>Paramètres</span>
-          </button>
         </div>
       </nav>
 
       <!-- Overlay pour mobile -->
       <div id="navOverlay" class="fixed inset-0 bg-black/50 hidden z-30 lg:hidden" onclick="closeNavbar()"></div>
-
-      <!-- Overlay pour l'historique -->
-      <div id="historyOverlay" class="fixed inset-0 bg-black/50 hidden z-34" onclick="closeHistoryPanel()"></div>
 
       <!-- Zone de chat et historique -->
       <div id="chatContainer" class="flex-1 flex flex-col overflow-hidden relative">
@@ -588,62 +581,7 @@
               </form>
             </div>
 
-            <div class="suggestions-grid">
-              <div class="suggestion-chip bg-white dark:bg-[rgba(255,255,255,0.04)] border-[#e0e0e0] dark:border-[rgba(255,255,255,0.1)] text-[#1a1d2e] dark:text-[#E6ECF2] shadow-[0_2px_4px_rgba(0,0,0,0.05)] dark:shadow-none" onclick="document.getElementById('messageInput').value='📅 Calendrier 2026'; document.getElementById('chatForm').dispatchEvent(new Event('submit'));">📅 Calendrier 2026</div>
-              <div class="suggestion-chip bg-white dark:bg-[rgba(255,255,255,0.04)] border-[#e0e0e0] dark:border-[rgba(255,255,255,0.1)] text-[#1a1d2e] dark:text-[#E6ECF2] shadow-[0_2px_4px_rgba(0,0,0,0.05)] dark:shadow-none" onclick="document.getElementById('messageInput').value='🏆 Classements pilotes'; document.getElementById('chatForm').dispatchEvent(new Event('submit'));">🏆 Classements pilotes</div>
-              <div class="suggestion-chip bg-white dark:bg-[rgba(255,255,255,0.04)] border-[#e0e0e0] dark:border-[rgba(255,255,255,0.1)] text-[#1a1d2e] dark:text-[#E6ECF2] shadow-[0_2px_4px_rgba(0,0,0,0.05)] dark:shadow-none" onclick="document.getElementById('messageInput').value='⚙️ Règles techniques'; document.getElementById('chatForm').dispatchEvent(new Event('submit'));">⚙️ Règles techniques</div>
-              <div class="suggestion-chip bg-white dark:bg-[rgba(255,255,255,0.04)] border-[#e0e0e0] dark:border-[rgba(255,255,255,0.1)] text-[#1a1d2e] dark:text-[#E6ECF2] shadow-[0_2px_4px_rgba(0,0,0,0.05)] dark:shadow-none" onclick="document.getElementById('messageInput').value='📊 Stats & records'; document.getElementById('chatForm').dispatchEvent(new Event('submit'));">📊 Stats & records</div>
-            </div>
           </div>
-        </div>
-      </div>
-
-        <!-- Panneau d'historique (coulissant par la droite) -->
-        <aside id="historyPanel" class="fixed right-0 top-0 w-64 h-full border-l border-[#e8e8e8] dark:border-[#1F334A] bg-[#ffffff] dark:bg-[#0C1A28] flex flex-col shadow-lg hidden z-35 transition-transform duration-300 transform translate-x-full" aria-hidden="true">
-          <div class="px-4 py-4 border-b border-[#e8e8e8] dark:border-[#1F334A] flex justify-between items-center bg-[#E10600] dark:bg-[#13263B]">
-            <h3 class="font-semibold text-[#FFFFFF] dark:text-[#E6ECF2]">Historique</h3>
-            <div class="relative group">
-              <button id="closeHistoryBtn" class="p-1 rounded hover:bg-[#f5f5f5] dark:hover:bg-[#1B2F46] transition" onclick="closeHistoryPanel()">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-              </button>
-              <div class="absolute left-10 top-1/2 -translate-y-1/2 bg-[#0B1C2D] dark:bg-[#13263B] text-white text-xs px-2 py-1 rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition pointer-events-none">Fermer</div>
-            </div>
-          </div>
-          <div id="historyContent" class="flex-1 overflow-y-auto p-3 space-y-2">
-            <p class="text-sm text-[#8A97A8] dark:text-[#6F8197]">Chargement...</p>
-          </div>
-        </aside>
-      </div>
-    </div>
-
-    <!-- Overlay profil -->
-    <div id="userProfileOverlay" class="fixed inset-0 bg-black/50 hidden z-40" onclick="closeUserProfile()"></div>
-    
-    <!-- Panneau profil utilisateur -->
-    <div id="userProfilePanel" class="fixed top-0 right-0 w-96 h-full bg-[#ffffff] dark:bg-[#0C1A28] shadow-xl flex flex-col z-50 transform translate-x-full transition-transform" aria-hidden="true">
-      <div class="px-6 py-4 border-b border-[#e8e8e8] dark:border-[#1F334A] flex justify-between items-center bg-[#E10600] dark:bg-[#13263B]">
-        <h3 class="font-semibold text-[#FFFFFF] dark:text-[#E6ECF2]">Profil</h3>
-        <div class="relative group">
-          <button class="p-1 rounded hover:bg-[#f5f5f5] dark:hover:bg-[#1B2F46] transition" onclick="closeUserProfile()">
-            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-          </button>
-          <div class="absolute right-8 top-1/2 -translate-y-1/2 bg-[#1a1d2e] dark:bg-[#13263B] text-[#FFFFFF] text-xs px-2 py-1 rounded whitespace-nowrap opacity-0 group-hover:opacity-100 transition pointer-events-none">Fermer</div>
-        </div>
-      </div>
-      <div class="flex-1 overflow-y-auto p-6 space-y-6">
-        <!-- Section apparence -->
-        <div>
-          <h4 class="font-semibold text-[#1a1d2e] dark:text-[#E6ECF2] mb-3">Apparence</h4>
-          <label class="flex items-center gap-3 cursor-pointer">
-            <input type="checkbox" id="darkModeToggle" class="w-4 h-4 rounded cursor-pointer" onchange="toggleDarkMode()">
-            <span class="text-sm text-[#6c757d] dark:text-[#A5B2C3]">Mode sombre</span>
-          </label>
-        </div>
-
-        <!-- Section données -->
-        <div>
-          <h4 class="font-semibold text-[#1a1d2e] dark:text-[#E6ECF2] mb-3">Données</h4>
-          <button id="clearHistoryBtn" class="w-full px-4 py-2 rounded-lg bg-[#E10600] dark:bg-[#FF3B30] hover:bg-[#FF3B30] dark:hover:bg-[#E10600] text-white transition text-sm font-medium" onclick="clearAllHistory()">Supprimer tout l'historique</button>
         </div>
       </div>
     </div>

@@ -39,15 +39,8 @@ const chatForm = document.getElementById("chatForm");
 const sendBtn = document.getElementById("sendBtn");
 const mainNavbar = document.getElementById("mainNavbar");
 const navOverlay = document.getElementById("navOverlay");
-const historyPanel = document.getElementById("historyPanel");
-const historyOverlay = document.getElementById("historyOverlay");
-const historyContent = document.getElementById("historyContent");
-
 // État
 let isWaiting = false;
-let isNavbarOpen = false;
-let isHistoryOpen = false;
-let isNavbarCollapsed = false;
 
 // Conversations store (frontend only, ChatGPT-like)
 let conversations = [];
@@ -213,46 +206,9 @@ function setConversationTitle(title) {
   }
 }
 
+// Legacy function - no longer used (history is managed via navbar only)
 function renderConversationList() {
-  if (!historyContent) return;
-  historyContent.innerHTML = '';
-  if (!conversations || conversations.length===0) {
-    historyContent.innerHTML = `<p class="text-sm text-[#8A97A8] dark:text-[#6F8197]">Aucune conversation.</p>`;
-    return;
-  }
-  conversations.forEach(conv => {
-    const item = document.createElement('div');
-    item.className = 'p-3 rounded-lg hover:bg-[#FCE8E7] dark:hover:bg-[#1B2F46] cursor-pointer transition flex justify-between items-center group';
-    item.title = conv.title;
-
-    const titleDiv = document.createElement('div');
-    titleDiv.className = 'flex-1 min-w-0';
-    const titleEl = document.createElement('p');
-    titleEl.className = 'text-xs font-medium text-[#0B1C2D] dark:text-[#E6ECF2] truncate';
-    titleEl.textContent = conv.title;
-    titleDiv.appendChild(titleEl);
-
-    const actions = document.createElement('div');
-    actions.className = 'flex gap-1 opacity-0 group-hover:opacity-100 transition';
-
-    const delBtn = document.createElement('button');
-    delBtn.className = 'p-1 rounded hover:bg-[#FCE8E7] dark:hover:bg-[#FF3B30]/20 text-[#E10600] dark:text-[#FF3B30] transition';
-    delBtn.title = 'Supprimer';
-    delBtn.innerHTML = '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>';
-    delBtn.onclick = (e) => { e.stopPropagation(); deleteConversation(conv.id); };
-
-    actions.appendChild(delBtn);
-
-    item.appendChild(titleDiv);
-    item.appendChild(actions);
-
-    item.onclick = () => {
-      loadConversationIntoChat(conv.id);
-      closeHistoryPanel();
-    };
-
-    historyContent.appendChild(item);
-  });
+  // This function is now handled by renderNavbarHistory()
 }
 
 // Remplir l'historique dans la navbar
@@ -502,12 +458,6 @@ function doDeleteConversation() {
  * Initialisation au chargement de la page
  */
 document.addEventListener("DOMContentLoaded", () => {
-  try {
-    console.log('Frontend: history UI initialized', {historyPanel: !!historyPanel, historyContent: !!historyContent});
-  } catch (e) {
-    console.error('Erreur initialisation UI:', e);
-  }
-
   loadConversationsFromStorage();
   
   // Nettoyer les conversations vides au démarrage
@@ -530,16 +480,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const closeBtn = document.getElementById("closeHistoryBtn");
   const newConvBtn = document.getElementById("newConversationBtn");
   
-  console.log('[DOMContentLoaded] Binding buttons:', {
-    closeBtn: !!closeBtn,
-    newConvBtn: !!newConvBtn
-  });
-  
   if (closeBtn) {
     closeBtn.addEventListener("click", (e) => {
       e.preventDefault();
       console.log('[closeBtn] clicked');
-      closeHistoryPanel();
     });
   }
   
@@ -548,20 +492,11 @@ document.addEventListener("DOMContentLoaded", () => {
       e.preventDefault();
       console.log('[newConvBtn in panel] clicked');
       createConversation();
-      closeHistoryPanel();
     });
   }
 
-  // Initialiser le dark mode et les infos utilisateur
+  // Initialiser le dark mode
   initDarkMode();
-  initUserInfo();
-  
-  // Initialiser l'état de collapse de la navbar
-  const savedNavbarCollapsed = localStorage.getItem('navbarCollapsed') === 'true';
-  if (savedNavbarCollapsed && window.innerWidth >= 1024) {
-    mainNavbar.classList.add("collapsed");
-    isNavbarCollapsed = true;
-  }
 });
 
 chatForm.addEventListener("submit", sendMessage);
@@ -575,133 +510,9 @@ function closeNavbar() {
   mainNavbar.classList.add("navbar-collapsed");
 }
 
-function toggleHistoryPanel() {
-  isHistoryOpen = !isHistoryOpen;
-  if (isHistoryOpen) {
-    openHistoryPanel();
-  } else {
-    closeHistoryPanel();
-  }
-}
 
-/**
- * Ouvre le panneau d'historique (affiche la liste des conversations)
- */
-async function openHistoryPanel() {
-  if (!historyPanel) return;
-  historyPanel.classList.remove("hidden");
-  historyPanel.classList.remove("translate-x-full");
-  historyPanel.setAttribute("aria-hidden", "false");
-  historyOverlay.classList.remove("hidden");
-  renderConversationList();
-}
 
-/**
- * Ferme le panneau d'historique
- */
-function closeHistoryPanel() {
-  if (!historyPanel) return;
-  isHistoryOpen = false;
-  historyPanel.classList.add("translate-x-full");
-  historyPanel.setAttribute("aria-hidden", "true");
-  historyOverlay.classList.add("hidden");
-}
 
-/**
- * Remplit le panneau avec les items d'historique (legacy function, not used currently)
- */
-function renderHistoryItems(items) {
-  if (!historyContent) return;
-  if (!items || items.length === 0) {
-    historyContent.innerHTML = `<p class="muted">Aucun historique trouvé.</p>`;
-    return;
-  }
-
-  historyContent.innerHTML = '';
-  items.forEach((it, idx) => {
-    const el = document.createElement('div');
-    el.className = 'history-item';
-
-    const meta = document.createElement('div');
-    meta.className = 'meta';
-    meta.textContent = `${idx + 1} • ${it.role === 'user' ? 'Utilisateur' : 'Assistant'}`;
-
-    const content = document.createElement('div');
-    content.className = 'content';
-    let html = it.content
-      .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" style="color: #3b82f6; text-decoration: underline; font-weight: 600;">$1</a>')
-      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-      .replace(/\*(.+?)\*/g, '<em>$1</em>')
-      .replace(/\n/g, '<br>');
-
-    content.innerHTML = html;
-
-    el.appendChild(meta);
-    el.appendChild(content);
-
-    historyContent.appendChild(el);
-  });
-}
-
-/**
- * Ouvre le panneau profil utilisateur
- */
-function openUserProfile() {
-  const userProfilePanel = document.getElementById("userProfilePanel");
-  const userProfileOverlay = document.getElementById("userProfileOverlay");
-  if (!userProfilePanel) return;
-  userProfileOverlay.classList.remove("hidden");
-  userProfilePanel.classList.remove("translate-x-full");
-  userProfilePanel.setAttribute("aria-hidden", "false");
-}
-
-/**
- * Ferme le panneau profil utilisateur
- */
-function closeUserProfile() {
-  const userProfilePanel = document.getElementById("userProfilePanel");
-  const userProfileOverlay = document.getElementById("userProfileOverlay");
-  if (!userProfilePanel) return;
-  userProfilePanel.classList.add("translate-x-full");
-  userProfileOverlay.classList.add("hidden");
-  userProfilePanel.setAttribute("aria-hidden", "true");
-}
-
-/**
- * Gère la connexion utilisateur
- */
-function handleLogin() {
-  const username = prompt("Entrez votre nom d'utilisateur :");
-  if (username && username.trim()) {
-    localStorage.setItem("username", username.trim());
-    updateUserInfo(username.trim());
-  }
-}
-
-/**
- * Met à jour l'affichage des infos utilisateur
- */
-function updateUserInfo(username) {
-  const userInfo = document.getElementById("userInfo");
-  if (!userInfo) return;
-  userInfo.innerHTML = `
-    <p class="text-sm">Connecté en tant que <strong>${username}</strong></p>
-    <button class="w-full px-4 py-2 rounded-lg bg-[#E10600] hover:bg-[#FF3B30] text-white transition text-sm font-medium" onclick="handleLogout()">Se déconnecter</button>
-  `;
-}
-
-/**
- * Gère la déconnexion utilisateur
- */
-function handleLogout() {
-  localStorage.removeItem("username");
-  const userInfo = document.getElementById("userInfo");
-  if (!userInfo) return;
-  userInfo.innerHTML = `
-    <p class="text-sm text-[#8A97A8] dark:text-[#6F8197]">Non connecté</p>
-    <button class="w-full px-4 py-2 rounded-lg bg-[#E10600] hover:bg-[#FF3B30] text-white transition text-sm font-medium mt-2" onclick="handleLogin()">Se connecter</button>
-  `;
-}
 
 /**
  * Active/désactive le dark mode avec Tailwind
@@ -738,15 +549,7 @@ function initDarkMode() {
   }
 }
 
-/**
- * Initialise les infos utilisateur au chargement
- */
-function initUserInfo() {
-  const username = localStorage.getItem("username");
-  if (username) {
-    updateUserInfo(username);
-  }
-}
+
 
 /**
  * Initialise la navbar
@@ -883,7 +686,6 @@ async function fetchTop3Drivers() {
 document.addEventListener("DOMContentLoaded", () => {
   initNavbar();
   initDarkMode();
-  initUserInfo();
   renderConversationList();
   renderNavbarHistory();
 
