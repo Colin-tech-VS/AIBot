@@ -17,9 +17,7 @@ from bs4 import BeautifulSoup
 from urllib.parse import urljoin
 from pydantic import BaseModel, Field, ValidationError
 
-# ==============================
 # BACKEND IMPORTS (inchangés)
-# ==============================
 from backend.knowledge_base import get_knowledge_base
 from backend.optimized_cache import get_cache, CACHE_TTL
 from backend.intent_router import get_router
@@ -36,10 +34,6 @@ logger = get_logger(__name__)
 # Cache centralisé
 _cache = get_cache()
 
-# ==============================
-# FIX 1 — FONCTIONS MANQUANTES
-# (empêche NameError → 500)
-# ==============================
 def search_f1_wiki_data(query: str):
     """
     FIX: fonction absente mais appelée plus bas.
@@ -66,9 +60,8 @@ def fetch_wikimedia_api(action: str, params: dict):
         logger.warning(f"Wikimedia API error: {e}")
         return None
 
-# ==============================
+
 # OLLAMA CONFIG
-# ==============================
 OLLAMA_PATHS = [
     Path(os.path.expanduser("~")) / "AppData" / "Local" / "Programs" / "Ollama" / "ollama.exe",
     Path("C:/Program Files/Ollama/ollama.exe"),
@@ -78,7 +71,7 @@ OLLAMA_PATHS = [
     Path("/usr/local/bin/ollama"),
     "ollama",
 ]
-OLLAMA_MODEL = "qwen2.5:7b"  # Version 7B pour meilleure qualité (4.7GB)
+OLLAMA_MODEL = "qwen2.5:7b"  
 OLLAMA_TIMEOUT = 15
 OLLAMA_URL = os.getenv("OLLAMA_URL", "http://127.0.0.1:11434/api/generate")
 RAG_ONLY = False
@@ -204,7 +197,7 @@ FIA_SOURCES = [
     "https://www.fia.com/regulation/category/110",  # Régulations
 ]
 
-# User-Agents rotatifs pour éviter blocage anti-bot
+
 USER_AGENTS = [
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36",
@@ -299,10 +292,9 @@ def retry_with_backoff(max_attempts: int = 3, base_delay: float = 1.0, max_delay
     return decorator
 
 
-@retry_with_backoff(max_attempts=2, base_delay=0.5, max_delay=2.0)  # 2 tentatives avec headers rotatifs
-def fetch_url(url: str, timeout: int = 6) -> str:  # Timeout augmenté 3s→6s (anti-bot protection)
+@retry_with_backoff(max_attempts=2, base_delay=0.5, max_delay=2.0)  
+def fetch_url(url: str, timeout: int = 6) -> str:  
     """Récupère le contenu HTML d'une URL avec retry automatique et headers rotatifs."""
-    # Créer un client avec headers frais pour chaque requête (éviter fingerprinting)
     headers = get_random_headers()
     resp = http_client.get(url, headers=headers, timeout=timeout)
     resp.raise_for_status()
@@ -405,10 +397,10 @@ def _follow_and_extract(links: List[Tuple[str, str]], cache_prefix: str, max_pag
     return results
 
 
-@retry_with_backoff(max_attempts=2, base_delay=0.5, max_delay=3.0)  # 2 tentatives pour robustesse
+@retry_with_backoff(max_attempts=2, base_delay=0.5, max_delay=3.0)  
 def scrape_actuf1() -> str:
     """Scrape ActuF1 - actualités F1 spécialisées (avec retry)."""
-    html = fetch_url("https://www.actuf1.com/", timeout=6)  # Timeout augmenté 2s→6s (anti-bot)
+    html = fetch_url("https://www.actuf1.com/", timeout=6)  
     if not html:
         raise httpx.TimeoutException("ActuF1 inaccessible")
     
@@ -438,7 +430,7 @@ def scrape_actuf1() -> str:
         return ""
 
 
-@retry_with_backoff(max_attempts=2, base_delay=0.5, max_delay=3.0)  # 2 tentatives pour robustesse
+@retry_with_backoff(max_attempts=2, base_delay=0.5, max_delay=3.0)  
 def scrape_lequipe() -> str:
     """Scrape L'Équipe (section Formule 1) — titres + résumés (avec retry).
 
@@ -446,7 +438,7 @@ def scrape_lequipe() -> str:
     - Cherche <article> avec titres (h2/h3) et paragraphes
     - Fallback: extraction de texte principal si structure inattendue
     """
-    html = fetch_url("https://www.lequipe.fr/Formule-1/", timeout=6)  # Timeout augmenté 2s→6s (anti-bot)
+    html = fetch_url("https://www.lequipe.fr/Formule-1/", timeout=6) 
     if not html:
         raise httpx.TimeoutException("L'Équipe inaccessible")
     
@@ -464,7 +456,7 @@ def scrape_lequipe() -> str:
                 if t:
                     contents.append(f"{t}: {s}".strip())
 
-        # Essai 2: liens vers articles F1 si peu d'<article>
+        #liens vers articles F1 si peu d'<article>
         if not contents:
             links = [
                 a for a in soup.find_all("a", href=True)
@@ -495,10 +487,10 @@ def scrape_lequipe() -> str:
         return ""
 
 
-@retry_with_backoff(max_attempts=2, base_delay=0.5, max_delay=3.0)  # 2 tentatives pour robustesse
+@retry_with_backoff(max_attempts=2, base_delay=0.5, max_delay=3.0)  
 def scrape_standf1() -> str:
     """Scrape StandF1 - classements et statistiques (avec retry)."""
-    html = fetch_url("https://www.standf1.com/", timeout=6)  # Timeout augmenté 2s→6s (anti-bot)
+    html = fetch_url("https://www.standf1.com/", timeout=6)  
     if not html:
         raise httpx.TimeoutException("StandF1 inaccessible")
     
@@ -519,10 +511,10 @@ def scrape_standf1() -> str:
         return ""
 
 
-@retry_with_backoff(max_attempts=2, base_delay=0.5, max_delay=3.0)  # 2 tentatives pour robustesse
+@retry_with_backoff(max_attempts=2, base_delay=0.5, max_delay=3.0)  
 def scrape_aurupteur() -> str:
     """Scrape Aurupteur - actualités F1 françaises (avec retry)."""
-    html = fetch_url("https://aurupteur.com/", timeout=6)  # Timeout augmenté 2s→6s (anti-bot)
+    html = fetch_url("https://aurupteur.com/", timeout=6)  
     if not html:
         raise httpx.TimeoutException("Aurupteur inaccessible")
     
@@ -611,12 +603,12 @@ def get_news_summaries(limit: int = 1) -> List[NewsItem]:
     
     # Mix de scrapers avec timeouts augmentés pour robustesse - TOUS les sites activés
     sources = [
-        ("ActuF1", scrape_actuf1, "https://www.actuf1.com/", 6),  # Timeout augmenté 2s→6s (anti-bot)
+        ("ActuF1", scrape_actuf1, "https://www.actuf1.com/", 6),  # Timeout augmenté 2s→6s 
         ("StandF1", scrape_standf1, "https://www.standf1.com/", 6),  # Timeout augmenté 2s→6s
         ("L'Équipe F1", scrape_lequipe, "https://www.lequipe.fr/Formule-1/", 6),  # Timeout augmenté 2s→6s
         ("Aurupteur", scrape_aurupteur, "https://aurupteur.com/", 6),  # Timeout augmenté 2s→6s
-        ("FIA Calendar", scrape_fia_calendar, "https://www.fia.com/events/fia-formula-one-world-championship/season-2025/", 8),  # Calendrier officiel (site lent)
-        ("FIA Regulations", scrape_fia_regulations, "https://www.fia.com/regulation/category/110", 8),  # Règlements officiels (site lent)
+        ("FIA Calendar", scrape_fia_calendar, "https://www.fia.com/events/fia-formula-one-world-championship/season-2025/", 8),  # Calendrier officiel 
+        ("FIA Regulations", scrape_fia_regulations, "https://www.fia.com/regulation/category/110", 8),  # Règlements officiels 
     ]
 
     # Paralléliser les appels avec ThreadPoolExecutor
@@ -625,7 +617,7 @@ def get_news_summaries(limit: int = 1) -> List[NewsItem]:
             logger.info(f"Fetching {source_name}")
             if scraper == extract_main_text and source_url:
                 html = fetch_url(source_url, timeout=timeout)
-                text = extract_main_text(html, max_chars=400)  # Réduit 600→400
+                text = extract_main_text(html, max_chars=400)  
             else:
                 text = scraper()
 
@@ -644,7 +636,7 @@ def get_news_summaries(limit: int = 1) -> List[NewsItem]:
         }
         
         for future in as_completed(futures):
-            if len(summaries) >= limit:  # Réduit limit*2→limit (pas besoin 2x)
+            if len(summaries) >= limit:  # Réduit limit*2→limit 
                 break
             result = future.result()
             if result:
@@ -674,7 +666,7 @@ def smart_clamp(text: str, max_len: int) -> str:
     if len(text) <= max_len:
         return text
     
-    # Chercher dernière phrase complète (. ou \n)
+    # Chercher dernière phrase complète 
     truncated = text[:max_len]
     last_period = truncated.rfind('. ')
     last_newline = truncated.rfind('\n\n')
@@ -722,12 +714,12 @@ def call_ollama(prompt: str, min_response_length: int = 15) -> str:
         "prompt": prompt,
         "stream": False,
         "options": {
-            "temperature": temp_default,       # Variable: 0.15 (strict) ou 0.35 (news/créatif)"
-            "top_p": 0.85,            # Focus sur meilleurs tokens
-            "num_ctx": 1024,          # Context augmenté (7b supporte plus)
-            "num_predict": 250,       # Augmenté: max 250 tokens (7b peut en générer plus)
-            "top_k": 15,              # Beam search un peu plus large
-            "repeat_penalty": 1.1,    # Anti-répétition
+            "temperature": temp_default,       
+            "top_p": 0.85,            
+            "num_ctx": 1024,          
+            "num_predict": 250,       
+            "top_k": 15,              
+            "repeat_penalty": 1.1,    
         }
     }
     try:
@@ -783,9 +775,6 @@ def call_ollama(prompt: str, min_response_length: int = 15) -> str:
 
 
 # Pipeline principal : à appeler depuis /chat
-
-# REMOVED: _is_probably_english() and _translate_to_french() - dead code never used
-# These functions were defined but never called. Removed to reduce maintenance burden.
 
 def _is_f1_question(q: str) -> bool:
     """Détecte si la question concerne la F1 de manière stricte."""
@@ -1033,7 +1022,7 @@ def _answer_f1_question_internal(user_question: str, history=None, rag_only: Opt
             if intent and not intent.requires_llm and intent.confidence >= 0.7:
                 handler = FAST_HANDLERS.get(intent.name)
                 if handler:
-                    logger.info(f"⚡ Intent rapide: {intent.name} (conf={intent.confidence:.2f})")
+                    logger.info(f" Intent rapide: {intent.name} (conf={intent.confidence:.2f})")
                     return handler()
         except Exception as e:
             logger.warning(f"Routage échoué: {e}")
@@ -1044,7 +1033,7 @@ def _answer_f1_question_internal(user_question: str, history=None, rag_only: Opt
         # Date du jour
         if any(keyword in q_lower for keyword in ["date", "aujourd'hui", "quel jour", "quelle date", "jour sommes"]):
             current_date = OptimizedPromptBuilder.get_current_date()
-            return f"On est le **{current_date}** ! 📅 Tu veux savoir ce qui se passe en F1 en ce moment ? 🏎️", sources
+            return f"On est le **{current_date}** !  Tu veux savoir ce qui se passe en F1 en ce moment ? 🏎️", sources
 
         # Référence à l'historique
         history_keywords = [
@@ -1164,7 +1153,7 @@ def _answer_f1_question_internal(user_question: str, history=None, rag_only: Opt
                 if kb_results:
                     # Prendre TOUS les résultats pertinents (pas de limite à 3000 chars)
                     kb_content = "\n\n".join(kb_results)[:5000]  # Augmenté de 3000→5000
-                    logger.info(f"✅ KB PRIORITAIRE: {len(kb_results)} chunks utilisés (score ≥0.45)")
+                    logger.info(f" KB PRIORITAIRE: {len(kb_results)} chunks utilisés (score ≥0.45)")
                     sources.append("Knowledge Base F1 (base de connaissances locale)")
                 else:
                     logger.info(f"KB: Aucun résultat (score <0.45)")
