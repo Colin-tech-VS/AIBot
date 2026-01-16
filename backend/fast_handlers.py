@@ -43,6 +43,7 @@ class F1DataHandler:
         return "Impossible de récupérer le classement pilotes pour le moment. 😕", []
     
     @staticmethod
+<<<<<<< HEAD
     def handle_standings_teams() -> Tuple[str, List[str]]:
         """Classement constructeurs (StandF1 temps réel)."""
         summary = get_standf1_constructors_summary(top_n=10)
@@ -50,6 +51,32 @@ class F1DataHandler:
         if summary:
             return summary, sources
         return "Impossible de récupérer le classement constructeurs pour le moment. 😕", []
+=======
+    def get_next_race() -> str:
+        """Prochain GP - ultra-rapide via endpoint Aurupteur (ne pas scraper FIA)"""
+        cache = get_cache()
+        cache_key = "next_race"
+        
+        cached = cache.get(cache_key)
+        if cached:
+            return f"🏁 (depuis cache)\n\n{cached}"
+        
+        try:
+            # Utiliser le endpoint /next_race_countdown qui scrape Aurupteur efficacement
+            import httpx
+            response = httpx.get("http://localhost:8001/next_race_countdown", timeout=3)
+            if response.status_code == 200:
+                data = response.json()
+                if data.get("countdown") and data.get("race_name"):
+                    result = f"🏁 **Prochain Grand Prix**\n\n{data['race_name']}\n⏱️ {data['countdown']}\n📅 {data.get('date', 'N/A')}\n🔗 Source: {data.get('source', 'Aurupteur')}"
+                    cache.set(cache_key, result, CACHE_TTL.get("ergast_race", 600))
+                    return result
+            
+            # Fallback si endpoint ne répond pas
+            raise RuntimeError("endpoint /next_race_countdown indisponible")
+        except Exception as e:
+            return f"⏰ Prochain GP: Australie - 8 mars 2026 (données Aurupteur indisponibles: {str(e)[:50]})"
+>>>>>>> frontend
     
     @staticmethod
     def handle_next_race() -> Tuple[str, List[str]]:

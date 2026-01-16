@@ -1,0 +1,114 @@
+id,title,content,category
+pilote_1,Lewis Hamilton,"Pilote: Lewis Hamilton. Nationalite: 2007-. Periode: 380. 105 participations. 27,63 % victoires en Grand Prix.",pilotes
+pilote_2,Michael Schumacher,"Pilote: Michael Schumacher. Nationalite: 1991-2006 ; 2010-2012. Periode: 307. 91 participations. 29,64 % victoires en Grand Prix.",pilotes
+pilote_3,Max Verstappen,"Pilote: Max Verstappen. Nationalite: 2015-. Periode: 233. 71 participations. 30,47 % victoires en Grand Prix.",pilotes
+pilote_4,Sebastian Vettel,"Pilote: Sebastian Vettel. Nationalite: 2007-2022. Periode: 299. 53 participations. 17,73 % victoires en Grand Prix.",pilotes
+pilote_5,Alain Prost,"Pilote: Alain Prost. Nationalite: 1980-1991 ; 1993. Periode: 199. 51 participations. 25,63 % victoires en Grand Prix.",pilotes
+pilote_6,Ayrton Senna,"Pilote: Ayrton Senna. Nationalite: 1984-1994. Periode: 161. 41 participations. 25,47 % victoires en Grand Prix.",pilotes
+pilote_7,Fernando Alonso,"Pilote: Fernando Alonso. Nationalite: 2001 ; 2003-2018 ; 2021-. Periode: 425. 32 participations. 7,53 % victoires en Grand Prix.",pilotes
+pilote_8,Nigel Mansell,"Pilote: Nigel Mansell. Nationalite: 1980-1992 ; 1994-1995. Periode: 187. 31 participations. 16,58 % victoires en Grand Prix.",pilotes
+pilote_9,Jackie Stewart,"Pilote: Jackie Stewart. Nationalite: 1965-1973. Periode: 99. 27 participations. 27,27 % victoires en Grand Prix.",pilotes
+pilote_10,Jim Clark,"Pilote: Jim Clark. Nationalite: 1960-1968. Periode: 72. 25 participations. 34,72 % victoires en Grand Prix.",pilotes
+pilote_11,Niki Lauda,"Pilote: Niki Lauda. Nationalite: 1971-1979 ; 1982-1985. Periode: 171. 25 participations. 14,62 % victoires en Grand Prix.",pilotes
+pilote_12,Juan Manuel Fangio,"Pilote: Juan Manuel Fangio. Nationalite: 1950-1951 ; 1953-1958. Periode: 51. 24 participations. 47,06 % victoires en Grand Prix.",pilotes
+pilote_13,Nico Rosberg,"Pilote: Nico Rosberg. Nationalite: 2006-2016. Periode: 202. 23 participations. 11,39 % victoires en Grand Prix.",pilotes
+pilote_14,Nelson Piquet,"Pilote: Nelson Piquet. Nationalite: 1978-1991. Periode: 204. 23 participations. 11,27 % victoires en Grand Prix.",pilotes
+pilote_15,Damon Hill,"Pilote: Damon Hill. Nationalite: 1992-1999. Periode: 115. 22 participations. 19,13 % victoires en Grand Prix.",pilotes
+pilote_16,Kimi Räikkönen,"Pilote: Kimi Räikkönen. Nationalite: 2001-2009 ; 2012-2021. Periode: 350. 21 participations. 6,00% victoires en Grand Prix.",pilotes
+pilote_17,Mika Häkkinen,"Pilote: Mika Häkkinen. Nationalite: 1991-2001. Periode: 161. 20 participations. 12,42 % victoires en Grand Prix.",pilotes
+pilote_18,Stirling Moss,"Pilote: Stirling Moss. Nationalite: 1951-1961. Periode: 66. 16 participations. 24,24 % victoires en Grand Prix.",pilotes
+pilote_19,Jenson Button,"Pilote: Jenson Button. Nationalite: 2000-2017. Periode: 306. 15 participations. 4,90 % victoires en Grand Prix.",pilotes
+pilote_20,Jack Brabham,"Pilote: Jack Brabham. Nationalite: 1955-1970. Periode: 123. 14 participations. 11,38 % victoires en Grand Prix.",pilotes
+pilote_21,Emerson Fittipaldi,"Pilote: Emerson Fittipaldi. Nationalite: 1970-1980. Periode: 144. 14 participations. 9,72 % victoires en Grand Prix.",pilotes
+pilote_22,Graham Hill,"Pilote: Graham Hill. Nationalite: 1958-1975. Periode: 175. 14 participations. 8,00 % victoires en Grand Prix.",pilotes
+pilote_23,Alberto Ascari,"Pilote: Alberto Ascari. Nationalite: 1950-1955. Periode: 32. 13 participations. 40,63 % victoires en Grand Prix.",pilotes
+pilote_24,David Coulthard,"Pilote: David Coulthard. Nationalite: 1994-2008. Periode: 246. 13 participations. 5,28 % victoires en Grand Prix.",pilotes
+pilote_25,Alan Jones,"Pilote: Alan Jones. Nationalite: 1975-1981 ; 1983 ; 1985-1986. Periode: 116. 12 participations. 10,34 % victoires en Grand Prix.",pilotes
+pilote_26,Mario Andretti,"Pilote: Mario Andretti. Nationalite: 1968-1972 ; 1974-1982. Periode: 128. 12 participations. 9,38 % victoires en Grand Prix.",pilotes
+pilote_27,Carlos Reutemann,"Pilote: Carlos Reutemann. Nationalite: 1972-1982. Periode: 146. 12 participations. 8,22 % victoires en Grand Prix.",pilotes
+pilote_28,Lando Norris,"Pilote: Lando Norris. Nationalite: 2019-. Periode: 152. 11 participations. 7,23 % victoires en Grand Prix.",pilotes
+pilote_29,Jacques Villeneuve,"Pilote: Jacques Villeneuve. Nationalite: 1996-2006. Periode: 163. 11 participations. 6,75 % victoires en Grand Prix.",pilotes
+pilote_30,Felipe Massa,"Pilote: Felipe Massa. Nationalite: 2002 ; 2004-2017. Periode: 269. 11 participations. 4,09 % victoires en Grand Prix.",pilotes
+pilote_31,Rubens Barrichello,"Pilote: Rubens Barrichello. Nationalite: 1993-2011. Periode: 323. 11 participations. 3,41 % victoires en Grand Prix.",pilotes
+pilote_32,James Hunt,"Pilote: James Hunt. Nationalite: 1973-1979. Periode: 92. 10 participations. 10,87 % victoires en Grand Prix.",pilotes
+pilote_33,Jody Scheckter,"Pilote: Jody Scheckter. Nationalite: 1972-1980. Periode: 112. 10 participations. 8,93 % victoires en Grand Prix.",pilotes
+pilote_34,Ronnie Peterson,"Pilote: Ronnie Peterson. Nationalite: 1970-1978. Periode: 123. 10 participations. 8,13 % victoires en Grand Prix.",pilotes
+pilote_35,Gerhard Berger,"Pilote: Gerhard Berger. Nationalite: 1984-1997. Periode: 210. 10 participations. 4,76 % victoires en Grand Prix.",pilotes
+pilote_36,Valtteri Bottas,"Pilote: Valtteri Bottas. Nationalite: 2013-2024 ; 2026-. Periode: 246. 10 participations. 4,07 % victoires en Grand Prix.",pilotes
+pilote_37,Oscar Piastri,"Pilote: Oscar Piastri. Nationalite: 2023-. Periode: 70. 9 participations. 12,85 % victoires en Grand Prix.",pilotes
+pilote_38,Mark Webber,"Pilote: Mark Webber. Nationalite: 2002-2013. Periode: 215. 9 participations. 4,19 % victoires en Grand Prix.",pilotes
+pilote_39,Denny Hulme,"Pilote: Denny Hulme. Nationalite: 1965-1974. Periode: 112. 8 participations. 7,14 % victoires en Grand Prix.",pilotes
+pilote_40,Jacky Ickx,"Pilote: Jacky Ickx. Nationalite: 1966-1979. Periode: 114. 8 participations. 7,02 % victoires en Grand Prix.",pilotes
+pilote_41,Charles Leclerc,"Pilote: Charles Leclerc. Nationalite: 2018-.... Periode: 171. 8 participations. 4,68 % victoires en Grand Prix.",pilotes
+pilote_42,Daniel Ricciardo,"Pilote: Daniel Ricciardo. Nationalite: 2011-2024. Periode: 258. 8 participations. 3,10 % victoires en Grand Prix.",pilotes
+pilote_43,Juan Pablo Montoya,"Pilote: Juan Pablo Montoya. Nationalite: 2001-2006. Periode: 94. 7 participations. 7,45 % victoires en Grand Prix.",pilotes
+pilote_44,René Arnoux,"Pilote: René Arnoux. Nationalite: 1978-1989. Periode: 149. 7 participations. 4,70 % victoires en Grand Prix.",pilotes
+pilote_45,Tony Brooks,"Pilote: Tony Brooks. Nationalite: 1956-1961. Periode: 38. 6 participations. 15,79 % victoires en Grand Prix.",pilotes
+pilote_46,Jochen Rindt,"Pilote: Jochen Rindt. Nationalite: 1964-1970. Periode: 60. 6 participations. 10,00 % victoires en Grand Prix.",pilotes
+pilote_47,Gilles Villeneuve,"Pilote: Gilles Villeneuve. Nationalite: 1977-1982. Periode: 67. 6 participations. 8,96 % victoires en Grand Prix.",pilotes
+pilote_48,John Surtees,"Pilote: John Surtees. Nationalite: 1960-1972. Periode: 111. 6 participations. 5,41 % victoires en Grand Prix.",pilotes
+pilote_49,Jacques Laffite,"Pilote: Jacques Laffite. Nationalite: 1974-1986. Periode: 176. 6 participations. 3,41 % victoires en Grand Prix.",pilotes
+pilote_50,Ralf Schumacher,"Pilote: Ralf Schumacher. Nationalite: 1997-2007. Periode: 180. 6 participations. 3,33 % victoires en Grand Prix.",pilotes
+pilote_51,Riccardo Patrese,"Pilote: Riccardo Patrese. Nationalite: 1977-1993. Periode: 256. 6 participations. 2,34 % victoires en Grand Prix.",pilotes
+pilote_52,Sergio Pérez,"Pilote: Sergio Pérez. Nationalite: 2011-2024 ; 2026-. Periode: 281. 6 participations. 2,14 % victoires en Grand Prix.",pilotes
+pilote_53,Giuseppe Farina,"Pilote: Giuseppe Farina. Nationalite: 1950-1955. Periode: 33. 5 participations. 15,15 % victoires en Grand Prix.",pilotes
+pilote_54,Keke Rosberg,"Pilote: Keke Rosberg. Nationalite: 1978-1986. Periode: 114. 5 participations. 4,39 % victoires en Grand Prix.",pilotes
+pilote_55,Clay Regazzoni,"Pilote: Clay Regazzoni. Nationalite: 1970-1980. Periode: 132. 5 participations. 3,79 % victoires en Grand Prix.",pilotes
+pilote_57,George Russell,"Pilote: George Russell. Nationalite: 2019-. Periode: 152. 5 participations. 3,29 % victoires en Grand Prix.",pilotes
+pilote_58,Michele Alboreto,"Pilote: Michele Alboreto. Nationalite: 1981-1994. Periode: 194. 5 participations. 2,58 % victoires en Grand Prix.",pilotes
+pilote_59,Dan Gurney,"Pilote: Dan Gurney. Nationalite: 1959-1970. Periode: 86. 4 participations. 4,65 % victoires en Grand Prix.",pilotes
+pilote_60,Bruce McLaren,"Pilote: Bruce McLaren. Nationalite: 1959-1970. Periode: 98. 4 participations. 4,08 % victoires en Grand Prix.",pilotes
+pilote_61,Eddie Irvine,"Pilote: Eddie Irvine. Nationalite: 1993-2002. Periode: 146. 4 participations. 2,74 % victoires en Grand Prix.",pilotes
+pilote_62,Carlos Sainz Jr.,"Pilote: Carlos Sainz Jr.. Nationalite: 2015-. Periode: 229. 4 participations. 1,75 % victoires en Grand Prix.",pilotes
+pilote_63,Peter Collins,"Pilote: Peter Collins. Nationalite: 1952-1958. Periode: 32. 3 participations. 9,38 % victoires en Grand Prix.",pilotes
+pilote_64,Mike Hawthorn,"Pilote: Mike Hawthorn. Nationalite: 1952-1958. Periode: 45. 3 participations. 6,67 % victoires en Grand Prix.",pilotes
+pilote_65,Phil Hill,"Pilote: Phil Hill. Nationalite: 1958-1964. Periode: 47. 3 participations. 6,38 % victoires en Grand Prix.",pilotes
+pilote_66,Didier Pironi,"Pilote: Didier Pironi. Nationalite: 1978-1982. Periode: 70. 3 participations. 4,29 % victoires en Grand Prix.",pilotes
+pilote_67,Heinz-Harald Frentzen,"Pilote: Heinz-Harald Frentzen. Nationalite: 1994-2003. Periode: 156. 3 participations. 1,92 % victoires en Grand Prix.",pilotes
+pilote_68,Johnny Herbert,"Pilote: Johnny Herbert. Nationalite: 1989-2000. Periode: 161. 3 participations. 1,86 % victoires en Grand Prix.",pilotes
+pilote_69,Thierry Boutsen,"Pilote: Thierry Boutsen. Nationalite: 1983-1993. Periode: 163. 3 participations. 1,84 % victoires en Grand Prix.",pilotes
+pilote_70,Giancarlo Fisichella,"Pilote: Giancarlo Fisichella. Nationalite: 1996-2009. Periode: 229. 3 participations. 1,31 % victoires en Grand Prix.",pilotes
+pilote_71,Bill Vukovich,"Pilote: Bill Vukovich. Nationalite: 1951-1955. Periode: 5. 2 participations. 40,00 % victoires en Grand Prix.",pilotes
+pilote_72,José Froilán González,"Pilote: José Froilán González. Nationalite: 1950-1957 ; 1960. Periode: 26. 2 participations. 7,69 % victoires en Grand Prix.",pilotes
+pilote_73,Wolfgang von Trips,"Pilote: Wolfgang von Trips. Nationalite: 1957-1961. Periode: 27. 2 participations. 7,41 % victoires en Grand Prix.",pilotes
+pilote_74,Peter Revson,"Pilote: Peter Revson. Nationalite: 1964 ; 1971-1974. Periode: 30. 2 participations. 6,67 % victoires en Grand Prix.",pilotes
+pilote_75,Jean-Pierre Jabouille,"Pilote: Jean-Pierre Jabouille. Nationalite: 1975-1981. Periode: 49. 2 participations. 4,08 % victoires en Grand Prix.",pilotes
+pilote_77,Maurice Trintignant,"Pilote: Maurice Trintignant. Nationalite: 1950-1964. Periode: 81. 2 participations. 2,47 % victoires en Grand Prix.",pilotes
+pilote_78,Patrick Depailler,"Pilote: Patrick Depailler. Nationalite: 1972-1980. Periode: 95. 2 participations. 2,11 % victoires en Grand Prix.",pilotes
+pilote_79,Joseph Siffert,"Pilote: Joseph Siffert. Nationalite: 1962-1971. Periode: 96. 2 participations. 2,08 % victoires en Grand Prix.",pilotes
+pilote_80,Elio De Angelis,"Pilote: Elio De Angelis. Nationalite: 1979-1986. Periode: 108. 2 participations. 1,85 % victoires en Grand Prix.",pilotes
+pilote_81,Patrick Tambay,"Pilote: Patrick Tambay. Nationalite: 1977-1986. Periode: 114. 2 participations. 1,75 % victoires en Grand Prix.",pilotes
+pilote_82,Lee Wallard,"Pilote: Lee Wallard. Nationalite: 1950-1951. Periode: 2. 1 participations. 50,00 % victoires en Grand Prix.",pilotes
+pilote_83,Bob Sweikert,"Pilote: Bob Sweikert. Nationalite: 1952-1956. Periode: 5. 1 participations. 20,00 % victoires en Grand Prix.",pilotes
+pilote_84,Pat Flaherty,"Pilote: Pat Flaherty. Nationalite: 1950-1959. Periode: 5. 1 participations. 20,00 % victoires en Grand Prix.",pilotes
+pilote_85,Luigi Fagioli,"Pilote: Luigi Fagioli. Nationalite: 1950-1951. Periode: 7. 1 participations. 14,29 % victoires en Grand Prix.",pilotes
+pilote_86,Troy Ruttman,"Pilote: Troy Ruttman. Nationalite: 1950-1960. Periode: 8. 1 participations. 12,50 % victoires en Grand Prix.",pilotes
+pilote_87,Sam Hanks,"Pilote: Sam Hanks. Nationalite: 1950-1957. Periode: 8. 1 participations. 12,50 % victoires en Grand Prix.",pilotes
+pilote_88,Johnnie Parsons,"Pilote: Johnnie Parsons. Nationalite: 1950-1958. Periode: 9. 1 participations. 11,11 % victoires en Grand Prix.",pilotes
+pilote_89,Jimmy Bryan,"Pilote: Jimmy Bryan. Nationalite: 1952-1960. Periode: 9. 1 participations. 11,11 % victoires en Grand Prix.",pilotes
+pilote_90,Ludovico Scarfiotti,"Pilote: Ludovico Scarfiotti. Nationalite: 1963-1968. Periode: 10. 1 participations. 10,00 % victoires en Grand Prix.",pilotes
+pilote_91,Jim Rathmann,"Pilote: Jim Rathmann. Nationalite: 1950-1960. Periode: 10. 1 participations. 10,00 % victoires en Grand Prix.",pilotes
+pilote_92,Rodger Ward,"Pilote: Rodger Ward. Nationalite: 1951-1963. Periode: 12. 1 participations. 8,33 % victoires en Grand Prix.",pilotes
+pilote_93,Piero Taruffi,"Pilote: Piero Taruffi. Nationalite: 1950-1956. Periode: 18. 1 participations. 5,56 % victoires en Grand Prix.",pilotes
+pilote_94,Giancarlo Baghetti,"Pilote: Giancarlo Baghetti. Nationalite: 1961-1967. Periode: 21. 1 participations. 4,76 % victoires en Grand Prix.",pilotes
+pilote_95,Luigi Musso,"Pilote: Luigi Musso. Nationalite: 1953-1958. Periode: 24. 1 participations. 4,17 % victoires en Grand Prix.",pilotes
+pilote_96,Peter Gethin,"Pilote: Peter Gethin. Nationalite: 1970-1974. Periode: 30. 1 participations. 3,33 % victoires en Grand Prix.",pilotes
+pilote_97,Gunnar Nilsson,"Pilote: Gunnar Nilsson. Nationalite: 1976-1977. Periode: 31. 1 participations. 3,23 % victoires en Grand Prix.",pilotes
+pilote_98,Lorenzo Bandini,"Pilote: Lorenzo Bandini. Nationalite: 1961-1967. Periode: 42. 1 participations. 2,38 % victoires en Grand Prix.",pilotes
+pilote_99,François Cevert,"Pilote: François Cevert. Nationalite: 1970-1973. Periode: 46. 1 participations. 2,17 % victoires en Grand Prix.",pilotes
+pilote_100,Innes Ireland,"Pilote: Innes Ireland. Nationalite: 1959-1966. Periode: 50. 1 participations. 2,00 % victoires en Grand Prix.",pilotes
+pilote_101,Richie Ginther,"Pilote: Richie Ginther. Nationalite: 1960-1966. Periode: 52. 1 participations. 1,92 % victoires en Grand Prix.",pilotes
+pilote_102,Carlos Pace,"Pilote: Carlos Pace. Nationalite: 1972-1977. Periode: 72. 1 participations. 1,39 % victoires en Grand Prix.",pilotes
+pilote_103,Vittorio Brambilla,"Pilote: Vittorio Brambilla. Nationalite: 1974-1980. Periode: 74. 1 participations. 1,35 % victoires en Grand Prix.",pilotes
+pilote_104,Alessandro Nannini,"Pilote: Alessandro Nannini. Nationalite: 1986-1990. Periode: 76. 1 participations. 1,32 % victoires en Grand Prix.",pilotes
+pilote_105,Jean-Pierre Beltoise,"Pilote: Jean-Pierre Beltoise. Nationalite: 1967-1974. Periode: 85. 1 participations. 1,18 % victoires en Grand Prix.",pilotes
+pilote_106,Pastor Maldonado,"Pilote: Pastor Maldonado. Nationalite: 2011-2015. Periode: 95. 1 participations. 1,05 % victoires en Grand Prix.",pilotes
+pilote_107,Robert Kubica,"Pilote: Robert Kubica. Nationalite: 2006-2010 ; 2019 ; 2021. Periode: 99. 1 participations. 1,01 % victoires en Grand Prix.",pilotes
+pilote_108,Joakim Bonnier,"Pilote: Joakim Bonnier. Nationalite: 1956-1971. Periode: 104. 1 participations. 0,96 % victoires en Grand Prix.",pilotes
+pilote_109,Jochen Mass,"Pilote: Jochen Mass. Nationalite: 1973-1982. Periode: 105. 1 participations. 0,95 % victoires en Grand Prix.",pilotes
+pilote_110,Heikki Kovalainen,"Pilote: Heikki Kovalainen. Nationalite: 2007-2012. Periode: 111. 1 participations. 0,90 % victoires en Grand Prix.",pilotes
+pilote_111,Olivier Panis,"Pilote: Olivier Panis. Nationalite: 1994-1999 ; 2001-2004. Periode: 158. 1 participations. 0,63 % victoires en Grand Prix.",pilotes
+pilote_112,Pierre Gasly,"Pilote: Pierre Gasly. Nationalite: 2017-. Periode: 177. 1 participations. 0,56 % victoires en Grand Prix.",pilotes
+pilote_113,Esteban Ocon,"Pilote: Esteban Ocon. Nationalite: 2016-2018 ; 2020-. Periode: 180. 1 participations. 0,56% victoires en Grand Prix.",pilotes
+pilote_114,Jean Alesi,"Pilote: Jean Alesi. Nationalite: 1989-2001. Periode: 201. 1 participations. 0,50 % victoires en Grand Prix.",pilotes
+pilote_115,Jarno Trulli,"Pilote: Jarno Trulli. Nationalite: 1997-2011. Periode: 252. 1 participations. 0,40 % victoires en Grand Prix.",pilotes

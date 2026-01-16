@@ -1,5 +1,6 @@
 /**
  * Chatbot Ollama Local - Frontend Client
+ * Chatbot Ollama Local - Frontend Client
  * Communication avec le backend FastAPI
  * Gestion des messages et affichage en temps réel
  */
@@ -12,13 +13,22 @@ function clearAllHistory() {
     conversations = [];
     currentConversationId = null;
     saveConversations();
-    renderConversationList();
     renderNavbarHistory();
     chatBox.innerHTML = '';
     const chatContainer = document.getElementById('chatContainer');
     chatContainer.classList.remove('active-chat');
     chatBox.classList.add('hidden');
     alert('Historique supprimé avec succès');
+  }
+}
+
+/**
+ * Toggle la visibilité de la liste d'historique
+ */
+function toggleHistoryList() {
+  const historyList = document.getElementById('navbarHistoryList');
+  if (historyList) {
+    historyList.classList.toggle('hidden');
   }
 }
 
@@ -144,7 +154,6 @@ function renameConversation(id) {
   if (!newTitle) return;
   conv.title = newTitle;
   saveConversations();
-  renderConversationList();
   renderNavbarHistory();
 }
 
@@ -263,11 +272,13 @@ function renderNavbarHistory() {
   navbarHistoryList.innerHTML = '';
   if (!conversations || conversations.length === 0) {
     navbarHistoryList.innerHTML = `<p class="text-xs text-[#0d0737]/50 dark:text-white/50 text-center py-4">Aucune conversation</p>`;
+    navbarHistoryList.innerHTML = `<p class="text-xs text-[#0d0737]/50 dark:text-white/50 text-center py-4">Aucune conversation</p>`;
     return;
   }
   
   conversations.forEach(conv => {
     const item = document.createElement('button');
+    item.className = 'flex items-center gap-2 w-full p-2 rounded hover:bg-[#FCE8E7] dark:hover:bg-[#1B2F46] transition text-left text-[#0B1C2D] dark:text-[#E6ECF2] text-xs group';
     item.className = 'flex items-center gap-2 w-full p-2 rounded hover:bg-[#FCE8E7] dark:hover:bg-[#1B2F46] transition text-left text-[#0B1C2D] dark:text-[#E6ECF2] text-xs group';
     item.title = conv.title;
     
@@ -287,6 +298,7 @@ function renderNavbarHistory() {
     
     // Bouton supprimer au hover
     const delBtn = document.createElement('button');
+    delBtn.className = 'p-1 rounded hover:bg-[#FCE8E7] dark:hover:bg-[#FF3B30]/20 text-[#E10600] dark:text-[#FF3B30] opacity-0 group-hover:opacity-100 transition flex-shrink-0';
     delBtn.className = 'p-1 rounded hover:bg-[#FCE8E7] dark:hover:bg-[#FF3B30]/20 text-[#E10600] dark:text-[#FF3B30] opacity-0 group-hover:opacity-100 transition flex-shrink-0';
     delBtn.title = 'Supprimer';
     delBtn.innerHTML = '<svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>';
@@ -332,6 +344,7 @@ async function sendMessage(event) {
       headers: {
         "Content-Type": "application/json",
       },
+      body: JSON.stringify({ message: message }),
       body: JSON.stringify({ message: message }),
     });
 
@@ -393,6 +406,7 @@ function displayMessage(text, role = "user", opts = {save: true}) {
   messageDiv.appendChild(bubble);
   chatBox.appendChild(messageDiv);
 
+  chatBox.scrollTop = chatBox.scrollHeight;
   chatBox.scrollTop = chatBox.scrollHeight;
 
   if (opts.save !== false) addMessageToCurrentConversation(role, text);
@@ -787,6 +801,7 @@ function renderHistoryItems(items) {
 
 /**
  * Ouvre le panneau profil utilisateur
+ * Ouvre le panneau profil utilisateur
  */
 function openUserProfile() {
   const userProfilePanel = document.getElementById("userProfilePanel");
@@ -811,7 +826,14 @@ function closeUserProfile() {
 
 /**
  * Gère la connexion utilisateur
+ * Gère la connexion utilisateur
  */
+function handleLogin() {
+  const username = prompt("Entrez votre nom d'utilisateur :");
+  if (username && username.trim()) {
+    localStorage.setItem("username", username.trim());
+    updateUserInfo(username.trim());
+  }
 function handleLogin() {
   const username = prompt("Entrez votre nom d'utilisateur :");
   if (username && username.trim()) {
@@ -829,6 +851,7 @@ function updateUserInfo(username) {
   userInfo.innerHTML = `
     <p class="text-sm">Connecté en tant que <strong>${username}</strong></p>
     <button class="w-full px-4 py-2 rounded-lg bg-[#E10600] hover:bg-[#FF3B30] text-white transition text-sm font-medium" onclick="handleLogout()">Se déconnecter</button>
+    <button class="w-full px-4 py-2 rounded-lg bg-[#E10600] hover:bg-[#FF3B30] text-white transition text-sm font-medium" onclick="handleLogout()">Se déconnecter</button>
   `;
 }
 
@@ -840,6 +863,8 @@ function handleLogout() {
   const userInfo = document.getElementById("userInfo");
   if (!userInfo) return;
   userInfo.innerHTML = `
+    <p class="text-sm text-[#8A97A8] dark:text-[#6F8197]">Non connecté</p>
+    <button class="w-full px-4 py-2 rounded-lg bg-[#E10600] hover:bg-[#FF3B30] text-white transition text-sm font-medium mt-2" onclick="handleLogin()">Se connecter</button>
     <p class="text-sm text-[#8A97A8] dark:text-[#6F8197]">Non connecté</p>
     <button class="w-full px-4 py-2 rounded-lg bg-[#E10600] hover:bg-[#FF3B30] text-white transition text-sm font-medium mt-2" onclick="handleLogin()">Se connecter</button>
   `;
@@ -865,7 +890,13 @@ function toggleDarkMode() {
 function initDarkMode() {
   const savedDarkMode = localStorage.getItem("darkMode");
   const isDarkMode = savedDarkMode !== null ? savedDarkMode === "true" : true; // Dark mode activé par défaut
+  const savedDarkMode = localStorage.getItem("darkMode");
+  const isDarkMode = savedDarkMode !== null ? savedDarkMode === "true" : true; // Dark mode activé par défaut
   const darkModeToggle = document.getElementById("darkModeToggle");
+  
+  // Toujours sauvegarder l'état pour synchroniser le localStorage
+  localStorage.setItem("darkMode", isDarkMode);
+  
   
   // Toujours sauvegarder l'état pour synchroniser le localStorage
   localStorage.setItem("darkMode", isDarkMode);

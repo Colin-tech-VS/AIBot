@@ -1,14 +1,35 @@
+<<<<<<< HEAD
 ﻿## 🔴 CORE - Runtime backend F1 (OBLIGATOIRE)
 fastapi
 uvicorn
+=======
+fastapi>=0.115.0
+uvicorn>=0.30.0
+>>>>>>> frontend
 jinja2
 httpx
 requests
 beautifulsoup4
-pydantic
+pydantic>=2.10.0
 numpy
+<<<<<<< HEAD
 sentence-transformers
 langchain-text-splitters
 faiss-cpu
 schedule
 ollama
+=======
+sentence-transformers>=3.0.0
+langchain-text-splitters>=0.3.0
+langchain-core>=0.3.0
+bcrypt
+PyJWT
+python-docx
+faiss-cpu
+transformers>=4.45.0
+
+# Testing
+pytest>=7.0.0
+pytest-asyncio>=0.21.0
+
+>>>>>>> frontend

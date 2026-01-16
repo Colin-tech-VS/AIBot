@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="fr">
   <head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>F1 Tech - Chatbot IA</title>
     <title>F1 Tech - Chatbot IA</title>
     <link rel="icon" type="image/png" href="/image/favicon.png?v={{ range(100000) | random }}">
     <!-- Tailwind CSS avec config sombre automatique -->
@@ -23,7 +25,24 @@
         }
       })();
     </script>
+    <!-- Init dark mode before DOM renders -->
+    <script>
+      (function() {
+        const savedDarkMode = localStorage.getItem("darkMode");
+        const isDarkMode = savedDarkMode !== null ? savedDarkMode === "true" : true;
+        localStorage.setItem("darkMode", isDarkMode);
+        if (isDarkMode) {
+          document.documentElement.classList.add("dark");
+        }
+      })();
+    </script>
     <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
       * {
         margin: 0;
         padding: 0;
@@ -32,6 +51,7 @@
 
       #mainNavbar {
         transition: width 0.3s ease;
+        width: 15rem;
         width: 15rem;
       }
       
@@ -42,7 +62,32 @@
       #mainNavbar.navbar-collapsed [data-navbar-text],
       #mainNavbar.navbar-collapsed .navbar-section-title {
         display: none;
+      #mainNavbar.navbar-collapsed {
+        width: 4rem;
       }
+      
+      #mainNavbar.navbar-collapsed [data-navbar-text],
+      #mainNavbar.navbar-collapsed .navbar-section-title {
+        display: none;
+      }
+
+      /* Cacher la section historique quand la navbar est fermée */
+      #mainNavbar.navbar-collapsed > div:nth-child(3) {
+        display: none;
+      }
+
+      #mainNavbar.navbar-collapsed > div:nth-child(4) {
+        display: none;
+      }
+      
+      /* Changer le padding uniquement pour la section historique (div centrale) */
+      #mainNavbar.navbar-collapsed > div:nth-child(3) .px-3 {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+      }
+      
+      #mainNavbar.navbar-collapsed button {
+        justify-content: flex-start;
 
       /* Cacher la section historique quand la navbar est fermée */
       #mainNavbar.navbar-collapsed > div:nth-child(3) {
@@ -135,6 +180,29 @@
         overflow: hidden;
       }
 
+      /* Fixation des éléments de la navbar */
+      #mainNavbar > div:first-child {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        overflow: hidden;
+      }
+
+      #mainNavbar > div:nth-child(2) {
+        position: sticky;
+        top: 4.5rem;
+        z-index: 10;
+        overflow: hidden;
+      }
+
+      #mainNavbar > div:last-child {
+        position: sticky;
+        bottom: 0;
+        z-index: 10;
+        margin-top: auto;
+        overflow: hidden;
+      }
+
       /* États du layout chat */
       #chatContainer.active-chat #chatBox {
         display: flex;
@@ -154,11 +222,84 @@
       #chatContainer.active-chat #inputContainer .main-subtitle,
       #chatContainer.active-chat #inputContainer .main-logo,
       #chatContainer.active-chat #inputContainer .suggestions-grid {
+      #chatContainer.active-chat #inputContainer .content-center {
+        max-width: 100%;
+      }
+
+      #chatContainer.active-chat #inputContainer .main-title,
+      #chatContainer.active-chat #inputContainer .main-subtitle,
+      #chatContainer.active-chat #inputContainer .main-logo,
+      #chatContainer.active-chat #inputContainer .suggestions-grid {
         display: none;
       }
 
       .input-racing {
+      .input-racing {
         width: 100%;
+        background: linear-gradient(135deg, rgba(225,6,0,0.2), rgba(139,0,0,0.2));
+        border: 2px solid #e10600;
+        border-radius: 50px;
+        padding: 18px 60px 18px 25px;
+        color: white;
+        font-size: 1em;
+        outline: none;
+        transition: all 0.3s;
+      }
+
+      .input-racing:hover {
+        background: linear-gradient(135deg, rgba(225,6,0,0.3), rgba(139,0,0,0.3));
+        border-color: #ff1e1e;
+        box-shadow: 0 0 20px rgba(225,6,0,0.3);
+      }
+
+      .input-racing:focus {
+        background: linear-gradient(135deg, rgba(225,6,0,0.25), rgba(139,0,0,0.25));
+        border-color: #ff3333;
+        box-shadow: 0 0 25px rgba(225,6,0,0.4);
+      }
+
+      .input-racing::placeholder {
+        color: #0B1C2D;
+        font-size: 0.95em;
+        letter-spacing: 0.5px;
+      }
+
+      .dark .input-racing::placeholder {
+        color: rgba(255,255,255,0.6);
+      }
+
+      /* Navbar F1 Racing Style */
+      .sidebar-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 30px;
+        padding-bottom: 20px;
+        border-bottom: 2px solid rgba(225,6,0,0.3);
+      }
+
+      #mainNavbar.navbar-collapsed .sidebar-header {
+        margin-bottom: 0;
+        padding-bottom: 0;
+        border-bottom: none;
+      }
+
+      .f1-logo-nav {
+        font-size: 1.8em;
+        flex-shrink: 0;
+      }
+
+      .brand-name {
+        font-size: 1.1em;
+        font-weight: 600;
+        background: linear-gradient(135deg, #e10600, #ff6b00);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      #mainNavbar.navbar-collapsed .brand-name {
+        display: none;
         background: linear-gradient(135deg, rgba(225,6,0,0.2), rgba(139,0,0,0.2));
         border: 2px solid #e10600;
         border-radius: 50px;
@@ -401,6 +542,7 @@
     </style>
   </head>
   <body class="bg-gradient-to-b from-[#f8f9fa] to-[#ffffff] dark:bg-[#050A10] text-[#1a1d2e] dark:text-[#E6ECF2] h-screen overflow-hidden">
+  <body class="bg-gradient-to-b from-[#f8f9fa] to-[#ffffff] dark:bg-[#050A10] text-[#1a1d2e] dark:text-[#E6ECF2] h-screen overflow-hidden">
     <div class="flex h-full">
       <!-- Navbar collapsible -->
       <nav id="mainNavbar" class="bg-gradient-to-b from-[#ffffff] to-[#f8f9fa] dark:from-[#0C1A28] dark:to-[#050A10] flex flex-col py-3 shadow-lg overflow-hidden fixed left-0 top-0 h-full z-50">
@@ -457,7 +599,15 @@
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
             </button>
           </div>
+        <div class="flex flex-col flex-1 overflow-hidden px-3 py-4" style="width: 15rem;">
+          <div class="flex items-center justify-between mb-3 min-w-0">
+            <h3 class="text-xs font-bold text-[#6c757d] dark:text-[#E6ECF2] uppercase tracking-widest navbar-section-title" data-navbar-text>Historique</h3>
+            <button id="historyToggleBtn" class="p-0.5 rounded hover:bg-[#f5f5f5] dark:hover:bg-[#1B2F46] transition-all duration-200 text-[#495057] dark:text-[#A5B2C3] hover:text-[#1a1d2e] dark:hover:text-[#E6ECF2]" title="Masquer l'historique" onclick="toggleHistoryList()" data-navbar-text>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+            </button>
+          </div>
           <div id="navbarHistoryList" class="flex-1 overflow-y-auto space-y-1">
+            <p class="text-xs text-[#0d0737]/50 dark:text-white/50 text-center py-4">Aucune conversation</p>
             <p class="text-xs text-[#0d0737]/50 dark:text-white/50 text-center py-4">Aucune conversation</p>
           </div>
         </div>
@@ -473,9 +623,6 @@
 
       <!-- Overlay pour mobile -->
       <div id="navOverlay" class="fixed inset-0 bg-black/50 hidden z-30 lg:hidden" onclick="closeNavbar()"></div>
-
-      <!-- Overlay pour l'historique -->
-      <div id="historyOverlay" class="fixed inset-0 bg-black/50 hidden z-34" onclick="closeHistoryPanel()"></div>
 
       <!-- Zone de chat et historique -->
       <div id="chatContainer" class="flex-1 flex flex-col overflow-hidden relative">

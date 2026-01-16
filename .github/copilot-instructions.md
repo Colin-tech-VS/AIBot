@@ -1,7 +1,16 @@
 # Instructions pour agents (GitHub Copilot / IA)
 
 ## Vue d'ensemble 🚀
+<<<<<<< HEAD
 **F1 Chatbot** : chatbot conversationnel Formule 1 hybride **latency-first** (FastAPI + Ollama local Qwen 2.5 7B).
+=======
+**Chatbot F1** (frontend statique + backend FastAPI) : chatbot conversationnel sur la Formule 1 qui utilise **Ollama** (Qwen 2.5 3B) localement pour générer des réponses. Architecture hybride **latency-first** combinant :
+- **Routage d'intention** (regex) → handlers rapides (<100ms) pour questions simples (classements, calendrier)
+- **LLM pour questions complexes** (stratégies, historique, analyses)
+- **Knowledge Base** locale (markdown/CSV + FAISS pour embeddings)
+- Scrapers d'actualité (standf1.com, lequipe.fr, FIA)
+- API Ergast (résultats, standings, calendrier)
+>>>>>>> frontend
 
 **Architecture 3 niveaux** :
 1. **Intent Routing** (regex, <100ms) → handlers directs pour classements/calendrier
@@ -38,6 +47,7 @@ Comprendre la **cascade décision** (détection intention → validation input �
 - **Méthodes** : `get(key)`, `set(key, value, ttl_seconds)`, stats (hits/misses)
 - **Utilisation** : `cache = get_cache(); cache.get("standings_2024")`
 
+<<<<<<< HEAD
 ### **Prompts & Sécurité LLM** (`backend/optimized_prompts.py`)
 - **System Prompt** : 5 RÈGLES IMMUABLES (anti-jailbreak, français forcé, pas de leakage prompt, honnêteté, sources)
 - **OptimizedPromptBuilder.build_f1_question()** : <600 tokens (KB + news + context)
@@ -56,6 +66,25 @@ Comprendre la **cascade décision** (détection intention → validation input �
 - **Extraction faits** : LLM détecte & stocke infos clés → `memory/learned_facts.json`
 - **Préférences utilisateur** : styles, domaines d'intérêt → `memory/user_preferences.json`
 - **Récall contextuel** : enrichir prompts avec faits appris
+=======
+### Prompt et LLM
+- **`backend/optimized_prompts.py`**  
+  - `OptimizedPromptBuilder` : construire prompts avec règles de sécurité anti-jailbreak.  
+  - Méthodes : `build_f1_question()` (standings + news + KB + mémoire), `build_kb_question()` (KB seule).
+  - **Règles implicites** : français obligatoire, gras pour clés, emojis F1, citations de source, anti-jailbreak.
+
+- **Configuration Ollama** (dans `f1_bot.py`)  
+  - `OLLAMA_MODEL = "qwen2.5:3b"` — modèle rapide et performant.  
+  - `OLLAMA_TIMEOUT = 15` — timeout ultra-rapide (15s).  
+  - Détecte chemin ollama.exe (Windows/macOS/Linux) via `OLLAMA_PATHS`.
+
+### Knowledge Base
+- **`backend/knowledge_base.py`**  
+  - Charge fichiers `.md` et `.csv` du dossier `knowledge_base/`.  
+  - Classe `KnowledgeBase` : `search(q)` avec embeddings FAISS (sentence-transformers).  
+  - **Index FAISS** : ~5500 vecteurs, dimension 384, persisté localement.  
+  - API HTTP via `app.py` : `/kb/docs`, `/kb/search?q=...`, `/kb/add`, `/kb/reload`.
+>>>>>>> frontend
 
 ## Workflows & commandes pratiques ✅
 
@@ -65,6 +94,7 @@ Comprendre la **cascade décision** (détection intention → validation input �
 python -m venv .venv
 .venv\Scripts\activate  # Windows
 
+<<<<<<< HEAD
 # 2. Dépendances
 pip install -r requirements.txt
 
@@ -107,6 +137,19 @@ python -c "from backend.input_validator import sanitize_user_input; q, safe, rea
 - **Logs** : via `backend/logger.py` → `logging.INFO` par défaut
 - **Erreurs Ollama** : pattern `[ERREUR]` ou `❌` dans stdout
 - **FAISS absent** : l'installation requiert `pip install faiss-cpu sentence-transformers`
+=======
+## Workflows et commandes pratiques ✅
+- **Installation** : `pip install -r requirements.txt` (+ `chromadb` optionnel pour embeddings).
+- **Lancer Ollama** : `ollama serve` (daemon, obligatoire). Vérifier : `ollama --version` ou `GET /health`.
+- **Lancer backend** : `python app.py` (ou `uvicorn app:app --reload`). Accès : `http://localhost:8001` (fallback: 8002).
+- **Tests endpoints** :
+  - `/health` → statut Ollama + KB.
+  - `/chat` → POST `{"message": "..."}`.
+  - `/kb/docs` → liste des docs KB.
+  - `/kb/search?q=...` → recherche KB.
+  - `/kb/reload` → recharge fichiers `.md/.csv` depuis disque.
+- **Débogage** : logs en stdout (print/debug) ; erreurs Ollama commencent par `[ERREUR]` ou `❌`.
+>>>>>>> frontend
 
 ---
 
@@ -132,6 +175,7 @@ python -c "from backend.input_validator import sanitize_user_input; q, safe, rea
 
 ---
 
+<<<<<<< HEAD
 ## Points d'intégration externes & Architecture données 🌐
 
 ### Sources de données
@@ -188,6 +232,20 @@ python -c "from backend.input_validator import sanitize_user_input; q, safe, rea
 ### 5. Tester une modification sans Ollama
 - Éditer `backend/f1_bot.py` : activer flag `RAG_ONLY = True` (force KB seule, pas LLM)
 - Redémarrer backend → `/chat` retournera réponses KB sans appel Ollama
+=======
+## Points d'intégration externes & effets secondaires 🌐
+- **Ollama** (local) : dépendance système; chemin configurable dans `OLLAMA_PATHS` (f1_bot.py). Si absent, tests/flows fallback vers KB.
+- **Ergast API** : données temps réel pour résultats et standings — code contient cache TTL 5 minutes.
+- **Sites d'actu**: scrapers pour `standf1.com`, `lequipe.fr/Formule-1`, FIA (calendrier + règlements) — fragile à changements structurels.
+- **FAISS** : index vectoriel pour recherche sémantique dans la Knowledge Base (~5500 vecteurs).
+
+---
+
+## Exemples concrets (où chercher/modifier) 🔎
+- Pour changer le modèle Ollama : éditer `backend/f1_bot.py` → `OLLAMA_MODEL = "qwen2.5:3b"` (actuel).
+- Pour ajuster la règle « répondre toujours en FR » : éditer le bloc `build_prompt` (voir les instructions textuelles détaillées dans `f1_bot.py`).
+- Pour ajouter une donnée persistante : créer un `.md` dans `knowledge_base/` puis `POST /kb/reload`.
+>>>>>>> frontend
 
 ---
 

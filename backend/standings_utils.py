@@ -3,7 +3,13 @@ from bs4 import BeautifulSoup
 from backend.optimized_cache import get_cache, CACHE_TTL
 from backend.logger import get_logger
 import httpx
+<<<<<<< HEAD
 import random
+=======
+import logging
+
+logger = logging.getLogger(__name__)
+>>>>>>> frontend
 
 logger = get_logger(__name__)
 
@@ -29,8 +35,49 @@ def get_random_headers():
     }
 
 
+<<<<<<< HEAD
 def _fetch_url(url: str, timeout: int = 6) -> str:  # Timeout augmenté 4s→6s (anti-bot)
     """Récupère une URL avec headers rotatifs et gestion d'erreurs."""
+=======
+def get_ergast_driver_standings(top_n: int = 10) -> Optional[str]:
+    """Récupère le classement des pilotes depuis Jolpica F1 API (successeur d'Ergast)"""
+    cache = get_cache()
+    cache_key = f"standings:jolpica:top{top_n}"
+    cached = cache.get(cache_key)
+    if cached:
+        return cached
+
+    try:
+        # Jolpica F1 API - successeur d'Ergast depuis 2024
+        url = "https://api.jolpi.ca/ergast/f1/current/driverStandings"
+        response = httpx.get(url, headers=HEADERS, timeout=10, follow_redirects=True)
+        response.raise_for_status()
+
+        data = response.json()
+        standings_list = data['MRData']['StandingsTable']['StandingsLists'][0]['DriverStandings']
+
+        summary_items = []
+        for standing in standings_list[:top_n]:
+            driver_info = standing['Driver']
+            name = f"{driver_info['givenName']} {driver_info['familyName']}"
+            points = int(standing['points'])
+            position = int(standing['position'])
+            summary_items.append(f"{position}. {name} — {points} pts")
+
+        if not summary_items:
+            return None
+
+        summary = "\n".join(summary_items)
+        # Cacher 7 jours pour widgets (604800 sec)
+        cache.set(cache_key, summary, CACHE_TTL.get("widget_standings", 604800))
+        return summary
+    except Exception as e:
+        logger.error(f"Erreur lors de la récupération des standings depuis Jolpica: {e}")
+        return None
+
+
+def _fetch_url(url: str, timeout: int = 4) -> str:  # Timeout réduit 8s→4s
+>>>>>>> frontend
     try:
         headers = get_random_headers()  # Headers rotatifs à chaque requête
         resp = httpx.get(url, headers=headers, timeout=timeout, follow_redirects=True)
@@ -50,7 +97,7 @@ def _fetch_url(url: str, timeout: int = 6) -> str:  # Timeout augmenté 4s→6s 
 def get_standf1_standings_summary(top_n: int = 10) -> Optional[str]:
     """Récupère et formate un résumé des classements (pilotes) via StandF1.
 
-    Renvoie une liste markdown: "1. Nom — NN pts" (top_n). Met en cache ~10 min.
+    Renvoie une liste markdown: "1. Nom — NN pts" (top_n). Met en cache 7 jours.
     """
     cache = get_cache()
     cache_key = f"standings:standf1:top{top_n}"
@@ -126,12 +173,110 @@ def get_standf1_standings_summary(top_n: int = 10) -> Optional[str]:
             return None
 
         summary = "\n".join(summary_items)
+<<<<<<< HEAD
         cache.set(cache_key, summary, CACHE_TTL.get("news_articles", 600))
         logger.info(f"StandF1 standings cached: {len(summary_items)} drivers")
+=======
+        # Cacher 7 jours pour widgets (604800 sec)
+        cache.set(cache_key, summary, CACHE_TTL.get("widget_standings", 604800))
+>>>>>>> frontend
         return summary
     except Exception as e:
         logger.error(f"StandF1 standings parse failed: {type(e).__name__}: {str(e)[:100]}")
         return None
+
+
+def get_lequipe_standings_summary(top_n: int = 10) -> Optional[str]:
+    """Récupère le classement pilotes depuis L'Équipe F1 (fallback).
+    
+    Renvoie markdown: "1. Nom — NN pts" (top_n). Met en cache 7 jours.
+    """
+    cache = get_cache()
+    cache_key = f"standings:lequipe:top{top_n}"
+    cached = cache.get(cache_key)
+    if cached:
+        return cached
+
+    try:
+        html = _fetch_url("https://www.lequipe.fr/Formule-1/f1-classement-pilotes.html", timeout=5)
+        if not html:
+            return None
+        soup = BeautifulSoup(html, "html.parser")
+
+        summary_items: List[str] = []
+
+        # Structure L'Équipe: tbody tr avec cellules [Position, Nom, Points, Victoires]
+        rows = soup.select("tbody tr")
+        
+        for tr in rows:
+            cells = tr.find_all("td")
+            if len(cells) < 3:
+                continue
+
+            # Cellules: [0]=Position, [1]=Nom, [2]=Points, [3]=Victoires
+            try:
+                position = cells[0].get_text(strip=True)
+                name = cells[1].get_text(strip=True)
+                pts = cells[2].get_text(strip=True)
+                
+                # Vérifier que c'est une vraie ligne de données
+                if not position.isdigit():
+                    continue
+                if not pts.isdigit():
+                    continue
+                    
+                rank = int(position)
+                summary_items.append(f"{rank}. {name} — {pts} pts")
+                
+                if len(summary_items) >= top_n:
+                    break
+            except (IndexError, ValueError):
+                continue
+
+        if not summary_items:
+            return None
+
+        summary = "\n".join(summary_items)
+        # Cacher 7 jours pour widgets (604800 sec)
+        cache.set(cache_key, summary, CACHE_TTL.get("widget_standings", 604800))
+        return summary
+    except Exception as e:
+        print(f"[WARN] L'Équipe standings parse failed: {e}")
+        return None
+
+
+def get_driver_standings(top_n: int = 10) -> Optional[str]:
+    """Récupère le classement pilotes avec fallbacks Jolpica → StandF1 → L'Équipe."""
+    # 1. Essayer Jolpica F1 API (successeur d'Ergast)
+    result = get_ergast_driver_standings(top_n)
+    if result:
+        return result
+
+    # 2. Fallback StandF1
+    result = get_standf1_standings_summary(top_n)
+    if result:
+        return result
+
+    # 3. Fallback L'Équipe
+    result = get_lequipe_standings_summary(top_n)
+    if result:
+        return result
+
+    # 4. Données du classement F1 2024 (dernier classement officiel disponible)
+    # Source: Classement final Pilotes 2024
+    mock_standings = [
+        "1. Max Verstappen — 437 pts",
+        "2. Lando Norris — 374 pts",
+        "3. Charles Leclerc — 356 pts",
+        "4. Oscar Piastri — 292 pts",
+        "5. Carlos Sainz — 290 pts",
+        "6. George Russell — 245 pts",
+        "7. Lewis Hamilton — 223 pts",
+        "8. Sergio Pérez — 152 pts",
+        "9. Fernando Alonso — 70 pts",
+        "10. Pierre Gasly — 42 pts",
+    ]
+    return "\n".join(mock_standings[:top_n])
 
 
 def get_standf1_constructors_summary(top_n: int = 10) -> Optional[str]:

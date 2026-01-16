@@ -1,6 +1,7 @@
 {
   "langue": "français",
   "thème": "Formule 1",
+<<<<<<< HEAD
   "last_updated": "2026-01-16T09:30:33.507377",
   "personne": "non spécifiée",
   "sujet_f1": "oui",
@@ -71,4 +72,15 @@
   "surnom": "Piastri",
   "Sport": "Formule 1",
   "source_information": "site officiel FIA F1 ou la page officielle de la F1 sur Twitter"
+=======
+  "last_updated": "2026-01-14T08:35:34.002691",
+  "personne": "non spécifiée",
+  "sport": "Formule 1",
+  "sujet": "Formule 1",
+  "search_topic": "F1",
+  "Formula1": "suivi attentivement",
+  "sujet_preferent": "Formule 1",
+  "annee": "2025",
+  "sports": "Formule 1"
+>>>>>>> frontend
 }

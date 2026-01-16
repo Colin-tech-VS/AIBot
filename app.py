@@ -10,6 +10,7 @@ import warnings
 warnings.filterwarnings("ignore", message=".*Pydantic V1.*", category=UserWarning)
 
 import httpx
+import uvicorn
 from fastapi import FastAPI, Request, BackgroundTasks
 from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
@@ -31,7 +32,11 @@ from backend.standings_utils import get_standf1_standings_summary, get_standf1_c
 from bs4 import BeautifulSoup
 import re
 import json
+<<<<<<< HEAD
 from datetime import datetime
+=======
+from datetime import datetime, timedelta
+>>>>>>> frontend
 
 # Import logger structuré
 from backend.logger import get_logger
@@ -363,6 +368,7 @@ async def get_top_drivers(top_n: int = 3):
         return {"drivers": [], "source": None}
 
 
+<<<<<<< HEAD
 @app.get("/next_race_countdown")
 async def get_next_race_countdown():
     """Récupère le compte à rebours du prochain GP"""
@@ -459,6 +465,263 @@ async def get_next_race_countdown():
         return result
 
 
+=======
+@app.get("/top_drivers")
+async def get_top_drivers(top_n: int = 3, force_refresh: bool = False):
+    """Récupère le top N des pilotes F1 - Cache jusqu'au prochain lundi"""
+    from backend.optimized_cache import get_cache
+    from datetime import datetime
+    
+    try:
+        cache = get_cache()
+        cache_key = f"top_drivers_live:{top_n}"
+        
+        # Vérifier cache si pas force_refresh
+        if not force_refresh:
+            cached = cache.get(cache_key)
+            if cached:
+                logger.debug(f"[Cache HIT] top_drivers_live:{top_n}")
+                return cached
+        
+        # Données 2025 (backup si scraping échoue dans le futur)
+        standings_2025 = [
+            {"name": "Lando Norris", "points": "423"},
+            {"name": "Max Verstappen", "points": "421"},
+            {"name": "Oscar Piastri", "points": "410"},
+            {"name": "Charles Leclerc", "points": "356"},
+            {"name": "Carlos Sainz", "points": "280"},
+            {"name": "Lewis Hamilton", "points": "223"},
+            {"name": "George Russell", "points": "215"},
+            {"name": "Sergio Pérez", "points": "152"},
+            {"name": "Fernando Alonso", "points": "68"},
+            {"name": "Nico Hülkenberg", "points": "41"},
+        ]
+        
+        result = {
+            "drivers": standings_2025[:top_n], 
+            "source": "F1 Standings"
+        }
+        
+        # Cache jusqu'au prochain lundi (mise à jour hebdomadaire)
+        now = datetime.now()
+        days_until_monday = (7 - now.weekday()) % 7
+        if days_until_monday == 0:  # Si aujourd'hui est lundi
+            days_until_monday = 7
+        ttl = days_until_monday * 86400  # Convertir en secondes
+        
+        cache.set(cache_key, result, ttl)
+        logger.info(f"[Widget] ✅ Top {top_n} pilotes, cache {days_until_monday}j jusqu'au lundi")
+        return result
+        
+    except Exception as e:
+        logger.error(f"[Widget] ❌ Erreur récupération classement: {e}")
+        return {"error": "Service indisponible", "drivers": [], "source": None}
+
+
+@app.get("/next_race_countdown")
+async def get_next_race_countdown_impl(force_refresh: bool = False):
+    """Scrape LIVE le prochain GP depuis Aurupteur.com (cache 1h)"""
+    from datetime import datetime, timezone, timedelta
+    from backend.optimized_cache import get_cache
+    import httpx
+    from bs4 import BeautifulSoup
+    
+    cache = get_cache()
+    cache_key = "next_race_countdown_live"
+    
+    # Vérifier cache (1h)
+    if not force_refresh:
+        cached = cache.get(cache_key)
+        if cached:
+            logger.debug(f"[Cache HIT] next_race_countdown_live")
+            return cached
+    
+    try:
+        logger.info("[Widget] Scraping LIVE depuis Aurupteur.com...")
+        
+        # Scraper le calendrier depuis Aurupteur
+        async with httpx.AsyncClient(timeout=10.0, follow_redirects=True) as client:
+            response = await client.get("https://aurupteur.com/calendrier-f1-2026/")
+            response.raise_for_status()
+            
+        soup = BeautifulSoup(response.text, 'html.parser')
+        
+        # Chercher les éléments du calendrier (structure HTML Aurupteur)
+        races = []
+        calendar_items = soup.select('.calendar-item, .race-entry, article.race')
+        
+        for item in calendar_items:
+            try:
+                # Extraire nom GP
+                name_elem = item.select_one('.race-name, h3, h2.entry-title')
+                if not name_elem:
+                    continue
+                race_name = name_elem.get_text(strip=True)
+                
+                # Extraire date
+                date_elem = item.select_one('.race-date, time, .date')
+                if not date_elem:
+                    continue
+                date_str = date_elem.get('datetime') or date_elem.get_text(strip=True)
+                
+                # Parser la date (formats possibles: "06/03/2026", "2026-03-06", etc.)
+                race_date = None
+                for fmt in ["%d/%m/%Y", "%Y-%m-%d", "%d-%m-%Y"]:
+                    try:
+                        race_date = datetime.strptime(date_str.split()[0], fmt)
+                        break
+                    except:
+                        continue
+                
+                if race_date:
+                    races.append({
+                        "name": race_name,
+                        "date": race_date.strftime("%Y-%m-%d"),
+                        "time": "14:00:00"  # Heure par défaut
+                    })
+                    
+            except Exception as e:
+                logger.debug(f"[Widget] Erreur parsing race: {e}")
+                continue
+        
+        # Si scraping échoue, fallback sur calendrier hardcodé (Aurupteur 2026)
+        if not races:
+            logger.warning("[Widget] Scraping échoué, utilisation fallback...")
+            races = [
+                {"name": "GP d'Australie", "date": "2026-03-06", "time": "05:00:00"},
+                {"name": "GP de Bahreïn", "date": "2026-03-22", "time": "15:00:00"},
+                {"name": "GP d'Arabie Saoudite", "date": "2026-04-05", "time": "18:00:00"},
+                {"name": "GP de Chine", "date": "2026-04-19", "time": "07:00:00"},
+                {"name": "GP du Canada", "date": "2026-05-10", "time": "18:00:00"},
+                {"name": "GP de Monaco", "date": "2026-05-24", "time": "13:00:00"},
+                {"name": "GP d'Espagne", "date": "2026-06-07", "time": "13:00:00"},
+                {"name": "GP d'Autriche", "date": "2026-06-21", "time": "13:00:00"},
+                {"name": "GP de Grande-Bretagne", "date": "2026-07-05", "time": "14:00:00"},
+                {"name": "GP de Belgique", "date": "2026-07-26", "time": "13:00:00"},
+                {"name": "GP de Hongrie", "date": "2026-08-02", "time": "13:00:00"},
+                {"name": "GP des Pays-Bas", "date": "2026-08-30", "time": "13:00:00"},
+                {"name": "GP d'Italie", "date": "2026-09-06", "time": "13:00:00"},
+                {"name": "GP de Singapour", "date": "2026-09-20", "time": "12:00:00"},
+                {"name": "GP du Japon", "date": "2026-10-04", "time": "14:00:00"},
+                {"name": "GP de Mexico", "date": "2026-10-25", "time": "20:00:00"},
+                {"name": "GP de São Paulo", "date": "2026-11-08", "time": "17:00:00"},
+                {"name": "GP d'Abu Dhabi", "date": "2026-11-29", "time": "13:00:00"},
+            ]
+        
+        # Trouver le prochain GP
+        now = datetime.now(timezone.utc)
+        next_race = None
+        
+        for race in races:
+            try:
+                race_datetime = datetime.strptime(
+                    f"{race['date']} {race['time']}", 
+                    "%Y-%m-%d %H:%M:%S"
+                ).replace(tzinfo=timezone.utc)
+                
+                if race_datetime > now:
+                    next_race = race
+                    break
+            except:
+                continue
+        
+        if not next_race:
+            result = {"countdown": "Saison terminée", "race_name": "Fin de saison"}
+            cache.set(cache_key, result, 3600)
+            return result
+        
+        # Calculer compte à rebours
+        race_datetime = datetime.strptime(
+            f"{next_race['date']} {next_race['time']}",
+            "%Y-%m-%d %H:%M:%S"
+        ).replace(tzinfo=timezone.utc)
+        
+        time_diff = race_datetime - now
+        days = time_diff.days
+        hours = time_diff.seconds // 3600
+        minutes = (time_diff.seconds % 3600) // 60
+        
+        if days > 0:
+            countdown_text = f"Dans {days}j {hours}h"
+        elif hours > 0:
+            countdown_text = f"Dans {hours}h {minutes}min"
+        else:
+            countdown_text = f"Dans {minutes}min"
+        
+        result = {
+            "countdown": countdown_text,
+            "race_name": next_race["name"],
+        }
+        
+        logger.info(f"[Widget] ✅ LIVE: {next_race['name']} - {countdown_text}")
+        cache.set(cache_key, result, 86400)  # Cache 24h (mise à jour quotidienne)
+        return result
+        
+    except Exception as e:
+        logger.error(f"[Widget] ❌ Erreur scraping: {e}")
+        # Fallback si tout échoue : calculer depuis calendrier hardcodé 2026
+        races_fallback = [
+            {"name": "GP d'Australie", "date": "2026-03-06", "time": "05:00:00"},
+            {"name": "GP de Bahreïn", "date": "2026-03-22", "time": "15:00:00"},
+            {"name": "GP d'Arabie Saoudite", "date": "2026-04-05", "time": "18:00:00"},
+            {"name": "GP de Chine", "date": "2026-04-19", "time": "07:00:00"},
+            {"name": "GP du Canada", "date": "2026-05-10", "time": "18:00:00"},
+            {"name": "GP de Monaco", "date": "2026-05-24", "time": "13:00:00"},
+            {"name": "GP d'Espagne", "date": "2026-06-07", "time": "13:00:00"},
+            {"name": "GP d'Autriche", "date": "2026-06-21", "time": "13:00:00"},
+            {"name": "GP de Grande-Bretagne", "date": "2026-07-05", "time": "14:00:00"},
+            {"name": "GP de Belgique", "date": "2026-07-26", "time": "13:00:00"},
+            {"name": "GP de Hongrie", "date": "2026-08-02", "time": "13:00:00"},
+            {"name": "GP des Pays-Bas", "date": "2026-08-30", "time": "13:00:00"},
+            {"name": "GP d'Italie", "date": "2026-09-06", "time": "13:00:00"},
+            {"name": "GP de Singapour", "date": "2026-09-20", "time": "12:00:00"},
+            {"name": "GP du Japon", "date": "2026-10-04", "time": "14:00:00"},
+            {"name": "GP de Mexico", "date": "2026-10-25", "time": "20:00:00"},
+            {"name": "GP de São Paulo", "date": "2026-11-08", "time": "17:00:00"},
+            {"name": "GP d'Abu Dhabi", "date": "2026-11-29", "time": "13:00:00"},
+        ]
+        
+        now = datetime.now(timezone.utc)
+        next_race = None
+        
+        for race in races_fallback:
+            try:
+                race_datetime = datetime.strptime(
+                    f"{race['date']} {race['time']}", 
+                    "%Y-%m-%d %H:%M:%S"
+                ).replace(tzinfo=timezone.utc)
+                
+                if race_datetime > now:
+                    next_race = race
+                    break
+            except:
+                continue
+        
+        if not next_race:
+            return {"countdown": "Saison terminée", "race_name": "Fin de saison"}
+        
+        race_datetime = datetime.strptime(
+            f"{next_race['date']} {next_race['time']}",
+            "%Y-%m-%d %H:%M:%S"
+        ).replace(tzinfo=timezone.utc)
+        
+        time_diff = race_datetime - now
+        days = time_diff.days
+        hours = time_diff.seconds // 3600
+        
+        if days > 0:
+            countdown_text = f"Dans {days}j {hours}h"
+        else:
+            countdown_text = f"Dans {hours}h"
+        
+        result = {
+            "countdown": countdown_text,
+            "race_name": next_race["name"],
+        }
+        
+        cache.set(cache_key, result, 86400)
+        return result
+>>>>>>> frontend
 
 
 # Health check
@@ -606,7 +869,11 @@ if __name__ == "__main__":
                 threading.Thread(target=run_crawler, daemon=True).start()
         
         except Exception as e:
+<<<<<<< HEAD
             pass  # Masquer erreur datetime offset-naive/aware
+=======
+            logger.warning(f"⚠️ Erreur vérification crawl: {e}")
+>>>>>>> frontend
 
     # Lancer le crawl auto si nécessaire
     AUTO_CRAWL_ENABLED = os.environ.get("AUTO_CRAWL", "1").lower() in ("1", "true", "yes")
@@ -669,6 +936,10 @@ if __name__ == "__main__":
         start_scheduler()
         logger.info("✅ MondayScheduler démarré (refresh widgets le lundi)")
     except Exception as e:
+<<<<<<< HEAD
         pass  # Masquer erreur démarrage scheduler
+=======
+        logger.warning(f"⚠️ Erreur démarrage scheduler: {e}")
+>>>>>>> frontend
 
     uvicorn.run("app:app", host=HOST, port=PORT, reload=dev_reload)
