@@ -1,4 +1,4 @@
-﻿## Dépendances noyau (runtime backend F1)
+﻿## 🔴 CORE - Runtime backend F1 (OBLIGATOIRE)
 fastapi
 uvicorn
 jinja2
@@ -11,9 +11,4 @@ sentence-transformers
 langchain-text-splitters
 faiss-cpu
 schedule
-
-## Outils docs / entraînement / crawling avancé (optionnels)
-python-docx
-transformers>=4.39.0
 ollama
-playwright
