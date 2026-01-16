@@ -544,6 +544,10 @@
 
         <!-- Bouton paramètres en bas -->
         <div class="px-3 py-4 border-t border-[#e8e8e8] dark:border-[#1F334A] bg-[#f8f9fa] dark:bg-[#050A10] overflow-hidden" style="width: 15rem;">
+          <button id="userProfileBtn" class="flex items-center gap-2 p-2 rounded-lg hover:bg-[#f5f5f5] dark:hover:bg-[#1B2F46] transition-all duration-200 active:scale-95 text-[#E10600] dark:text-[#FF3B30] w-full text-left text-sm font-semibold min-w-0" onclick="openUserProfile()">
+            <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+            <span class="whitespace-nowrap overflow-hidden" data-navbar-text>Paramètres</span>
+          </button>
         </div>
       </nav>
 
@@ -581,6 +585,50 @@
               </form>
             </div>
 
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Overlay profil -->
+    <div id="userProfileOverlay" class="fixed inset-0 bg-black/50 hidden z-40" onclick="closeUserProfile()"></div>
+    
+    <!-- Panneau profil utilisateur -->
+    <div id="userProfilePanel" class="fixed top-0 right-0 w-96 h-full bg-white dark:bg-slate-900 shadow-2xl flex flex-col z-50 transform translate-x-full transition-transform duration-300 ease-in-out" aria-hidden="true">
+      <!-- Header -->
+      <div class="px-6 py-4 border-b border-gray-200 dark:border-slate-700 flex justify-between items-center bg-red-600 dark:bg-red-700">
+        <h3 class="font-semibold text-white">Paramètres</h3>
+        <button class="p-1 rounded hover:bg-red-700 dark:hover:bg-red-800 transition-colors text-white" onclick="closeUserProfile()" title="Fermer">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+        </button>
+      </div>
+
+      <!-- Contenu -->
+      <div class="flex-1 overflow-y-auto p-6 space-y-8">
+        <!-- Apparence -->
+        <div>
+          <h4 class="font-semibold text-gray-900 dark:text-white mb-4">Apparence</h4>
+          <label class="flex items-center gap-3 cursor-pointer p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors">
+            <input type="checkbox" id="darkModeToggle" class="w-4 h-4 rounded cursor-pointer" onchange="toggleDarkMode()">
+            <span class="text-sm text-gray-700 dark:text-gray-300">Mode sombre</span>
+          </label>
+        </div>
+
+        <!-- Données -->
+        <div>
+          <h4 class="font-semibold text-gray-900 dark:text-white mb-4">Données</h4>
+          <button id="clearHistoryBtn" class="w-full px-4 py-3 rounded-lg bg-red-600 hover:bg-red-700 dark:bg-red-700 dark:hover:bg-red-800 text-white transition-colors font-medium" onclick="clearAllHistory()">
+            Supprimer l'historique
+          </button>
+        </div>
+
+        <!-- À propos -->
+        <div>
+          <h4 class="font-semibold text-gray-900 dark:text-white mb-4">À propos</h4>
+          <div class="p-4 rounded-lg bg-gray-50 dark:bg-slate-800 border border-gray-200 dark:border-slate-700">
+            <p class="text-sm text-gray-700 dark:text-gray-300 font-medium">F1 Tech - Chatbot IA v1.0</p>
+            <p class="text-xs text-gray-500 dark:text-gray-400 mt-3">Assisté par Qwen 2.5 + Ollama</p>
+            <p class="text-xs text-gray-500 dark:text-gray-400 mt-2">Backend : FastAPI + Knowledge Base</p>
           </div>
         </div>
       </div>
