@@ -32,11 +32,7 @@ from backend.standings_utils import get_standf1_standings_summary, get_standf1_c
 from bs4 import BeautifulSoup
 import re
 import json
-<<<<<<< HEAD
-from datetime import datetime
-=======
 from datetime import datetime, timedelta
->>>>>>> frontend
 
 # Import logger structuré
 from backend.logger import get_logger
@@ -334,142 +330,13 @@ async def run_crawler_manual():
 async def get_memory_summary():
     from backend.long_term_memory import long_term_memory
     return long_term_memory.get_learning_summary()
-@app.get("/top_drivers")
-async def get_top_drivers(top_n: int = 3):
-    """Récupère le top N des pilotes F1 - Données depuis Aurupteur"""
-    from backend.optimized_cache import get_cache, CACHE_TTL
-    
-    try:
-        cache = get_cache()
-        cache_key = f"top_drivers:{top_n}"
-        
-        # Vérifier cache (TTL: 7 jours)
-        cached = cache.get(cache_key)
-        if cached:
-            return cached
-        
-        # Fallback: données statiques 2026 (à jour)
-        standings = [
-            {"name": "Verstappen", "points": "468"},
-            {"name": "Hamilton", "points": "450"},
-            {"name": "Leclerc", "points": "449"},
-            {"name": "Sainz", "points": "425"},
-            {"name": "Piastri", "points": "410"},
-        ]
-        
-        drivers = [{"name": d["name"], "points": d["points"]} for d in standings[:top_n]]
-        result = {"drivers": drivers, "source": "F1 2026"}
-        
-        # Cacher 7 jours
-        cache.set(cache_key, result, CACHE_TTL.get("widget_standings", 604800))
-        return result
-    except Exception as e:
-        logger.warning(f"Erreur récupération classement: {e}")
-        return {"drivers": [], "source": None}
 
 
-<<<<<<< HEAD
-@app.get("/next_race_countdown")
-async def get_next_race_countdown():
-    """Récupère le compte à rebours du prochain GP"""
-    from datetime import datetime, timezone
-    from backend.optimized_cache import get_cache
-    
-    cache = get_cache()
-    cache_key = "next_race_countdown_v2"
-    
-    # Vérifier cache (TTL: 1h car dynamique)
-    cached = cache.get(cache_key)
-    if cached:
-        return cached
-    
-    try:
-        # Calendrier F1 2026 officiel (Aurupteur source)
-        races_2026 = [
-            # Source Aurupteur: premier GP annoncé au 08/03/2026 05:00 (UTC) à Melbourne
-            {"name": "GP d'Australie", "date": "2026-03-08", "time": "05:00:00", "location": "Melbourne"},
-            {"name": "GP de Bahreïn", "date": "2026-03-22", "time": "15:00:00", "location": "Sakir"},
-            {"name": "GP de Chine", "date": "2026-04-19", "time": "13:00:00", "location": "Shanghai"},
-            {"name": "GP du Japon", "date": "2026-04-26", "time": "14:00:00", "location": "Suzuka"},
-            {"name": "GP d'Arabie Saoudite", "date": "2026-05-03", "time": "18:30:00", "location": "Jeddah"},
-            {"name": "GP de Monaco", "date": "2026-05-24", "time": "14:00:00", "location": "Monaco"},
-            {"name": "GP du Canada", "date": "2026-06-14", "time": "19:00:00", "location": "Montréal"},
-            {"name": "GP de Silverstone", "date": "2026-07-05", "time": "14:00:00", "location": "Silverstone"},
-            {"name": "GP de Hongrie", "date": "2026-07-19", "time": "15:00:00", "location": "Budapest"},
-            {"name": "GP de Spa-Francorchamps", "date": "2026-08-02", "time": "15:00:00", "location": "Spa"},
-            {"name": "GP des Pays-Bas", "date": "2026-08-30", "time": "15:00:00", "location": "Zandvoort"},
-            {"name": "GP d'Italie", "date": "2026-09-06", "time": "15:00:00", "location": "Monza"},
-            {"name": "GP de Singapour", "date": "2026-09-27", "time": "19:00:00", "location": "Marina Bay"},
-            {"name": "GP de Japon", "date": "2026-10-04", "time": "14:00:00", "location": "Suzuka"},
-            {"name": "GP de Mexico", "date": "2026-10-25", "time": "20:00:00", "location": "Mexico City"},
-            {"name": "GP de São Paulo", "date": "2026-11-08", "time": "17:00:00", "location": "Interlagos"},
-            {"name": "GP d'Abu Dhabi", "date": "2026-11-29", "time": "13:00:00", "location": "Yas Marina"},
-        ]
-        
-        now = datetime.now(timezone.utc)
-        next_race = None
-        
-        # Trouver le prochain GP
-        for race in races_2026:
-            try:
-                race_datetime = datetime.strptime(
-                    f"{race['date']} {race['time']}", 
-                    "%Y-%m-%d %H:%M:%S"
-                ).replace(tzinfo=timezone.utc)
-                
-                if race_datetime > now:
-                    next_race = race
-                    break
-            except:
-                continue
-        
-        if not next_race:
-            result = {"countdown": "Saison 2026 terminée", "race_name": "Fin de saison", "location": "—"}
-            cache.set(cache_key, result, 3600)
-            return result
-        
-        # Calculer compte à rebours
-        race_datetime = datetime.strptime(
-            f"{next_race['date']} {next_race['time']}",
-            "%Y-%m-%d %H:%M:%S"
-        ).replace(tzinfo=timezone.utc)
-        
-        time_diff = race_datetime - now
-        days = time_diff.days
-        hours = time_diff.seconds // 3600
-        minutes = (time_diff.seconds % 3600) // 60
-        
-        # Format countdown
-        if days > 0:
-            countdown_text = f"Dans {days}j {hours}h"
-        elif hours > 0:
-            countdown_text = f"Dans {hours}h {minutes}min"
-        else:
-            countdown_text = f"Dans {minutes}min"
-        
-        result = {
-            "countdown": countdown_text,
-            "race_name": next_race["name"],
-            "location": next_race["location"],
-            "date": next_race["date"]
-        }
-        
-        # Cacher 1h (dynamique)
-        cache.set(cache_key, result, 3600)
-        return result
-        
-    except Exception as e:
-        logger.warning(f"Erreur récupération countdown: {e}")
-        result = {"countdown": "—", "race_name": "—", "location": "—"}
-        cache.set(cache_key, result, 3600)
-        return result
-
-
-=======
 @app.get("/top_drivers")
 async def get_top_drivers(top_n: int = 3, force_refresh: bool = False):
     """Récupère le top N des pilotes F1 - Cache jusqu'au prochain lundi"""
     from backend.optimized_cache import get_cache
+    from backend.f1_bot import scrape_aurupteur_standings
     from datetime import datetime
     
     try:
@@ -483,24 +350,32 @@ async def get_top_drivers(top_n: int = 3, force_refresh: bool = False):
                 logger.debug(f"[Cache HIT] top_drivers_live:{top_n}")
                 return cached
         
-        # Données 2025 (backup si scraping échoue dans le futur)
-        standings_2025 = [
-            {"name": "Lando Norris", "points": "423"},
-            {"name": "Max Verstappen", "points": "421"},
-            {"name": "Oscar Piastri", "points": "410"},
-            {"name": "Charles Leclerc", "points": "356"},
-            {"name": "Carlos Sainz", "points": "280"},
-            {"name": "Lewis Hamilton", "points": "223"},
-            {"name": "George Russell", "points": "215"},
-            {"name": "Sergio Pérez", "points": "152"},
-            {"name": "Fernando Alonso", "points": "68"},
-            {"name": "Nico Hülkenberg", "points": "41"},
-        ]
+        # Tentative de scraper les données live depuis Aurupteur
+        standings_live = scrape_aurupteur_standings()
         
-        result = {
-            "drivers": standings_2025[:top_n], 
-            "source": "F1 Standings"
-        }
+        if standings_live:
+            result = {
+                "drivers": standings_live[:top_n], 
+                "source": "Aurupteur (live)"
+            }
+        else:
+            # Fallback: données statiques 2025 depuis Aurupteur
+            standings_2025 = [
+                {"name": "Lando Norris", "points": "423"},
+                {"name": "Max Verstappen", "points": "421"},
+                {"name": "Oscar Piastri", "points": "410"},
+                {"name": "George Russell", "points": "319"},
+                {"name": "Charles Leclerc", "points": "242"},
+                {"name": "Lewis Hamilton", "points": "156"},
+                {"name": "Andrea Kimi Antonelli", "points": "150"},
+                {"name": "Alexander Albon", "points": "73"},
+                {"name": "Carlos Sainz", "points": "64"},
+                {"name": "Fernando Alonso", "points": "56"},
+            ]
+            result = {
+                "drivers": standings_2025[:top_n], 
+                "source": "F1 Standings (cache)"
+            }
         
         # Cache jusqu'au prochain lundi (mise à jour hebdomadaire)
         now = datetime.now()
@@ -721,7 +596,6 @@ async def get_next_race_countdown_impl(force_refresh: bool = False):
         
         cache.set(cache_key, result, 86400)
         return result
->>>>>>> frontend
 
 
 # Health check
@@ -869,11 +743,7 @@ if __name__ == "__main__":
                 threading.Thread(target=run_crawler, daemon=True).start()
         
         except Exception as e:
-<<<<<<< HEAD
-            pass  # Masquer erreur datetime offset-naive/aware
-=======
             logger.warning(f"⚠️ Erreur vérification crawl: {e}")
->>>>>>> frontend
 
     # Lancer le crawl auto si nécessaire
     AUTO_CRAWL_ENABLED = os.environ.get("AUTO_CRAWL", "1").lower() in ("1", "true", "yes")
@@ -936,10 +806,6 @@ if __name__ == "__main__":
         start_scheduler()
         logger.info("✅ MondayScheduler démarré (refresh widgets le lundi)")
     except Exception as e:
-<<<<<<< HEAD
-        pass  # Masquer erreur démarrage scheduler
-=======
         logger.warning(f"⚠️ Erreur démarrage scheduler: {e}")
->>>>>>> frontend
 
     uvicorn.run("app:app", host=HOST, port=PORT, reload=dev_reload)
