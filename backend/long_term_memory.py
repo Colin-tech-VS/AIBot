@@ -49,10 +49,16 @@ class LongTermMemory:
     def _save_json(self, filepath: Path, data):
         """Sauvegarde des données en JSON."""
         try:
-            with open(filepath, "w", encoding="utf-8") as f:
+            # Sauvegarde atomique : écrire dans un fichier temporaire puis renommer
+            temp_file = filepath.with_suffix('.tmp')
+            with open(temp_file, "w", encoding="utf-8") as f:
                 json.dump(data, f, ensure_ascii=False, indent=2)
+                f.flush()  # Forcer l'écriture sur disque
+                os.fsync(f.fileno())  # Garantir la synchronisation
+            temp_file.replace(filepath)  # Renommage atomique
         except Exception as e:
             print(f"[ERROR] Erreur sauvegarde {filepath}: {e}")
+            raise  # Re-lever l'exception pour que l'appelant sache qu'il y a un problème
 
     def store_conversation(self, user_message: str, assistant_response: str,
                           session_id: str = "default", metadata: Optional[Dict] = None):
@@ -71,11 +77,18 @@ class LongTermMemory:
         try:
             with open(self.all_conversations_file, "a", encoding="utf-8") as f:
                 f.write(json.dumps(entry, ensure_ascii=False) + "\n")
+                f.flush()  # Forcer l'écriture immédiate
+                os.fsync(f.fileno())  # Garantir la synchronisation disque
+            print(f"[OK] Conversation enregistrée: {len(user_message)} chars user, {len(assistant_response)} chars assistant")
         except Exception as e:
             print(f"[ERROR] Erreur stockage conversation: {e}")
+            raise  # Re-lever pour que l'appelant puisse logger
 
         # Analyser et extraire des connaissances de cet échange
-        self._extract_knowledge(user_message, assistant_response)
+        try:
+            self._extract_knowledge(user_message, assistant_response)
+        except Exception as e:
+            print(f"[WARNING] Extraction connaissance échouée: {e}")
 
     def _extract_knowledge(self, user_message: str, assistant_response: str):
         """
@@ -178,23 +191,32 @@ class LongTermMemory:
             "timestamp": datetime.now().isoformat()
         })
         self.learned_facts = self.learned_facts[-200:] # Plus de place pour les faits LLM
-        self._save_json(self.learned_facts_file, self.learned_facts)
         
-        print(f"[IA APPREND]  ANALYSE LLM : Fait extrait : '{fact_text}'")
-        print(f"   -> Méthode : Intelligence Artificielle (Extraction sémantique)")
-        print(f"   -> Durée : Long terme")
+        try:
+            self._save_json(self.learned_facts_file, self.learned_facts)
+            print(f"[IA APPREND]  ANALYSE LLM : Fait extrait : '{fact_text}'")
+            print(f"   -> Méthode : Intelligence Artificielle (Extraction sémantique)")
+            print(f"   -> Durée : Long terme")
+        except Exception as e:
+            print(f"[ERROR] Échec sauvegarde fait LLM: {e}")
+            raise
 
     def update_preferences_from_llm(self, prefs: Dict):
         """Met à jour les préférences via des données structurées LLM."""
         for k, v in prefs.items():
             self.user_preferences[k] = v
         self.user_preferences["last_updated"] = datetime.now().isoformat()
-        self._save_json(self.user_preferences_file, self.user_preferences)
         
-        for k, v in prefs.items():
-            print(f"[IA APPREND]  RÉGLAGE UTILISATEUR (via LLM) : {k} = '{v}'")
-        print(f"   -> Méthode : Synthèse intelligente des préférences")
-        print(f"   -> Durée : Permanent")
+        try:
+            self._save_json(self.user_preferences_file, self.user_preferences)
+            
+            for k, v in prefs.items():
+                print(f"[IA APPREND]  RÉGLAGE UTILISATEUR (via LLM) : {k} = '{v}'")
+            print(f"   -> Méthode : Synthèse intelligente des préférences")
+            print(f"   -> Durée : Permanent")
+        except Exception as e:
+            print(f"[ERROR] Échec sauvegarde préférences LLM: {e}")
+            raise
 
     def get_relevant_context(self, current_question: str, max_items: int = 5) -> str:
         """

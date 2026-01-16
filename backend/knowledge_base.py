@@ -12,6 +12,7 @@ import os
 import csv
 import pickle
 import numpy as np
+import re
 
 # Import logger AVANT les try/except pour éviter erreur
 from backend.logger import get_logger
@@ -267,85 +268,102 @@ class KnowledgeBase:
             except Exception as e:
                 logger.warning(f"FAISS add failed pour {doc.title}: {e}")
     
-    def search(self, query: str, top_k: int = 5, min_score: float = 0.3) -> List[str]:
-        """Rechercher documents pertinents par similarité sémantique (FAISS)
+    def search(self, query: str, top_k: int = 5, min_score: float = 0.5, return_scores: bool = False):
+        """Recherche dans la KB FAISS."""
         
-        Args:
-            query: Question utilisateur
-            top_k: Nombre de chunks à retourner
-            min_score: Score cosine minimum (0.0-1.0, recommandé 0.3-0.5)
+        # VALIDATION: Vérifier que l'index est chargé
+        if not self.index:
+            logger.error("❌ Index FAISS non initialisé")
+            return []
         
-        Returns:
-            Liste de chunks pertinents (texte brut)
-        """
-        if self.use_faiss and self.embedder and self.index and self.index.ntotal > 0:
-            try:
-                # 1. Embed query
-                query_embedding = self.embedder.encode([query], convert_to_numpy=True, show_progress_bar=False)
-                faiss.normalize_L2(query_embedding)
-                
-                # 2. Recherche top_k + 2 (pour filtrer score)
-                search_k = min(top_k + 2, self.index.ntotal)
-                distances, indices = self.index.search(query_embedding, search_k)
-                
-                # 3. Filtrer par score minimum + retourner chunks
-                results = []
-                for dist, idx in zip(distances[0], indices[0]):
-                    if dist >= min_score and idx < len(self.chunks):
-                        results.append(self.chunks[idx])
-                        if KB_LOG_VERBOSE:
-                            meta = self.chunk_metadata[idx]
-                            print(f"[DEBUG] Match: {meta['title']} (score={dist:.3f})")
-                
-                if results:
-                    return results[:top_k]
-                else:
-                    logger.warning(f"Aucun résultat FAISS > {min_score}, fallback recherche simple")
-            except Exception as e:
-                logger.warning(f"FAISS search failed: {e}")
+        if not self.chunks or len(self.chunks) == 0:
+            logger.error("❌ Aucun document chargé dans la KB")
+            return []
         
-        # Fallback : recherche simple (keyword matching)
-        return self._simple_search(query, top_k)
+        # VALIDATION: Vérifier cohérence index/documents
+        if self.index.ntotal != len(self.chunks):
+            logger.warning(f"⚠️ Incohérence index/docs: {self.index.ntotal} vecteurs vs {len(self.chunks)} docs")
+        
+        try:
+            # Générer embedding de la requête
+            query_embedding = self.embedder.encode([query], convert_to_numpy=True)
+            
+            # VALIDATION: Vérifier dimension embedding
+            expected_dim = self.index.d  # Dimension attendue par FAISS
+            actual_dim = query_embedding.shape[1]
+            if actual_dim != expected_dim:
+                logger.error(f"❌ Dimension embedding incorrecte: {actual_dim} (attendu: {expected_dim})")
+                return []
+            
+            # Recherche FAISS (chercher 2x plus pour filtrer)
+            k_search = min(top_k * 3, len(self.chunks))
+            distances, indices = self.index.search(query_embedding, k_search)
+            
+            results = []
+            for dist, idx in zip(distances[0], indices[0]):
+                # VALIDATION: Index valide
+                if idx < 0 or idx >= len(self.chunks):
+                    logger.warning(f"⚠️ Index FAISS invalide: {idx} (max: {len(self.chunks)-1})")
+                    continue
+                
+                # Score cosine approximatif
+                score = 1.0 / (1.0 + dist)
+                
+                if score >= min_score:
+                    doc_content = self.chunks[idx]
+                    
+                    # Ajouter le résultat
+                    if return_scores:
+                        results.append((doc_content, score))
+                    else:
+                        results.append(doc_content)
+                
+                if len(results) >= top_k:
+                    break
+            
+            # FALLBACK: Si 0 résultat avec min_score, réessayer sans filtre
+            if not results and min_score > 0.0:
+                logger.warning(f"⚠️ FAISS: 0 résultat avec min_score={min_score}, fallback sans seuil")
+                for dist, idx in zip(distances[0][:top_k], indices[0][:top_k]):
+                    if idx >= 0 and idx < len(self.chunks):
+                        score = 1.0 / (1.0 + dist)
+                        doc_content = self.chunks[idx]
+                        if return_scores:
+                            results.append((doc_content, score))
+                        else:
+                            results.append(doc_content)
+            
+            logger.info(f"FAISS: {len(results)}/{top_k} résultats (seuil={min_score})")
+            return results
+            
+        except Exception as e:
+            logger.error(f"❌ Erreur critique recherche FAISS: {type(e).__name__}: {e}", exc_info=True)
+            # FALLBACK: Recherche texte simple si FAISS échoue
+            logger.warning("🔄 Fallback recherche texte simple (FAISS défaillant)")
+            return self._simple_text_search(query, top_k)
     
-    def _simple_search(self, query: str, top_k: int = 3) -> List[str]:
-        """Recherche simple par mots-clés - améliorée pour chercher en profondeur
-        
-        Avec seuil minimum de pertinence pour éviter les faux positifs
-        """
-        query_lower = query.lower()
-        query_words = query_lower.split()
-        scores = []
-        
-        for doc_id, doc in self.docs.items():
-            # Combiner titre + contenu pour la recherche
-            full_text = (doc.title + " " + doc.content).lower()
+    def _simple_text_search(self, query: str, top_k: int = 3) -> List[str]:
+        """Fallback: recherche texte simple si FAISS échoue."""
+        try:
+            query_lower = query.lower()
+            scored_docs = []
             
-            # Score 1: Nombre exact de mots trovés (exact match)
-            exact_score = sum(1 for word in query_words if word in full_text)
+            for doc in self.chunks:
+                doc_lower = doc.lower()
+                # Score basique: nombre de mots-clés présents
+                matches = sum(1 for word in query_lower.split() if len(word) > 3 and word in doc_lower)
+                if matches > 0:
+                    scored_docs.append((doc, matches))
             
-            # Score 2: Correspondance partielle
-            partial_score = 0
-            for word in query_words:
-                if len(word) > 2:  # Ignorer les petits mots
-                    if word in full_text:
-                        partial_score += 2
-                    # Chercher aussi les variantes (pluriel, etc.)
-                    if word.rstrip('s') in full_text or word + 's' in full_text:
-                        partial_score += 1
+            # Trier par score décroissant
+            scored_docs.sort(key=lambda x: x[1], reverse=True)
             
-            total_score = exact_score * 2 + partial_score
-            
-            # Bonus si titre correspond exactement
-            if query_lower in doc.title.lower():
-                total_score += 10
-            
-            # SEUIL MINIMUM: au moins 2 points (au moins 1 mot matché ou titre partiel)
-            if total_score >= 2:
-                scores.append((total_score, doc.content))
-        
-        # Trier par score décroissant et retourner top_k
-        scores.sort(reverse=True, key=lambda x: x[0])
-        return [content for _, content in scores[:top_k]]
+            results = [doc for doc, score in scored_docs[:top_k]]
+            logger.info(f"Recherche texte simple: {len(results)} résultats")
+            return results
+        except Exception as e:
+            logger.error(f"❌ Même la recherche simple a échoué: {e}")
+            return []
     
     def get_all_docs(self) -> List[KnowledgeDoc]:
         """Retourner tous les documents"""
@@ -418,8 +436,10 @@ class KnowledgeBase:
             except Exception as e:
                 logger.warning(f"Échec chargement CSV {csv_file.name}: {e}")
         
-        # 3) Charger les articles crawlés (news)
-        self.load_crawled_articles(kb_dir)
+        # 3) NE PAS charger les articles crawlés dans FAISS
+        # ⚠️ NEWS = FALLBACK SÉPARÉ (pas mélangées dans KB principale)
+        # Elles seront interrogées uniquement si KB ne trouve rien
+        # (voir search_news_fallback() plus bas)
         
         # Résumé global
         if not KB_LOG_VERBOSE:
@@ -434,49 +454,109 @@ class KnowledgeBase:
         self._loaded = True
         
         # Sauvegarder index FAISS pour prochaine utilisation
-        if self.use_faiss:
+        # ⚠️ OPTIMISATION: Ne sauvegarder que si changements (évite I/O inutile)
+        if self.use_faiss and not FAISS_INDEX_PATH.exists():
             self._save_faiss_index()
 
     def load_crawled_articles(self, kb_dir: Path = KB_DIR):
-        """Charge les articles crawlés depuis knowledge_base/crawled/*.json"""
+        """Charge les articles crawlés depuis knowledge_base/crawled/*.json
+        
+        ⚠️ DEPRECATED: Les news ne sont plus chargées dans FAISS au démarrage.
+        Utiliser search_news_fallback() à la place pour recherche à la demande.
+        """
+        logger.warning("⚠️ load_crawled_articles() deprecated. Utiliser search_news_fallback()")
+    
+    def search_news_fallback(self, query: str, top_k: int = 3, kb_dir: Path = KB_DIR) -> List[str]:
+        """Recherche dans les news scrapées (FALLBACK uniquement si KB principale vide)
+        
+        Args:
+            query: Question utilisateur
+            top_k: Nombre d'articles à retourner
+            kb_dir: Dossier knowledge_base
+        
+        Returns:
+            Liste de contenus d'articles pertinents
+        """
         crawled_dir = kb_dir / "crawled"
         if not crawled_dir.exists():
-            return
+            return []
         
-        total_articles = 0
+        results = []
+        query_lower = query.lower()
         
-        for json_file in crawled_dir.glob("news_*.json"):
+        # Mots-clés de la requête
+        query_words = [w.strip() for w in query_lower.split() if len(w.strip()) > 3]
+        
+        for json_file in crawled_dir.glob("*.json"):
+            # Ignorer fichiers metadata
+            if json_file.name.startswith("_"):
+                continue
+            
             try:
                 with open(json_file, "r", encoding="utf-8") as f:
                     data = json.load(f)
                 
-                site_name = data.get("site", "unknown")
-                items = data.get("items", [])
+                source = data.get("source", json_file.stem)
+
+                # Supporter deux formats:
+                # 1) {"articles": [{"title", "content", "url", ...}]}
+                # 2) {"items":   [{"title", "url"}]} (liste de liens sans contenu)
+                articles = data.get("articles")
+                if not isinstance(articles, list) or not articles:
+                    items = data.get("items", [])
+                    articles = []
+                    for item in items:
+                        title_item = (item.get("title") or "").strip()
+                        url_item = item.get("url")
+                        if not title_item:
+                            continue
+                        articles.append({
+                            "title": title_item,
+                            # Pas de contenu détaillé disponible dans ce format
+                            "content": "",
+                            "url": url_item,
+                        })
                 
-                # Ajouter chaque article comme document
-                for idx, item in enumerate(items):
-                    title = item.get("title", "")
-                    url = item.get("url", "")
+                for article in articles:
+                    raw_title = (article.get("title") or "").strip()
+                    raw_content = (article.get("content") or "").strip()
+                    title = raw_title.lower()
+                    content = raw_content.lower()
                     
-                    if not title:
-                        continue
+                    # Scoring simple
+                    score = 0
+                    for word in query_words:
+                        if word in title:
+                            score += 3  # Titre = poids fort
+                        elif word in content:
+                            score += 1
                     
-                    # Créer contenu riche pour indexing
-                    content = f"Source: {site_name.upper()}\nTitle: {title}\nURL: {url}"
-                    doc_id = f"crawled_{site_name}_{idx}"
-                    
-                    doc = KnowledgeDoc(doc_id, title, content, "news")
-                    self.add_document(doc)
-                    total_articles += 1
-                
-                if KB_LOG_VERBOSE:
-                    logger.info(f"Articles crawlés chargés: {json_file.name} ({len(items)} items)")
+                    if score > 0:
+                        # Format enrichi avec source (sans inventer de contenu)
+                        formatted = f"**{raw_title or 'Article'}** ({source})\n\n"
+                        if raw_content:
+                            formatted += raw_content
+                        else:
+                            formatted += (
+                                "Résumé indisponible dans la base d'actualités. "
+                                "Consulte le lien ci-dessous pour lire l'article complet."
+                            )
+
+                        if article.get('url'):
+                            formatted += f"\n\nSource: {article['url']}"
+                        
+                        results.append((score, formatted))
             
             except Exception as e:
-                logger.warning(f"Erreur lecture articles crawlés {json_file.name}: {e}")
+                logger.warning(f"⚠️ Erreur lecture news {json_file.name}: {e}")
         
-        if total_articles > 0:
-            logger.info(f"✅ {total_articles} articles crawlés indexés dans FAISS")
+        # Trier par score et retourner top_k
+        results.sort(reverse=True, key=lambda x: x[0])
+        
+        if results:
+            logger.info(f"📰 News fallback: {len(results[:top_k])} articles trouvés")
+        
+        return [content for _, content in results[:top_k]]
 
     def ensure_loaded(self, kb_dir: Path = KB_DIR):
         """Assure que la KB est chargée (chargement paresseux)."""

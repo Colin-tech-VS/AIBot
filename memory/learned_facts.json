@@ -1,720 +1,1002 @@
 [
   {
     "type": "llm_extracted",
-    "content": "Il a remporté deux titres mondiaux (2005 et 2006)",
-    "timestamp": "2026-01-13T01:22:19.913753"
+    "content": "Il a fait ses débuts professionnels chez McLaren en 2019",
+    "timestamp": "2026-01-15T23:30:29.585972"
   },
   {
     "type": "llm_extracted",
-    "content": "Fernando Alonso a remporté deux titres mondiaux en Formule 1 (2005 et 2006)",
-    "timestamp": "2026-01-13T01:23:41.318022"
+    "content": "Il a pris la relève de Lando Norris comme coéquipier à McLaren",
+    "timestamp": "2026-01-15T23:30:29.587832"
   },
   {
     "type": "llm_extracted",
-    "content": "{\"facts\": [\"Fernando Alonso a remporté deux titres mondiaux en Formule 1 (2005 et 2006)\"], \"preferences\": {\"langue\": \"fr\", \"format\": \"gras\"}}",
-    "timestamp": "2026-01-13T01:23:41.318785"
-  },
-  {
-    "type": "correction",
-    "user_input": "non c est le spneu ca",
-    "context": "Voici la réponse concise et factuelle en français :\n\nC'est concernant les pneus pour 2024.",
-    "timestamp": "2026-01-14T12:51:17.238343"
+    "content": "Il a marqué sa première victoire en Grand Chelem lors du Grand Prix d'Espagne 2023",
+    "timestamp": "2026-01-15T23:30:29.589252"
   },
   {
     "type": "llm_extracted",
-    "content": "Les pneus de Formule 1 sont conçus pour résister aux conditions extrêmes, notamment au niveau du chaleur et de l'humidité.",
-    "timestamp": "2026-01-14T15:50:53.489777"
+    "content": "l'utilisateur parle de Coolisch et Pizzari",
+    "timestamp": "2026-01-15T23:30:55.292883"
   },
   {
     "type": "llm_extracted",
-    "content": "Ils utilisent généralement des composants en caoutchouc synthétique ou naturel, parfois combinés avec des fibres de carbone pour améliorer la durabilité.",
-    "timestamp": "2026-01-14T15:50:53.491482"
+    "content": "Wolfgang Seidel e Giorgio Scarlatti sont des pilotes de Formule 1 avec lesquels l'utilisateur a pu se confronter",
+    "timestamp": "2026-01-15T23:30:55.295013"
   },
   {
     "type": "llm_extracted",
-    "content": "Le dernier Championnat du Monde de Formule 1 a été remporté par Lewis Hamilton en 2022",
-    "timestamp": "2026-01-14T19:51:30.231774"
+    "content": "piastri est un nom qui pourrait faire référence à un pilote de Formule 1",
+    "timestamp": "2026-01-15T23:31:10.573519"
   },
   {
     "type": "llm_extracted",
-    "content": "Jean-Pierre Derrier a effectué ses débuts avec Ferrari lors du Grand Prix d'Espagne 2005",
-    "timestamp": "2026-01-14T20:44:45.452201"
+    "content": "Vettel a connu un grave accident lors du Grand Prix d'Allemagne 2015.",
+    "timestamp": "2026-01-15T23:31:48.151355"
   },
   {
     "type": "llm_extracted",
-    "content": "Pour Lewis Hamilton, lors du Grand Prix automobile de Turquie 2020, il a terminé la course en pole position.",
-    "timestamp": "2026-01-14T20:45:03.472751"
+    "content": "Il s'est retrouvé hospitalisé après une collision avec le mur à high speed sur la ligne droite de Hockenheim.",
+    "timestamp": "2026-01-15T23:31:48.153389"
   },
   {
     "type": "llm_extracted",
-    "content": "Fernando Alonso est un pilote automobile espagnol",
-    "timestamp": "2026-01-14T20:45:19.873176"
+    "content": "La sécurité routière a été largement discutée dans ce contexte, mettant en lumière les risques encourus par les pilotes lors des courses.",
+    "timestamp": "2026-01-15T23:31:48.155348"
   },
   {
     "type": "llm_extracted",
-    "content": "Il a remporté trois championnats du monde de Formule 1 en 2003, 2005 et 2018",
-    "timestamp": "2026-01-14T20:45:19.874532"
+    "content": "L'accident impliquant Michael Schumacher a eu lieu le 30 décembre 2013.",
+    "timestamp": "2026-01-15T23:32:10.751605"
   },
   {
     "type": "llm_extracted",
-    "content": "le dernier champion connu mentionné est Lewis Hamilton",
-    "timestamp": "2026-01-14T20:45:47.930654"
-  },
-  {
-    "type": "llm_extracted",
-    "content": "Matra International/Tyrrell Racing a remporté 10 victoires au championnat du monde de Formule 1",
-    "timestamp": "2026-01-14T20:46:11.951298"
-  },
-  {
-    "type": "llm_extracted",
-    "content": "Rob Walker Racing a remporté 9 victoires au championnat du monde de Formule 1",
-    "timestamp": "2026-01-14T20:46:11.952675"
-  },
-  {
-    "type": "llm_extracted",
-    "content": "FISA a remporté 1 victoire au championnat du monde de Formule 1",
-    "timestamp": "2026-01-14T20:46:11.953617"
-  },
-  {
-    "type": "llm_extracted",
-    "content": "Le premier grand prix de l'année est le 14 janvier 2026.",
-    "timestamp": "2026-01-14T20:46:40.677751"
-  },
-  {
-    "type": "llm_extracted",
-    "content": "Le premier grand prix de l'année est prévu le 14 janvier 2026",
-    "timestamp": "2026-01-14T20:46:48.249695"
-  },
-  {
-    "type": "correction",
-    "user_input": "faux",
-    "context": "Le premier grand prix de l'année est prévu le 14 janvier 2026.",
-    "timestamp": "2026-01-14T20:46:56.254904"
-  },
-  {
-    "type": "llm_extracted",
-    "content": "Le top 10 a été énuméré",
-    "timestamp": "2026-01-14T20:54:24.775164"
-  },
-  {
-    "type": "llm_extracted",
-    "content": "Les pilotes mentionnés sont Oliver Bearman, Lando Norris, Esteban Ocon, Oscar Piastri, Kimi Antonelli, George Russell, Liam Lawson, Arvid Lindblad et Max Verstappen",
-    "timestamp": "2026-01-14T20:54:24.776730"
-  },
-  {
-    "type": "llm_extracted",
-    "content": "Lewis Hamilton est un pilote de Formule 1 britannique.",
-    "timestamp": "2026-01-14T21:02:43.273423"
-  },
-  {
-    "type": "llm_extracted",
-    "content": "Il a remporté plusieurs championnats du monde.",
-    "timestamp": "2026-01-14T21:02:43.274933"
-  },
-  {
-    "type": "llm_extracted",
-    "content": "Il est considéré comme l'un des meilleurs pilotes de l'histoire de la F1.",
-    "timestamp": "2026-01-14T21:02:43.275968"
-  },
-  {
-    "type": "llm_extracted",
-    "content": "Dernière victoire de Lewis Hamilton est le Grand Prix d'Australie 2023",
-    "timestamp": "2026-01-14T21:02:52.437091"
-  },
-  {
-    "type": "llm_extracted",
-    "content": "Lewis Hamilton n'a pas remporté de nouvelles courses depuis sa dernière victoire au Grand Prix d'Australie 2023",
-    "timestamp": "2026-01-14T21:02:59.499652"
-  },
-  {
-    "type": "llm_extracted",
-    "content": "Les pneus en Formule 1 sont classés en pneus secs et pneus pluie",
-    "timestamp": "2026-01-14T21:04:17.867035"
-  },
-  {
-    "type": "llm_extracted",
-    "content": "Il y a trois types de pneus secs: tendre, moyen et dur, ainsi qu'un type intermédiaire.",
-    "timestamp": "2026-01-14T21:04:17.868712"
-  },
-  {
-    "type": "llm_extracted",
-    "content": "Il existe un seul type de pneu pour la pluie.",
-    "timestamp": "2026-01-14T21:04:17.870051"
-  },
-  {
-    "type": "llm_extracted",
-    "content": "Drapeau rouge : Suspension de la course (accident, danger)",
-    "timestamp": "2026-01-14T21:04:46.487566"
-  },
-  {
-    "type": "llm_extracted",
-    "content": "Drapeau jaune : Alertes ou obstacles sur la piste",
-    "timestamp": "2026-01-14T21:04:46.489068"
-  },
-  {
-    "type": "llm_extracted",
-    "content": "Drapeau noir avec croix blanche : Véhicule hors circuit",
-    "timestamp": "2026-01-14T21:04:46.490078"
-  },
-  {
-    "type": "llm_extracted",
-    "content": "Drapeau bleu : Pilote qui bloque délibérément",
-    "timestamp": "2026-01-14T21:04:46.491074"
-  },
-  {
-    "type": "llm_extracted",
-    "content": "Ferrari",
-    "timestamp": "2026-01-14T21:05:17.537412"
-  },
-  {
-    "type": "llm_extracted",
-    "content": "Mercedes (en tant que Mercedes-Benz avant 2010)",
-    "timestamp": "2026-01-14T21:05:17.538941"
-  },
-  {
-    "type": "llm_extracted",
-    "content": "McLaren",
-    "timestamp": "2026-01-14T21:05:17.540007"
-  },
-  {
-    "type": "llm_extracted",
-    "content": "Williams",
-    "timestamp": "2026-01-14T21:05:17.541076"
-  },
-  {
-    "type": "llm_extracted",
-    "content": "Red Bull Racing",
-    "timestamp": "2026-01-14T21:05:17.542117"
-  },
-  {
-    "type": "llm_extracted",
-    "content": "Renault (avant sa reprise par Nissan)",
-    "timestamp": "2026-01-14T21:05:17.543195"
-  },
-  {
-    "type": "llm_extracted",
-    "content": "BMW Sauber (maintenant Alfa Romeo)",
-    "timestamp": "2026-01-14T21:05:17.544250"
-  },
-  {
-    "type": "llm_extracted",
-    "content": "Toyota",
-    "timestamp": "2026-01-14T21:05:17.545279"
-  },
-  {
-    "type": "llm_extracted",
-    "content": "Porsche",
-    "timestamp": "2026-01-14T21:05:17.546373"
-  },
-  {
-    "type": "llm_extracted",
-    "content": "BMW Sauber a participé à la Formule 1 de 2006 à 2014",
-    "timestamp": "2026-01-14T21:05:34.471571"
-  },
-  {
-    "type": "llm_extracted",
-    "content": "BMW Sauber a remporté le championnat des constructeurs en 2009",
-    "timestamp": "2026-01-14T21:05:34.473081"
-  },
-  {
-    "type": "llm_extracted",
-    "content": "Timo Glock a été pilote de Formule 1 pour l'écurie BMW Sauber de 2006 à 2014.",
-    "timestamp": "2026-01-14T21:05:53.832966"
-  },
-  {
-    "type": "llm_extracted",
-    "content": "Il a remporté la course du Grand Prix d'Allemagne en 2009.",
-    "timestamp": "2026-01-14T21:05:53.834592"
-  },
-  {
-    "type": "llm_extracted",
-    "content": "Michael Schumacher a remporté 7 championnats du monde de Formule 1",
-    "timestamp": "2026-01-14T21:06:16.949237"
-  },
-  {
-    "type": "llm_extracted",
-    "content": "Michael Schumacher a eu un accident grave en 2013",
-    "timestamp": "2026-01-14T21:06:26.011952"
-  },
-  {
-    "type": "llm_extracted",
-    "content": "Michael Schumacher a eu un accident grave en 2013",
-    "timestamp": "2026-01-14T21:06:36.037159"
-  },
-  {
-    "type": "llm_extracted",
-    "content": "l'accident de Michael Schumacher s'est produit en 2013 lors d'une descente de ski",
-    "timestamp": "2026-01-14T21:06:49.506229"
-  },
-  {
-    "type": "llm_extracted",
-    "content": "L'accident de Michael Schumacher s'est produit à Meribel, en France, lors d'une descente de ski en 2013.",
-    "timestamp": "2026-01-14T21:06:57.827458"
-  },
-  {
-    "type": "llm_extracted",
-    "content": "Michael Schumacher réside actuellement au Tessin, en Suisse.",
-    "timestamp": "2026-01-14T21:07:07.731815"
-  },
-  {
-    "type": "llm_extracted",
-    "content": "Michael Schumacher a eu un accident grave lors d'une descente de ski à Meribel en 2013",
-    "timestamp": "2026-01-14T21:07:14.460231"
-  },
-  {
-    "type": "llm_extracted",
-    "content": "il réside actuellement au Tessin, en Suisse",
-    "timestamp": "2026-01-14T21:07:14.461841"
-  },
-  {
-    "type": "llm_extracted",
-    "content": "Ayrton Senna est un pilote brésilien",
-    "timestamp": "2026-01-14T21:07:20.794770"
-  },
-  {
-    "type": "llm_extracted",
-    "content": "Ayrton Senna est originaire du Brésil.",
-    "timestamp": "2026-01-14T21:07:30.159166"
-  },
-  {
-    "type": "llm_extracted",
-    "content": "Ayrton Senna est décédé lors d'un accident au Grand Prix du Brésil de Formule 1 en 1994.",
-    "timestamp": "2026-01-14T21:07:37.986916"
+    "content": "Il s'agissait d'une grave blessure cérébrale due à une avalanche à Méribel, en France.",
+    "timestamp": "2026-01-15T23:32:10.753716"
   },
   {
     "type": "llm_extracted",
     "content": "Nous sommes en janvier 2026",
-    "timestamp": "2026-01-14T21:52:51.351740"
+    "timestamp": "2026-01-15T23:45:02.557237"
   },
   {
     "type": "llm_extracted",
-    "content": "La saison de Formule 1 2025 vient de se terminer",
-    "timestamp": "2026-01-14T21:52:51.353695"
+    "content": "La saison 2025 de Formule 1 vient de se terminer",
+    "timestamp": "2026-01-15T23:45:02.559344"
   },
   {
     "type": "llm_extracted",
-    "content": "prost a remporté deux championnats du monde de Formule 1 en 1985 et 1993",
-    "timestamp": "2026-01-14T21:53:47.897889"
+    "content": "Les courses de Formule 1 en 2027 sont programmées",
+    "timestamp": "2026-01-15T23:45:27.926689"
   },
   {
     "type": "llm_extracted",
-    "content": "Alain Prost a terminé la course avec 2 points pour le pole position",
-    "timestamp": "2026-01-14T21:54:06.773173"
+    "content": "La saison débutera le 5 mars au Bahrein et se terminera le 8 octobre en Italie avec le Grand Prix de Grande-Bretagne",
+    "timestamp": "2026-01-15T23:45:27.928717"
   },
   {
     "type": "llm_extracted",
-    "content": "Alain Prost a terminé la course avec 4 points pour la pole position du sprint",
-    "timestamp": "2026-01-14T21:54:06.775316"
+    "content": "Lewis Hamilton disputera la saison 2026 de Formule 1 avec Mercedes",
+    "timestamp": "2026-01-15T23:45:52.177317"
   },
   {
     "type": "llm_extracted",
-    "content": "Alain Prost a DNS (Did Not Start) pour la qualification",
-    "timestamp": "2026-01-14T21:54:06.776524"
+    "content": "Les principales courses de la saison 2026 incluent le Grand Prix d'Australie, des États-Unis et de Grande-Bretagne",
+    "timestamp": "2026-01-15T23:45:52.179455"
   },
   {
     "type": "llm_extracted",
-    "content": "Alain Prost est ret traffié de la course",
-    "timestamp": "2026-01-14T21:54:06.777741"
+    "content": "Valtteri Bottas est le dernier vainqueur du championnat du monde de Formule 1.",
+    "timestamp": "2026-01-15T23:57:15.046360"
   },
   {
     "type": "llm_extracted",
-    "content": "En 1960, le championnat du monde de Formule 1 n'a pas été remporté par un pilote spécifique car cette saison ne faisait alors pas partie du championnat mondial de Formule 1.",
-    "timestamp": "2026-01-14T21:54:26.490933"
+    "content": "Il a remporté la saison 2019 au volant d'une Mercedes.",
+    "timestamp": "2026-01-15T23:57:15.048664"
   },
   {
     "type": "llm_extracted",
-    "content": "Le championnat mondial de Formule 1 a commencé en 1950.",
-    "timestamp": "2026-01-14T21:54:26.492607"
+    "content": "Le Royaume-Uni a remporté un titre de championnat de Formule 1 en 2025",
+    "timestamp": "2026-01-15T23:57:26.025908"
   },
   {
     "type": "llm_extracted",
-    "content": "le championnat mondial de Formule 1 a été créé en 1950",
-    "timestamp": "2026-01-14T21:54:39.055714"
+    "content": "Le Royaume-Uni a remporté le titre de championnat de Formule 1 en 2025.",
+    "timestamp": "2026-01-15T23:57:43.741012"
   },
   {
     "type": "llm_extracted",
-    "content": "Les circuits où ont eu lieu des courses de F1 en 2025 sont Monza (Italie) et Yas Marina (Abu Dhabi, Émirats Arabes Unis).",
-    "timestamp": "2026-01-14T21:55:06.109427"
+    "content": "Lewis Hamilton a remporté 8 titres mondiaux en Formule 1",
+    "timestamp": "2026-01-15T23:57:56.102941"
   },
   {
     "type": "llm_extracted",
-    "content": "Les courses de Formule 1 en 2025 auront lieu à Monza (Italie) et Yas Marina (Abu Dhabi, Émirats Arabes Unis).",
-    "timestamp": "2026-01-14T21:55:20.455631"
+    "content": "Lewis Hamilton a remporté 157 courses en Formule 1, un record",
+    "timestamp": "2026-01-15T23:57:56.105226"
   },
   {
     "type": "llm_extracted",
-    "content": "Les courses de Formule 1 en 2025 auront lieu à Monza (Italie) et Yas Marina (Abu Dhabi, Émirats Arabes Unis).",
-    "timestamp": "2026-01-14T21:55:33.662138"
+    "content": "Schumacher détient le record avec 7 titres mondiaux.",
+    "timestamp": "2026-01-15T23:58:14.961898"
   },
   {
     "type": "llm_extracted",
-    "content": "Les courses de Formule 1 en 2025 auront lieu à Monza en Italie et à Yas Marina à Abu Dhabi.",
-    "timestamp": "2026-01-14T21:55:47.082222"
+    "content": "Il a dominé la Formule 1 pendant de nombreuses années, remportant ses premiers titres en 1994 et terminant sa carrière en 2006.",
+    "timestamp": "2026-01-15T23:58:14.964011"
   },
   {
     "type": "llm_extracted",
-    "content": "Les drapeaux en Formule 1 servent à communiquer diverses informations.",
-    "timestamp": "2026-01-14T21:56:15.599629"
+    "content": "Riccardo 'Ricci' Piastri est un pilote australien qui a fait ses débuts en Formule 1 avec la Alpine en 2023.",
+    "timestamp": "2026-01-15T23:58:26.254859"
   },
   {
     "type": "llm_extracted",
-    "content": "Drapeau Bleu indique un pilote plus rapide en train de dépasser.",
-    "timestamp": "2026-01-14T21:56:15.601359"
+    "content": "Il est connu pour son agilité et sa vitesse sur la piste.",
+    "timestamp": "2026-01-15T23:58:26.257027"
   },
   {
     "type": "llm_extracted",
-    "content": "Drapeau Jaune signifie attention, danger sur la piste.",
-    "timestamp": "2026-01-14T21:56:15.602492"
+    "content": "Max Verstappen a remporté 15 victoires en 2022 avec Red Bull Racing-RBPT.",
+    "timestamp": "2026-01-15T23:58:37.452420"
   },
   {
     "type": "llm_extracted",
-    "content": "Drapeau Vert marque le début ou reprise de la course après une pause.",
-    "timestamp": "2026-01-14T21:56:15.603747"
+    "content": "les pneus doivent respecter des régulations strictes concernant leur composition et leur durée d'utilisation définies par la FIA pour chaque Grand Prix",
+    "timestamp": "2026-01-15T23:58:56.799276"
   },
   {
     "type": "llm_extracted",
-    "content": "Drapeau Rouge à Croix Blanche indique une course interrompue en raison d'un accident grave.",
-    "timestamp": "2026-01-14T21:56:15.605009"
+    "content": "le DRS réduit la traînée pour favoriser les dépassements dans certaines zones de la piste",
+    "timestamp": "2026-01-15T23:58:56.801438"
   },
   {
     "type": "llm_extracted",
-    "content": "Drapeau Rouge signifie que la course est suspendue pour une urgence.",
-    "timestamp": "2026-01-14T21:56:15.606286"
+    "content": "actualités f1",
+    "timestamp": "2026-01-15T23:59:15.047535"
   },
   {
     "type": "llm_extracted",
-    "content": "Peter Whitehead a terminé la course au 10e rang.",
-    "timestamp": "2026-01-14T21:56:45.779515"
+    "content": "Grégory a sélectionné plusieurs courses",
+    "timestamp": "2026-01-15T23:59:36.988724"
   },
   {
     "type": "llm_extracted",
-    "content": "Peter Whitehead a terminé la 10e position lors de la course du Grand Prix de Monaco 2025",
-    "timestamp": "2026-01-14T21:57:01.117301"
-  },
-  {
-    "type": "llm_extracted",
-    "content": "Peter Whitehead a terminé la course au 10e rang lors du Grand Prix de Monaco 2025",
-    "timestamp": "2026-01-14T21:57:10.266545"
-  },
-  {
-    "type": "llm_extracted",
-    "content": "Peter Whitehead a terminé la course au 10e rang lors du Grand Prix de Monaco 2025",
-    "timestamp": "2026-01-14T21:57:18.272535"
+    "content": "Je m'appelle Qwen, créé par Alibaba Cloud.",
+    "timestamp": "2026-01-15T23:59:50.957217"
   },
   {
     "type": "llm_extracted",
     "content": "Nous sommes en janvier 2026",
-    "timestamp": "2026-01-14T22:11:51.424212"
+    "timestamp": "2026-01-16T00:18:49.504571"
   },
   {
     "type": "llm_extracted",
-    "content": "Nous sommes en janvier 2026",
-    "timestamp": "2026-01-14T22:18:42.265044"
+    "content": "La saison 2025 de Formule 1 est terminée",
+    "timestamp": "2026-01-16T00:18:49.506685"
   },
   {
     "type": "llm_extracted",
-    "content": "La saison de Formule 1 a récemment pris fin",
-    "timestamp": "2026-01-14T22:18:42.266698"
+    "content": "On est le 16 janvier 2026",
+    "timestamp": "2026-01-16T00:19:01.457762"
   },
   {
     "type": "llm_extracted",
-    "content": "Les rumeurs dans la Formule 1 concernent souvent les mouvements de pilotes entre équipes",
-    "timestamp": "2026-01-14T22:19:00.499397"
+    "content": "Valtteri Bottas termina la dernière course de la saison en 5e position pour Mercedes.",
+    "timestamp": "2026-01-16T00:19:17.106481"
   },
   {
     "type": "llm_extracted",
-    "content": "les changements d'engagements des propriétaires d'écuries",
-    "timestamp": "2026-01-14T22:19:00.501160"
+    "content": "Cette performance lui permet d'achever la saison dans le top 3 du championnat mondial de pilotes.",
+    "timestamp": "2026-01-16T00:19:17.108629"
   },
   {
     "type": "llm_extracted",
-    "content": "les développements techniques des voitures",
-    "timestamp": "2026-01-14T22:19:00.502511"
+    "content": "La saison 2025 de Formule 1 vient de se terminer",
+    "timestamp": "2026-01-16T00:29:37.586736"
   },
   {
     "type": "llm_extracted",
-    "content": "Les rumeurs dans la Formule 1 concernent principalement les transferts de pilotes entre équipes.",
-    "timestamp": "2026-01-14T22:19:14.880738"
+    "content": "Les préparatifs pour la saison 2026 sont bien avancés",
+    "timestamp": "2026-01-16T00:29:37.588943"
   },
   {
     "type": "llm_extracted",
-    "content": "Ces rumeurs peuvent influencer le marché du personnel et les décisions stratégiques des équipes avant l'officialisation officielle.",
-    "timestamp": "2026-01-14T22:19:14.882638"
+    "content": "Vertapen ne semble pas être un nom connu dans le monde de la Formule 1",
+    "timestamp": "2026-01-16T00:30:49.503146"
   },
   {
     "type": "llm_extracted",
-    "content": "Les mouvements potentiels de pilotes entre équipes sont en cours dans la Formule 1",
-    "timestamp": "2026-01-14T22:19:30.311620"
+    "content": "Charles Leclerc a remporté le championnat du monde des pilotes de la saison 2023 de Formule 1 pour la deuxième fois consécutive",
+    "timestamp": "2026-01-16T00:31:23.026218"
   },
   {
     "type": "llm_extracted",
-    "content": "Des stratégies associées aux mouvements de pilotes existent dans la Formule 1",
-    "timestamp": "2026-01-14T22:19:30.313942"
+    "content": "Max Verstappen et Fernando Alonso ont terminé respectivement deuxième et troisième au championnat de la saison 2023 de Formule 1",
+    "timestamp": "2026-01-16T00:31:23.028592"
   },
   {
     "type": "llm_extracted",
-    "content": "Les rumeurs dans la Formule 1 concernent principalement les transferts de pilotes entre équipes",
-    "timestamp": "2026-01-14T22:19:41.623283"
+    "content": "Michael Schumacher détient sept titres mondiaux en Formule 1",
+    "timestamp": "2026-01-16T00:31:49.350714"
   },
   {
     "type": "llm_extracted",
-    "content": "elles incluent également les changements d'engagement des propriétaires d'écuries et les mises à jour techniques des voitures",
-    "timestamp": "2026-01-14T22:19:41.624918"
+    "content": "Lewis Hamilton a remporté six championnats mondiaux en Formule 1",
+    "timestamp": "2026-01-16T00:31:49.352968"
   },
   {
     "type": "llm_extracted",
-    "content": "Lewis Hamilton est concerné par les rumeurs de transferts",
-    "timestamp": "2026-01-14T22:19:57.185843"
+    "content": "Max Verstappen est un pilote néerlandais de Formule 1.",
+    "timestamp": "2026-01-16T00:50:25.152366"
   },
   {
     "type": "llm_extracted",
-    "content": "Les rumeurs concernent principalement les transferts potentiels de pilotes entre écuries",
-    "timestamp": "2026-01-14T22:20:14.559460"
+    "content": "Il a remporté le championnat du monde des constructeurs en 2023 avec la Red Bull Racing.",
+    "timestamp": "2026-01-16T00:50:25.153821"
   },
   {
     "type": "llm_extracted",
-    "content": "Lewis Hamilton est notamment mentionné dans ces spéculations",
-    "timestamp": "2026-01-14T22:20:14.561500"
+    "content": "Il détient le record de plus de victoires en sprint sur une saison, avec quatre (2023, 2024).",
+    "timestamp": "2026-01-16T00:50:25.154811"
   },
   {
     "type": "llm_extracted",
-    "content": "Les rumeurs dans la Formule 1 se concentrent sur les transferts potentiels de pilotes entre écuries",
-    "timestamp": "2026-01-14T22:20:25.996161"
+    "content": "l'utilisateur parle de Formule 1",
+    "timestamp": "2026-01-16T00:51:14.701500"
   },
   {
     "type": "llm_extracted",
-    "content": "Lewis Hamilton est particulièrement mentionné dans ces spéculations",
-    "timestamp": "2026-01-14T22:20:25.998188"
+    "content": "l'utilisateur parle de Formule 1",
+    "timestamp": "2026-01-16T00:51:15.138420"
   },
   {
     "type": "llm_extracted",
-    "content": "On parle beaucoup de transferts en Formule 1",
-    "timestamp": "2026-01-14T22:30:34.971969"
+    "content": "Les circuits actuels pour la saison 2026 incluent Monaco et Abu Dhabi.",
+    "timestamp": "2026-01-16T00:51:34.388047"
   },
   {
     "type": "llm_extracted",
-    "content": "Les dernières rumeurs concernent Lewis Hamilton",
-    "timestamp": "2026-01-14T22:30:34.973431"
-  },
-  {
-    "type": "correction",
-    "user_input": "non c est quoi",
-    "context": "Les rumeurs dans la Formule 1 sont des spéculations sur les mouvements de pilotes, les changements d",
-    "timestamp": "2026-01-14T22:30:45.219240"
+    "content": "Pour la saison 2027, on prévoit d'ajouter Budapest en Hongrie.",
+    "timestamp": "2026-01-16T00:51:34.390376"
   },
   {
     "type": "llm_extracted",
-    "content": "Les rumeurs dans la Formule 1 concernent les mouvements de pilotes et les changements d'engagement des équipes.",
-    "timestamp": "2026-01-14T22:30:47.000935"
+    "content": "Barcelona pourrait revenir au calendrier pour la saison 2027.",
+    "timestamp": "2026-01-16T00:51:34.392402"
   },
   {
     "type": "llm_extracted",
-    "content": "Ces informations circulent généralement avant l'officialisation.",
-    "timestamp": "2026-01-14T22:30:47.002411"
+    "content": "Les circuits actuels pour la saison 2026 incluent Monaco et Abu Dhabi.",
+    "timestamp": "2026-01-16T00:51:35.545461"
   },
   {
     "type": "llm_extracted",
-    "content": "Les voitures de Formule 1 sont légères, rapides et technologiques.",
-    "timestamp": "2026-01-14T22:31:09.917607"
+    "content": "Pour la saison 2027, on prévoit d'ajouter Budapest en Hongrie.",
+    "timestamp": "2026-01-16T00:51:35.547759"
   },
   {
     "type": "llm_extracted",
-    "content": "Elles ont un moteur V6 hybride de 1,6 litre avec une puissance maximale de 680 chevaux.",
-    "timestamp": "2026-01-14T22:31:09.919305"
+    "content": "Barcelona pourrait revenir au calendrier pour la saison 2027.",
+    "timestamp": "2026-01-16T00:51:35.549393"
   },
   {
     "type": "llm_extracted",
-    "content": "Le châssis est en carbone pour réduire le poids et augmenter la vitesse.",
-    "timestamp": "2026-01-14T22:31:09.920531"
+    "content": "Firestone 🏎️: Équipe de 1968, 1970 et 1972.",
+    "timestamp": "2026-01-16T00:52:14.250081"
   },
   {
     "type": "llm_extracted",
-    "content": "Les voitures sont dotées de freins à disques en céramique.",
-    "timestamp": "2026-01-14T22:31:09.921717"
+    "content": "Continental 🏎️: Équipe en 1954 et 1155.",
+    "timestamp": "2026-01-16T00:52:14.252129"
   },
   {
     "type": "llm_extracted",
-    "content": "D'un aérodynamisme avancé pour maximiser la traction et la vitesse.",
-    "timestamp": "2026-01-14T22:31:09.922844"
+    "content": "Englebert 🏎️: Équipe en 1956 et 1958.",
+    "timestamp": "2026-01-16T00:52:14.254091"
   },
   {
     "type": "llm_extracted",
-    "content": "Les voitures de Formule 1 pèsent entre 600 et 750 kg.",
-    "timestamp": "2026-01-14T22:31:19.015200"
+    "content": "Firestone 🏎️: Équipe de 1968, 1970 et 1972.",
+    "timestamp": "2026-01-16T00:52:15.729738"
   },
   {
     "type": "llm_extracted",
-    "content": "Le volant des voitures de Formule 1 est ergonomique et réactif.",
-    "timestamp": "2026-01-14T22:31:30.891050"
+    "content": "Continental 🏎️: Équipe en 1954 et 1955.",
+    "timestamp": "2026-01-16T00:52:15.732276"
   },
   {
     "type": "llm_extracted",
-    "content": "Il est généralement minimaliste.",
-    "timestamp": "2026-01-14T22:31:30.892849"
+    "content": "Englebert 🏎️: Équipe en 1956 et 1958.",
+    "timestamp": "2026-01-16T00:52:15.734650"
   },
   {
     "type": "llm_extracted",
-    "content": "L'équipement d'un pilote en Formule 1 inclut un casque avec système audio intégré, des combinaisons anti-incendie, des gants résistants aux chocs, des bottes de protection et une tenue de survie (HANS device) fixée au harnais.",
-    "timestamp": "2026-01-14T22:31:49.723327"
+    "content": "ferrari est une écurie italienne fondée en 1929.",
+    "timestamp": "2026-01-16T00:52:38.420121"
   },
   {
     "type": "llm_extracted",
-    "content": "Le tout doit respecter des normes d'incendie très stricts.",
-    "timestamp": "2026-01-14T22:31:49.725117"
+    "content": "Ferrari a remporté un total impressionnant de 16 championnats du monde constructeurs et 15 championnats du monde pilotes.",
+    "timestamp": "2026-01-16T00:52:38.421892"
   },
   {
     "type": "llm_extracted",
-    "content": "Hadjar fait probablement référence à Hadjar Ayari, une pilote de Formule E.",
-    "timestamp": "2026-01-14T22:32:05.869361"
+    "content": "Haas est une écurie américaine fondée en 2014.",
+    "timestamp": "2026-01-16T00:52:38.423774"
   },
   {
     "type": "llm_extracted",
-    "content": "Elle a participé à plusieurs courses de Formule E et est l'une des rares femmes à concourir dans cette discipline.",
-    "timestamp": "2026-01-14T22:32:05.871130"
+    "content": "Haas a remporté 9 podiums depuis sa création.",
+    "timestamp": "2026-01-16T00:52:38.425839"
   },
   {
     "type": "llm_extracted",
-    "content": "Championnat de Formule 1 en 2026 aura lieu dans plusieurs pays",
-    "timestamp": "2026-01-14T22:32:52.985606"
+    "content": "McLaren est une écurie britannique fondée en 1963.",
+    "timestamp": "2026-01-16T00:52:38.427872"
   },
   {
     "type": "llm_extracted",
-    "content": "l'utilisateur semble avoir un intérêt pour la Formule 1",
-    "timestamp": "2026-01-14T22:37:03.033953"
+    "content": "fondation de Ferrari en 1929",
+    "timestamp": "2026-01-16T00:52:40.434864"
   },
   {
     "type": "llm_extracted",
-    "content": "l'utilisateur a peut-être une préférence pour Lewis Hamilton",
-    "timestamp": "2026-01-14T22:37:03.035187"
+    "content": "Ferrari a remporté 16 championnats du monde constructeurs et 15 championnats du monde pilotes",
+    "timestamp": "2026-01-16T00:52:40.436156"
   },
   {
     "type": "llm_extracted",
-    "content": "La saison 2025 de F1 est récente",
-    "timestamp": "2026-01-14T22:41:40.978884"
+    "content": "Haas est une écurie américaine fondée en 2014",
+    "timestamp": "2026-01-16T00:52:40.437578"
   },
   {
     "type": "llm_extracted",
-    "content": "La préparation pour la saison 2026 commence",
-    "timestamp": "2026-01-14T22:41:40.980964"
+    "content": "Haas a remporté 9 podiums depuis sa création",
+    "timestamp": "2026-01-16T00:52:40.439028"
   },
   {
     "type": "llm_extracted",
-    "content": "Oscar Piastri est un pilote automobile australien né en 2001.",
-    "timestamp": "2026-01-14T22:41:55.929018"
+    "content": "McLaren est une écurie britannique fondée en 1963",
+    "timestamp": "2026-01-16T00:52:40.440113"
   },
   {
     "type": "llm_extracted",
-    "content": "Il a débuté sa carrière en karting et a progressivement monté en catégorie, passant par la Formula Renault et la Formule 3 avant d'intégrer les séries F1.",
-    "timestamp": "2026-01-14T22:41:55.930877"
+    "content": "Firestone a fourni des pneus pour la Formule 1 en 1968, 1970 et 1972",
+    "timestamp": "2026-01-16T01:32:30.385710"
   },
   {
     "type": "llm_extracted",
-    "content": "Liam Norris n'a pas encore remporté de Grand Prix en Formule 1",
-    "timestamp": "2026-01-14T22:42:21.601920"
+    "content": "Englebert et Continental ont également été fournisseurs de pneumatiques à différentes époques",
+    "timestamp": "2026-01-16T01:32:30.387806"
   },
   {
     "type": "llm_extracted",
-    "content": "Lewis Hamilton a remporté 77.27% des courses contre Max Verstappen en 2021",
-    "timestamp": "2026-01-14T22:42:44.185362"
+    "content": "Firestone a fourni des pneus pour la Formule 1 en 1968, 1970 et 1972",
+    "timestamp": "2026-01-16T01:32:31.582427"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Englebert et Continental ont également été fournisseurs de pneumatiques à différentes époques",
+    "timestamp": "2026-01-16T01:32:31.584914"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "pilotes 1999",
+    "timestamp": "2026-01-16T01:32:48.926473"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "pilotes 1999",
+    "timestamp": "2026-01-16T01:32:49.367344"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Lewis Hamilton est un pilote britannique de Formule 1.",
+    "timestamp": "2026-01-16T01:33:09.733716"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Il a remporté 5 championnats du monde avec Mercedes.",
+    "timestamp": "2026-01-16T01:33:09.736057"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Ses saisons les plus couronnées sont 2017 et 2018 où il a dominé la saison, suivies par une victoire en 2020.",
+    "timestamp": "2026-01-16T01:33:09.738504"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Lewis Hamilton est un pilote britannique de Formule 1.",
+    "timestamp": "2026-01-16T01:33:11.182235"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Il a remporté 5 championnats du monde avec Mercedes.",
+    "timestamp": "2026-01-16T01:33:11.184248"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Ses saisons les plus couronnées sont 2017 et 2018, suivies par une victoire en 2020.",
+    "timestamp": "2026-01-16T01:33:11.186174"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Valtteri Bottas n'a jamais remporté le championnat du monde",
+    "timestamp": "2026-01-16T01:33:43.571538"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Sa meilleure performance en 2019 a été un deuxième rang avec une avance de 87 points sur Hamilton",
+    "timestamp": "2026-01-16T01:33:43.573807"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Valtteri Bottas n'a jamais remporté le championnat du monde",
+    "timestamp": "2026-01-16T01:33:44.484136"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Sa meilleure performance en 2019 a été un deuxième place avec 87 points d'écart par rapport à Hamilton",
+    "timestamp": "2026-01-16T01:33:44.486722"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "schumar a eu un accident de ski",
+    "timestamp": "2026-01-16T01:34:11.319799"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "schumar a eu un accident de ski",
+    "timestamp": "2026-01-16T01:34:11.616203"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "shumacher accident de ski",
+    "timestamp": "2026-01-16T01:34:21.296011"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "shumacher accident de ski",
+    "timestamp": "2026-01-16T01:34:21.561309"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "pilote plus grand vainqueurs",
+    "timestamp": "2026-01-16T01:43:51.160005"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "pilote plus grand vainqueurs",
+    "timestamp": "2026-01-16T01:43:51.598561"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Schumacher mentionné",
+    "timestamp": "2026-01-16T01:44:40.724136"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Schumacher mentionné",
+    "timestamp": "2026-01-16T01:44:40.985868"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "l'utilisateur parle de Formule 1",
+    "timestamp": "2026-01-16T02:06:37.479579"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "l'utilisateur parle de Formule 1",
+    "timestamp": "2026-01-16T02:06:37.928878"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "L'utilisateur préfère les analyses techniques plutôt que les résultats bruts",
+    "timestamp": "2026-01-16T02:20:11.953212"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "l'utilisateur parle de Formule 1",
+    "timestamp": "2026-01-16T02:24:30.038040"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "L'utilisateur parle de Formule 1",
+    "timestamp": "2026-01-16T02:24:30.475071"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "circuits 2020",
+    "timestamp": "2026-01-16T02:48:48.249216"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "circuits 2020",
+    "timestamp": "2026-01-16T02:48:48.539306"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "l'utilisateur parle de Formule 1",
+    "timestamp": "2026-01-16T02:57:53.111904"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "l'utilisateur parle de Formule 1",
+    "timestamp": "2026-01-16T02:57:53.547277"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "L'utilisateur est intéressé par la Formule 1",
+    "timestamp": "2026-01-16T03:20:52.627148"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Nous sommes en janvier 2026, après la fin de la saison 2025",
+    "timestamp": "2026-01-16T03:20:52.633822"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Lewis Hamilton a remporté 77.27% des courses disputées en 2021",
+    "timestamp": "2026-01-16T03:21:04.458841"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Max Verstappen a gagné toutes les courses de la saison 2022",
+    "timestamp": "2026-01-16T03:21:04.464473"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Lewis Hamilton a dominé la saison 2021 avec une performance exceptionnelle en remportant 77.27% des courses disputées",
+    "timestamp": "2026-01-16T03:23:13.630704"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Max Verstappen a marqué les esprits en gagnant toutes les courses de la saison 2022",
+    "timestamp": "2026-01-16T03:23:13.637152"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "ferrai fait référence à Ferrari",
+    "timestamp": "2026-01-16T03:23:31.582488"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Ferrari est une célèbre marque italienne de voitures de sport",
+    "timestamp": "2026-01-16T03:23:31.589065"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "shumi",
+    "timestamp": "2026-01-16T03:23:53.458083"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Nous sommes actuellement en janvier 2026, juste après la fin de la saison 2025.",
+    "timestamp": "2026-01-16T03:29:08.815826"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Il est courant que des rumeurs circulent autour des courses de Formule 1 concernant les transferts de pilotes ou d'équipes.",
+    "timestamp": "2026-01-16T03:29:20.398597"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Michael Schumacher a eu un accident de ski en décembre 2013 à Méribel.",
+    "timestamp": "2026-01-16T03:30:28.542132"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Ayrton Senna est décédé le 1er mai 1994 suite à un accident au GP de Saint-Marin (Imola).",
+    "timestamp": "2026-01-16T03:30:28.546922"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Niki Lauda a eu un accident au Nürburgring en 1976 et a fait un retour héroïque 6 semaines plus tard.",
+    "timestamp": "2026-01-16T03:30:28.563475"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Le champion du monde de Formule 1 en 2025 n'a pas encore été déterminé",
+    "timestamp": "2026-01-16T03:31:01.580339"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Max Verstappen et Charles Leclerc sont parmi les pilotes qui ont des chances élevées de remporter le titre",
+    "timestamp": "2026-01-16T03:31:01.587007"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Le champion en 1967 était Jim Clark",
+    "timestamp": "2026-01-16T03:31:22.798335"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Jim Clark a remporté la Formule 1 après avoir gagné les Grands Prix du Mexique et d'Angleterre de cette année",
+    "timestamp": "2026-01-16T03:31:22.803383"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Michael Schumacher remporta le championnat du monde de Formule 1 en 2000 avec la Scuderia Ferrari.",
+    "timestamp": "2026-01-16T03:31:42.002680"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Les circuits actuels de Formule 1 pour la saison 2026 incluent Silverstone, Spa-Francorchamps et Monza",
+    "timestamp": "2026-01-16T03:35:33.299866"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Miami et Las Vegas sont de nouveaux circuits",
+    "timestamp": "2026-01-16T03:35:33.306741"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Les modifications de la Formule 1 en 2026 incluent des circuits comme l'Australie, la Chine, le Japon, Bahreïn, Arabie Saoudite, Miami, Monaco, Espagne, Autriche, Grande-Bretagne, Belgique, Hongrie, Pays-Bas, Italie, Azérie, Singapour, États-Unis, Mexique, São Paulo/Cachoeira Paulista, Luxembourg, Qatar et Abu Dhabi.",
+    "timestamp": "2026-01-16T03:35:54.998720"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Lando Norris a remporté le championnat en 2025",
+    "timestamp": "2026-01-16T03:52:23.809992"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "La saison 2026 introduira des changements réglementaires et plus de courses",
+    "timestamp": "2026-01-16T03:52:23.819256"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Lando Norris a terminé la saison avec 97 points.",
+    "timestamp": "2026-01-16T03:52:41.149579"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Il a eu quelques performances notables, comme une pole position en qualifications (3F).",
+    "timestamp": "2026-01-16T03:52:41.156513"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Il a aussi des abandons et des finitions dans le top 10.",
+    "timestamp": "2026-01-16T03:52:41.161496"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Lorenzo Piastri a terminé la saison avec 36 points.",
+    "timestamp": "2026-01-16T03:52:55.615065"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Il a marqué des points à ses débuts chez Alpine, notamment en terminant 7ème au Grand Prix d'Abu Dhabi.",
+    "timestamp": "2026-01-16T03:52:55.623282"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Fernando Alonso a remporté deux championnats du monde de Formule 1 en 2005 et 2006.",
+    "timestamp": "2026-01-16T03:53:29.812481"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Il a également obtenu une victoire dans le Grand Prix d'Espagne en 2007.",
+    "timestamp": "2026-01-16T03:53:29.818356"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Lando Norris a remporté le championnat de la saison 2025",
+    "timestamp": "2026-01-16T04:05:54.723036"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Il y a eu des victoires notables pour Carlos Sainz et Max Verstappen",
+    "timestamp": "2026-01-16T04:05:54.730945"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Nous sommes en janvier 2026, juste après la fin de la saison 2025.",
+    "timestamp": "2026-01-16T04:10:11.493015"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Ferrari a remporté 16 championnats du monde des constructeurs en Formule 1.",
+    "timestamp": "2026-01-16T04:10:24.369632"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Leur dernier succès est venu en 2025.",
+    "timestamp": "2026-01-16T04:10:24.377384"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Ferrari a remporté le championnat des constructeurs en Formule 1 en 2025",
+    "timestamp": "2026-01-16T04:10:41.864394"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Lewis Hamilton a remporté le Grand Prix de Monaco.",
+    "timestamp": "2026-01-16T04:11:14.991110"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Hamilton a dominé la compétition en terminant en tête à chaque tour.",
+    "timestamp": "2026-01-16T04:11:14.998765"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Max Verstappen a été une pression pour Hamilton.",
+    "timestamp": "2026-01-16T04:11:15.004458"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Il est courant en Formule 1 que des rumeurs circulent sur les transferts d'écuries ou de pilotes.",
+    "timestamp": "2026-01-16T04:12:03.846878"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Patrick Tambay et Teo Fabi ont eu quelques bons résultats mais aussi des performances moyennes.",
+    "timestamp": "2026-01-16T04:12:03.853550"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Hakkinen a participé à des courses en Suède, Belgique, France, Royaume-Uni, Allemagne et Italie.",
+    "timestamp": "2026-01-16T04:12:18.379364"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "l'utilisateur recherche des informations sur les actualités",
+    "timestamp": "2026-01-16T04:12:59.151957"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Jim Clark a gagné le championnat du monde de Formule 1 en 1970",
+    "timestamp": "2026-01-16T04:13:36.378417"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Lewis Hamilton a remporté 77.27% des courses disputées entre 2015 et 2021",
+    "timestamp": "2026-01-16T04:17:41.888798"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Il a terminé 2nd de la saison 2021 avec 17 victoires sur 22 courses",
+    "timestamp": "2026-01-16T04:17:41.895684"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Nous sommes en janvier 2026, juste après la fin de la saison 2025.",
+    "timestamp": "2026-01-16T04:22:40.383597"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "On est le 16 janvier 2026",
+    "timestamp": "2026-01-16T04:22:52.059995"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "La saison 2025 a été dominante pour Max Verstappen avec un 4e titre consécutif.",
+    "timestamp": "2026-01-16T04:23:06.886771"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Max Verstappen a fini la saison 2025 avec 437 points.",
+    "timestamp": "2026-01-16T04:23:06.892959"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Lando Norris a terminé deuxième de la saison 2025 avec 374 points.",
+    "timestamp": "2026-01-16T04:23:06.897177"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Charles Leclerc a terminé troisième de la saison 2025 avec 356 points.",
+    "timestamp": "2026-01-16T04:23:06.901256"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Cette saison marque également le 60e succès en carrière de Verstappen.",
+    "timestamp": "2026-01-16T04:23:06.906573"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Red Bull Racing-Honda RBPT a confirmé sa suprématie avec une nouvelle victoire à Abu Dhabi.",
+    "timestamp": "2026-01-16T04:23:06.911003"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Il y a des rumeurs de nouvelles réglementations pour rendre les voitures plus rapides et spectaculaires sur le plan visuel en 2026.",
+    "timestamp": "2026-01-16T04:23:26.671491"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Il y aurait une augmentation du downforce et des moteurs plus puissants en 2026.",
+    "timestamp": "2026-01-16T04:23:26.678045"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Des modifications concernant la stratégie de pit-stop seraient apportées pour encourager l'interaction entre pilotes en 2026.",
+    "timestamp": "2026-01-16T04:23:26.682093"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Nous sommes en janvier 2026, juste après la fin de la saison 2025.",
+    "timestamp": "2026-01-16T04:27:18.815915"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Nous sommes en janvier 2026, juste après la fin de la saison 2025.",
+    "timestamp": "2026-01-16T04:29:24.102513"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Lewis Hamilton a remporté 77.27% des courses disputées en 2021",
+    "timestamp": "2026-01-16T04:29:30.496715"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Max Verstappen a gagné toutes les courses de la saison 2022",
+    "timestamp": "2026-01-16T04:29:30.501281"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Lorenzo Piastri a disputé ses premières courses en Formule 1 avec Alpine en 2022.",
+    "timestamp": "2026-01-16T04:29:38.600889"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Il a terminé à la 7ème place du championnat des pilotes derrière Fernando Alonso et Esteban Ocon.",
+    "timestamp": "2026-01-16T04:29:38.605186"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Schumacher a remporté 7 titres mondiaux entre 1994 et 2006.",
+    "timestamp": "2026-01-16T04:30:11.000842"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Sa saison la plus dominante reste 2004, où il a remporté 13 victoires sur 18 courses.",
+    "timestamp": "2026-01-16T04:30:11.005473"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Lando Norris a terminé la saison avec 97 points.",
+    "timestamp": "2026-01-16T04:52:53.690396"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Il a eu des performances notables comme une pole position en qualifications (3F) et des podiums réguliers.",
+    "timestamp": "2026-01-16T04:52:53.696940"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Lewis Hamilton a remporté 77.27% des courses disputées entre 2015 et 2021",
+    "timestamp": "2026-01-16T04:53:00.437604"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Il a terminé 2nd de la saison 2021 avec 17 victoires sur 22 courses",
+    "timestamp": "2026-01-16T04:53:00.443620"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Nous sommes en janvier 2026, juste après la fin de la saison 2025.",
+    "timestamp": "2026-01-16T05:04:50.917487"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Lando Norris a terminé 5e au championnat pilotes en 2025 avec McLaren.",
+    "timestamp": "2026-01-16T05:05:06.689396"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Il a remporté deux courses cette saison.",
+    "timestamp": "2026-01-16T05:05:06.696336"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Hamilton est un pilote de Formule 1",
+    "timestamp": "2026-01-16T05:05:23.961091"
+  },
+  {
+    "type": "llm_extracted",
+    "content": "Il a travaillé avec Mercedes",
+    "timestamp": "2026-01-16T05:05:23.967740"
   },
   {
     "type": "llm_extracted",
     "content": "Lewis Hamilton est un pilote de Formule 1 britannique",
-    "timestamp": "2026-01-14T22:43:06.482601"
+    "timestamp": "2026-01-16T05:05:32.596131"
   },
   {
     "type": "llm_extracted",
-    "content": "il a remporté sept championnats du monde de Formule 1",
-    "timestamp": "2026-01-14T22:43:06.484647"
+    "content": "il actuellement évolue pour Mercedes",
+    "timestamp": "2026-01-16T05:05:32.601199"
   },
   {
     "type": "llm_extracted",
-    "content": "Lewis Hamilton a remporté ses sept championnats du monde de Formule 1 entre 2008 et 2022.",
-    "timestamp": "2026-01-14T22:43:17.393679"
+    "content": "il a remporté 7 championnats du monde pilotes",
+    "timestamp": "2026-01-16T05:05:32.605630"
   },
   {
     "type": "llm_extracted",
-    "content": "Lewis Hamilton a remporté sept championnats du monde de Formule 1",
-    "timestamp": "2026-01-14T22:43:25.709867"
+    "content": "Nous sommes en janvier 2026",
+    "timestamp": "2026-01-16T09:05:55.923291"
   },
   {
     "type": "llm_extracted",
-    "content": "Max Verstappen a remporté six championnats du monde de Formule 1",
-    "timestamp": "2026-01-14T22:43:37.488394"
+    "content": "Les préparatifs pour la saison prochaine sont déjà bien avancés",
+    "timestamp": "2026-01-16T09:05:55.930069"
   },
   {
     "type": "llm_extracted",
-    "content": "Lewis Hamilton a remporté sept championnats du monde de Formule 1",
-    "timestamp": "2026-01-14T22:43:37.490384"
+    "content": "Fernando Alonso est un pilote espagnol reconnu pour ses performances exceptionnelles.",
+    "timestamp": "2026-01-16T09:06:06.893266"
   },
   {
     "type": "llm_extracted",
-    "content": "Michael Schumacher a remporté sept championnats du monde de Formule 1 entre 1994 et 2006",
-    "timestamp": "2026-01-14T22:43:58.029120"
+    "content": "Il a remporté deux championnats du monde de Formule 1 en 2005 et 2006 avec Renault.",
+    "timestamp": "2026-01-16T09:06:06.900354"
   },
   {
     "type": "llm_extracted",
-    "content": "Michael Schumacher a également remporté sept championnats du monde de Formule 1 entre 1994 et 2006",
-    "timestamp": "2026-01-14T22:44:06.943262"
+    "content": "Actuellement, il évolue chez Alpine.",
+    "timestamp": "2026-01-16T09:06:06.904897"
   },
   {
     "type": "llm_extracted",
-    "content": "Il y a trois pilotes qui ont remporté sept championnats mondiaux de Formule 1",
-    "timestamp": "2026-01-14T22:44:18.210728"
+    "content": "champion dans le contexte de la Formule 1 fait référence à l'conducteur qui remporte le championnat du monde des constructeurs ou du pilote",
+    "timestamp": "2026-01-16T09:06:17.686744"
   },
   {
     "type": "llm_extracted",
-    "content": "Max Verstappen et Lewis Hamilton sont les seuls pilotes à avoir remporté sept championnats mondiaux de Formule 1 après Michael Schumacher",
-    "timestamp": "2026-01-14T22:44:35.669615"
+    "content": "le championnat du monde des pilotes est souvent considéré comme l'épreuve la plus prestigieuse",
+    "timestamp": "2026-01-16T09:06:17.691515"
   },
   {
     "type": "llm_extracted",
-    "content": "Max Verstappen a remporté 6 championnats mondiaux",
-    "timestamp": "2026-01-14T22:44:44.767216"
+    "content": "Le champion du monde de Formule 1 en 1979 était James Hunt",
+    "timestamp": "2026-01-16T09:06:51.955969"
   },
   {
     "type": "llm_extracted",
-    "content": "Lewis Hamilton a remporté 5 championnats mondiaux",
-    "timestamp": "2026-01-14T22:44:44.769026"
+    "content": "Hunt est connu pour sa personnalité colorée et son style de conduite audacieux",
+    "timestamp": "2026-01-16T09:06:51.962511"
   },
   {
     "type": "llm_extracted",
-    "content": "Les vainqueurs de la course remportent 25 points.",
-    "timestamp": "2026-01-14T22:45:02.269764"
+    "content": "La dernière saison mentionnée était 2023",
+    "timestamp": "2026-01-16T09:29:02.614308"
   },
   {
     "type": "llm_extracted",
-    "content": "Les positions suivantes gagnent respectivement 18, 15, 12, 10, 8, 6, 4, 2 et 1 point.",
-    "timestamp": "2026-01-14T22:45:02.271926"
+    "content": "Max Verstappen a dominé avec 575 points et 19 victoires sur 22 courses",
+    "timestamp": "2026-01-16T09:29:02.621142"
   },
   {
     "type": "llm_extracted",
-    "content": "Un pilote en pole position réalisant le meilleur tour reçoit un bonus de 1 point supplémentaire.",
-    "timestamp": "2026-01-14T22:45:02.273843"
+    "content": "La réglementation F1 actuelle se concentre sur l'hybridation des moteurs.",
+    "timestamp": "2026-01-16T09:29:22.893274"
   },
   {
     "type": "llm_extracted",
-    "content": "Max Verstappen est un pilote automobile néerlandais",
-    "timestamp": "2026-01-15T08:37:47.769626"
+    "content": "La réglementation F1 actuelle limite le nombre de pneus par pilote.",
+    "timestamp": "2026-01-16T09:29:22.898658"
   },
   {
     "type": "llm_extracted",
-    "content": "il compétit actuellement dans le championnat du monde de Formule 1",
-    "timestamp": "2026-01-15T08:37:47.772258"
+    "content": "La régulation F1 actuelle introduit une boîte de vitesse automatique semi-automatique.",
+    "timestamp": "2026-01-16T09:29:22.903614"
   },
   {
     "type": "llm_extracted",
-    "content": "il évolue pour l'écurie Red Bull Racing",
-    "timestamp": "2026-01-15T08:37:47.773476"
+    "content": "Alain Prost a remporté le championnat du monde de Formule 1 en 1990",
+    "timestamp": "2026-01-16T09:30:10.922844"
   },
   {
     "type": "llm_extracted",
-    "content": "Le champion du monde en titre de Formule 1 est Max Verstappen.",
-    "timestamp": "2026-01-15T09:42:20.429364"
+    "content": "Les pneus sont essentiels pour la performance des voitures F1.",
+    "timestamp": "2026-01-16T09:30:33.499761"
   },
   {
     "type": "llm_extracted",
-    "content": "Le champion du monde en titre de Formule 1 pour la saison 2023 est Lando Norris",
-    "timestamp": "2026-01-15T09:45:31.253208"
+    "content": "{\"facts\": [\"Il n'y a pas de 'Grand Prix d\\'Europe' mentionné.\", \"L'European Grand Prix aurait eu lieu le 15 septembre à un circuit non spécifié.\"], \"preferences\": {}}",
+    "timestamp": "2026-01-16T09:31:56.910615"
   }
 ]

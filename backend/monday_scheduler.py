@@ -110,36 +110,22 @@ class MondayScheduler:
             logger.debug(f"Erreur refresh hebdo: {e}")
     
     def _run_crawler(self):
-        """Exécuter le script crawler_f1_weekly.py pour actualiser les news"""
+        """Exécuter les scrapers avancés pour actualiser les news"""
         try:
-            import subprocess
-            import sys
-            from pathlib import Path
-            
-            crawler_path = Path(__file__).resolve().parents[2] / "scripts" / "crawler_f1_weekly.py"
-            
-            logger.info(f"🕷️  Lancement crawling hebdo (page 1 uniquement): {crawler_path}")
-            
-            # Exécuter le crawler en subprocess
-            result = subprocess.run(
-                [sys.executable, str(crawler_path)],
-                capture_output=True,
-                text=True,
-                timeout=120  # Timeout 2 min max pour le crawling
-            )
-            
-            if result.returncode == 0:
-                logger.info(f"✅ Crawling hebdo réussi")
-                # Invalider cache news pour le rechargement
-                from backend.optimized_cache import get_cache
-                cache = get_cache()
-                cache.invalidate("news*")
-                logger.info("✅ Cache news invalidé (nouvelles données crawlées)")
-            else:
-                logger.debug(f"Crawling partiellement échoué: {result.stderr}")
-                
-        except subprocess.TimeoutExpired:
-            logger.debug("Crawling timeout (>120s)")
+            from backend.scrapers.scheduler import get_scheduler
+            from backend.optimized_cache import get_cache
+
+            logger.info("🕷️  Lancement crawling hebdo via backend.scrapers Scheduler")
+
+            # Exécuter un job de scraping complet (motorsport, autosport, ...)
+            scheduler = get_scheduler()
+            scheduler.scrape_job()
+
+            # Invalider cache news pour forcer la prise en compte des nouvelles données
+            cache = get_cache()
+            cache.invalidate("news*")
+            logger.info("✅ Cache news invalidé (nouvelles données crawlées)")
+
         except Exception as e:
             logger.debug(f"Erreur crawling hebdo: {e}")
 

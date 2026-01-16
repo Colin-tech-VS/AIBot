@@ -1,6 +1,9 @@
 # 🏎️ F1 Chatbot - Assistant Conversationnel Formule 1
 
-Chatbot intelligent sur la Formule 1 utilisant **Ollama Qwen 2.5 7B** localement, avec Knowledge Base vectorielle et routage d'intention optimisé pour des réponses rapides et précises.
+> Chatbot conversationnel Formule 1 hybride **latency-first** avec architecture 3 niveaux : FastAPI + FAISS KB (7983 vecteurs) + Ollama local (Qwen 2.5 7B).
+
+**Performance** : <100ms (intent routing) | <500ms (KB search) | 8-15s (LLM complet)
+**Sécurité** : 2 couches anti-jailbreak (validation entrée + prompt système)
 
 ## ✨ Fonctionnalités
 
@@ -33,10 +36,53 @@ Chatbot intelligent sur la Formule 1 utilisant **Ollama Qwen 2.5 7B** localement
 - **Web Search proactif** : Automatique pour questions actualités
 - **News caching** : TTL variable (1800s pour news)
 
-### 🔐 **Authentification**
-- **JWT tokens** (bcrypt + PyJWT)
-- **Base SQLite** : Gestion utilisateurs
-- **Synchronisation conversations** multi-appareils
+> Actuellement, le projet tourne **en local sans authentification utilisateur**.
+
+---
+
+## 🏗️ Architecture 3 Niveaux (Latency-First)
+
+```mermaid
+graph TD
+    A[Question Utilisateur] --> B[Input Validator]
+    B -->|23 regex patterns| C{Intent Router}
+    
+    C -->|Détecté <10ms| D[Fast Handlers]
+    D -->|standings/calendar| E[Cache/Ergast API]
+    E --> F[Réponse <100ms]
+    
+    C -->|KB Required| G[FAISS Search]
+    G -->|7983 vecteurs| H[Top-K Chunks]
+    H --> I[Réponse <500ms]
+    
+    C -->|Complexe/Ambigü| J[Prompt Builder]
+    J -->|KB+News+Context| K[Ollama LLM]
+    K -->|qwen2.5:7b| L[Génération 8-15s]
+    L --> M[Long-term Memory]
+    M --> N[Réponse finale]
+    
+    style B fill:#ff6b6b
+    style D fill:#51cf66
+    style G fill:#4dabf7
+    style K fill:#ffd43b
+```
+
+### Cascade de Décision
+
+1. **Niveau 1 - Intent Routing** (<100ms)
+   - Patterns regex (standings_drivers, next_race, calendar)
+   - Handlers directs → `backend/fast_handlers.py`
+   - Cache TTL adaptatif (300-1800s)
+
+2. **Niveau 2 - Knowledge Base** (<500ms)
+   - FAISS similarity search (min_score=0.45)
+   - 7983 chunks, 2233 documents
+   - Fallback recherche simple si <0.45
+
+3. **Niveau 3 - LLM Ollama** (8-15s)
+   - Questions complexes/conversationnelles
+   - Temperature 0.15 (déterministe), num_predict=150 tokens
+   - Anti-jailbreak double-layer (prompt + validation)
 
 ---
 
@@ -54,14 +100,13 @@ Chatbot intelligent sur la Formule 1 utilisant **Ollama Qwen 2.5 7B** localement
 ### Installation Rapide
 
 ```bash
-# 1. Cloner le repo
-git clone https://github.com/VOTRE_USERNAME/AIBot.git
+# 1. Cloner le repo (ou ouvrir le dossier existant)
 cd AIBot
 
 # 2. Créer environnement virtuel
-python -m venv chatbot
-chatbot\Scripts\activate  # Windows
-# source chatbot/bin/activate  # Linux/macOS
+python -m venv .venv
+.venv\Scripts\activate  # Windows
+# source .venv/bin/activate  # Linux/macOS
 
 # 3. Installer dépendances
 pip install -r requirements.txt
@@ -69,11 +114,11 @@ pip install -r requirements.txt
 # 4. Lancer Ollama en daemon
 ollama serve
 
-# 5. Lancer le serveur (dans un autre terminal)
+# 5. Lancer le backend FastAPI (port par défaut: 8001, fallback auto 8002)
 python app.py
 ```
 
-Accéder à l'application : **http://localhost:8001**
+Accéder à l'application : **http://localhost:8001** (frontend intégré FastAPI; fallback possible sur 8002 selon disponibilité du port)
 
 ---
 
@@ -95,7 +140,6 @@ AIBot/
 │   ├── long_term_memory.py    # Mémoire persistante
 │   ├── standings_utils.py     # Scrapers classements
 │   ├── logger.py              # Logging structuré
-│   └── auth/                  # Authentification JWT
 ├── frontend/
 │   ├── index.html             # Interface chat
 │   └── static/                # CSS + JS
@@ -104,10 +148,29 @@ AIBot/
 │   └── f1_wiki_csv/           # Données Wikipedia (1950-2024)
 ├── memory/
 │   ├── learned_facts.json     # Faits appris
-│   └── user_preferences.json  # Préférences utilisateurs
+│   ├── user_preferences.json  # Préférences utilisateurs
+│   └── all_conversations.jsonl# Historique complet des échanges
 └── logs/
     └── f1_bot.log             # Logs rotatifs (10 MB max)
 ```
+
+### Composants Backend (11 fichiers)
+
+| Fichier | Lignes | Responsabilité |
+|---------|--------|----------------|
+| `f1_bot.py` | 1052 | Orchestration centrale (`answer_f1_question`) |
+| `knowledge_base.py` | 467 | FAISS + embeddings sentence-transformers |
+| `intent_router.py` | 180 | Détection intention (<10ms, 6 patterns) |
+| `fast_handlers.py` | 250 | Handlers rapides (standings, calendar) |
+| `fast_responses.py` | 120 | Réponses salutations (<20ms) |
+| `optimized_prompts.py` | 300 | Prompt builder + système anti-jailbreak |
+| `optimized_cache.py` | 200 | Cache TTL intelligent par type |
+| `optimized_ollama.py` | 220 | Wrapper Ollama + fallback subprocess |
+| `input_validator.py` | 100 | Validation input (23 regex patterns) |
+| `long_term_memory.py` | 350 | Mémoire persistante (faits, préférences) |
+| `standings_utils.py` | 400 | Scrapers classements (Ergast, StandF1) |
+
+**Total** : ~3639 lignes de code backend
 
 ---
 
@@ -177,7 +240,11 @@ curl "http://localhost:8001/kb/search?q=DRS"
 # .env (optionnel)
 OLLAMA_MODEL=qwen2.5:7b
 LOG_LEVEL=INFO          # DEBUG, INFO, WARNING, ERROR
-AUTO_TRAIN=0            # Désactiver auto-learning
+
+# Auto-train / auto-apprentissage (désactivé par défaut)
+# Quand AUTO_TRAIN=0 → message de log : "auto_train désactivé (AUTO_TRAIN=0)"
+# Mettre 1 pour activer certains comportements automatiques (entraînements / rechargements planifiés)
+AUTO_TRAIN=0
 ```
 
 ### Paramètres Modifiables
@@ -209,15 +276,20 @@ BANNED_PATTERNS = [
 
 ## 🧪 Tests
 
+Quelques commandes utiles pour tester en local :
+
 ```bash
-# Test sécurité Niveau 1 (input validator)
-python test_input_validator.py
+# Vérifier que le backend répond
+curl http://localhost:8001/health
 
-# Test sécurité Niveau 2 (anti-jailbreak) - serveur requis
-python test_level2_live.py
+# Tester l'API chat (depuis PowerShell ou WSL)
+curl -X POST http://localhost:8001/chat \
+    -H "Content-Type: application/json" \
+    -d '{"message": "Qui a gagné le championnat 2024?", "conversation_id": "test"}'
 
-# Test Knowledge Base
-python test_faiss.py
+# Tester l'API KB (scripts fournis)
+python scripts/test_kb_api.py
+python scripts/test_chromadb.py
 ```
 
 ---
@@ -253,7 +325,6 @@ Question utilisateur
 | **Vector DB** | FAISS (CPU) | Recherche similarité |
 | **Chunking** | LangChain RecursiveTextSplitter | Découpage documents |
 | **Cache** | Custom TTL cache | Performance |
-| **Auth** | JWT + bcrypt | Sécurité utilisateurs |
 | **Logging** | RotatingFileHandler | Traçabilité |
 | **Scraping** | BeautifulSoup4 + requests | Actualités |
 
@@ -263,12 +334,14 @@ Question utilisateur
 
 | Métrique | Valeur |
 |----------|--------|
-| **Latence moyenne** | 2-8s (selon scraping) |
-| **Questions simples** | <100ms (handlers rapides) |
-| **KB search** | ~200ms (FAISS 5551 vecteurs) |
+| **Latence moyenne** | 8-15s (LLM complet) |
+| **Fast Handlers** | <100ms (intent routing) |
+| **KB FAISS search** | <500ms (7983 vecteurs) |
 | **Cache hit rate** | ~60-70% (après warm-up) |
-| **Taille index FAISS** | ~8 MB (5551 vecteurs 384-dim) |
+| **Taille index FAISS** | ~11 MB (7983 vecteurs 384-dim) |
 | **Mémoire runtime** | ~2 GB (sentence-transformers) |
+| **Documents indexés** | 2233 docs (2010 base + 223 crawled) |
+| **Chunk overlap** | 100 tokens (RecursiveTextSplitter) |
 
 ---
 
@@ -301,7 +374,58 @@ python test_level2_live.py
 
 ---
 
-## 🚧 Limitations & TODO
+## �️ Dépannage
+
+### Problèmes Courants
+
+**1. Ollama not found**
+```bash
+# Erreur : "Ollama non trouvé"
+# Solution : Vérifier installation
+ollama --version
+# Si absent, installer : https://ollama.com
+# Puis télécharger modèle
+ollama pull qwen2.5:7b
+```
+
+**2. FAISS index corrompu**
+```bash
+# Erreur : "Cannot load FAISS index"
+# Solution : Reconstruire index
+curl -X POST http://localhost:8001/kb/reload
+# Ou supprimer et relancer
+rm knowledge_base/faiss_index.bin
+python app.py
+```
+
+**3. Port 8001 déjà utilisé**
+```bash
+# Erreur : "Address already in use"
+# Solution : Changer port dans app.py
+uvicorn app:app --port 8002
+# Ou tuer processus
+netstat -ano | findstr :8001  # Windows
+lsof -ti:8001 | xargs kill -9  # Linux/macOS
+```
+
+**4. Réponses lentes (>30s)**
+```bash
+# Cause probable : Scrapers timeout
+# Solution : Désactiver web search temporairement
+# Dans backend/f1_bot.py ligne ~500
+WEB_SEARCH_ENABLED = False  # Changer à False
+```
+
+**5. Input validation trop stricte**
+```bash
+# Si questions légitimes bloquées
+# Modifier backend/input_validator.py
+# Commenter patterns spécifiques dans BANNED_PATTERNS
+```
+
+---
+
+## �🚧 Limitations & TODO
 
 ### Limitations Actuelles
 - ⚠️ **Latence** : 8s max (scrapers synchrones)
@@ -329,3 +453,23 @@ MIT License - Voir [LICENSE](LICENSE) pour détails.
 Contributions bienvenues ! Ouvrir une issue ou PR sur GitHub.
 
 **Développé avec ❤️ pour les fans de F1** 🏁
+
+---
+
+## 📧 Contact & Support
+
+- **Projet** : F1 Chatbot - Chatbot conversationnel Formule 1
+- **Version** : 1.0.0 (Janvier 2026)
+- **Auteur** : [Votre Nom]
+- **GitHub** : [Lien vers repo]
+- **Issues** : [Lien vers issues GitHub]
+
+### Statistiques Projet
+
+- **Lignes de code backend** : ~3639 lignes
+- **Documents KB** : 2233 fichiers indexés
+- **Vecteurs FAISS** : 7983 chunks (384 dimensions)
+- **Taux protection** : ~70% (anti-injection)
+- **Latence optimale** : <100ms (fast handlers)
+
+**Powered by** : FastAPI • Ollama • FAISS • LangChain

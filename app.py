@@ -1,6 +1,6 @@
 """
 Backend FastAPI - Chatbot Ollama Local (Multiplateforme)
-Reçoit les messages utilisateur, appelle Ollama (Llama 3.2 3B) et retourne les réponses.
+Reçoit les messages utilisateur, et retourne les réponses.
 Communication frontend ↔ backend ↔ Ollama fonctionnelle.
 Compatible: Windows, macOS, Linux
 """

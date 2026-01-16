@@ -12,7 +12,7 @@
                                    ↓
 ┌──────────────────────────────────────────────────────────────────┐
 │                    BACKEND - FastAPI (app.py)                   │
-│                          Port 8001                              │
+│                  Port 8001 (fallback 8002)                      │
 │                                                                  │
 │  ┌────────────────────────────────────────────────────────────┐ │
 │  │         REQUEST HANDLING & ROUTING                        │ │
@@ -59,13 +59,13 @@
                 ↓                  ↓                  ↓
         ┌────────────────┐  ┌────────────────┐  ┌──────────────┐
         │  Ergast API    │  │  FAISS Index   │  │ Ollama Local │
-        │  (HTTP REST)   │  │  (sentence-    │  │  (GGML/CUDA) │
-        │                │  │  transformers) │  │ Qwen 2.5 7B  │
-        │ • standings    │  │                │  │              │
-        │ • races        │  │ ~/.faiss/      │  │ :11434       │
-        │ • drivers      │  │ index.faiss    │  │              │
+        │  (HTTP REST)   │  │  (sentence-    │  │  (GGUF/CUDA) │
+        │                │  │  transformers) │  │ qwen2.5:7b   │
+        │ • standings    │  │                │  │  (7B params) │
+        │ • races        │  │ knowledge_base/│  │ :11434       │
+        │ • drivers      │  │ faiss_index.bin│  │              │
         │ • results      │  │ metadata.json  │  │ Inference    │
-        └────────────────┘  └────────────────┘  │ 2-15s/query  │
+        └────────────────┘  └────────────────┘  │ 8-15s/query  │
                                                   └──────────────┘
                             
         ┌────────────────────────────┐
@@ -83,10 +83,8 @@
         │  │  └─ tableaux.md         │
         │  │                         │
         │  ├─ CSV files (.csv)       │
-        │  │  ├─ pilotes_kb.csv      │
-        │  │  ├─ constructeurs_kb.csv│
-        │  │  ├─ circuits_kb.csv     │
-        │  │  └─ classements_*.csv   │
+        │  │  ├─ champions_complete_1950_2024.csv│
+        │  │  └─ f1_wiki_csv/...     │
         │  │                         │
         │  ├─ Crawled content        │
         │  │  ├─ news_motorsport.json│
@@ -105,13 +103,13 @@
 
 ### Backend
 - **Framework** : FastAPI + Uvicorn (async Python)
-- **LLM Local** : Ollama (GGML runtime) + Qwen 2.5 7B
-- **Embeddings** : Sentence-transformers (all-MiniLM-L6-v2)
+- **LLM Local** : Ollama (runtime local) + Qwen 2.5 7B
+- **Embeddings** : sentence-transformers (all-MiniLM-L6-v2)
 - **Vector Store** : FAISS (Facebook AI Similarity Search)
-- **Data** : Ergast API (REST), Web scraping (BeautifulSoup/Selenium)
+- **Data** : Ergast API (REST), web scraping (requests + BeautifulSoup4, scripts Playwright)
 - **Caching** : Custom OptimizedCache (in-memory + TTL)
-- **Async** : asyncio, aiohttp pour requêtes parallèles
-- **Scheduling** : APScheduler (news refresh hebdomadaire)
+- **Async** : asyncio + httpx / ThreadPoolExecutor pour les appels parallèles
+- **Scheduling** : Scheduler maison (backend/monday_scheduler.py basé sur `schedule`)
 
 ### Frontend
 - **HTML5** + **CSS3** (responsive)
@@ -231,13 +229,14 @@ class KnowledgeBase:
         
         # Embeddings et FAISS
         self.embedder = SentenceTransformer('all-MiniLM-L6-v2')
-        self.faiss_index = load_or_create_faiss()  # ~5500 vecteurs
+        self.faiss_index = load_or_create_faiss()  # 7983 vecteurs
         self.dimension = 384  # all-MiniLM output
     
     def search(self, query: str, top_k: int = 5) -> List[Document]:
         """
         Recherche sémantique via FAISS
-        ~50-100ms pour 5500 docs
+        ~50-100ms pour 7983 vecteurs (warm cache)
+        ~7s cold start (chargement embeddings)
         """
         query_embedding = self.embedder.encode(query)
         distances, indices = self.faiss_index.search(
@@ -267,14 +266,16 @@ class KnowledgeBase:
         # Vider + reconstruire index FAISS
         pass
 
-# Contenu KB (~5500 vecteurs)
+# Contenu KB (7983 vecteurs, 2233 documents)
 # - Glossaire F1 (100+ termes)
 # - Règles FIA (50+ sujets)
-# - Historique (1950-2025, ~75 ans)
+# - Historique (1950-2024, 75 saisons)
 # - FAQ (~50 questions)
-# - Circuits (24 circuits détaillés)
-# - Constructeurs (10+ équipes actuelles + historiques)
+# - Circuits (77 circuits)
+# - Constructeurs (210+ équipes)
+# - Pilotes (850+ pilotes historiques)
 # - Stratégies et analyses
+# - News crawlées (3 sites: motorsport, autosport, actuf1)
 ```
 
 ### 4. **Cache Layer** (`backend/optimized_cache.py`)
@@ -640,9 +641,9 @@ GET /driver_stats?id=hamilton
    │  └─ Cache news: latest F1 news (~10ms)
    ├─ Prompt building: RAG prompt avec contexte
    ├─ Ollama inference:
-   │  ├─ Qwen 2.5 3B model
+   │  ├─ qwen2.5:7b model (7B params)
    │  ├─ Streaming tokens
-   │  └─ ~5-15 sec generation
+   │  └─ ~8-15 sec generation
    ├─ Post-process: verify FR, add citations
    ├─ Save memory
    └─ Return: ~6-16 sec ✅
@@ -735,14 +736,8 @@ memory/
 
 ### Dépendances Python
 ```
-fastapi==0.104.0
-uvicorn==0.24.0
-sentence-transformers==2.2.2
-faiss-cpu==1.7.4
-ollama==0.0.10
-aiohttp==3.9.0
-apscheduler==3.10.4
-python-dotenv==1.0.0
+La liste à jour des dépendances (backend + outils de crawling/entraînement)
+est maintenue dans le fichier requirements.txt à la racine du projet.
 ```
 
 ### Chemins & Config

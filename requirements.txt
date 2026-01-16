@@ -1,4 +1,5 @@
-﻿fastapi
+﻿## Dépendances noyau (runtime backend F1)
+fastapi
 uvicorn
 jinja2
 httpx
@@ -8,11 +9,11 @@ pydantic
 numpy
 sentence-transformers
 langchain-text-splitters
-bcrypt
-PyJWT
-python-docx
 faiss-cpu
-transformers>=4.39.0
 schedule
+
+## Outils docs / entraînement / crawling avancé (optionnels)
+python-docx
+transformers>=4.39.0
 ollama
 playwright

@@ -133,7 +133,7 @@ Tu peux poser :
 - 📄 Fichiers texte (Markdown) : règles, glossaire, FAQ, procédures
 - 📊 Tables (CSV) : pilotes, équipes, circuits
 - 🔍 Index vectoriel (FAISS) : pour recherches sémantiques rapides
-- ~5500 vecteurs pour une recherche "intelligente"
+- ~8000 vecteurs (≈7983 chunks FAISS) pour une recherche "intelligente"
 
 ### **Actualités**
 - 📰 Scraping automatique de standf1.com

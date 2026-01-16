@@ -27,7 +27,7 @@ class IntentRouter:
             
             # Classements (pas besoin LLM)
             "standings_drivers": (
-                r"\b(classement|champion|leader|leading|position|points|standings)\b.*\b(pilote|pilotes|driver|drivers|championship)\b",
+                r"\b(classement|champion|dernier champion|leader|leading|position|points|standings)\b.*\b(pilote|pilotes|driver|drivers|championship)\b|\b(dernier|last)\s+(champion|championship)",
                 False, 10
             ),
             "standings_teams": (
@@ -47,9 +47,15 @@ class IntentRouter:
                 False, 9
             ),
             
+            # Vie privée pilotes (réponse template respectueuse)
+            "driver_personal_life": (
+                r"\b(schumacher|senna|lauda|clark|cevert|peterson|villeneuve).*(accident|santé|décès|mort|vie|crash|ski|condition|état|coma|privé|hôpital|family|famille)\b|\b(accident|crash).*(hors.*(piste|circuit)|ski|privé|personnel)\b|\b(état|santé|condition|vie privée).*(pilote|schumacher|senna)",
+                False, 11
+            ),
+            
             # Stats pilote (besoin LLM pour détails)
             "driver_stats": (
-                r"\b(verstappen|hamilton|leclerc|sainz|alonso|norris|piastri|russell|perez|magnussen)\b",
+                r"\b(verstappen|max|hamilton|lewis|leclerc|charles|charlie|sainz|carlos|alonso|nando|fernando|norris|lando|piastri|oscar|russell|george|perez|checo|sergio|magnussen|kevin|s[ch]hu?mi?|s[ch]humacher|vettel|seb|sebastian|raikkonen|kimi|rosberg|nico|button|jenson|ricciardo|daniel|ocon|esteban|gasly|pierre|tsunoda|yuki|stroll|lance|bottas|valtteri|hulkenberg|nico|zhou|guanyu|sargeant|logan|de vries|nyck)\b",
                 True, 8
             ),
             
@@ -71,6 +77,18 @@ class IntentRouter:
                 False, 7
             ),
             
+            # Résultats dernière course / dernier GP
+            "last_race_result": (
+                r"\b(dernier|last|latest|précédent|previous)\b.*\b(gp|grand prix|course|race|résultat|result|vainqueur|winner|gagn[eé]|won)\b|\b(qui|who)\b.*\b(gagn[eé]|won|remport[eé]|victoire|victory)\b.*\b(dernier|last|latest)",
+                False, 12
+            ),
+            
+            # Questions génériques sur pilotes (ex: juste "pilote")
+            "generic_driver_question": (
+                r"^(pilote|pilotes|driver|drivers)s?\??$|^(qui|quel|quels)\s+(pilote|driver)s?\??$",
+                True, 8
+            ),
+            
             # Résultats dernière course
             "last_race": (
                 r"\b(dernier|last|résultat|result|podium|ganant|winner)\b.*\b(course|race|gp)\b",
@@ -79,8 +97,8 @@ class IntentRouter:
             
             # Qui est... (Knowledge Base)
             "knowledge_base": (
-                r"\b(qui|who|qu'est|what is|profil|profile|biographie|biography)\b",
-                True, 6
+                r"\b(qui\s+(est|était)|who\s+is|qu'est[-\s]ce|what\s+is|profil|profile|biographie|biography|présente|raconte|parle\s+moi)\b",
+                True, 9
             ),
             
             # Questions générales (LLM nécessaire)

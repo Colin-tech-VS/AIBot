@@ -1,0 +1,76 @@
+Year,Driver,Constructor,Nationality,Points,Wins,Poles,Constructor_Champion,Constructor_Points
+1950,Giuseppe Farina,Alfa Romeo,Italian,30,3,2,N/A,N/A
+1951,Juan Manuel Fangio,Alfa Romeo,Argentine,31,3,4,N/A,N/A
+1952,Alberto Ascari,Ferrari,Italian,36,6,5,N/A,N/A
+1953,Alberto Ascari,Ferrari,Italian,34.5,5,6,N/A,N/A
+1954,Juan Manuel Fangio,Maserati/Mercedes,Argentine,42,6,5,N/A,N/A
+1955,Juan Manuel Fangio,Mercedes,Argentine,40,4,3,N/A,N/A
+1956,Juan Manuel Fangio,Ferrari,Argentine,30,3,6,N/A,N/A
+1957,Juan Manuel Fangio,Maserati,Argentine,40,4,4,N/A,N/A
+1958,Mike Hawthorn,Ferrari,British,42,1,4,Ferrari,N/A
+1959,Jack Brabham,Cooper-Climax,Australian,31,2,1,Cooper-Climax,N/A
+1960,Jack Brabham,Cooper-Climax,Australian,43,5,3,Cooper-Climax,N/A
+1961,Phil Hill,Ferrari,American,34,2,5,Ferrari,N/A
+1962,Graham Hill,BRM,British,42,4,1,BRM,N/A
+1963,Jim Clark,Lotus-Climax,British,54,7,7,Lotus-Climax,N/A
+1964,John Surtees,Ferrari,British,40,2,2,Ferrari,N/A
+1965,Jim Clark,Lotus-Climax,British,54,6,6,Lotus-Climax,N/A
+1966,Jack Brabham,Brabham-Repco,Australian,42,4,3,Brabham-Repco,N/A
+1967,Denny Hulme,Brabham-Repco,New Zealander,51,2,0,Brabham-Repco,N/A
+1968,Graham Hill,Lotus-Ford,British,48,3,2,Lotus-Ford,N/A
+1969,Jackie Stewart,Matra-Ford,British,63,6,2,Matra-Ford,N/A
+1970,Jochen Rindt,Lotus-Ford,Austrian,45,5,3,Lotus-Ford,N/A
+1971,Jackie Stewart,Tyrrell-Ford,British,62,6,6,Tyrrell-Ford,N/A
+1972,Emerson Fittipaldi,Lotus-Ford,Brazilian,61,5,3,Lotus-Ford,N/A
+1973,Jackie Stewart,Tyrrell-Ford,British,71,5,3,Lotus-Ford,N/A
+1974,Emerson Fittipaldi,McLaren-Ford,Brazilian,55,3,1,McLaren-Ford,N/A
+1975,Niki Lauda,Ferrari,Austrian,64.5,5,9,Ferrari,N/A
+1976,James Hunt,McLaren-Ford,British,69,6,8,Ferrari,N/A
+1977,Niki Lauda,Ferrari,Austrian,72,3,2,Ferrari,N/A
+1978,Mario Andretti,Lotus-Ford,American,64,6,8,Lotus-Ford,N/A
+1979,Jody Scheckter,Ferrari,South African,51,3,1,Ferrari,N/A
+1980,Alan Jones,Williams-Ford,Australian,67,5,3,Williams-Ford,N/A
+1981,Nelson Piquet,Brabham-Ford,Brazilian,50,3,4,Williams-Ford,N/A
+1982,Keke Rosberg,Williams-Ford,Finnish,44,1,1,Ferrari,N/A
+1983,Nelson Piquet,Brabham-BMW,Brazilian,59,3,1,Ferrari,N/A
+1984,Niki Lauda,McLaren-TAG,Austrian,72,5,0,McLaren-TAG,N/A
+1985,Alain Prost,McLaren-TAG,French,73,5,2,McLaren-TAG,N/A
+1986,Alain Prost,McLaren-TAG,French,72,4,1,Williams-Honda,N/A
+1987,Nelson Piquet,Williams-Honda,Brazilian,73,3,4,Williams-Honda,N/A
+1988,Ayrton Senna,McLaren-Honda,Brazilian,90,8,13,McLaren-Honda,199
+1989,Alain Prost,McLaren-Honda,French,76,4,2,McLaren-Honda,141
+1990,Ayrton Senna,McLaren-Honda,Brazilian,78,6,10,McLaren-Honda,121
+1991,Ayrton Senna,McLaren-Honda,Brazilian,96,7,8,McLaren-Honda,139
+1992,Nigel Mansell,Williams-Renault,British,108,9,14,Williams-Renault,164
+1993,Alain Prost,Williams-Renault,French,99,7,13,Williams-Renault,168
+1994,Michael Schumacher,Benetton-Ford,German,92,8,6,Williams-Renault,118
+1995,Michael Schumacher,Benetton-Renault,German,102,9,4,Benetton-Renault,137
+1996,Damon Hill,Williams-Renault,British,97,8,9,Williams-Renault,175
+1997,Jacques Villeneuve,Williams-Renault,Canadian,81,7,10,Williams-Renault,123
+1998,Mika Häkkinen,McLaren-Mercedes,Finnish,100,8,9,McLaren-Mercedes,156
+1999,Mika Häkkinen,McLaren-Mercedes,Finnish,76,5,11,Ferrari,128
+2000,Michael Schumacher,Ferrari,German,108,9,9,Ferrari,170
+2001,Michael Schumacher,Ferrari,German,123,9,11,Ferrari,179
+2002,Michael Schumacher,Ferrari,German,144,11,7,Ferrari,221
+2003,Michael Schumacher,Ferrari,German,93,6,5,Ferrari,158
+2004,Michael Schumacher,Ferrari,German,148,13,8,Ferrari,262
+2005,Fernando Alonso,Renault,Spanish,133,7,6,Renault,191
+2006,Fernando Alonso,Renault,Spanish,134,7,6,Renault,206
+2007,Kimi Räikkönen,Ferrari,Finnish,110,6,3,Ferrari,204
+2008,Lewis Hamilton,McLaren-Mercedes,British,98,5,7,Ferrari,172
+2009,Jenson Button,Brawn-Mercedes,British,95,6,4,Brawn-Mercedes,172
+2010,Sebastian Vettel,Red Bull-Renault,German,256,5,10,Red Bull-Renault,498
+2011,Sebastian Vettel,Red Bull-Renault,German,392,11,15,Red Bull-Renault,650
+2012,Sebastian Vettel,Red Bull-Renault,German,281,5,6,Red Bull-Renault,460
+2013,Sebastian Vettel,Red Bull-Renault,German,397,13,9,Red Bull-Renault,596
+2014,Lewis Hamilton,Mercedes,British,384,11,7,Mercedes,701
+2015,Lewis Hamilton,Mercedes,British,381,10,11,Mercedes,703
+2016,Nico Rosberg,Mercedes,German,385,9,8,Mercedes,765
+2017,Lewis Hamilton,Mercedes,British,363,9,11,Mercedes,668
+2018,Lewis Hamilton,Mercedes,British,408,11,11,Mercedes,655
+2019,Lewis Hamilton,Mercedes,British,413,11,5,Mercedes,739
+2020,Lewis Hamilton,Mercedes,British,347,11,10,Mercedes,573
+2021,Max Verstappen,Red Bull-Honda,Dutch,395.5,10,10,Mercedes,613.5
+2022,Max Verstappen,Red Bull-RBPT,Dutch,454,15,7,Red Bull-RBPT,759
+2023,Max Verstappen,Red Bull-Honda RBPT,Dutch,575,19,12,Red Bull-Honda RBPT,860
+2024,Max Verstappen,Red Bull-Honda RBPT,Dutch,437,19,10,McLaren-Mercedes,666

@@ -3,11 +3,11 @@ Handlers rapides pour F1 sans LLM
 Répondent en <100ms pour les questions simples
 """
 
-from typing import Dict, Any, Optional
+from typing import Dict, Any, Optional, Tuple, List
 import httpx
 from bs4 import BeautifulSoup
 from backend.optimized_cache import get_cache, CACHE_TTL
-from backend.standings_utils import get_standf1_standings_summary
+from backend.standings_utils import get_standf1_standings_summary, get_standf1_constructors_summary
 
 
 # En-têtes HTTP simples pour scraping
@@ -31,129 +31,60 @@ def _fetch_url(url: str, timeout: int = 4) -> str:  # Timeout réduit 8s→4s
 
 
 class F1DataHandler:
-    """Handlers pour données F1 rapides"""
-    # Ergast retiré: n'utiliser que des sources publiques (FIA/StandF1)
+    """Handlers rapides pour les questions F1 simples (classements, calendrier)."""
     
     @staticmethod
-    def get_standings() -> str:
-        """Classements drivers - ultra-rapide avec cache"""
-        cache = get_cache()
-        cache_key = "standings_drivers"
-        
-        # Vérifier cache
-        cached = cache.get(cache_key)
-        if cached:
-            return f"📊 (depuis cache)\n\n{cached}"
-        
-        try:
-            summary = get_standf1_standings_summary(top_n=10)
-            if summary:
-                result = "🏎️ **Classement Pilotes (top 10)** :\n\n" + summary
-                cache.set(cache_key, result, CACHE_TTL.get("news_articles", 600))
-                return result
-            return "⚠️ Classements indisponibles pour le moment (StandF1)."
-        except Exception as e:
-            return f"⚠️ Impossible de récupérer les classements (StandF1): {e}"
+    def handle_standings_drivers() -> Tuple[str, List[str]]:
+        """Classement pilotes (StandF1 temps réel)."""
+        summary = get_standf1_standings_summary(top_n=10)
+        sources = ["StandF1.com - Classements pilotes temps réel"]
+        if summary:
+            return summary, sources
+        return "Impossible de récupérer le classement pilotes pour le moment. 😕", []
     
     @staticmethod
-    def get_next_race() -> str:
-        """Prochain GP - donnees statiques"""
-        cache = get_cache()
-        cache_key = "next_race"
-        
-        cached = cache.get(cache_key)
-        if cached:
-            return f"🏁 (depuis cache)\n\n{cached}"
-        
-        try:
-            # Donnees statiques du calendrier 2026
-            result = "🏁 **Prochain Grand Prix**\n\nBahreïn\n⏱️ 22 mars 2026\n📅 Sakir\n🔗 Source: FIA"
-            cache.set(cache_key, result, CACHE_TTL.get("ergast_race", 600))
-            return result
-        except Exception as e:
-            return f"⏰ Prochain GP: Australie - 8 mars 2026 (données Aurupteur indisponibles: {str(e)[:50]})"
+    def handle_standings_teams() -> Tuple[str, List[str]]:
+        """Classement constructeurs (StandF1 temps réel)."""
+        summary = get_standf1_constructors_summary(top_n=10)
+        sources = ["StandF1.com - Classements constructeurs temps réel"]
+        if summary:
+            return summary, sources
+        return "Impossible de récupérer le classement constructeurs pour le moment. 😕", []
     
     @staticmethod
-    def get_rules() -> str:
-        """Règles F1 simples - sans API"""
-        cache = get_cache()
-        cache_key = "rules_basic"
-        
-        cached = cache.get(cache_key)
-        if cached:
-            return cached
-        
-        rules = """📋 **Règles F1 2025**
-
-**Points au podium** :
-1️⃣ = 25pts | 2️⃣ = 18pts | 3️⃣ = 15pts | 4️⃣ = 12pts | 5️⃣ = 10pts
-6️⃣ = 8pts | 7️⃣ = 6pts | 8️⃣ = 4pts | 9️⃣ = 2pts | 🔟 = 1pt
-
-**Meilleur tour** : +1 point (si dans top 10)
-
-**Distance** : ~307 km (~2h)
-
-**Sécurité** : Halo, KERS, DRS"""
-        
-        cache.set(cache_key, rules, CACHE_TTL["ergast_standings"])
-        return rules
-
-
-def handle_standings_drivers() -> str:
-    """Handler: Classement drivers"""
-    return F1DataHandler.get_standings()
-
-
-def handle_standings_teams() -> str:
-    """Handler: Classement teams"""
-    # Indisponible sans source fiable stable après retrait Ergast
-    return "🏭 **Classement Constructeurs** : Indisponible temporairement (source Ergast retirée)."
-
-
-def handle_next_race() -> str:
-    """Handler: Prochain GP"""
-    return F1DataHandler.get_next_race()
-
-
-def handle_rules() -> str:
-    """Handler: Règles F1"""
-    return F1DataHandler.get_rules()
-
-
-def handle_calendar() -> str:
-    """Handler: Calendrier (sommaire)"""
-    cache = get_cache()
-    cache_key = "calendar"
+    def handle_next_race() -> Tuple[str, List[str]]:
+        """Prochaine course (calendrier)."""
+        # TODO: implémenter récupération prochaine course
+        return "Fonctionnalité 'prochaine course' en développement. 🚧", []
     
-    cached = cache.get(cache_key)
-    if cached:
-        return cached
-    
-    try:
-        # Scraper FIA pour un extrait (3 premiers événements)
-        url = "https://www.fia.com/events/fia-formula-one-world-championship/season-2025/2025-fia-formula-one-world-championship"
-        html = _fetch_url(url, timeout=5)  # Timeout réduit 8s→5s
-        if not html:
-            raise RuntimeError("source FIA indisponible")
-        soup = BeautifulSoup(html, "html.parser")
-        events = soup.find_all("div", class_=lambda x: x and "event" in x.lower())[:3]
-        lines = ["📅 **Calendrier F1 (extrait)** :\n"]
-        for ev in events:
-            text = ev.get_text(" ", strip=True)
-            lines.append(f"• {text[:120]}")
-        result = "\n".join(lines) + "\n\n🔗 Source: FIA"
-        cache = get_cache()
-        cache.set(cache_key, result, CACHE_TTL.get("ergast_race", 600))
-        return result
-    except Exception as e:
-        return f"⚠️ Erreur (FIA): {e}"
+    @staticmethod
+    def handle_calendar() -> Tuple[str, List[str]]:
+        """Calendrier complet."""
+        # TODO: implémenter calendrier complet
+        return "Fonctionnalité 'calendrier' en développement. 🚧", []
 
 
-# Mappage intent -> handler
+# Réponse sensible pour vie privée pilotes
+SENSITIVE_RESPONSE = """🙏 **Respect de la vie privée**
+
+Cette question concerne un événement **hors contexte F1** et touche à la vie privée d'un pilote.
+
+**Informations publiques disponibles** :
+- **Michael Schumacher** : accident de ski en décembre 2013 à Méribel. Sa famille demande le respect de sa vie privée depuis 2014, et aucune information médicale publique récente n'est disponible.
+- **Ayrton Senna** : décédé le 1er mai 1994 suite à un accident au GP de Saint-Marin (Imola). Son héritage inspire toujours la F1.
+- **Niki Lauda** : accident au Nürburgring en 1976, retour héroïque 6 semaines plus tard. Décédé en 2019.
+
+Par respect pour les personnes concernées et leurs familles, je privilégie les discussions sur les **carrières F1 légendaires** de ces pilotes.
+
+📚 **Intéressé par leur palmarès ?** Demande-moi sur les **7 titres de Schumi**, les **41 victoires de Senna**, ou le **retour miraculeux de Lauda** ! 🏆🏎️
+"""
+
+
+# Mapping des handlers pour intent_router
 FAST_HANDLERS = {
-    "standings_drivers": handle_standings_drivers,
-    "standings_teams": handle_standings_teams,
-    "next_race": handle_next_race,
-    "rules": handle_rules,
-    "calendar": handle_calendar,
+    "standings_drivers": F1DataHandler.handle_standings_drivers,
+    "standings_teams": F1DataHandler.handle_standings_teams,
+    "next_race": F1DataHandler.handle_next_race,
+    "calendar": F1DataHandler.handle_calendar,
+    "driver_personal_life": lambda: (SENSITIVE_RESPONSE, ["Knowledge Base - Pilotes Légendaires"]),
 }

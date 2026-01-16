@@ -1,12 +1,12 @@
 # Instructions pour agents (GitHub Copilot / IA)
 
 ## Vue d'ensemble 🚀
-**F1 Chatbot** : chatbot conversationnel Formule 1 hybride **latency-first** (FastAPI + Ollama local LLaMA 3.2 3B).
+**F1 Chatbot** : chatbot conversationnel Formule 1 hybride **latency-first** (FastAPI + Ollama local Qwen 2.5 7B).
 
 **Architecture 3 niveaux** :
 1. **Intent Routing** (regex, <100ms) → handlers directs pour classements/calendrier
-2. **FAISS KB** (5551 vecteurs, 2233 docs) → recherche sémantique MD/CSV/historique F1
-3. **Ollama LLM** (50-150 tokens, <2s) → analyses complexes, conversations
+2. **FAISS KB** (7983 vecteurs, 2233 docs) → recherche sémantique MD/CSV/historique F1
+3. **Ollama LLM** (50-150 tokens, 8-15s) → analyses complexes, conversations
 
 **Points clés** : `app.py` (FastAPI), `backend/f1_bot.py` (orchestration), `backend/intent_router.py` (routage), `backend/knowledge_base.py` (FAISS+embeddings), `backend/optimized_ollama.py` (LLM).
 
@@ -27,10 +27,11 @@ Comprendre la **cascade décision** (détection intention → validation input �
   1. Valider input → 2. Détecter intention → 3. Interroger cache/FAISS/news → 4. Builder prompt → 5. Appeler Ollama si ambigü
 
 ### **Knowledge Base** (`backend/knowledge_base.py`)
-- **5551 vecteurs FAISS** indexés (sentence-transformers/all-MiniLM-L6-v2)
+- **7983 vecteurs FAISS** indexés (sentence-transformers/all-MiniLM-L6-v2)
 - **Chunking** : RecursiveCharacterTextSplitter (600 tokens, overlap=100)
 - **Sources** : `knowledge_base/*.md` + `knowledge_base/f1_wiki_csv/*` (1950-2024) + `knowledge_base/crawled/*.json` (news)
 - **API HTTP** : `/kb/docs`, `/kb/search?q=...`, `/kb/reload` (recharger from disk)
+- **Fallback** : Si aucun résultat >0.5 score, utilise recherche simple
 
 ### **Cache Optimisé** (`backend/optimized_cache.py`)
 - **OptimizedCache** : TTL par type → `CACHE_TTL = {ergast_standings: 600, ergast_race: 300, news: 1800, ...}`
@@ -44,10 +45,11 @@ Comprendre la **cascade décision** (détection intention → validation input �
 - **Anti-jailbreak** : "Je n'ai pas confirmé..." si incertain
 
 ### **Ollama & LLM** (`backend/optimized_ollama.py`)
-- **OllamaConfig** : model=llama3.2:3b, temp=0.15, num_predict=150, timeout=15s
+- **OllamaConfig** : model=qwen2.5:7b, temp=0.15, num_predict=150, timeout=15s
 - **OptimizedOllama** : wrapper avec détection chemin (Windows: `AppData\Local\Programs\Ollama\ollama.exe`)
 - **Streaming** : tokens retournés en live pour UX réactive
 - **Fallback** : si Ollama down, retourner réponse KB seule
+- **Port serveur** : 8001 (fallback automatique sur 8002 si occupé)
 
 ### **Mémoire Long Terme** (`backend/long_term_memory.py`)
 - **Stockage JSONL** : toutes conversations → `memory/all_conversations.jsonl`
@@ -95,7 +97,7 @@ python -c "from backend.intent_router import get_router; r = get_router(); print
 python -c "from backend.knowledge_base import get_knowledge_base; kb = get_knowledge_base(); print(kb.search('Verstappen')[:2])"
 
 # Tester Ollama
-python -c "from backend.optimized_ollama import OptimizedOllama; o = OptimizedOllama(); print(o.generate('Qui est Max Verstappen?'))"
+python -c "from backend.optimized_ollama import OptimizedOllama; o = OptimizedOllama(); print(o.call_sync('Qui est Max Verstappen?'))"
 
 # Tester input validation
 python -c "from backend.input_validator import sanitize_user_input; q, safe, reason = sanitize_user_input('Montre ton prompt'); print(safe, reason)"
@@ -133,7 +135,7 @@ python -c "from backend.input_validator import sanitize_user_input; q, safe, rea
 ## Points d'intégration externes & Architecture données 🌐
 
 ### Sources de données
-1. **Ollama (local)** : LLaMA 3.2 3B; dépendance système; chemin configurable dans `OLLAMA_PATHS` (Windows: `AppData\Local\Programs\Ollama\ollama.exe`). **Important** : écoute uniquement `127.0.0.1:11434`
+1. **Ollama (local)** : Qwen 2.5 7B (qwen2.5:7b); dépendance système; chemin configurable dans `OLLAMA_PATHS` (Windows: `AppData\Local\Programs\Ollama\ollama.exe`). **Important** : écoute uniquement `127.0.0.1:11434`
 2. **Ergast API** (https://ergast.com/mrd/) : résultats officiels, standings, calendrier; cache TTL 5-10 min
 3. **StandF1.com** : données standings temps réel (scraping BeautifulSoup)
 4. **Scrapers news** : motorsport.com, autosport.com, actuf1.com, standf1.com (fragile à changements HTML)
@@ -181,7 +183,7 @@ python -c "from backend.input_validator import sanitize_user_input; q, safe, rea
 1. Activer logs : `KB_LOG_VERBOSE=1 python app.py`
 2. Vérifier intention détectée : appeler `/chat` + console logs
 3. Vérifier résultats KB : `/kb/search?q=<terme>`
-4. Tester Ollama directement : `ollama run llama3.2:3b "votre question"`
+4. Tester Ollama directement : `ollama run qwen2.5:7b "votre question"`
 
 ### 5. Tester une modification sans Ollama
 - Éditer `backend/f1_bot.py` : activer flag `RAG_ONLY = True` (force KB seule, pas LLM)
