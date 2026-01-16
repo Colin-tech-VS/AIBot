@@ -1,6 +1,5 @@
 /**
  * Chatbot Ollama Local - Frontend Client
- * Chatbot Ollama Local - Frontend Client
  * Communication avec le backend FastAPI
  * Gestion des messages et affichage en temps réel
  */
@@ -32,16 +31,6 @@ function toggleHistoryList() {
   }
 }
 
-/**
- * Toggle la visibilité de la liste d'historique
- */
-function toggleHistoryList() {
-  const historyList = document.getElementById('navbarHistoryList');
-  if (historyList) {
-    historyList.classList.toggle('hidden');
-  }
-}
-
 // Références au DOM
 const chatBox = document.getElementById("chatBox");
 const messageInput = document.getElementById("messageInput");
@@ -49,14 +38,9 @@ const chatForm = document.getElementById("chatForm");
 const sendBtn = document.getElementById("sendBtn");
 const mainNavbar = document.getElementById("mainNavbar");
 const navOverlay = document.getElementById("navOverlay");
-const historyPanel = document.getElementById("historyPanel");
-const historyOverlay = document.getElementById("historyOverlay");
-const historyContent = document.getElementById("historyContent");
 
 // État
 let isWaiting = false;
-let isNavbarOpen = false;
-let isHistoryOpen = false;
 let isNavbarCollapsed = false;
 
 // Conversations store (frontend only, ChatGPT-like)
@@ -112,7 +96,6 @@ function createConversation(fromHistory) {
   console.log('[createConversation] Created:', {id: conv.id, title: conv.title});
   
   saveConversations();
-  renderConversationList();
   renderNavbarHistory();
   loadConversationIntoChat(conv.id);
   
@@ -136,7 +119,6 @@ function deleteConversation(id, silent = false) {
     else currentConversationId = null;
   }
   saveConversations();
-  renderConversationList();
   renderNavbarHistory();
   if (currentConversationId) loadConversationIntoChat(currentConversationId);
   else chatBox.innerHTML = `<div class="message-info"><p class="muted">Aucune conversation. Créez-en une.</p></div>`;
@@ -176,7 +158,6 @@ function addMessageToCurrentConversation(role, content) {
   
   conv.messages.push({role, content, ts: Date.now()});
   saveConversations();
-  renderConversationList();
 }
 
 function loadConversationIntoChat(id) {
@@ -222,47 +203,7 @@ function setConversationTitle(title) {
   }
 }
 
-function renderConversationList() {
-  if (!historyContent) return;
-  historyContent.innerHTML = '';
-  if (!conversations || conversations.length===0) {
-    historyContent.innerHTML = `<p class="text-sm text-[#8A97A8] dark:text-[#6F8197]">Aucune conversation.</p>`;
-    return;
-  }
-  conversations.forEach(conv => {
-    const item = document.createElement('div');
-    item.className = 'p-3 rounded-lg hover:bg-[#FCE8E7] dark:hover:bg-[#1B2F46] cursor-pointer transition flex justify-between items-center group';
-    item.title = conv.title;
 
-    const titleDiv = document.createElement('div');
-    titleDiv.className = 'flex-1 min-w-0';
-    const titleEl = document.createElement('p');
-    titleEl.className = 'text-xs font-medium text-[#0B1C2D] dark:text-[#E6ECF2] truncate';
-    titleEl.textContent = conv.title;
-    titleDiv.appendChild(titleEl);
-
-    const actions = document.createElement('div');
-    actions.className = 'flex gap-1 opacity-0 group-hover:opacity-100 transition';
-
-    const delBtn = document.createElement('button');
-    delBtn.className = 'p-1 rounded hover:bg-[#FCE8E7] dark:hover:bg-[#FF3B30]/20 text-[#E10600] dark:text-[#FF3B30] transition';
-    delBtn.title = 'Supprimer';
-    delBtn.innerHTML = '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>';
-    delBtn.onclick = (e) => { e.stopPropagation(); deleteConversation(conv.id); };
-
-    actions.appendChild(delBtn);
-
-    item.appendChild(titleDiv);
-    item.appendChild(actions);
-
-    item.onclick = () => {
-      loadConversationIntoChat(conv.id);
-      closeHistoryPanel();
-    };
-
-    historyContent.appendChild(item);
-  });
-}
 
 // Remplir l'historique dans la navbar
 function renderNavbarHistory() {
@@ -272,13 +213,11 @@ function renderNavbarHistory() {
   navbarHistoryList.innerHTML = '';
   if (!conversations || conversations.length === 0) {
     navbarHistoryList.innerHTML = `<p class="text-xs text-[#0d0737]/50 dark:text-white/50 text-center py-4">Aucune conversation</p>`;
-    navbarHistoryList.innerHTML = `<p class="text-xs text-[#0d0737]/50 dark:text-white/50 text-center py-4">Aucune conversation</p>`;
     return;
   }
   
   conversations.forEach(conv => {
     const item = document.createElement('button');
-    item.className = 'flex items-center gap-2 w-full p-2 rounded hover:bg-[#FCE8E7] dark:hover:bg-[#1B2F46] transition text-left text-[#0B1C2D] dark:text-[#E6ECF2] text-xs group';
     item.className = 'flex items-center gap-2 w-full p-2 rounded hover:bg-[#FCE8E7] dark:hover:bg-[#1B2F46] transition text-left text-[#0B1C2D] dark:text-[#E6ECF2] text-xs group';
     item.title = conv.title;
     
@@ -298,7 +237,6 @@ function renderNavbarHistory() {
     
     // Bouton supprimer au hover
     const delBtn = document.createElement('button');
-    delBtn.className = 'p-1 rounded hover:bg-[#FCE8E7] dark:hover:bg-[#FF3B30]/20 text-[#E10600] dark:text-[#FF3B30] opacity-0 group-hover:opacity-100 transition flex-shrink-0';
     delBtn.className = 'p-1 rounded hover:bg-[#FCE8E7] dark:hover:bg-[#FF3B30]/20 text-[#E10600] dark:text-[#FF3B30] opacity-0 group-hover:opacity-100 transition flex-shrink-0';
     delBtn.title = 'Supprimer';
     delBtn.innerHTML = '<svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>';
@@ -345,7 +283,6 @@ async function sendMessage(event) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ message: message }),
-      body: JSON.stringify({ message: message }),
     });
 
     if (!response.ok) {
@@ -357,7 +294,7 @@ async function sendMessage(event) {
 
     removeMessage(loaderId);
 
-    displayBotMessageWithTyping(data.bot_response);
+    displayMessage(data.bot_response, "bot");
   } catch (error) {
     removeMessage(loaderId);
 
@@ -377,14 +314,6 @@ async function sendMessage(event) {
  * Affiche un message dans la zone de chat
  * Support du markdown et emojis (liens cliquables)
  */
-function formatMarkdown(text) {
-  return text
-    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" class="underline font-semibold hover:opacity-80">$1</a>')
-    .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
-    .replace(/\*(.+?)\*/g, "<em>$1</em>")
-    .replace(/\n/g, "<br>");
-}
-
 function displayMessage(text, role = "user", opts = {save: true}) {
   const messageDiv = document.createElement("div");
   messageDiv.className = `flex ${role === "user" ? "justify-end" : "justify-start"} mb-2`;
@@ -395,55 +324,26 @@ function displayMessage(text, role = "user", opts = {save: true}) {
   if (role === "user") {
     bubble.className = `${baseClass} text-white rounded-br-none user-message-bubble`;
     const isDarkMode = document.documentElement.classList.contains("dark");
-    bubble.style.backgroundColor = isDarkMode ? "#9b473e" : "#0d0737";
+    bubble.style.backgroundColor = isDarkMode ? "#E10600" : "#E10600";
   } else {
-    const roleClass = "bg-[#EEF1F5] dark:bg-[#13263B] text-[#0B1C2D] dark:text-[#E6ECF2] rounded-bl-none";
+    const roleClass = "bg-[#EEF1F5] dark:bg-[#1B2F46] text-[#0B1C2D] dark:text-[#E6ECF2] rounded-bl-none";
     bubble.className = `${baseClass} ${roleClass}`;
   }
   
-  bubble.innerHTML = formatMarkdown(text);
+  let htmlContent = text
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" class="underline font-semibold hover:opacity-80">$1</a>')
+    .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+    .replace(/\*(.+?)\*/g, "<em>$1</em>")
+    .replace(/\n/g, "<br>");
+  
+  bubble.innerHTML = htmlContent;
 
   messageDiv.appendChild(bubble);
   chatBox.appendChild(messageDiv);
 
-  chatBox.scrollTop = chatBox.scrollHeight;
   chatBox.scrollTop = chatBox.scrollHeight;
 
   if (opts.save !== false) addMessageToCurrentConversation(role, text);
-
-  return messageDiv;
-}
-
-/**
- * Affiche un message bot avec effet "machine à écrire"
- */
-function displayBotMessageWithTyping(text, opts = {save: true}) {
-  const messageDiv = document.createElement("div");
-  messageDiv.className = "flex justify-start mb-2";
-
-  const bubble = document.createElement("div");
-  const baseClass = `max-w-xs lg:max-w-md xl:max-w-lg px-4 py-2 rounded-lg text-sm`;
-  const roleClass = "bg-[#EEF1F5] dark:bg-[#13263B] text-[#0B1C2D] dark:text-[#E6ECF2] rounded-bl-none";
-  bubble.className = `${baseClass} ${roleClass}`;
-  bubble.textContent = "";
-
-  messageDiv.appendChild(bubble);
-  chatBox.appendChild(messageDiv);
-  chatBox.scrollTop = chatBox.scrollHeight;
-
-  let idx = 0;
-  const total = text.length;
-  const typingInterval = setInterval(() => {
-    if (idx >= total) {
-      clearInterval(typingInterval);
-      bubble.innerHTML = formatMarkdown(text);
-      if (opts.save !== false) addMessageToCurrentConversation("bot", text);
-      return;
-    }
-    bubble.textContent += text[idx];
-    idx += 1;
-    chatBox.scrollTop = chatBox.scrollHeight;
-  }, 12);
 
   return messageDiv;
 }
@@ -457,24 +357,19 @@ function displayLoader() {
 
   const bubble = document.createElement("div");
   bubble.className = "px-4 py-2 rounded-lg bg-[#EEF1F5] dark:bg-[#13263B] rounded-bl-none";
-  const dots = document.createElement("span");
-  dots.textContent = "●";
-  dots.style.display = "inline-block";
-  bubble.appendChild(dots);
+  bubble.innerHTML = `
+    <div class="flex gap-1">
+      <span class="inline-block animate-bounce">🏎️</span>
+      <span class="inline-block animate-bounce" style="animation-delay: 0.1s">🏁</span>
+      <span class="inline-block animate-bounce" style="animation-delay: 0.2s">⚡</span>
+    </div>
+  `;
 
   loadingDiv.appendChild(bubble);
   chatBox.appendChild(loadingDiv);
 
   chatBox.scrollTop = chatBox.scrollHeight;
 
-  const frames = ["●  ", "●● ", "●●●", " ●●", "  ●", "   "];
-  let idx = 0;
-  const timer = setInterval(() => {
-    dots.textContent = frames[idx % frames.length];
-    idx += 1;
-  }, 220);
-
-  loadingDiv._loaderTimer = timer;
   return loadingDiv;
 }
 
@@ -483,9 +378,6 @@ function displayLoader() {
  */
 function removeMessage(messageElement) {
   if (messageElement && messageElement.parentNode) {
-    if (messageElement._loaderTimer) {
-      clearInterval(messageElement._loaderTimer);
-    }
     messageElement.remove();
   }
 }
@@ -543,7 +435,6 @@ function doDeleteConversation() {
           }
           
           saveConversations();
-          renderConversationList();
         }
       }
 
@@ -559,49 +450,7 @@ function doDeleteConversation() {
 /**
  * Initialisation au chargement de la page
  */
-
-async function fetchNextRaceCountdown() {
-  const countdownEl = document.getElementById("widget-countdown");
-  const nameEl = document.getElementById("widget-gp-name");
-  if (!countdownEl || !nameEl) return;
-  try {
-    const res = await fetch("/next_race_countdown");
-    if (!res.ok) throw new Error("HTTP " + res.status);
-    const data = await res.json();
-    countdownEl.textContent = data.countdown || "—";
-    const name = data.race_name ? `${data.race_name} — ${data.location}` : "—";
-    nameEl.textContent = name;
-  } catch (err) {
-    console.error("[widget] next race", err);
-    countdownEl.textContent = "—";
-    nameEl.textContent = "—";
-  }
-}
-
-async function fetchTop3Drivers() {
-  const container = document.getElementById("widget-top-drivers");
-  if (!container) return;
-  try {
-    const res = await fetch("/top_drivers");
-    if (!res.ok) throw new Error("HTTP " + res.status);
-    const data = await res.json();
-    const drivers = (data.drivers || []).slice(0, 3);
-    if (!drivers.length) throw new Error("No drivers");
-    container.innerHTML = drivers
-      .map((d, idx) => `<div class="flex items-center gap-2"><span class="text-[11px] font-semibold text-[#6B7280] dark:text-[#AAB1BA]">${idx+1}.</span><span class="text-xs text-[#2a3441] dark:text-[#ddd] font-medium">${d.name}</span><span class="text-[11px] text-[#6B7280] dark:text-[#AAB1BA]">${d.points} pts</span></div>`)
-      .join("");
-  } catch (err) {
-    console.error("[widget] top drivers", err);
-    container.innerHTML = `<div class="text-[#6c757d] dark:text-[#777]">—</div>`;
-  }
-}
 document.addEventListener("DOMContentLoaded", () => {
-  try {
-    console.log('Frontend: history UI initialized', {historyPanel: !!historyPanel, historyContent: !!historyContent});
-  } catch (e) {
-    console.error('Erreur initialisation UI:', e);
-  }
-
   loadConversationsFromStorage();
   
   // Nettoyer les conversations vides au démarrage
@@ -609,7 +458,6 @@ document.addEventListener("DOMContentLoaded", () => {
   
   // Always create a new conversation on page load
   createConversation();
-  renderConversationList();
   renderNavbarHistory();
   
   messageInput.focus();
@@ -620,31 +468,7 @@ document.addEventListener("DOMContentLoaded", () => {
       sendMessage(e);
     }
   });
-  
-  const closeBtn = document.getElementById("closeHistoryBtn");
-  const newConvBtn = document.getElementById("newConversationBtn");
-  
-  console.log('[DOMContentLoaded] Binding buttons:', {
-    closeBtn: !!closeBtn,
-    newConvBtn: !!newConvBtn
-  });
-  
-  if (closeBtn) {
-    closeBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      console.log('[closeBtn] clicked');
-      closeHistoryPanel();
-    });
-  }
-  
-  if (newConvBtn) {
-    newConvBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      console.log('[newConvBtn in panel] clicked');
-      createConversation();
-      closeHistoryPanel();
-    });
-  }
+
 
   // Initialiser le dark mode et les infos utilisateur
   initDarkMode();
@@ -655,68 +479,6 @@ document.addEventListener("DOMContentLoaded", () => {
   if (savedNavbarCollapsed && window.innerWidth >= 1024) {
     mainNavbar.classList.add("collapsed");
     isNavbarCollapsed = true;
-  }
-  
-    // Widgets
-    fetchNextRaceCountdown();
-    fetchTop3Drivers();
-  
-  /**
-   * Charger les données du widget Prochain GP
-   */
-  async function fetchNextRaceCountdown() {
-    try {
-      const response = await fetch('/next_race_countdown');
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
-      const data = await response.json();
-      
-      // Mettre à jour les éléments du widget
-      const countdownEl = document.getElementById('widget-countdown');
-      const gpNameEl = document.getElementById('widget-gp-name');
-      
-      if (countdownEl) {
-        countdownEl.textContent = data.countdown || '—';
-      }
-      if (gpNameEl) {
-        gpNameEl.innerHTML = `<strong>${data.race_name || '—'}</strong><br><small>${data.location || '—'}</small>`;
-      }
-      
-      console.log('[fetchNextRaceCountdown] Widgets updated:', {countdown: data.countdown, race: data.race_name});
-    } catch (error) {
-      console.error('[fetchNextRaceCountdown] Error:', error);
-      const countdownEl = document.getElementById('widget-countdown');
-      if (countdownEl) countdownEl.textContent = 'Erreur ⚠️';
-    }
-  }
-
-  /**
-   * Charger les données du widget Top 3 Drivers
-   */
-  async function fetchTop3Drivers() {
-    try {
-      const response = await fetch('/top_drivers?top_n=3');
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
-      const data = await response.json();
-      
-      const driversEl = document.getElementById('widget-top-drivers');
-      if (driversEl && data.drivers && data.drivers.length > 0) {
-        driversEl.innerHTML = data.drivers.map((driver, idx) => {
-          const medal = ['🥇', '🥈', '🥉'][idx] || '•';
-          return `<div class="flex items-center justify-between gap-1">
-            <span>${medal} ${driver.name}</span>
-            <strong>${driver.points}pts</strong>
-          </div>`;
-        }).join('');
-      } else {
-        driversEl.innerHTML = '<div class="text-[#6c757d] dark:text-[#777]">—</div>';
-      }
-      
-      console.log('[fetchTop3Drivers] Widget updated:', {count: data.drivers?.length || 0});
-    } catch (error) {
-      console.error('[fetchTop3Drivers] Error:', error);
-      const driversEl = document.getElementById('widget-top-drivers');
-      if (driversEl) driversEl.innerHTML = '<div class="text-red-500">Erreur ⚠️</div>';
-    }
   }
 });
 
@@ -731,76 +493,9 @@ function closeNavbar() {
   mainNavbar.classList.add("navbar-collapsed");
 }
 
-function toggleHistoryPanel() {
-  isHistoryOpen = !isHistoryOpen;
-  if (isHistoryOpen) {
-    openHistoryPanel();
-  } else {
-    closeHistoryPanel();
-  }
-}
+
 
 /**
- * Ouvre le panneau d'historique (affiche la liste des conversations)
- */
-async function openHistoryPanel() {
-  if (!historyPanel) return;
-  historyPanel.classList.remove("hidden");
-  historyPanel.classList.remove("translate-x-full");
-  historyPanel.setAttribute("aria-hidden", "false");
-  historyOverlay.classList.remove("hidden");
-  renderConversationList();
-}
-
-/**
- * Ferme le panneau d'historique
- */
-function closeHistoryPanel() {
-  if (!historyPanel) return;
-  isHistoryOpen = false;
-  historyPanel.classList.add("translate-x-full");
-  historyPanel.setAttribute("aria-hidden", "true");
-  historyOverlay.classList.add("hidden");
-}
-
-/**
- * Remplit le panneau avec les items d'historique (legacy function, not used currently)
- */
-function renderHistoryItems(items) {
-  if (!historyContent) return;
-  if (!items || items.length === 0) {
-    historyContent.innerHTML = `<p class="muted">Aucun historique trouvé.</p>`;
-    return;
-  }
-
-  historyContent.innerHTML = '';
-  items.forEach((it, idx) => {
-    const el = document.createElement('div');
-    el.className = 'history-item';
-
-    const meta = document.createElement('div');
-    meta.className = 'meta';
-    meta.textContent = `${idx + 1} • ${it.role === 'user' ? 'Utilisateur' : 'Assistant'}`;
-
-    const content = document.createElement('div');
-    content.className = 'content';
-    let html = it.content
-      .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" style="color: #3b82f6; text-decoration: underline; font-weight: 600;">$1</a>')
-      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-      .replace(/\*(.+?)\*/g, '<em>$1</em>')
-      .replace(/\n/g, '<br>');
-
-    content.innerHTML = html;
-
-    el.appendChild(meta);
-    el.appendChild(content);
-
-    historyContent.appendChild(el);
-  });
-}
-
-/**
- * Ouvre le panneau profil utilisateur
  * Ouvre le panneau profil utilisateur
  */
 function openUserProfile() {
@@ -826,14 +521,7 @@ function closeUserProfile() {
 
 /**
  * Gère la connexion utilisateur
- * Gère la connexion utilisateur
  */
-function handleLogin() {
-  const username = prompt("Entrez votre nom d'utilisateur :");
-  if (username && username.trim()) {
-    localStorage.setItem("username", username.trim());
-    updateUserInfo(username.trim());
-  }
 function handleLogin() {
   const username = prompt("Entrez votre nom d'utilisateur :");
   if (username && username.trim()) {
@@ -851,7 +539,6 @@ function updateUserInfo(username) {
   userInfo.innerHTML = `
     <p class="text-sm">Connecté en tant que <strong>${username}</strong></p>
     <button class="w-full px-4 py-2 rounded-lg bg-[#E10600] hover:bg-[#FF3B30] text-white transition text-sm font-medium" onclick="handleLogout()">Se déconnecter</button>
-    <button class="w-full px-4 py-2 rounded-lg bg-[#E10600] hover:bg-[#FF3B30] text-white transition text-sm font-medium" onclick="handleLogout()">Se déconnecter</button>
   `;
 }
 
@@ -863,8 +550,6 @@ function handleLogout() {
   const userInfo = document.getElementById("userInfo");
   if (!userInfo) return;
   userInfo.innerHTML = `
-    <p class="text-sm text-[#8A97A8] dark:text-[#6F8197]">Non connecté</p>
-    <button class="w-full px-4 py-2 rounded-lg bg-[#E10600] hover:bg-[#FF3B30] text-white transition text-sm font-medium mt-2" onclick="handleLogin()">Se connecter</button>
     <p class="text-sm text-[#8A97A8] dark:text-[#6F8197]">Non connecté</p>
     <button class="w-full px-4 py-2 rounded-lg bg-[#E10600] hover:bg-[#FF3B30] text-white transition text-sm font-medium mt-2" onclick="handleLogin()">Se connecter</button>
   `;
@@ -880,7 +565,7 @@ function toggleDarkMode() {
   // Mettre à jour la couleur de tous les messages utilisateurs existants
   const userBubbles = document.querySelectorAll('.user-message-bubble');
   userBubbles.forEach(bubble => {
-    bubble.style.backgroundColor = isDarkMode ? "#9b473e" : "#0d0737";
+    bubble.style.backgroundColor = "#E10600";
   });
 }
 
@@ -890,13 +575,7 @@ function toggleDarkMode() {
 function initDarkMode() {
   const savedDarkMode = localStorage.getItem("darkMode");
   const isDarkMode = savedDarkMode !== null ? savedDarkMode === "true" : true; // Dark mode activé par défaut
-  const savedDarkMode = localStorage.getItem("darkMode");
-  const isDarkMode = savedDarkMode !== null ? savedDarkMode === "true" : true; // Dark mode activé par défaut
   const darkModeToggle = document.getElementById("darkModeToggle");
-  
-  // Toujours sauvegarder l'état pour synchroniser le localStorage
-  localStorage.setItem("darkMode", isDarkMode);
-  
   
   // Toujours sauvegarder l'état pour synchroniser le localStorage
   localStorage.setItem("darkMode", isDarkMode);
@@ -931,27 +610,135 @@ function initNavbar() {
 
 // ===== WIDGETS F1 =====
 
-// Exposer les fonctions globalement pour les onclick inline
-window.sendMessage = sendMessage;
-window.toggleNavbar = toggleNavbar;
-window.closeNavbar = closeNavbar;
-window.toggleHistoryPanel = toggleHistoryPanel;
-window.openHistoryPanel = openHistoryPanel;
-window.closeHistoryPanel = closeHistoryPanel;
-window.createConversation = createConversation;
-window.loadConversationIntoChat = loadConversationIntoChat;
-window.deleteConversation = deleteConversation;
-window.clearAllHistory = clearAllHistory;
-window.toggleHistoryList = toggleHistoryList;
-window.openUserProfile = openUserProfile;
-window.closeUserProfile = closeUserProfile;
-window.toggleDarkMode = toggleDarkMode;
+/**
+ * Récupère et affiche le prochain GP depuis le backend (qui scrape Aurupteur)
+ */
+async function fetchNextRaceCountdown() {
+  console.log('[Widget GP] Récupération depuis backend...');
+  try {
+    // Appeler notre backend qui scrape Aurupteur en temps réel
+    const response = await fetch('/next_race_countdown');
+    if (!response.ok) throw new Error('API Error');
+    const data = await response.json();
+    
+    console.log('[Widget GP] Données reçues:', data);
+    
+    if (data && data.countdown && data.race_name) {
+      document.getElementById('widget-countdown').textContent = data.countdown;
+      document.getElementById('widget-gp-name').textContent = data.race_name;
+      console.log('[Widget GP] ✅ Mis à jour depuis backend');
+    } else {
+      throw new Error('Données incomplètes');
+    }
+    
+  } catch (error) {
+    console.error('[Widget GP] ❌ Erreur backend:', error);
+    // Fallback local uniquement si le backend échoue
+    fetchNextRaceCountdownFallback();
+  }
+}
+
+/**
+ * Fallback avec calendrier 2026 hardcodé
+ */
+function fetchNextRaceCountdownFallback() {
+  console.log('[Widget GP] Utilisation du fallback calendrier 2026...');
+  const races_2026 = [
+    { name: "GP d'Australie", date: "2026-03-06", time: "05:00:00" },
+    { name: "GP de Bahreïn", date: "2026-03-22", time: "15:00:00" },
+    { name: "GP d'Arabie Saoudite", date: "2026-04-05", time: "18:30:00" },
+    { name: "GP de Chine", date: "2026-04-19", time: "13:00:00" },
+    { name: "GP du Japon", date: "2026-04-26", time: "14:00:00" },
+    { name: "GP de Monaco", date: "2026-05-24", time: "14:00:00" },
+    { name: "GP du Canada", date: "2026-06-14", time: "19:00:00" },
+    { name: "GP de Silverstone", date: "2026-07-05", time: "14:00:00" },
+    { name: "GP de Hongrie", date: "2026-07-19", time: "15:00:00" },
+    { name: "GP de Spa-Francorchamps", date: "2026-08-02", time: "15:00:00" },
+    { name: "GP des Pays-Bas", date: "2026-08-30", time: "15:00:00" },
+    { name: "GP d'Italie", date: "2026-09-06", time: "15:00:00" },
+    { name: "GP de Singapour", date: "2026-09-27", time: "19:00:00" },
+    { name: "GP de Suzuka", date: "2026-10-04", time: "14:00:00" },
+    { name: "GP de Mexico", date: "2026-10-25", time: "20:00:00" },
+    { name: "GP de São Paulo", date: "2026-11-08", time: "17:00:00" },
+    { name: "GP d'Abu Dhabi", date: "2026-11-29", time: "13:00:00" },
+  ];
+  
+  const now = new Date();
+  let nextRace = null;
+  
+  for (const race of races_2026) {
+    const raceDate = new Date(race.date + 'T' + race.time + 'Z');
+    if (raceDate > now) {
+      nextRace = race;
+      break;
+    }
+  }
+  
+  if (!nextRace) {
+    document.getElementById('widget-countdown').textContent = '—';
+    document.getElementById('widget-gp-name').textContent = '—';
+    console.warn('[Widget GP] Aucun GP trouvé');
+    return;
+  }
+  
+  const raceDate = new Date(nextRace.date + 'T' + nextRace.time + 'Z');
+  const diffMs = raceDate - now;
+  const days = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((diffMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  
+  let countdownText = `Dans ${days}j ${hours}h`;
+  
+  document.getElementById('widget-countdown').textContent = countdownText;
+  document.getElementById('widget-gp-name').textContent = nextRace.name;
+  console.log('[Widget GP] ✅ Fallback utilisé:', nextRace.name, '-', countdownText);
+}
+
+/**
+ * Récupère et affiche le top 3 des pilotes depuis le backend
+ */
+async function fetchTop3Drivers() {
+  console.log('[Widget Drivers] Récupération depuis backend...');
+  try {
+    // Appeler notre backend
+    const response = await fetch('/top_drivers');
+    if (!response.ok) throw new Error('API Error');
+    const data = await response.json();
+    
+    console.log('[Widget Drivers] Données reçues:', data);
+    
+    if (data && data.drivers && data.drivers.length > 0) {
+      const medals = ['🥇', '🥈', '🥉'];
+      const topDriversList = document.getElementById('widget-top-drivers');
+      
+      if (topDriversList) {
+        topDriversList.innerHTML = data.drivers.slice(0, 3)
+          .map((driver, i) => {
+            return `<div>${medals[i]} ${driver.name} · ${driver.points}pts</div>`;
+          })
+          .join('');
+        console.log('[Widget Drivers] ✅ Mis à jour depuis backend');
+      }
+    } else {
+      throw new Error('Données incomplètes');
+    }
+    
+  } catch (error) {
+    console.error('[Widget Drivers] ❌ Erreur backend:', error);
+    const topDriversList = document.getElementById('widget-top-drivers');
+    if (topDriversList) {
+      topDriversList.innerHTML = '<div>Service indisponible</div>';
+    }
+  }
+}
 
 // Initialisation
 document.addEventListener("DOMContentLoaded", () => {
   initNavbar();
   initDarkMode();
   initUserInfo();
-  renderConversationList();
   renderNavbarHistory();
+
+  // Charger les widgets F1
+  fetchNextRaceCountdown();
+  fetchTop3Drivers();
 });
